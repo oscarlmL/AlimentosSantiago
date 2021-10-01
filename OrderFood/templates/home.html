@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+<body>
+    <div class="block hero1 my-auto"
+        style="background-image:url(https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80);">
+        <div class="container-fluid text-center">
+            <h1 class="display-2 text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="0">El Comilon
+            </h1>
+            <p class="lead text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">Las delicias de
+                nuestra Carta a la comodidad de su Hogar</p>
+            <a href="#menu" class="btn-text lead d-inline-block text-white border-top border-bottom mt-4 pt-1 pb-1"
+                data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1200">Visita Nuestro Menú</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="maincontent">
+        <div class="container">
+            <section id="menu">
+                <div class="block menu1">
+                    <div class="buttons-container">
+                        <a href="#" class="button button--is-active" data-target="pizzaMenu">Platos</a>
+                        <a href="#" class="button" data-target="coffeeMenu">Bebidas / Licores</a>
+                        <a href="#" class="button" data-target="noodlesMenu">Postres</a>
+                    </div>
+                    <!-- Start Pizza Menu -->
+                    <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">
+                        <div class="item row align-items-center">
+                            <div class="col-{% load static %}sm-3 pr-5">
+                                <img class="product-img" src="./img/pizza-1.png">
+                            </div>
+                            <div class="details col-sm-9">
+                                <div class="item__header">
+                                    <h3 class="item__title">Cazuela de Vacuno</h3>
+                                    <span class="item__dots"></span>
+                                    <span class="item__price">$7990</span>
+                                </div>
+                                <p class="item__description">Cazuela de Vecuno (200gr) Con papas, choclo y zapallo</p>
+                                <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="1"
+                                    data-name="Cazuela de Vecuno" data-price="7990" data-quantity="1"
+                                    data-image="./img/pizza-1.png">Agregar al Carro</button>
+                            </div>
+                        </div>
+                        <div class="item row align-items-center">
+                            <div class="col-sm-3 pr-5">
+                                <img class="product-img" src="./img/pizza-2.png">
+                            </div>
+                            <div class="details col-sm-9">
+                                <div class="item__header">
+                                    <h3 class="item__title">Pastel de Choclo</h3>
+                                    <span class="item__dots"></span>
+                                    <span class="item__price">$9990</span>
+                                </div>
+                                <p class="item__description">Pastel de choclo en plato de greda cocinado al horno</p>
+                                <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="2"
+                                    data-name="Pastel de choclo" data-price="9990" data-quantity="1"
+                                    data-image="./img/pizza-2.png">Agregar al Carro</button>
+                            </div>
+                        </div>
+                        <div class="item row align-items-center">
+                            <div class="col-sm-3 pr-5">
+                                <img class="product-img" src="./img/pizza-3.png">
+                            </div>
+                            <div class="details col-sm-9">
+                                <div class="item__header">
+                                    <h3 class="item__title">Cazuela de Pollo</h3>
+                                    <span class="item__dots"></span>
+                                    <span class="item__price">$8990</span>
+                                </div>
+                                <p class="item__description">Cazuela de POLLO (200gr) Con papas, choclo y zapallo</p>
+                                <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="3"
+                                    data-name="Cazuela de POLLO" data-price="8990" data-quantity="1"
+                                    data-image="./img/pizza-3.png">Agregar al Carro</button>
+                            </div>
+                        </div>
+                        <div class="item row align-items-center">
+                            <div class="col-sm-3 pr-5">
+                                <img class="product-img" src="./img/pizza-4.png">
+                            </div>
+                            <div class="details col-sm-9">
+                                <div class="item__header">
+                                    <h3 class="item__title">Pastel de Papas</h3>
+                                    <span class="item__dots"></span>
+                                    <span class="item__price">$7990</span>
+                                </div>
+                                <p class="item__description">Pastel de papas en plato de greda cocinado al horno.</p>
+                                <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="4"
+                                    data-name="Pastel de Papas" data-price="7990" data-quantity="1"
+                                    data-image="./img/pizza-4.png">Agregar al Carro</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Pizza Menu -->
+                    <!-- Start Coffee Menu -->
+                    <div class="menu" id="coffeeMenu">
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Bebidas</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$1000</span>
+                            </div>
+                            <p class="item__description">gaseosa coca-cola, sprite, fanta (250ml).</p>
+                        </div>
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Jugos Naturales</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$1200</span>
+                            </div>
+                            <p class="item__description">Piña, Mango, Frambueza, Maracuya</p>
+                        </div>
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Café Latte</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$1000</span>
+                            </div>
+                            <p class="item__description">espresso y leche al vapor.</p>
+                        </div>
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Espresso</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$1000</span>
+                            </div>
+                            <p class="item__description">su rápida preparación a una alta presión y por un sabor y
+                                textura más concentrados.</p>
+                        </div>
+                    </div>
+                    <!-- End Coffee Menu -->
+                    <!-- Start Noodles Menu -->
+                    <div class="menu" id="noodlesMenu">
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Helado</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$800</span>
+                            </div>
+                            <p class="item__description">chocolate, piña, frambueza, pasas al ron (360cc).</p>
+                        </div>
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Leche asada</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$950</span>
+                            </div>
+                            <p class="item__description">(360cc).</p>
+                        </div>
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Jalea</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$500</span>
+                            </div>
+                            <p class="item__description">(360cc).</p>
+                        </div>
+                        <div class="item">
+                            <div class="item__header">
+                                <h3 class="item__title">Mote con huesillo</h3>
+                                <span class="item__dots"></span>
+                                <span class="item__price">$1200</span>
+                            </div>
+                            <p class="item__description">(500cc).</p>
+                        </div>
+                    </div>
+                    <!-- End Noodles Menu -->
+                </div>
+                <!-- End block -->
+                <script src="/static/app/js/mycart.js"></script>
+                <script src="/static/app/js/mycart-custom.js"></script>
+            </section>
+        </div>
+    </div>
+    <div class="nav-item my-cart-icon">
+        <img src="/static/app/img/cart.svg" style="width:20px;"> <span class="badge badge-notify my-cart-badge"> </span>
+    </div>
+    <script src="/static/app/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script src="/static/app/js/custom-general.js"></script>
+</body>
+
+{% endblock %}
