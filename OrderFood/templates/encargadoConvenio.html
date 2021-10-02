@@ -1,0 +1,50 @@
+<div class="p-4 m-4">
+    <div class="col-lg-5 mx-auto border rounded pt-4">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% if errorEncConvenio %}
+            <div class="alert alert-danger" role="alert">
+                {{errorEncConvenio}}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""
+                    value="{{values.rut_enc_conv}}" maxlength="12" onkeyup="formatoRut(this)">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="" name="nom_enc_conv" aria-describedby=""
+                    placeholder="Nombres" value="{{values.nom_enc_conv}}">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="" name="ap_enc_conv" aria-describedby=""
+                    placeholder="Apellidos" value="{{values.ap_enc_conv}}">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="" name="email_enc_conv" aria-describedby=""
+                    value="{{values.email_enc_conv}}" placeholder="ejemplo: encargadoConvenio@dominio.com">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                    value="{{values.celular}}" placeholder="Celular ej: 912345678">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
+                    placeholder="Ingresar Contraseña">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
+                    placeholder="Confirmar Contraseña">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function formatoRut(rut_enc_conv) {
+        rut_enc_conv.value = rut_enc_conv.value.replace(/[.-]/g, '')
+            .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4')
+    }
+</script>

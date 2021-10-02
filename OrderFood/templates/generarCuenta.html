@@ -1,45 +1,98 @@
 {% extends 'base.html' %}
 {% block contenido %}
-{% load static %}
 
-<div class="p-4 m-4">
-    <div class="col-lg-5 mx-auto border rounded pt-4">
-        <form method="POST" action="">
-            <h3 class="mb-4 text-center">Generar Cuenta</h3>
-            {% csrf_token %}
-            {% if error %}
-            <div class="alert alert-danger" role="alert">
-                {{error}}
-            </div>
-            {% endif %}
-            <div class="form-group">
-                <input type="text" class="form-control" name="nombre" placeholder="Nombre Completo" id=""
-                value="{{values.nom_enc_coc}}">
-            </div>
-            <div class="form-group">
-                <select class="form-control" name="titulo" id="" value="{{values.titulo}}">
-                    <option value="Tecnico">Técnico</option>
-                    <option value="Profesional">Profesional</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" id="" name="experiencia_laboral" aria-describedby=""
-                    placeholder="" value="{{values.exp_laboral}}">
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" id="" name="email_enc_cocina"
-                    aria-describedby="email_enc_cocina" value="{{values.email_enc_coc}}" placeholder="ejemplo: encargadococina@dominio.com">
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="" name="contraseña1" aria-describedby="" placeholder="">
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="" name="contraseña2" aria-describedby="" placeholder="">
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
-            </div>
-        </form>
+<br>
+<br>
+<h3 class="mb-4 text-center">Generar Cuenta</h3>
+<div class="container">
+    <ul class="nav-tabs nav nav-justified">
+        <li class="nav-item">
+            <a href="#encargadoCocina" class="nav-link" data-toggle="tab">Encargado de Cocina</a>
+        </li>
+        <li class="nav-item">
+            <a href="#encargadoConvenio" class="nav-link" data-toggle="tab">Encargado de Convenio</a>
+        </li>
+        <li class="nav-item">
+            <a href="#seccion3" class="nav-link" data-toggle="tab">Repartidor</a>
+        </li>
+    </ul>
+
+    <div class="tab-content container">
+        <div class="tab-pane" id="encargadoCocina">
+            {% include 'encargadoCocina.html' %}
+        </div>
+
+        <div class="tab-pane" id="encargadoConvenio">
+            {% include 'encargadoConvenio.html' %}
+        </div>
+
+        <div class="tab-pane" id="seccion3">
+            <!-- <div class="p-4 m-4">
+                <div class="col-lg-5 mx-auto border rounded pt-4">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{error}}
+                        </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="rut_adm" placeholder="rut " id=""
+                                >
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="nombre_adm" aria-describedby=""
+                                placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="apat_adm" aria-describedby=""
+                                placeholder="Ap paterno">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="amat_adm"
+                                aria-describedby=""
+                                placeholder="apellido materno">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="" name="fono_admin"
+                                aria-describedby="" 
+                                placeholder="Celular">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="" name="email_admin"
+                                aria-describedby="" 
+                                placeholder="ejemplo: encargadococina@dominio.com">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="" name="restaurant_id_restaurante"
+                                aria-describedby="" 
+                                placeholder="restaurante id">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
+                                placeholder="Ingresar Contraseña">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
+                                placeholder="Confirmar Contraseña">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+                        </div>
+                    </form>
+                </div>
+            </div> -->
+        </div>
+
+
     </div>
+
 </div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/app/css/style.css" />
+<script src="/static/app/js/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 {% endblock %}

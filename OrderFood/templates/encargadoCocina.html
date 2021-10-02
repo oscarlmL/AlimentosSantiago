@@ -1,0 +1,46 @@
+<div class="p-4 m-4">
+    <div class="col-lg-5 mx-auto border rounded pt-4">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo" id=""
+                    value="{{values.nom_enc_coc}}">
+            </div>
+            <div class="form-group">
+                <select class="form-control" id="validationCustom04" name="titulo" required value="{{values.titulo}}">
+                    <option selected disabled value="">--- Seleccionar Tipo de Titulo ---</option>
+                    <option value="Tecnico">Técnico</option>
+                    <option value="Profesional">Profesional</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="" name="exp_laboral" aria-describedby=""
+                    placeholder="Experiencia laboral en años" value="{{values.exp_laboral}}">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                    placeholder="912345678" value="{{values.celular}}">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="" name="email_enc_coc" aria-describedby="email_enc_cocina"
+                    value="{{values.email_enc_coc}}" placeholder="ejemplo: encargadococina@dominio.com">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
+                    placeholder="Ingresar Contraseña">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
+                    placeholder="Confirmar Contraseña">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+            </div>
+        </form>
+    </div>
+</div>

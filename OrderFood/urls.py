@@ -1,8 +1,12 @@
 from django.urls import path
-from . import views
+from .views import *
+from .middlewares.auth import auth_middleware
+
 
 urlpatterns = [
-    path('', views.home, name="home"),
-    path('login', views.login, name="login"),
-    path('generar-cuenta/', views.generar_cuenta_enc_cocina, name="generar-cuenta"),
+    path('', home, name="home"),
+    path('login', Login.as_view(), name="login"),
+    path('logout', logout, name="logout"),
+    path('generar-cuenta/', auth_middleware(generar_cuenta_enc_cocina) and auth_middleware(generar_cuenta_enc_convenio), name="generar-cuenta"),
+
 ]

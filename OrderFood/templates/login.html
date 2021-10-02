@@ -18,17 +18,23 @@
             </div>
             <div class="col-md-6 p-0 h-md-100 loginarea">
                 <div class="d-md-flex align-items-center h-md-100 p-3 justify-content-center">
-                    <form>
-                        <h3 class="mb-4 text-center">Ingreso de Cliente</h3>
+                    <form action="/login" method="POST">
+                        <h3 class="mb-4 text-center">Inicio de sesión</h3>
+                        {% csrf_token %}
+                        {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{error}}
+                        </div>
+                        {% endif %}
                         <div class="form-group">
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" placeholder="E-mail" required="">
+                            <input type="email" class="form-control" 
+                               name="email" aria-describedby="emailHelp" placeholder="E-mail" required="">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="exampleInputPassword1"
-                                placeholder="Password" required="">
+                            <input type="password" class="form-control"
+                                placeholder="Contraseña" name="contraseña" required="">
                         </div>
-                        <button type="submit" class="btn btn-dark btn-round btn-block">Ingresar</button>
+                        <input type="submit" value="Ingresar" class="btn btn-dark btn-round btn-block">
 
                     </form>
                 </div>

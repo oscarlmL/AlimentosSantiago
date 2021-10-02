@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -14,8 +15,8 @@
     <title>Food Delivery Landing Page</title>
 </head>
 
-<nav class="navbar navbar-expand-md navbar-light fixed-top bg-white"> <a class="navbar-brand" href="{% url 'home' %}"><img
-            src="/static/app/img/logo.png"></a>
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-white"> <a class="navbar-brand"
+        href="{% url 'home' %}"><img src="/static/app/img/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
         aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"> <span
             class="navbar-toggler-icon"></span>
@@ -27,14 +28,44 @@
             </li>
             <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Nuestro Menú</a>
             </li>
-        </ul> <a href="https://github.com/wowthemesnet/template-fooddelivery-bootstrap-html/archive/master.zip"
-            class="btn btn-outline-dark">Registrate es Gratis!!</a>
+        </ul>
+        {{cuentaAdmin}}
+        {% if request.session.cuentaAdmin %}
+        <div class="dropdown">
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{email}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/generar-cuenta">Generar Cuenta</a>
+                <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
+            </div>
+        </div>
+        <!-- <li class="nav-item nav" >
+            <a class="nav-link active" href="/generar-cuenta">
+                <span>Generar Cuenta</span>
+            </a>
+        </li>
+        <li class="nav-item nav" >
+            <a href="/logout" class="nav-link active" >
+                <span class="">Cerrar Sesión</span>
+            </a>
+        </li> -->
+        {% else %}
+        <li class="nav-item nav">
+            <a class="nav-link active" href="{% url 'login' %}">
+                <span>iniciar sesión</span>
+            </a>
+        </li>
+        <a href="#" class="btn btn-outline-dark">Registrate es Gratis!!</a>
+        {% endif %}
     </div>
 </nav>
 
 {% block contenido %}
 {% endblock %}
 <footer class="block footer1 footer text-center">
-            
+
 </footer>
+
 </html>
