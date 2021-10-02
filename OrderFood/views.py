@@ -7,8 +7,7 @@ from django.views import View
 
 # Create your views here.
 def home(request):
-    email = request.session['cuentaAdmin']
-    return render(request, 'home.html',{'email':email})
+    return render(request, 'home.html')
 
 def generar_cuenta_enc_cocina(request):
     request.session.set_expiry(10000)
@@ -156,7 +155,7 @@ def generar_cuenta_enc_convenio(request):
         elif encConvenio.rutExiste():
             error_message = 'El Rut ya tiene una cuenta'
             
-        # gudar datos de cuenta
+        #guardar datos de cuenta
         if not error_message:
             encConvenio.contraseña1 = make_password(encConvenio.contraseña1)
             encConvenio.contraseña2 = make_password(encConvenio.contraseña2)
@@ -177,6 +176,8 @@ class Login(View):
         email = request.POST.get('email')
         contraseña = request.POST.get('contraseña')
         cuentaAdmin = Administrador.get_admin_by_email(email)
+        cuentaEncCocina = EncCocina.get_enc_cocina_by_email(email)
+        cuentaEncConvenio = EncConvenio.get_enc_convenio_by_email(email)
         error_message = None
         if cuentaAdmin:
             flag = check_password(contraseña, cuentaAdmin.contraseña1)
@@ -186,6 +187,18 @@ class Login(View):
                 return redirect('home')
             else:
                 error_message = 'Email o Contraseña incorrecto'
+        elif cuentaEncCocina:
+            flag = check_password(contraseña, cuentaEncCocina.contraseña1),
+            if flag:
+                request.session['cuentaEncCocina'] = cuentaEncCocina.email_enc_coc
+                print('eres: ',email)
+                return redirect('home')
+        elif cuentaEncConvenio:
+            flag = check_password(contraseña, cuentaEncConvenio.contraseña1),
+            if flag:
+                request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
+                print('eres: ',email)
+                return redirect('home')
         else:
             error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})

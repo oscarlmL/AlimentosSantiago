@@ -155,6 +155,14 @@ class EncCocina(models.Model):
             return True
         return False
 
+    @staticmethod
+    def get_enc_cocina_by_email(email_enc_coc):
+        try:
+            return EncCocina.objects.get(email_enc_coc=email_enc_coc)
+        except:
+            return False
+
+
     class Meta:
         db_table = 'enc_cocina'
 
@@ -179,6 +187,14 @@ class EncConvenio(models.Model):
         if EncConvenio.objects.filter(email_enc_conv=self.email_enc_conv):
             return True
         return False
+    
+    @staticmethod
+    def get_enc_convenio_by_email(email_enc_conv):
+        try:
+            return EncConvenio.objects.get(email_enc_conv=email_enc_conv)
+        except:
+            return False
+
 
     def rutExiste(self):
         if EncConvenio.objects.filter(rut_enc_conv=self.rut_enc_conv):
