@@ -1,11 +1,19 @@
+{% include 'generarCuenta.html' %}
 <div class="p-4 m-4">
     <div class="col-lg-5 mx-auto border rounded pt-4">
         <form method="POST" action="">
             {% csrf_token %}
-            {% if errorEncConvenio %}
+            {% if error %}
             <div class="alert alert-danger" role="alert">
-                {{errorEncConvenio}}
+                {{error}}
             </div>
+            {% endif %}
+            {% if messages %}
+                {% for m in messages  %}
+                    <div class="alert alert-success" role="alert">
+                        {{m}}
+                    </div> 
+                {% endfor %}
             {% endif %}
             <div class="form-group">
                 <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""

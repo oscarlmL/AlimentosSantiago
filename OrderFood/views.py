@@ -1,19 +1,24 @@
+from django.contrib.messages.storage.base import Message
 from django.shortcuts import redirect, render
 from django.contrib.auth.hashers import make_password, check_password
 from django import views
 from .models import *
-from django.contrib import messages
 from django.views import View
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
+
+def generar_cuenta_get(request):
+    return render(request, 'generarCuenta.html')
+
 def generar_cuenta_enc_cocina(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
         email = request.session['cuentaAdmin']
-        return render(request, 'generarCuenta.html',{'email':email})
+        return render(request, 'encargadoCocina.html',{'email':email})
     else:
         postData = request.POST
         nom_enc_coc = postData.get('nom_enc_coc')
@@ -76,19 +81,20 @@ def generar_cuenta_enc_cocina(request):
             encCocina.contraseña1 = make_password(encCocina.contraseña1)
             encCocina.contraseña2 = make_password(encCocina.contraseña2)
             encCocina.cuentaEncargadoCocina()
-            return redirect('generar-cuenta')
+            messages.success(request, "Cuenta Encargado Cocina Generada")
+            return redirect('encargado-cocina')
         else:
             data = {
                 'error': error_message,
                 'values': value
             }
-            return render(request, 'generarCuenta.html', data)
+            return render(request, 'encargadoCocina.html', data)
 
 def generar_cuenta_enc_convenio(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
         email = request.session['cuentaAdmin']
-        return render(request, 'generarCuenta.html',{'email':email})
+        return render(request, 'encargadoConvenio.html',{'email':email})
     else:
         postData = request.POST
         rut_enc_conv = postData.get('rut_enc_conv')
@@ -160,13 +166,15 @@ def generar_cuenta_enc_convenio(request):
             encConvenio.contraseña1 = make_password(encConvenio.contraseña1)
             encConvenio.contraseña2 = make_password(encConvenio.contraseña2)
             encConvenio.cuentaEncargadoConvenio()
-            return redirect('generar-cuenta')
+            messages.success(request, "Cuenta Encargado Convenio Generada")
+            return redirect('encargado-convenio')
         else:
             data = {
-                'errorEncConvenio': error_message,
+                'error': error_message,
+                'correcto':messages,
                 'values': value
             }
-            return render(request, 'generarCuenta.html', data)
+            return render(request, 'encargadoConvenio.html', data)
 
 class Login(View):
     def get(self, request):

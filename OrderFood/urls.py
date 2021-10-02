@@ -7,6 +7,8 @@ urlpatterns = [
     path('', home, name="home"),
     path('login', Login.as_view(), name="login"),
     path('logout', logout, name="logout"),
-    path('generar-cuenta/', auth_middleware(generar_cuenta_enc_cocina) and auth_middleware(generar_cuenta_enc_convenio), name="generar-cuenta"),
+    path('generar-cuenta/',generar_cuenta_get, name="generar-cuenta"),
+    path('generar-cuenta/encargado-cocina', auth_middleware(generar_cuenta_enc_cocina), name="encargado-cocina"),
+    path('generar-cuenta/encargado-convenio', auth_middleware(generar_cuenta_enc_convenio), name="encargado-convenio")
 
 ]

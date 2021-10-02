@@ -7,10 +7,10 @@
 <div class="container">
     <ul class="nav-tabs nav nav-justified">
         <li class="nav-item">
-            <a href="#encargadoCocina" class="nav-link" data-toggle="tab">Encargado de Cocina</a>
+            <a href="/generar-cuenta/encargado-cocina" class="nav-link" >Encargado de Cocina</a>
         </li>
         <li class="nav-item">
-            <a href="#encargadoConvenio" class="nav-link" data-toggle="tab">Encargado de Convenio</a>
+            <a href="/generar-cuenta/encargado-convenio" class="nav-link ">Encargado de Convenio</a>
         </li>
         <li class="nav-item">
             <a href="#seccion3" class="nav-link" data-toggle="tab">Repartidor</a>
@@ -19,11 +19,10 @@
 
     <div class="tab-content container">
         <div class="tab-pane" id="encargadoCocina">
-            {% include 'encargadoCocina.html' %}
+            
         </div>
 
         <div class="tab-pane" id="encargadoConvenio">
-            {% include 'encargadoConvenio.html' %}
         </div>
 
         <div class="tab-pane" id="seccion3">
@@ -88,11 +87,5 @@
     </div>
 
 </div>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link rel="stylesheet" href="/static/app/css/style.css" />
-<script src="/static/app/js/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 {% endblock %}

@@ -1,3 +1,4 @@
+{% include 'generarCuenta.html' %}
 <div class="p-4 m-4">
     <div class="col-lg-5 mx-auto border rounded pt-4">
         <form method="POST" action="">
@@ -5,7 +6,14 @@
             {% if error %}
             <div class="alert alert-danger" role="alert">
                 {{error}}
-            </div>
+            </div> 
+            {% endif %}
+            {% if messages %}
+                {% for m in messages  %}
+                    <div class="alert alert-success" role="alert">
+                        {{m}}
+                    </div> 
+                {% endfor %}
             {% endif %}
             <div class="form-group">
                 <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo" id=""
