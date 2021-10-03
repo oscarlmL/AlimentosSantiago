@@ -7,18 +7,22 @@ from django.views import View
 from django.contrib import messages
 
 # Create your views here.
-def home(request):
-    return render(request, 'home.html')
 
+def home(request):
+    email = request.session.get('cuentaAdmin') or request.session.get(
+    'cuentaEncConvenio') or request.session.get('cuentaEncCocina')
+    return render(request, 'home.html', {'email': email})
 
 def generar_cuenta_get(request):
-    return render(request, 'generarCuenta.html')
+    email = request.session.get('cuentaAdmin')
+    return render(request, 'generarCuenta.html', {'email': email})
+
 
 def generar_cuenta_enc_cocina(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
         email = request.session['cuentaAdmin']
-        return render(request, 'encargadoCocina.html',{'email':email})
+        return render(request, 'encargadoCocina.html', {'email': email})
     else:
         postData = request.POST
         nom_enc_coc = postData.get('nom_enc_coc')
@@ -33,7 +37,7 @@ def generar_cuenta_enc_cocina(request):
             'nom_enc_coc': nom_enc_coc,
             'titulo': titulo,
             'exp_laboral': exp_laboral,
-            'celular':celular,
+            'celular': celular,
             'email_enc_coc': email_enc_coc,
         }
         error_message = None
@@ -65,7 +69,7 @@ def generar_cuenta_enc_cocina(request):
         elif not celular:
             error_message = 'EL celular es requierodo'
         elif len(celular) < 7:
-            error_message = 'El celular debe tener mas de 7 digitos' 
+            error_message = 'El celular debe tener mas de 7 digitos'
 
         elif len(contraseña1 and contraseña2) < 5:
             error_message = 'Las contraseñas deben tener mas de 5 caracteres'
@@ -75,7 +79,7 @@ def generar_cuenta_enc_cocina(request):
 
         elif encCocina.siExiste():
             error_message = 'El email ya tiene una cuenta'
-            
+
         # gudar datos de cuenta
         if not error_message:
             encCocina.contraseña1 = make_password(encCocina.contraseña1)
@@ -90,11 +94,12 @@ def generar_cuenta_enc_cocina(request):
             }
             return render(request, 'encargadoCocina.html', data)
 
+
 def generar_cuenta_enc_convenio(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
         email = request.session['cuentaAdmin']
-        return render(request, 'encargadoConvenio.html',{'email':email})
+        return render(request, 'encargadoConvenio.html', {'email': email})
     else:
         postData = request.POST
         rut_enc_conv = postData.get('rut_enc_conv')
@@ -110,17 +115,17 @@ def generar_cuenta_enc_convenio(request):
             'rut_enc_conv': rut_enc_conv,
             'nom_enc_conv': nom_enc_conv,
             'ap_enc_conv': ap_enc_conv,
-            'email_enc_conv':email_enc_conv,
-            'celular':celular,
+            'email_enc_conv': email_enc_conv,
+            'celular': celular,
         }
         error_message = None
         encConvenio = EncConvenio(rut_enc_conv=rut_enc_conv,
-                              nom_enc_conv=nom_enc_conv,
-                              ap_enc_conv=ap_enc_conv,
-                              email_enc_conv=email_enc_conv,
-                              celular=celular,
-                              contraseña1=contraseña1,
-                              contraseña2=contraseña2)
+                                  nom_enc_conv=nom_enc_conv,
+                                  ap_enc_conv=ap_enc_conv,
+                                  email_enc_conv=email_enc_conv,
+                                  celular=celular,
+                                  contraseña1=contraseña1,
+                                  contraseña2=contraseña2)
         if(not rut_enc_conv):
             error_message = 'El Rut es requerido'
         elif len(rut_enc_conv) < 8:
@@ -144,7 +149,7 @@ def generar_cuenta_enc_convenio(request):
         elif not celular:
             error_message = 'EL celular es requierodo'
         elif len(celular) < 7:
-            error_message = 'El celular debe tener mas de 7 digitos' 
+            error_message = 'El celular debe tener mas de 7 digitos'
 
         elif len(contraseña1 and contraseña2) < 5:
             error_message = 'Las contraseñas deben tener mas de 5 caracteres'
@@ -157,11 +162,11 @@ def generar_cuenta_enc_convenio(request):
 
         elif encConvenio.emailExiste():
             error_message = 'El email ya tiene una cuenta'
-        
+
         elif encConvenio.rutExiste():
             error_message = 'El Rut ya tiene una cuenta'
-            
-        #guardar datos de cuenta
+
+        # guardar datos de cuenta
         if not error_message:
             encConvenio.contraseña1 = make_password(encConvenio.contraseña1)
             encConvenio.contraseña2 = make_password(encConvenio.contraseña2)
@@ -171,10 +176,10 @@ def generar_cuenta_enc_convenio(request):
         else:
             data = {
                 'error': error_message,
-                'correcto':messages,
                 'values': value
             }
             return render(request, 'encargadoConvenio.html', data)
+
 
 class Login(View):
     def get(self, request):
@@ -199,17 +204,18 @@ class Login(View):
             flag = check_password(contraseña, cuentaEncCocina.contraseña1),
             if flag:
                 request.session['cuentaEncCocina'] = cuentaEncCocina.email_enc_coc
-                print('eres: ',email)
+                print('eres: ', email)
                 return redirect('home')
         elif cuentaEncConvenio:
             flag = check_password(contraseña, cuentaEncConvenio.contraseña1),
             if flag:
                 request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
-                print('eres: ',email)
+                print('eres: ', email)
                 return redirect('home')
         else:
             error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
+
 
 def logout(request):
     request.session.clear()

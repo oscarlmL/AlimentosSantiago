@@ -38,10 +38,9 @@
                 <div class="dropdown">
                     <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Bienvenido
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {{email}}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         {% if request.session.cuentaAdmin %}
                         <a class="dropdown-item" href="/generar-cuenta">Generar Cuenta</a>
                         {% elif request.session.cuentaEncCocina %}
