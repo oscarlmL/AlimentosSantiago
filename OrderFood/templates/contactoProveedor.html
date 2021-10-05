@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+<div class="p-4 m-4">
+    <div class="col-lg-5 mx-auto border rounded pt-4">
+
+
+        <h1>Ingresa tus datos</h1>
+        <form action="" class="formulario_proveedor" method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{form}}
+
+            <br>
+            <input class="form-control" type="submit" value="Enviar">
+
+        </form>
+        {{mensaje}}
+    </div>
+</div>
+
+
+
+{% endblock %}
