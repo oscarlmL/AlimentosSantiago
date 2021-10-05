@@ -288,6 +288,10 @@ class Proveedor(models.Model):
     class Meta:
         db_table = 'proveedor'
 
+    def __str__(self): 
+        return self.nom_proveedor
+
+        
 
 class Repartidor(models.Model):
     id_repartidor = models.AutoField(primary_key=True)

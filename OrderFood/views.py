@@ -5,6 +5,7 @@ from django import views
 from .models import *
 from django.views import View
 from django.contrib import messages
+from .forms import ProveedorForm
 
 # Create your views here.
 
@@ -313,6 +314,22 @@ class Login(View):
         else:
             error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
+
+
+def proveedor(request):
+    data = {
+        'form': ProveedorForm()
+    }
+    if request.method == 'POST':
+        formulario = ProveedorForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"]= "Contacto enviado"
+        else:
+            data["form"] = formulario
+
+    return render(request, 'contactoProveedor.html', data)
+
 
 
 def logout(request):
