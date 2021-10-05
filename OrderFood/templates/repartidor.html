@@ -6,7 +6,7 @@
             {% if error %}
             <div class="alert alert-danger" role="alert">
                 {{error}}
-            </div>
+            </div> 
             {% endif %}
             {% if messages %}
                 {% for m in messages  %}
@@ -16,24 +16,28 @@
                 {% endfor %}
             {% endif %}
             <div class="form-group">
-                <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""
-                    value="{{values.rut_enc_conv}}" maxlength="12" onkeyup="formatoRut(this)">
+                <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
+                    value="{{values.rut_repartidor}}" maxlength="12" onkeyup="formatoRut(this)">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="" name="nom_enc_conv" aria-describedby=""
-                    placeholder="Nombres" value="{{values.nom_enc_conv}}">
+                <input type="text" class="form-control" name="nombre_repartidor" placeholder="Nombre" id=""
+                    value="{{values.nombre_repartidor}}">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="" name="ap_enc_conv" aria-describedby=""
-                    placeholder="Apellidos" value="{{values.ap_enc_conv}}">
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" id="" name="email_enc_conv" aria-describedby=""
-                    value="{{values.email_enc_conv}}" placeholder="ejemplo: encargadoConvenio@dominio.com">
+                <input type="text" class="form-control" id="" name="apellido_repartidor" aria-describedby=""
+                    placeholder="Apellido" value="{{values.apellido_repartidor}}">
             </div>
             <div class="form-group">
                 <input type="number" class="form-control" id="" name="celular" aria-describedby=""
-                    value="{{values.celular}}" placeholder="Celular ej: 912345678">
+                placeholder="celular ej: 912345678"  value="{{values.celular}}">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
+                    value="{{values.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="" name="patente_veh" aria-describedby=""
+                    value="{{values.patente_veh}}" placeholder="Patente Vehiculo">
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
@@ -49,4 +53,3 @@
         </form>
     </div>
 </div>
-

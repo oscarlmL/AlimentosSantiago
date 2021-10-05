@@ -10,7 +10,7 @@ from django.contrib import messages
 
 def home(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
-    'cuentaEncConvenio') or request.session.get('cuentaEncCocina')
+    'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
     return render(request, 'home.html', {'email': email})
 
 def generar_cuenta_get(request):
@@ -180,6 +180,97 @@ def generar_cuenta_enc_convenio(request):
             }
             return render(request, 'encargadoConvenio.html', data)
 
+def generar_cuenta_repartidor(request):
+    request.session.set_expiry(10000)
+    if request.method == 'GET':
+        return render(request, 'repartidor.html')
+    else:
+        postData = request.POST
+        rut_repartidor = postData.get('rut_repartidor')
+        nombre_repartidor = postData.get('nombre_repartidor')
+        apellido_repartidor = postData.get('apellido_repartidor')
+        email_repartidor = postData.get('email_repartidor')
+        patente_veh = postData.get('patente_veh')
+        celular = postData.get('celular')
+        contraseña1 = postData.get('contraseña1')
+        contraseña2 = postData.get('contraseña2')
+
+        # validaciones
+        value = {
+            'rut_repartidor': rut_repartidor,
+            'nombre_repartidor': nombre_repartidor,
+            'apellido_repartidor': apellido_repartidor,
+            'email_repartidor': email_repartidor,
+            'patente_veh':patente_veh,
+            'celular': celular,
+        }
+        error_message = None
+        repartidor = Repartidor(rut_repartidor=rut_repartidor,
+                                  nombre_repartidor=nombre_repartidor,
+                                  apellido_repartidor=apellido_repartidor,
+                                  email_repartidor=email_repartidor,
+                                  patente_veh=patente_veh,
+                                  celular=celular,
+                                  contraseña1=contraseña1,
+                                  contraseña2=contraseña2)
+        if(not rut_repartidor):
+            error_message = 'El Rut es requerido'
+        elif len(rut_repartidor) < 8:
+            error_message = 'El Rut debe tener mas de 8 digitos'
+        elif len(rut_repartidor) > 12:
+            error_message = 'El Rut no debe tener mas de 12 digitos'
+
+        elif not nombre_repartidor:
+            error_message = 'El Nombre es requerido'
+        elif len(nombre_repartidor) < 4:
+            error_message = 'El Nombre debe tener mas de 4 caracteres'
+
+        elif not apellido_repartidor:
+            error_message = 'El Apellido  es requerida'
+        elif len(apellido_repartidor) < 2:
+            error_message = 'EL appelido debe tener mas de 2'
+
+        elif not email_repartidor:
+            error_message = 'El email es requerido'
+
+        elif not patente_veh:
+            error_message = 'La patente del vehiculo es requerido'
+
+        elif not celular:
+            error_message = 'EL celular es requierodo'
+        elif len(celular) < 7:
+            error_message = 'El celular debe tener mas de 7 digitos'
+
+        elif len(contraseña1 and contraseña2) < 5:
+            error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+
+        elif len(contraseña1 and contraseña2) > 10:
+            error_message = 'Las contraseñas no puede ser mayor a 10 caracteres'
+
+        elif contraseña2 != contraseña1:
+            error_message = 'Las contraseñas no coinciden'
+
+        elif repartidor.emailExiste():
+            error_message = 'El email ya tiene una cuenta'
+
+        elif repartidor.rutExiste():
+            error_message = 'El Rut ya tiene una cuenta'
+
+        # guardar datos de cuenta
+        if not error_message:
+            repartidor.contraseña1 = make_password(repartidor.contraseña1)
+            repartidor.contraseña2 = make_password(repartidor.contraseña2)
+            repartidor.cuentaRepartidor()
+            messages.success(request, "Cuenta Repartidor Generada")
+            return redirect('repartidor')
+        else:
+            data = {
+                'error': error_message,
+                'values': value
+            }
+            return render(request, 'repartidor.html', data)
+
+
 
 class Login(View):
     def get(self, request):
@@ -191,6 +282,7 @@ class Login(View):
         cuentaAdmin = Administrador.get_admin_by_email(email)
         cuentaEncCocina = EncCocina.get_enc_cocina_by_email(email)
         cuentaEncConvenio = EncConvenio.get_enc_convenio_by_email(email)
+        cuentaRepartidor = Repartidor.get_repartidor_by_email(email)
         error_message = None
         if cuentaAdmin:
             flag = check_password(contraseña, cuentaAdmin.contraseña1)
@@ -210,6 +302,12 @@ class Login(View):
             flag = check_password(contraseña, cuentaEncConvenio.contraseña1),
             if flag:
                 request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
+                print('eres: ', email)
+                return redirect('home')
+        elif cuentaRepartidor:
+            flag = check_password(contraseña, cuentaRepartidor.contraseña1),
+            if flag:
+                request.session['cuentaRepartidor'] = cuentaRepartidor.email_repartidor
                 print('eres: ', email)
                 return redirect('home')
         else:

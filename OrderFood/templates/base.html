@@ -34,7 +34,7 @@
                     </li>
                 </ul>
 
-                {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio %}
+                {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor %}
                 <div class="dropdown">
                     <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,6 +47,8 @@
                         <a class="dropdown-item" href="#">Gestionar Menú</a>
                         {% elif request.session.cuentaEncConvenio %}
                         <a class="dropdown-item" href="#">Gestionar Empresas</a>
+                        {% elif request.session.cuentaRepartidor %}
+                        <a class="dropdown-item" href="#">Mi cuenta</a>
                         {% endif %}
                         <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
                     </div>

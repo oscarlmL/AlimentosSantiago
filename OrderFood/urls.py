@@ -9,6 +9,8 @@ urlpatterns = [
     path('logout', logout, name="logout"),
     path('generar-cuenta/',generar_cuenta_get, name="generar-cuenta"),
     path('generar-cuenta/encargado-cocina', auth_middleware(generar_cuenta_enc_cocina), name="encargado-cocina"),
-    path('generar-cuenta/encargado-convenio', auth_middleware(generar_cuenta_enc_convenio), name="encargado-convenio")
+    path('generar-cuenta/encargado-convenio', auth_middleware(generar_cuenta_enc_convenio), name="encargado-convenio"),
+    path('generar-cuenta/repartidor', auth_middleware(generar_cuenta_repartidor), name="repartidor")
+
 
 ]

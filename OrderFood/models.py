@@ -291,15 +291,38 @@ class Proveedor(models.Model):
 
 class Repartidor(models.Model):
     id_repartidor = models.AutoField(primary_key=True)
+    rut_repartidor = models.CharField(max_length=50)
     # This field type is a guess.
     nombre_repartidor = models.CharField(max_length=50)
     # This field type is a guess.
     apellido_repartidor = models.CharField(max_length=50)
+    email_repartidor = models.CharField(max_length=50)
     # This field type is a guess.
     patente_veh = models.CharField(max_length=50)
     celular = models.IntegerField()
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
+
+    def cuentaRepartidor(self):
+        self.save()
+
+    def emailExiste(self):
+        if Repartidor.objects.filter(email_repartidor=self.email_repartidor):
+            return True
+        return False
+    
+    @staticmethod
+    def get_repartidor_by_email(email_repartidor):
+        try:
+            return Repartidor.objects.get(email_repartidor=email_repartidor)
+        except:
+            return False
+
+
+    def rutExiste(self):
+        if Repartidor.objects.filter(rut_repartidor=self.rut_repartidor):
+            return True
+        return False
 
     class Meta:
         db_table = 'repartidor'
