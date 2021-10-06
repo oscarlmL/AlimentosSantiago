@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 {% block contenido %}
 {% load crispy_forms_tags %}
 <br><br>
@@ -15,21 +14,19 @@
                 <th>Nombre Plato</th>
                 <th>Valor Plato</th>
                 <th>Descripción</th>
+                <th>Opciónes</th>
             </tr>
             {% for p in plato %}
         
             <tr>
                 <td> {{ p.nom_plato | title }} </td>
-                <td> ${{ p.valor_plato }} </td>
+                <td> $ {{ p.valor_plato }} </td>
                 <td> {{ p.descripcion | title }} </td>
 
                 <td>
-                    {% if perms.app.change_producto %}
-                    <a href="{% url 'modificar_producto' p.id %}" class="btn btn-info btn-sm">Modificar</a>
-                    {% endif %}
-                    {% if perms.app.delete_producto %}
-                    <a href="#" onclick="eliminarProducto({{ p.id }})" class="btn btn-danger btn-sm">Eliminar</a>
-                    {% endif %}
+                    
+                    <a href="{% url 'modificar_plato' p.id_plato %}" class="btn btn-info btn-sm">Modificar</a>
+                    <a href="{% url 'eliminar_plato' p.id_plato %}" class="btn btn-danger btn-sm">Eliminar</a>
                     
                 </td>
             </tr>

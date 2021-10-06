@@ -1,5 +1,5 @@
 from django.contrib.messages.storage.base import Message
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
 from django import views
 from .models import *
@@ -361,3 +361,27 @@ def listar_platos(request):
     }
     
     return render(request, 'menu/listar.html', data)
+
+def modificar_plato(request, id_plato):
+
+    plato = get_object_or_404(Plato, id_plato=id_plato)
+
+    data = {
+        'form' : PlatoForm(instance=plato)
+    }
+    if request.method == 'POST':
+        formulario = PlatoForm(data=request.POST, instance=plato)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Modificado Correctamente")
+            return redirect(to="listar_plato")
+        else:
+            data["form"] = formulario
+
+    return render(request, 'menu/modificar.html', data)
+
+def eliminar_plato(request, id_plato):
+    plato = get_object_or_404(Plato, id_plato=id_plato)
+    plato.delete()
+    messages.success(request,"Eliminado Correctamente")
+    return redirect(to="listar_plato")
