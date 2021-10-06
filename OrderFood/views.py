@@ -5,7 +5,7 @@ from django import views
 from .models import *
 from django.views import View
 from django.contrib import messages
-from .forms import ProveedorForm
+from .forms import ProveedorForm, PlatoForm
 
 # Create your views here.
 
@@ -335,3 +335,26 @@ def proveedor(request):
 def logout(request):
     request.session.clear()
     return redirect('login')
+
+
+def agregar_plato(request):
+
+    data = {
+        'form': PlatoForm()
+    }
+
+    if request.method =='POST':
+        formulario = PlatoForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"]= "Plato guardado correctamente"
+        else:
+            data["form"] = formulario
+
+    return render(request, 'menu/agregar.html', data)
+
+def listar_platos(request):
+
+
+    
+    return render(request, 'menu/listar.html')

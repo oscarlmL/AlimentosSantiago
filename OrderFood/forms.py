@@ -1,5 +1,5 @@
 from django import forms
-from .models import Proveedor
+from .models import Proveedor, Plato
 
 
 class ProveedorForm(forms.ModelForm):
@@ -12,3 +12,11 @@ class ProveedorForm(forms.ModelForm):
     nom_proveedor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     celular = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
     descripcion = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+class PlatoForm(forms.ModelForm):
+
+    class Meta:
+        model = Plato
+        fields = '__all__'
+        
