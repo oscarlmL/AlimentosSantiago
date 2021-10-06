@@ -44,7 +44,9 @@
                         {% if request.session.cuentaAdmin %}
                         <a class="dropdown-item" href="/generar-cuenta">Generar Cuenta</a>
                         {% elif request.session.cuentaEncCocina %}
-                        <a class="dropdown-item" href="#">Gestionar Menú</a>
+                        <a class="dropdown-item" href="/agregar-plato">Agregar Plato</a>
+                        <a class="dropdown-item" href="#">Ver Menú</a>
+                        <a class="dropdown-item" href="#">Modificar Menú</a>
                         {% elif request.session.cuentaEncConvenio %}
                         <a class="dropdown-item" href="#">Gestionar Empresas</a>
                         {% elif request.session.cuentaRepartidor %}

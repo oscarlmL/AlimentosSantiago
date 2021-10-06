@@ -12,4 +12,6 @@ urlpatterns = [
     path('generar-cuenta/encargado-convenio', auth_middleware(generar_cuenta_enc_convenio), name="encargado-convenio"),
     path('generar-cuenta/repartidor', auth_middleware(generar_cuenta_repartidor), name="repartidor"),
     path('proveedor', proveedor, name="proveedor"),
+    path('agregar-plato/', agregar_plato, name="agregar_plato"),
+    path('listar-platos/', listar_platos, name='listar_plato')
 ]
