@@ -354,7 +354,10 @@ def agregar_plato(request):
     return render(request, 'menu/agregar.html', data)
 
 def listar_platos(request):
+    plato = Plato.objects.all()
 
-
+    data ={
+        'plato' : plato
+    }
     
-    return render(request, 'menu/listar.html')
+    return render(request, 'menu/listar.html', data)
