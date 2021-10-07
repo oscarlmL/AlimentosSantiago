@@ -588,15 +588,11 @@ def agregar_plato(request):
     return render(request, 'menu/agregar.html', data)
 
 def listar_platos(request):
-<<<<<<< HEAD
-=======
     plato = Plato.objects.all()
 
     data ={
         'plato' : plato
     }
->>>>>>> ebe907e9afb97188ae4bab9a908434bf5c093edc
-    
     return render(request, 'menu/listar.html', data)
 
 def modificar_plato(request, id_plato):
