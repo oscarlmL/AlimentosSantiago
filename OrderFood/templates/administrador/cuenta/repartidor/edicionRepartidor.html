@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+<div class="p-4 m-4">
+    <div class="col-lg-5 mx-auto border rounded pt-4">
+        <h1>Editar datos Repartidor</h1>
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        {% endif %}
+        {% if messages %}
+        {% for m in messages %}
+        <div class="alert alert-success" role="alert">
+            {{m}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <form method="POST" action="/editar-cuenta-repartidor/">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="id_repartidor" placeholder="Rut" id=""
+                    value="{{cuentaRepartidor.id_repartidor}}" readonly required maxlength="12">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
+                    value="{{cuentaRepartidor.rut_repartidor}}" onkeyup="formatoRut(this)" maxlength="12">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="nombre_repartidor" placeholder="Nombre" id=""
+                    value="{{cuentaRepartidor.nombre_repartidor}}">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="" name="apellido_repartidor" aria-describedby=""
+                    placeholder="Apellido" value="{{cuentaRepartidor.apellido_repartidor}}">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                    placeholder="celular ej: 912345678" value="{{cuentaRepartidor.celular}}">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
+                    value="{{cuentaRepartidor.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="" name="patente_veh" aria-describedby=""
+                    value="{{cuentaRepartidor.patente_veh}}" placeholder="Patente Vehiculo">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-dark btn-round btn-block" value="Editar">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

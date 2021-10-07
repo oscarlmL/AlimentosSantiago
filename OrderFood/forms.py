@@ -1,5 +1,5 @@
 from django import forms
-from .models import Proveedor, Plato
+from .models import Proveedor, Plato, Repartidor
 
 
 class ProveedorForm(forms.ModelForm):
@@ -19,4 +19,11 @@ class PlatoForm(forms.ModelForm):
     class Meta:
         model = Plato
         fields = '__all__'
+        
+
+class RepartidorForm(forms.ModelForm):
+
+    class Meta:
+        model = Repartidor
+        fields = ['rut_repartidor', 'nombre_repartidor','apellido_repartidor','email_repartidor','patente_veh', 'celular','contraseña1','contraseña2']
         
