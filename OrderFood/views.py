@@ -588,5 +588,37 @@ def agregar_plato(request):
     return render(request, 'menu/agregar.html', data)
 
 def listar_platos(request):
+<<<<<<< HEAD
+=======
+    plato = Plato.objects.all()
+
+    data ={
+        'plato' : plato
+    }
+>>>>>>> ebe907e9afb97188ae4bab9a908434bf5c093edc
     
-    return render(request, 'menu/listar.html')
+    return render(request, 'menu/listar.html', data)
+
+def modificar_plato(request, id_plato):
+
+    plato = get_object_or_404(Plato, id_plato=id_plato)
+
+    data = {
+        'form' : PlatoForm(instance=plato)
+    }
+    if request.method == 'POST':
+        formulario = PlatoForm(data=request.POST, instance=plato)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Modificado Correctamente")
+            return redirect(to="listar_plato")
+        else:
+            data["form"] = formulario
+
+    return render(request, 'menu/modificar.html', data)
+
+def eliminar_plato(request, id_plato):
+    plato = get_object_or_404(Plato, id_plato=id_plato)
+    plato.delete()
+    messages.success(request,"Eliminado Correctamente")
+    return redirect(to="listar_plato")
