@@ -6,6 +6,7 @@ from .models import *
 from django.views import View
 from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm
+from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm
 
 # Create your views here.
 
@@ -560,6 +561,8 @@ class Login(View):
         return render(request, 'login.html', {'error': error_message})
 
 
+#contacto proveedor
+
 def proveedor(request):
     data = {
         'form': ProveedorForm()
@@ -572,8 +575,64 @@ def proveedor(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'contactoProveedor.html', data)
+    return render(request, 'proveedor/contactoProveedor.html', data)
 
+
+#Home repartidor
+
+#pedidos
+
+def agregar_pedido(request):
+
+    data = {
+        'form': PedidoForm()
+    }
+    if request.method == 'POST':
+        formulario = PedidoForm(request.POST)
+        if formulario.is_valid():
+            formulario.save() 
+            data["mensaje"] = "Guardado correctamente"
+        else:
+            data["form"] = formulario
+
+    return render(request, 'pedido/agregar.html', data)
+
+
+def listar_pedido(request):
+    pedidos = Pedido.objects.all()
+    data = {
+        'pedidos' : pedidos
+    }
+
+    return render(request, 'pedido/listar.html', data)
+
+
+def modificar_pedido(request, id):
+    
+    pedido = get_object_or_404(Pedido, id_pedido=id)
+    
+    data = {
+        'form':PedidoForm(instance=pedido)
+    }
+
+    if request.method == 'POST':
+        formulario = PedidoForm(data=request.POST, instance=pedido)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listar_pedido")
+        data["form"] = formulario
+
+    return render(request, 'pedido/modificar.html', data)
+
+
+def eliminar_pedido(request, id):
+
+    pedido = get_object_or_404(Pedido, id_pedido=id)
+    pedido.delete()
+    return redirect(to="listar_pedido")
+
+
+#fin pedido
 
 def logout(request):
     request.session.clear()

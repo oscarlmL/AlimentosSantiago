@@ -1,5 +1,7 @@
 from django import forms
-from .models import Proveedor, Plato, Repartidor
+from django.db.models import fields
+from django.forms import widgets
+from .models import Proveedor, Plato, Repartidor,Pedido
 
 
 class ProveedorForm(forms.ModelForm):
@@ -14,9 +16,29 @@ class ProveedorForm(forms.ModelForm):
     descripcion = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
+class PedidoForm(forms.ModelForm):
+
+    class Meta:
+        model = Pedido
+        fields = '__all__'
+        widgets = {
+            "fecha_pedido": forms.SelectDateWidget()
+        }
+
+
+
+
 class PlatoForm(forms.ModelForm):
 
     class Meta:
         model = Plato
         fields = '__all__'
         
+        
+
+class RepartidorForm(forms.ModelForm):
+
+    class Meta:
+        model = Repartidor
+        fields = ['rut_repartidor', 'nombre_repartidor','apellido_repartidor','email_repartidor','patente_veh', 'celular','contraseña1','contraseña2']
+    

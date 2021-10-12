@@ -236,9 +236,18 @@ class Pago(models.Model):
         db_table = 'pago'
 
 
+#OPCIONES ESTADO PEDIDO
+estado_pedido = [
+    ['Pendiente', "Pendiente"],
+    ['Confirmado', "Confirmado"],
+    ['En ruta', "En ruta"],
+    ['Entregado', "Entregado"]
+
+]
+
 class Pedido(models.Model):
     id_pedido = models.AutoField(primary_key=True)
-    estado = models.CharField(max_length=50)   # This field type is a guess.
+    estado = models.CharField(max_length=50, choices=estado_pedido)   # This field type is a guess.
     # This field type is a guess.
     fecha_pedido = models.CharField(max_length=50)
     cliente_rut_cli = models.ForeignKey(
