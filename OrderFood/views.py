@@ -5,7 +5,7 @@ from django import views
 from .models import *
 from django.views import View
 from django.contrib import messages
-from .forms import ProveedorForm, PlatoForm, RepartidorForm
+from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm
 
 # Create your views here.
 
@@ -550,6 +550,8 @@ class Login(View):
         return render(request, 'login.html', {'error': error_message})
 
 
+#contacto proveedor
+
 def proveedor(request):
     data = {
         'form': ProveedorForm()
@@ -562,7 +564,29 @@ def proveedor(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'contactoProveedor.html', data)
+    return render(request, 'proveedor/contactoProveedor.html', data)
+
+
+#Home repartidor
+
+#pedidos
+
+def agregar_pedido(request):
+
+    data = {
+        'form': PedidoForm()
+    }
+    if request.method == 'POST':
+        formulario = PedidoForm(request.POST)
+        if formulario.is_valid():
+            formulario.save() 
+            data["mensaje"] = "Guardado correctamente"
+        else:
+            data["form"] = formulario
+
+    return render(request, 'pedido/agregar.html', data)
+
+
 
 
 
