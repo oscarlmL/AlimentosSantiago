@@ -618,3 +618,8 @@ def eliminar_plato(request, id_plato):
     plato.delete()
     messages.success(request,"Eliminado Correctamente")
     return redirect(to="listar_plato")
+
+
+
+def registro(request):
+    return render(request, 'registro.html')
