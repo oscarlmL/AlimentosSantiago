@@ -31,4 +31,7 @@ urlpatterns = [
     path('eliminar-plato/<id_plato>/', eliminar_plato, name="eliminar_plato"),
    # path('repartidor', repartidor, name="repartidor"),
     path('agregar-pedido', agregar_pedido, name="agregar_pedido"),
+    path('listar-pedido', listar_pedido, name="listar_pedido"),
+
+    
 ]

@@ -586,8 +586,13 @@ def agregar_pedido(request):
 
     return render(request, 'pedido/agregar.html', data)
 
+def listar_pedido(request):
+    pedidos = Pedido.objects.all()
+    data = {
+        'pedidos' : pedidos
+    }
 
-
+    return render(request, 'pedido/listar.html', data)
 
 
 def logout(request):
