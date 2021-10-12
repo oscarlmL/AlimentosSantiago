@@ -25,6 +25,8 @@ urlpatterns = [
     path('eliminar-cuenta-repartidor/<id_repartidor>/', eliminar_cuenta_repartidor, name='eliminar-cuenta-repartidor'),
 
     path('proveedor', proveedor, name="proveedor"),
+
+    
     path('agregar-plato/', agregar_plato, name="agregar_plato"),
     path('listar-platos/', listar_platos, name='listar_plato'),
     path('modificar-plato/<id_plato>/', modificar_plato, name="modificar_plato"),
