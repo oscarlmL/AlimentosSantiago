@@ -24,14 +24,16 @@ urlpatterns = [
     path('editar-cuenta-repartidor/', auth_middleware(editar_cuenta_repartidor), name='editar-cuenta-repartidor'),
     path('eliminar-cuenta-repartidor/<id_repartidor>/', eliminar_cuenta_repartidor, name='eliminar-cuenta-repartidor'),
 
-    path('proveedor', proveedor, name="proveedor"),
+    path('proveedor/', proveedor, name="proveedor"),
     path('agregar-plato/', agregar_plato, name="agregar_plato"),
     path('listar-platos/', listar_platos, name='listar_plato'),
     path('modificar-plato/<id_plato>/', modificar_plato, name="modificar_plato"),
     path('eliminar-plato/<id_plato>/', eliminar_plato, name="eliminar_plato"),
    # path('repartidor', repartidor, name="repartidor"),
-    path('agregar-pedido', agregar_pedido, name="agregar_pedido"),
-    path('listar-pedido', listar_pedido, name="listar_pedido"),
+    path('agregar-pedido/', agregar_pedido, name="agregar_pedido"),
+    path('listar-pedido/', listar_pedido, name="listar_pedido"),
+    path('modificar-pedido/<id>/', modificar_pedido, name="modificar_pedido"),
+    path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
 
     
 ]

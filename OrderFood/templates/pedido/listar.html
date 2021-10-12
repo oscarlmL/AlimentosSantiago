@@ -11,13 +11,25 @@
             <tr>
                 <th>Estado</th>
                 <th>Fecha_pedido</th>
+                <th>Opciones</th>
             </tr>
             
             {% for p in pedidos %}
+
             <tr>
                 <td>{{p.estado | title }}</td>
                 <td>{{p.fecha_pedido}}</td>
+                <td>
+                    <a href="{% url 'modificar_pedido' p.id_pedido %}" class="btn btn-dark btn-round">Modificar</a>
+                    <a href="{% url 'eliminar_pedido' p.id_pedido %}" class="btn btn-dark btn-round">Eliminar</a>
+                </td>
+
+
             </tr>
+
+
+
+
             {% endfor %}
             </table>
     </div>
