@@ -302,6 +302,7 @@ class Repartidor(models.Model):
     apellido_repartidor = models.CharField(max_length=50)
     email_repartidor = models.CharField(max_length=50)
     # This field type is a guess.
+    tipo_veh = models.CharField(max_length=50)
     patente_veh = models.CharField(max_length=50)
     celular = models.IntegerField(null=True)
     contraseña1 = models.CharField(max_length=100)

@@ -7,103 +7,125 @@
 <br>
 <div class="container-fluid">
     <div class="row">
-    <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
-        {% if error %}
-        <div class="alert alert-danger" role="alert">
-            {{error}}
-        </div>
-        {% endif %}
-        {% if messages %}
-        {% for m in messages %}
-        <div class="alert alert-success" role="alert">
-            {{m}}
-        </div>
-        {% endfor %}
-        {% endif %}
-        <h2>Ingresar Repartidor</h2>
+        <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
+            {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-success" role="alert">
+                {{m}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <h2>Ingresar Repartidor</h2>
 
-        <div class="card">
-            <div class="card-body">
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
-                            value="{{values.rut_repartidor}}" maxlength="12" onkeyup="formatoRut(this)">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="nombre_repartidor" placeholder="Nombre" id=""
-                            value="{{values.nombre_repartidor}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" name="apellido_repartidor" aria-describedby=""
-                            placeholder="Apellido" value="{{values.apellido_repartidor}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="" name="celular" aria-describedby=""
-                            placeholder="celular ej: 912345678" value="{{values.celular}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
-                            value="{{values.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" name="patente_veh" aria-describedby=""
-                            value="{{values.patente_veh}}" placeholder="Patente Vehiculo">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
-                            placeholder="Ingresar Contraseña">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
-                            placeholder="Confirmar Contraseña">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
-                    </div>
-                </form>
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
+                                value="{{values.rut_repartidor}}" maxlength="12" onkeyup="formatoRut(this)">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="nombre_repartidor" placeholder="Nombre" id=""
+                                value="{{values.nombre_repartidor}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="apellido_repartidor" aria-describedby=""
+                                placeholder="Apellido" value="{{values.apellido_repartidor}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                                placeholder="celular ej: 912345678" value="{{values.celular}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
+                                value="{{values.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
+                        </div>
+                        <!-- <div class="form-group">
+                            <select class="form-control" id="validationCustom04 tipo_veh" name="tipo_veh" required
+                                value="{{values.tipo_veh}}" onchange="showInp()">
+                                <option selected disabled value="">--- Seleccionar Tipo de Vehiculo ---</option>
+                                <option value="moto">Moto</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div> -->
+                        <div class="form-group">
+                            <select class="form-control" name="tipo_veh" id="tipo_veh" onchange="showInp()">
+                                <option value="">--- Seleccionar Tipo de Vehiculo ---</option>
+                                <option value="Moto">Moto</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control"  style="display: none" id="patente_veh_moto" name="patente_veh"
+                                value="{{values.patente_veh}}" maxlength="8" onkeyup="formatoPatenteMoto(this);"
+                                placeholder="Patente de la Moto">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control"  style="display: none" id="patente_veh_auto" name="patente_veh"
+                                value="{{values.patente_veh}}" maxlength="8" onkeyup="formatoPatenteAuto(this);"
+                                placeholder="Patente del Auto">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
+                                placeholder="Ingresar Contraseña">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
+                                placeholder="Confirmar Contraseña">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h2>Lista de Repartidores</h2>
-        <div class="table-responsive py-2">
-            <table class="table table-striped">
-                <tr class="table-active">
-                    <th>Rut</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Patente Vehiculo</th>
-                    <th>Celular</th>
-                    <th>Opciones</th>
-                </tr>
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Lista de Repartidores</h2>
+            <div class="table-responsive py-2">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Rut</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Patente Vehiculo</th>
+                        <th>Celular</th>
+                        <th>Opciones</th>
+                    </tr>
 
-                {% for cuentasRepartidor in cuentasRepartidor %}
-                <tr class="table-light">
-                    <th>{{cuentasRepartidor.rut_repartidor}}</th>
-                    <th>{{cuentasRepartidor.nombre_repartidor}}</th>
-                    <th>{{cuentasRepartidor.apellido_repartidor}}</th>
-                    <th>{{cuentasRepartidor.email_repartidor}}</th>
-                    <th>{{cuentasRepartidor.patente_veh}}</th>
-                    <th>{{cuentasRepartidor.celular}}</th>
-                    <td>
-                        <a href="{% url 'edicion-cuenta-repartidor' cuentasRepartidor.id_repartidor %}"
-                            class="btn btn-dark btn-sm">Modificar</a>
-                        <a href="{% url 'eliminar-cuenta-repartidor' cuentasRepartidor.id_repartidor %}"
-                            class="btn btn-danger btn-sm">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
+                    {% for cuentasRepartidor in cuentasRepartidor %}
+                    <tr class="table-light">
+                        <th>{{cuentasRepartidor.rut_repartidor}}</th>
+                        <th>{{cuentasRepartidor.nombre_repartidor}}</th>
+                        <th>{{cuentasRepartidor.apellido_repartidor}}</th>
+                        <th>{{cuentasRepartidor.email_repartidor}}</th>
+                        <th>{{cuentasRepartidor.patente_veh}}</th>
+                        <th>{{cuentasRepartidor.celular}}</th>
+                        <td>
+                            <a href="{% url 'edicion-cuenta-repartidor' cuentasRepartidor.id_repartidor %}"
+                                class="btn btn-dark btn-sm">Modificar</a>
+                            <a href="{% url 'eliminar-cuenta-repartidor' cuentasRepartidor.id_repartidor %}"
+                                class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+
         </div>
 
-
     </div>
-
-</div>
 </div>
 
 

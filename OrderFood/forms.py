@@ -20,10 +20,3 @@ class PlatoForm(forms.ModelForm):
         model = Plato
         fields = '__all__'
         
-
-class RepartidorForm(forms.ModelForm):
-
-    class Meta:
-        model = Repartidor
-        fields = ['rut_repartidor', 'nombre_repartidor','apellido_repartidor','email_repartidor','patente_veh', 'celular','contraseña1','contraseña2']
-        
