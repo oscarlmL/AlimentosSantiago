@@ -117,6 +117,9 @@ class Empresa(models.Model):
     enc_convenio_id_enc_conv = models.ForeignKey(
         'EncConvenio', models.DO_NOTHING, db_column='enc_convenio_id_enc_conv')
 
+    def __str__(self):
+        return self.nom_emp
+
     class Meta:
         db_table = 'empresa'
 
@@ -190,6 +193,10 @@ class EncConvenio(models.Model):
         db_table = 'enc_convenio'
 
 
+    def __str__(self):
+        return self.nom_enc_conv
+
+
 class Informes(models.Model):
     id_pedido = models.IntegerField()
     id_plato = models.IntegerField()
@@ -247,6 +254,10 @@ class Plato(models.Model):
     Ingrediente = models.ForeignKey('Ingrediente', on_delete=models.PROTECT, null=True)
     Restaurant = models.ForeignKey('Restaurant', on_delete=models.PROTECT, null=True)
     
+
+    @staticmethod
+    def get_all_platos():
+        return Plato.objects.all()
 
     class Meta:
         db_table = 'plato'

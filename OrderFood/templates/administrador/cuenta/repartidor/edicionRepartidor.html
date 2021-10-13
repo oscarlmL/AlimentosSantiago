@@ -43,14 +43,22 @@
                     value="{{cuentaRepartidor.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
             </div>
             <div class="form-group">
-                <select class="form-control" id="validationCustom04" name="tipo_veh" required value="{{cuentaRepartidor.tipo_veh}}">
-                    <option value="cuentaRepartidor.tipo_veh" >Moto</option>
-                    <option value="cuentaRepartidor.tipo_veh">Auto</option>
+                <select class="form-control" value="{{cuentaRepartidor.tipo_veh}}" name="tipo_veh" id="tipo_veh" onchange="showInp()">
+                    <option value="{{cuentaRepartidor.tipo_veh}}">--- Seleccionar Tipo de Vehículo ---</option>
+                    <option value="Moto">Moto</option>
+                    <option value="Auto">Auto</option>
                 </select>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="patente_veh" name="patente_veh" aria-describedby=""
-                    value="{{cuentaRepartidor.patente_veh}}" placeholder="Patente Vehiculo" maxlength="8" onkeyup="formatoPatenteAuto(this);formatoPatenteMoto(this);"> 
+                <input type="text" class="form-control"  style="display: none" id="patente_veh_moto" name="patente_veh"
+                    value="{{cuentaRepartidor.patente_veh}}" maxlength="6" onkeyup="formatoPatenteMoto(this);"
+                    placeholder="Patente de la Moto">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control"  style="display: none" id="patente_veh_auto" name="patente_veh"
+                    value="{{cuentaRepartidor.patente_veh}}" maxlength="8" onkeyup="formatoPatenteAuto(this);"
+                    placeholder="Patente del Auto">
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-dark btn-round btn-block" value="Editar">
