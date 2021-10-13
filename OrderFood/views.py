@@ -697,7 +697,7 @@ def modificar_plato(request, id_plato):
         'form': PlatoForm(instance=plato)
     }
     if request.method == 'POST':
-        formulario = PlatoForm(data=request.POST, instance=plato)
+        formulario = PlatoForm(data=request.POST, instance=plato, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificado Correctamente")
