@@ -6,7 +6,7 @@ from .models import *
 from django.views import View
 from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm, ClienteForm 
-from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm
+from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm
 
 # Create your views here.
 
@@ -699,3 +699,105 @@ def registro(request):
     return render(request, 'registro.html', data)
 
 
+
+# def modificar_repartidor(request, id_repartidor):
+
+#     postData = request.POST
+#     id_repartidor = postData.get('id_repartidor')
+#     rut_repartidor = postData.get('rut_repartidor')
+#     nombre_repartidor = postData.get('nombre_repartidor')
+#     apellido_repartidor = postData.get('apellido_repartidor')
+#     email_repartidor = postData.get('email_repartidor')
+#     patente_veh = postData.get('patente_veh')
+#     celular = postData.get('celular')
+
+#     repartidor = get_object_or_404(Repartidor, id_repartidor=id_repartidor)
+#     repartidor.rut_repartidor = rut_repartidor
+#     repartidor.nombre_repartidor = nombre_repartidor
+#     repartidor.apellido_repartidor = apellido_repartidor
+#     repartidor.email_repartidor = email_repartidor
+#     repartidor.patente_veh = patente_veh
+#     repartidor.celular = celular
+
+#     error_message = None
+#     if(not repartidor.rut_repartidor):
+#         error_message = 'El Rut es requerido'
+#     elif len(repartidor.rut_repartidor) < 8:
+#             error_message = 'El Rut debe tener mas de 8 digitos'
+#     elif len(repartidor.rut_repartidor) > 12:
+#             error_message = 'El Rut no debe tener mas de 12 digitos'
+
+#     elif not repartidor.nombre_repartidor:
+#         error_message = 'El Nombre es requerido'
+#     elif len(repartidor.nombre_repartidor) < 4:
+#         error_message = 'El Nombre debe tener mas de 4 caracteres'
+
+#     elif not repartidor.apellido_repartidor:
+#         error_message = 'El Apellido  es requerida'
+#     elif len(repartidor.apellido_repartidor) < 2:
+#         error_message = 'El Apellido debe tener mas de 2'
+
+#     elif not repartidor.email_repartidor:
+#         error_message = 'El email es requerido'
+
+#     elif not repartidor.patente_veh:
+#         error_message = 'La patente del vehiculo es requerido'
+
+#     elif not repartidor.celular:
+#         error_message = 'EL celular es requierodo'
+#     elif len(repartidor.celular) < 7:
+#         error_message = 'El celular debe tener mas de 7 digitos'
+#     elif len(repartidor.celular) > 9:
+#         error_message = 'El celular no puede tener mas de 9 digitos'
+
+#     # guardar datos de cuenta
+#     if not error_message:
+#         repartidor.save()
+#         messages.success(request, "Cuenta Repartidor Modificada")
+#         return redirect('modificar-repartidor')
+#     else:
+#         data = {
+#              'error': error_message,
+#              'cuentaRepartidor':repartidor
+#             }
+#         return render(request, 'modificarRepartidor.html', data)
+
+#encargadoConvenioEmpresa
+def agregar_empresa(request):
+    data ={
+        'form' : GestionEmpresaForm()
+    }
+    if request.method == 'POST':
+        formula = GestionEmpresaForm(data = request.POST, files=request.FILES)
+        if formula.is_valid():
+            formula.save()
+        else:
+            data["form"] = formula
+    return render(request, 'encargadoConvenio/agregarEmpConv.html', data)
+
+def listar_empresa(request):
+    empresa = Empresa.objects.all()
+    data ={
+        'empresa': empresa
+    }
+    return render(request, 'encargadoConvenio/listarEmpConv.html', data)
+
+def modificar_convenio(request, rut_emp):
+    empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
+    data ={
+        "form" : GestionEmpresaForm(instance=empresa)
+    }
+    if request.method =='POST':
+        formulario = GestionEmpresaForm(data=request.POST, instance=empresa)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listar_empresa")
+        else:
+            data['form']=formulario
+    return render(request, 'encargadoConvenio/modificarEmpConv.html',data)
+
+def eliminar_empresa(request, rut_emp):
+    empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
+    empresa.delete()
+    return redirect(to="listar_empresa")
+#fin encargadoConvenioEmpresa

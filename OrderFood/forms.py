@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import fields
 from django.forms import widgets
-from .models import Cliente, Proveedor, Plato, Repartidor,Pedido
+from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa
 
 
 class ProveedorForm(forms.ModelForm):
@@ -59,3 +59,12 @@ class ClienteForm(forms.ModelForm):
     pass_field = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     direccion_cliente = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     convenio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+class GestionEmpresaForm(forms.ModelForm):
+
+    class Meta:
+        model = Empresa
+        fields = ['rut_emp','nom_emp', 'nom_gerente', 'cant_trabajadores','enc_convenio_id_enc_conv']
+        #fields = '__all__'
+
+        rut_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','onkeyup':'formatoRut(this)'}))

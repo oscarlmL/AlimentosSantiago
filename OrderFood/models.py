@@ -132,6 +132,9 @@ class Empresa(models.Model):
     enc_convenio_id_enc_conv = models.ForeignKey(
         'EncConvenio', models.DO_NOTHING, db_column='enc_convenio_id_enc_conv')
 
+    def __str__(self):
+        return self.nom_emp
+
     class Meta:
         db_table = 'empresa'
 
@@ -203,6 +206,10 @@ class EncConvenio(models.Model):
 
     class Meta:
         db_table = 'enc_convenio'
+
+
+    def __str__(self):
+        return self.nom_enc_conv
 
 
 class Informes(models.Model):
