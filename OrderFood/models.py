@@ -266,6 +266,10 @@ class Plato(models.Model):
     # This field type is a guess.
     descripcion = models.CharField(max_length=50)
 
+    @staticmethod
+    def get_all_platos():
+        return Plato.objects.all()
+
     class Meta:
         db_table = 'plato'
 
