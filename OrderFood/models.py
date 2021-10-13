@@ -250,9 +250,9 @@ class Plato(models.Model):
     valor_plato = models.IntegerField()
     # This field type is a guess.
     descripcion = models.CharField(max_length=50)
-    foto = models.FileField(default = None, upload_to="plato")
     Ingrediente = models.ForeignKey('Ingrediente', on_delete=models.PROTECT, null=True)
     Restaurant = models.ForeignKey('Restaurant', on_delete=models.PROTECT, null=True)
+    Imagen = models.ImageField(default = None, upload_to="plato")
     
 
     @staticmethod

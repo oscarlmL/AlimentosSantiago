@@ -668,7 +668,8 @@ def agregar_plato(request):
     }
 
     if request.method == 'POST':
-        formulario = PlatoForm(request.POST)
+        formulario = PlatoForm(data=request.POST, files=request.FILES)
+
         if formulario.is_valid():
             formulario.save()
             data["mensaje"] = "Plato guardado correctamente"
