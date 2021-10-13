@@ -28,7 +28,7 @@
                 <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">
                     <div class="item row align-items-center">
                         <div class="col-{% load static %}sm-3 pr-5">
-                            <img class="product-img" src="./img/pizza-1.png">
+                            <img class="product-img" src="{% static 'app/img/pizza-1.png' %}">
                         </div>
                         <div class="details col-sm-9">
                             <div class="item__header">
@@ -39,12 +39,12 @@
                             <p class="item__description">{{plato.descripcion}}</p>
                             <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="1"
                                 data-name="Cazuela de Vecuno" data-price="7990" data-quantity="1"
-                                data-image="./img/pizza-1.png">Agregar al Carro</button>
+                                data-image="{% static 'app/img/pizza-1.png' %}">Agregar al Carro</button>
                         </div>
                     </div>
                     <!-- <div class="item row align-items-center">
                         <div class="col-sm-3 pr-5">
-                            <img class="product-img" src="./img/pizza-2.png">
+                            <img class="product-img" src="{% static 'app/img/pizza-2.png' %}">
                         </div>
                         <div class="details col-sm-9">
                             <div class="item__header">
@@ -55,12 +55,12 @@
                             <p class="item__description">Pastel de choclo en plato de greda cocinado al horno</p>
                             <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="2"
                                 data-name="Pastel de choclo" data-price="9990" data-quantity="1"
-                                data-image="./img/pizza-2.png">Agregar al Carro</button>
+                                data-image="{% static 'app/img/pizza-2.png' %}">Agregar al Carro</button>
                         </div>
                     </div>
                     <div class="item row align-items-center">
                         <div class="col-sm-3 pr-5">
-                            <img class="product-img" src="./img/pizza-3.png">
+                            <img class="product-img" src="{% static 'app/img/pizza-3.png' %}">
                         </div>
                         <div class="details col-sm-9">
                             <div class="item__header">
@@ -71,12 +71,12 @@
                             <p class="item__description">Cazuela de POLLO (200gr) Con papas, choclo y zapallo</p>
                             <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="3"
                                 data-name="Cazuela de POLLO" data-price="8990" data-quantity="1"
-                                data-image="./img/pizza-3.png">Agregar al Carro</button>
+                                data-image="{% static 'app/img/pizza-3.png' %}">Agregar al Carro</button>
                         </div>
                     </div>
                     <div class="item row align-items-center">
                         <div class="col-sm-3 pr-5">
-                            <img class="product-img" src="./img/pizza-4.png">
+                            <img class="product-img" src="{% static 'app/img/pizza-4.png' %}">
                         </div>
                         <div class="details col-sm-9">
                             <div class="item__header">
@@ -87,7 +87,7 @@
                             <p class="item__description">Pastel de papas en plato de greda cocinado al horno.</p>
                             <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="4"
                                 data-name="Pastel de Papas" data-price="7990" data-quantity="1"
-                                data-image="./img/pizza-4.png">Agregar al Carro</button>
+                                data-image="{% static 'app/img/pizza-4.png' %}">Agregar al Carro</button>
                         </div>
                     </div> -->
                 </div>

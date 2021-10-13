@@ -50,7 +50,10 @@
                         <a class="dropdown-item" href="/listar-platos">Ver Menú</a>
                         <a class="dropdown-item" href="/modificar-plato">Modificar Menú</a>
                         {% elif request.session.cuentaEncConvenio %}
-                        <a class="dropdown-item" href="#">Gestionar Empresas</a>
+                        <a class="dropdown-item" href="/agregar-empresa">Agregar Empresa</a>
+                        <a class="dropdown-item" href="/listar-empresa">Listar Empresas Afiliadas</a>
+
+
                         <a class="dropdown-item" href="/edicion-datos-enc-convenio">Editar datos cuenta</a>
                         {% elif request.session.cuentaRepartidor %}
                         <a class="dropdown-item" href="#">Mi cuenta</a>
@@ -61,12 +64,15 @@
                 {% else %}
                 <li class="nav-item nav">
                     <a class="nav-link active" href="{% url 'login' %}">
-                        <span>Iniciar sesión</span>
+                        <span>Iniciar Sesión</span>
                     </a>
                 </li>
-                <nav>
-                    <a href="#" class="btn btn-outline-dark">Registrate, ¡Es Gratis!</a>
-                </nav>
+                
+                <li class="btn btn-outline-dark">
+                    <a class="nav-link active" href="{% url 'registro' %}">
+                        <span>Registrate, ¡Es Gratis!</span>
+                    </a>
+                </li>
                 
 
                 {% endif %}
