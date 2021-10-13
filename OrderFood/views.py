@@ -14,7 +14,7 @@ from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, Gestion
 def home(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
-    platos = Plato.get_all_platos()    
+    platos = Plato.objects.all()    
     data = {'email':email, 'platos':platos}
     return render(request, 'home.html',data)
 
