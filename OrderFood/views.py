@@ -5,7 +5,7 @@ from django import views
 from .models import *
 from django.views import View
 from django.contrib import messages
-from .forms import ProveedorForm, PlatoForm
+from .forms import ProveedorForm, PlatoForm, ClienteForm 
 from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm
 
 # Create your views here.
@@ -693,4 +693,9 @@ def eliminar_plato(request, id_plato):
 
 
 def registro(request):
-    return render(request, 'registro.html')
+    data = {
+        'form': ClienteForm()
+    }
+    return render(request, 'registro.html', data)
+
+
