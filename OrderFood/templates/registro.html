@@ -7,18 +7,23 @@
     <div class="p-4 m-4">
          <div class="col-lg-5 mx-auto border rounded pt-4">
                 
-             <h2 class="text-center">Formulario de Registro.</h2>
+             <h2 class="text-center">Formulario de Registro</h2>
         
                  <div class="card-body">
                         
                     <form action="" id="custom-general.js">
                             {% csrf_token %}
     
-                            {{ form }}
-    
+                            {{ form |crispy }}
+
+
                             <br>
-                            <button type="reset" value="Cancelar" class="btn btn-secondary">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" id="guardar">Registrarme</button>
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" value="Cancelar" class="btn btn-secondary">Cancelar</button>
+                                 &nbsp;
+                                <button type="submit" class="btn btn-primary" id="guardar">Registrarme</button>
+                            </div>
+                            
     
                         </form>
                 </div>
