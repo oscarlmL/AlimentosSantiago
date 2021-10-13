@@ -13,7 +13,7 @@ urlpatterns = [
     path('gestionar-enc-cocina/', auth_middleware(generar_cuenta_enc_cocina), name="gestionar-encCocina"),
     path('edicion-cuenta-enc-cocina/<id_enc_coc>/', obtener_datos_cuenta_enc_cocina, name='edicion-cuenta-enc-cocina'),
     path('editar-cuenta-enc-cocina/', auth_middleware(editar_cuenta_enc_cocina), name='editar-cuenta-enc-cocina'),
-    path('eliminar-cuenta-enc-cocina/<id_enc_coc>/', eliminar_cuenta_enc_cocina, name='eliminar-cuenta-enc-cocina'),
+    path('eliminar-cuenta-enc-cocina/<id_enc_coc>/', auth_middleware(eliminar_cuenta_enc_cocina), name='eliminar-cuenta-enc-cocina'),
 
     path('gestionar-enc-convenio', auth_middleware(generar_cuenta_enc_convenio), name="gestionar-enc-convenio"),
     path('edicion-cuenta-enc-convenio/<id_enc_conv>/', obtener_datos_cuenta_enc_convenio, name='edicion-cuenta-enc-convenio'),
@@ -27,9 +27,18 @@ urlpatterns = [
     path('eliminar-cuenta-repartidor/<id_repartidor>/', eliminar_cuenta_repartidor, name='eliminar-cuenta-repartidor'),
 
     path('proveedor', proveedor, name="proveedor"),
+
+    
+    path('proveedor/', proveedor, name="proveedor"),
     path('agregar-plato/', agregar_plato, name="agregar_plato"),
     path('listar-platos/', listar_platos, name='listar_plato'),
     path('modificar-plato/<id_plato>/', modificar_plato, name="modificar_plato"),
     path('eliminar-plato/<id_plato>/', eliminar_plato, name="eliminar_plato"),
+   # path('repartidor', repartidor, name="repartidor"),
+    path('agregar-pedido/', agregar_pedido, name="agregar_pedido"),
+    path('listar-pedido/', listar_pedido, name="listar_pedido"),
+    path('modificar-pedido/<id>/', modificar_pedido, name="modificar_pedido"),
+    path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
+
     
 ]
