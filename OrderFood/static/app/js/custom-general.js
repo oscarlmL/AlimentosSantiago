@@ -1,6 +1,6 @@
 
 
-$("formulario_registro").validate({
+$("formulario").validate({
     rules: {
         nombre: {
             required: true,
@@ -11,10 +11,10 @@ $("formulario_registro").validate({
 })
 
 $("#guardar").click(function() {
-    if ($('#formulario_registro').valid() == false) {
+    if ($('#formulario').valid() == false) {
         return;
     }
-    let rut = $("rut").val()
+    let nombre = $("nombre").val()
 
 
 })
