@@ -5,9 +5,10 @@ from django import views
 from .models import *
 from django.views import View
 from django.contrib import messages
-from .forms import ProveedorForm, PlatoForm, ClienteForm 
+from django.contrib.auth.forms import UserCreationForm
+from .forms import ProveedorForm, PlatoForm, ClienteForm
 from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm
-
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
@@ -696,6 +697,12 @@ def registro(request):
     data = {
         'form': ClienteForm()
     }
+    if request.method == 'POST':
+        formulario = ClienteForm(request.POST)
+        if formulario.is_valid():
+            formulario.save() 
+            data["mensaje"] = "Guardado correctamente"
+        else:
+            data["form"] = formulario
+
     return render(request, 'registro.html', data)
-
-
