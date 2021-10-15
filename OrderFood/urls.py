@@ -40,5 +40,11 @@ urlpatterns = [
     path('modificar-pedido/<id>/', modificar_pedido, name="modificar_pedido"),
     path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
 
+    #path encargadoEmpresasConvenio
+    path('agregar-empresa', agregar_empresa , name='agregar_empresa'),
+    path('listar-empresa', listar_empresa, name='listar_empresa'),
+    path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
+    path('eliminar-empresa/<rut_emp>/', eliminar_empresa, name='eliminar_empresa'),
+
     
 ]
