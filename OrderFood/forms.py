@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import fields
 from django.forms import widgets
-from .models import Cliente, Proveedor, Plato, Repartidor,Pedido
+from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
@@ -62,3 +62,19 @@ class ClienteForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     Domicilio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     # convenio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+class GestionEmpresaForm(forms.ModelForm):
+
+    class Meta:
+        model = Empresa
+        fields = ['rut_emp','nom_emp', 'nom_gerente', 'cant_trabajadores','enc_convenio_id_enc_conv']
+        #fields = 'all'
+
+
+    #labels = {'rut_emp':'Run Empresa'}
+    rut_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','onkeyup':'formatoRut(this)','placeholder':'Run Empresa', 'display': None}))
+    nom_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre Empresa'}))
+    nom_gerente = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre Gerente'}))
+    cant_trabajadores = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad Trabajadores'}))
+    #rut_emp = forms.CharField(max_length=9)    
