@@ -5,19 +5,29 @@ from django import views
 from .models import *
 from django.views import View
 from django.contrib import messages
+<<<<<<< HEAD
 from django.contrib.auth.forms import UserCreationForm
 from .forms import ProveedorForm, PlatoForm, ClienteForm
 from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm
 from django.contrib.auth import authenticate, login
+=======
+from .forms import ProveedorForm, PlatoForm, ClienteForm 
+from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm
+
+>>>>>>> d8383df6ae3d3527232bf237348b8d543642a95f
 # Create your views here.
 
 
 def home(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
-    return render(request, 'home.html', {'email':email})
+    platos = Plato.objects.all()
+    rest = Restaurant.objects.all()    
+    data = {'email':email, 'platos':platos, 'rest':rest}
+    return render(request, 'home.html',data)
 
 
+#Modulo administracion
 def generar_cuenta_enc_cocina(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
@@ -93,9 +103,13 @@ def generar_cuenta_enc_cocina(request):
             messages.success(request, "Cuenta Encargado Cocina Generada")
             return redirect('gestionar-encCocina')
         else:
+            email = request.session['cuentaAdmin']
+            cuentasEncCocina = EncCocina.objects.all()
             data = {
                 'error': error_message,
-                'values': value
+                'values': value,
+                'cuentasEncCocina':cuentasEncCocina,
+                'email':email
             }
             return render(request, 'administrador/cuenta/encargadoCocina/gestionarEncCocina.html', data)
 
@@ -155,7 +169,9 @@ def editar_cuenta_enc_cocina(request):
         messages.success(request, "Cuenta Encargado Cocina Editada")
         return redirect('gestionar-encCocina')
     else:
+        email = request.session['cuentaAdmin']
         data = {
+            'email':email,
             'error': error_message,
             'cuentaEncCocina': cuentaEncCocina
         }
@@ -252,9 +268,13 @@ def generar_cuenta_enc_convenio(request):
             messages.success(request, "Cuenta Encargado Convenio Generada")
             return redirect('gestionar-enc-convenio')
         else:
+            email = request.session['cuentaAdmin']
+            cuentasEncConvenio = EncConvenio.objects.all()
             data = {
+                'email':email,
                 'error': error_message,
-                'values': value
+                'values': value,
+                'cuentasEncConvenio':cuentasEncConvenio
             }
             return render(request, 'administrador/cuenta/encargadoConvenio/gestionarEncConvenio.html', data)
 
@@ -319,7 +339,9 @@ def editar_cuenta_enc_convenio(request):
         messages.success(request, "Cuenta Encargado Convenio Editada")
         return redirect('gestionar-enc-convenio')
     else:
+        email = request.session['cuentaAdmin']
         data = {
+            'email':email,
             'error': error_message,
             'cuentaEncConvenio': cuentaEncConvenio
         }
@@ -430,13 +452,15 @@ def generar_cuenta_repartidor(request):
             messages.success(request, "Cuenta Repartidor Generada")
             return redirect('gestionar-repartidor')
         else:
+            email = request.session['cuentaAdmin']
+            cuentasRepartidor = Repartidor.objects.all()
             data = {
+                'email':email,
                 'error': error_message,
-                'values': value
+                'values': value,
+                'cuentasRepartidor':cuentasRepartidor
             }
-            return render(request, 'administrador/cuenta/repartidor/gestionarRepartidor.html', data)
-
-
+        return render(request, 'administrador/cuenta/repartidor/gestionarRepartidor.html', data)
 
 
 def obtener_datos_cuenta_repartidor(request, id_repartidor):
@@ -506,7 +530,9 @@ def editar_cuenta_repartidor(request):
         messages.success(request, "Cuenta Repartidor Editada")
         return redirect('gestionar-repartidor')
     else:
+        email = request.session['cuentaAdmin']
         data = {
+            'email':email,
             'error': error_message,
             'cuentaRepartidor': cuentaRepartidor
         }
@@ -516,7 +542,10 @@ def editar_cuenta_repartidor(request):
 def eliminar_cuenta_repartidor(request, id_repartidor):
     cuentaRepartidor = Repartidor.objects.get(id_repartidor=id_repartidor)
     cuentaRepartidor.delete()
-    return redirect('gestionar-repartidor')
+    return redirect(to='gestionar-repartidor')
+
+#Fin Modulo Administración
+
 
 
 class Login(View):
@@ -647,7 +676,8 @@ def agregar_plato(request):
     }
 
     if request.method == 'POST':
-        formulario = PlatoForm(request.POST)
+        formulario = PlatoForm(data=request.POST, files=request.FILES)
+
         if formulario.is_valid():
             formulario.save()
             data["mensaje"] = "Plato guardado correctamente"
@@ -674,7 +704,7 @@ def modificar_plato(request, id_plato):
         'form': PlatoForm(instance=plato)
     }
     if request.method == 'POST':
-        formulario = PlatoForm(data=request.POST, instance=plato)
+        formulario = PlatoForm(data=request.POST, instance=plato, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificado Correctamente")
@@ -705,4 +735,109 @@ def registro(request):
         else:
             data["form"] = formulario
 
+<<<<<<< HEAD
     return render(request, 'registro.html', data)
+=======
+
+# def modificar_repartidor(request, id_repartidor):
+
+#     postData = request.POST
+#     id_repartidor = postData.get('id_repartidor')
+#     rut_repartidor = postData.get('rut_repartidor')
+#     nombre_repartidor = postData.get('nombre_repartidor')
+#     apellido_repartidor = postData.get('apellido_repartidor')
+#     email_repartidor = postData.get('email_repartidor')
+#     patente_veh = postData.get('patente_veh')
+#     celular = postData.get('celular')
+
+#     repartidor = get_object_or_404(Repartidor, id_repartidor=id_repartidor)
+#     repartidor.rut_repartidor = rut_repartidor
+#     repartidor.nombre_repartidor = nombre_repartidor
+#     repartidor.apellido_repartidor = apellido_repartidor
+#     repartidor.email_repartidor = email_repartidor
+#     repartidor.patente_veh = patente_veh
+#     repartidor.celular = celular
+
+#     error_message = None
+#     if(not repartidor.rut_repartidor):
+#         error_message = 'El Rut es requerido'
+#     elif len(repartidor.rut_repartidor) < 8:
+#             error_message = 'El Rut debe tener mas de 8 digitos'
+#     elif len(repartidor.rut_repartidor) > 12:
+#             error_message = 'El Rut no debe tener mas de 12 digitos'
+
+#     elif not repartidor.nombre_repartidor:
+#         error_message = 'El Nombre es requerido'
+#     elif len(repartidor.nombre_repartidor) < 4:
+#         error_message = 'El Nombre debe tener mas de 4 caracteres'
+
+#     elif not repartidor.apellido_repartidor:
+#         error_message = 'El Apellido  es requerida'
+#     elif len(repartidor.apellido_repartidor) < 2:
+#         error_message = 'El Apellido debe tener mas de 2'
+
+#     elif not repartidor.email_repartidor:
+#         error_message = 'El email es requerido'
+
+#     elif not repartidor.patente_veh:
+#         error_message = 'La patente del vehiculo es requerido'
+
+#     elif not repartidor.celular:
+#         error_message = 'EL celular es requierodo'
+#     elif len(repartidor.celular) < 7:
+#         error_message = 'El celular debe tener mas de 7 digitos'
+#     elif len(repartidor.celular) > 9:
+#         error_message = 'El celular no puede tener mas de 9 digitos'
+
+#     # guardar datos de cuenta
+#     if not error_message:
+#         repartidor.save()
+#         messages.success(request, "Cuenta Repartidor Modificada")
+#         return redirect('modificar-repartidor')
+#     else:
+#         data = {
+#              'error': error_message,
+#              'cuentaRepartidor':repartidor
+#             }
+#         return render(request, 'modificarRepartidor.html', data)
+
+#encargadoConvenioEmpresa
+def agregar_empresa(request):
+    data ={
+        'form' : GestionEmpresaForm()
+    }
+    if request.method == 'POST':
+        formula = GestionEmpresaForm(data = request.POST, files=request.FILES)
+        if formula.is_valid():
+            formula.save()
+        else:
+            data["form"] = formula
+    return render(request, 'encargadoConvenio/agregarEmpConv.html', data)
+
+def listar_empresa(request):
+    empresa = Empresa.objects.all()
+    data ={
+        'empresa': empresa
+    }
+    return render(request, 'encargadoConvenio/listarEmpConv.html', data)
+
+def modificar_convenio(request, rut_emp):
+    empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
+    data ={
+        "form" : GestionEmpresaForm(instance=empresa)
+    }
+    if request.method =='POST':
+        formulario = GestionEmpresaForm(data=request.POST, instance=empresa)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listar_empresa")
+        else:
+            data['form']=formulario
+    return render(request, 'encargadoConvenio/modificarEmpConv.html',data)
+
+def eliminar_empresa(request, rut_emp):
+    empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
+    empresa.delete()
+    return redirect(to="listar_empresa")
+#fin encargadoConvenioEmpresa
+>>>>>>> d8383df6ae3d3527232bf237348b8d543642a95f
