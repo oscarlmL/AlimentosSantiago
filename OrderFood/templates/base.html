@@ -48,16 +48,16 @@
                         {% elif request.session.cuentaEncCocina %}
                         <a class="dropdown-item" href="/agregar-plato">Agregar Plato</a>
                         <a class="dropdown-item" href="/listar-platos">Ver Menú</a>
-                        <a class="dropdown-item" href="/modificar-plato">Modificar Menú</a>
                         {% elif request.session.cuentaEncConvenio %}
-                        <a class="dropdown-item" href="#">Gestionar Empresas</a>
+                        <a class="dropdown-item" href="/agregar-empresa">Agregar Empresa</a>
+                        <a class="dropdown-item" href="/listar-empresa">Listar Empresas Afiliadas</a>
+
+
                         <a class="dropdown-item" href="/edicion-datos-enc-convenio">Editar datos cuenta</a>
                         {% elif request.session.cuentaRepartidor %}
                         <a class="dropdown-item" href="#">Mi cuenta</a>
                         {% endif %}
                         <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
-                        
-                       
                     </div>
                 </div>
                 {% else %}
@@ -86,7 +86,7 @@
     </div>
     <script src="{% static 'app/js/mycart.js' %}"></script>
     <script src="/static/app/js/mycart-custom.js"></script>
-    <script src="{% static 'app/js/formato-rut.js' %}"></script>
+    <script src="{% static 'app/js/js.js' %}"></script>
     <div class="nav-item my-cart-icon">
         <img src="{% static 'app/img/cart.svg' %}" style="width:20px;"> <span class="badge badge-notify my-cart-badge">
         </span>
