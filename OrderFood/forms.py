@@ -2,6 +2,8 @@ from django import forms
 from django.db.models import fields
 from django.forms import widgets
 from .models import Cliente, Proveedor, Plato, Repartidor,Pedido
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 
 class ProveedorForm(forms.ModelForm):
@@ -43,19 +45,20 @@ class RepartidorForm(forms.ModelForm):
         fields = ['rut_repartidor', 'nombre_repartidor','apellido_repartidor','email_repartidor','patente_veh', 'celular','contraseña1','contraseña2']
     
 
+
 class ClienteForm(forms.ModelForm):
 
     class Meta:
         model = Cliente
-        fields = ['nombre_cli', 'apaterno_cli', 'amaterno_cli', 'fono_cli', 'email_cli', 'saldo_cli', 'pass_field', 'direccion_cliente', 'convenio']
+        fields = ['rut_cli','nombre_cli', 'apaterno_cli','amaterno_cli', 'fono_cli', 'email_cli', 'saldo_cli', 'password', 'Domicilio', 'convenio']
 
 
-    nombre_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    apaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
-    amaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
-    fono_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    email_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    saldo_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    pass_field = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    direccion_cliente = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    convenio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # RUT = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # apaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
+    # amaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
+    # fono_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    # email_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # saldo_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    Domicilio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # convenio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
