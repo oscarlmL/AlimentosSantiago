@@ -9,6 +9,10 @@ urlpatterns = [
     path('logout', logout, name="logout"),
 
     path('registro/', registro, name="registro"),
+    path("editar-perfil/",editar_perfil_admin,name="editar-perfil"),
+    path("editar-perfil-enc-cocina/",editar_perfil_enc_cocina,name="editar-perfil-enc-cocina"),
+    path("editar-perfil-enc-convenio/",editar_perfil_enc_convenio,name="editar-perfil-enc-convenio"),
+    path("editar-perfil-repartidor/",editar_perfil_repartidor,name="editar-perfil-repartidor"),
 
     path('gestionar-enc-cocina/', auth_middleware(generar_cuenta_enc_cocina), name="gestionar-encCocina"),
     path('edicion-cuenta-enc-cocina/<id_enc_coc>/', obtener_datos_cuenta_enc_cocina, name='edicion-cuenta-enc-cocina'),

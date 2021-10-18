@@ -2,6 +2,7 @@ from django import forms
 from django.db.models import fields
 from django.forms import widgets
 from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa
+from multiselectfield import MultiSelectField
 
 
 class ProveedorForm(forms.ModelForm):
@@ -32,8 +33,9 @@ class PlatoForm(forms.ModelForm):
 
     class Meta:
         model = Plato
-        fields = '__all__'
-        
+        fields = ['nom_plato', 'valor_plato','descripcion','Ingrediente','Restaurant']
+    Ingrediente = forms.CharField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
+
         
 
 class RepartidorForm(forms.ModelForm):
@@ -60,11 +62,12 @@ class ClienteForm(forms.ModelForm):
     direccion_cliente = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     convenio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
+
 class GestionEmpresaForm(forms.ModelForm):
 
     class Meta:
         model = Empresa
         fields = ['rut_emp','nom_emp', 'nom_gerente', 'cant_trabajadores','enc_convenio_id_enc_conv']
-        #fields = '__all__'
+        labels = {' display:none; '}
 
-        rut_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','onkeyup':'formatoRut(this)'}))
+    rut_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','onkeyup':'formatoRut(this)','placeholder':'Run Empresa'}))

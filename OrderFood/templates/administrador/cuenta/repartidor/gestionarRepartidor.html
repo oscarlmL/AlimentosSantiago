@@ -39,7 +39,7 @@
                                 placeholder="Apellido" value="{{values.apellido_repartidor}}">
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                            <input type="tel" class="form-control" id="" name="celular" aria-describedby=""
                                 placeholder="celular ej: 912345678" value="{{values.celular}}">
                         </div>
                         <div class="form-group">
@@ -47,24 +47,23 @@
                                 value="{{values.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" value="{{values.tipo_veh}}" name="tipo_veh" id="tipo_veh" onchange="showInp()">
+                            <select class="form-control" value="{{values.tipo_veh}}" name="tipo_veh" id="tipo_veh" onclick="showInp(this);">
                                 <option value="{{values.tipo_veh}}">--- Seleccionar Tipo de Vehículo ---</option>
-                                <option value="Moto">Moto</option>
                                 <option value="Auto">Auto</option>
+                                <option value="Bicicleta">Bicicleta</option>
+                                <option value="Moto">Moto</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control"  style="display: none" id="patente_veh_moto" name="patente_veh"
-                                value="{{values.patente_veh}}" maxlength="8" onkeyup="formatoPatenteMoto(this);"
+                            <input type="text" class="form-control"  style="display: none" id="patente_veh_moto" name="patente_veh_moto"
+                                value="{{values.patente_veh}}" maxlength="6" onkeyup="formatoPatenteMoto(this);"
                                 placeholder="Patente de la Moto">
                         </div>
-                        
                         <div class="form-group">
-                            <input type="text" class="form-control"  style="display: none" id="patente_veh_auto" name="patente_veh"
-                                value="{{values.patente_veh}}" maxlength="8" onkeyup="formatoPatenteAuto(this);"
+                            <input type="text" class="form-control"  style="display: none" id="patente_veh_auto" name="patente_veh_auto"
+                                value="{{values.patente_veh}}" maxlength="6" onkeyup="formatoPatenteAuto(this);"
                                 placeholder="Patente del Auto">
                         </div>
-            
                         <div class="form-group">
                             <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
                                 placeholder="Ingresar Contraseña">

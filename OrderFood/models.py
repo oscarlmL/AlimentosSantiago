@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import TranslatorCommentWarning
+from multiselectfield import MultiSelectField
 
 
 class Administrador(models.Model):
@@ -28,6 +29,7 @@ class Administrador(models.Model):
             return Administrador.objects.get(email_admin=email_admin)
         except:
             return False
+
 
 
 class Cajero(models.Model):
@@ -210,9 +212,6 @@ class Informes(models.Model):
         db_table = 'informes'
 
 
-
-
-
 class Pago(models.Model):
     id_pago = models.AutoField(primary_key=True)
     tipo_pago = models.CharField(max_length=50)  # This field type is a guess.
@@ -250,7 +249,6 @@ class Plato(models.Model):
     valor_plato = models.IntegerField()
     # This field type is a guess.
     descripcion = models.CharField(max_length=50)
-    foto = models.FileField(default = None, upload_to="plato")
     Ingrediente = models.ForeignKey('Ingrediente', on_delete=models.PROTECT, null=True)
     Restaurant = models.ForeignKey('Restaurant', on_delete=models.PROTECT, null=True)
     
@@ -326,7 +324,17 @@ class Repartidor(models.Model):
         if Repartidor.objects.filter(email_repartidor=self.email_repartidor):
             return True
         return False
-    
+
+    def rutExiste(self):
+        if Repartidor.objects.filter(rut_repartidor=self.rut_repartidor):
+            return True
+        return False
+
+    def patenteExiste(self):
+        if Repartidor.objects.filter(patente_veh=self.patente_veh):
+            return True
+        return False
+
     @staticmethod
     def get_repartidor_by_email(email_repartidor):
         try:
@@ -335,10 +343,6 @@ class Repartidor(models.Model):
             return False
 
 
-    def rutExiste(self):
-        if Repartidor.objects.filter(rut_repartidor=self.rut_repartidor):
-            return True
-        return False
 
     class Meta:
         db_table = 'repartidor'
