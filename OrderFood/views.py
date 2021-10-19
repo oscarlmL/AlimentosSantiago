@@ -19,8 +19,6 @@ def home(request):
     return render(request, 'home.html', data)
 
 # Modulo administracion
-
-
 def editar_perfil_admin(request):
     check = Administrador.objects.filter(
         email_admin=request.session['cuentaAdmin'])
@@ -305,8 +303,8 @@ def generar_cuenta_enc_cocina(request):
             email = request.session['cuentaAdmin']
             cuentasEncCocina = EncCocina.objects.all()
             data = {
-                'email':email,
-                'cuentasEncCocina':cuentasEncCocina,
+                'email': email,
+                'cuentasEncCocina': cuentasEncCocina,
                 'error': error_message,
                 'values': value,
             }
@@ -371,8 +369,8 @@ def editar_cuenta_enc_cocina(request):
         email = request.session['cuentaAdmin']
         cuentasEncCocina = EncCocina.objects.all()
         data = {
-            'email':email,
-            'cuentasEncCocina':cuentasEncCocina,
+            'email': email,
+            'cuentasEncCocina': cuentasEncCocina,
             'error': error_message,
             'cuentaEncCocina': cuentaEncCocina
         }
@@ -472,8 +470,8 @@ def generar_cuenta_enc_convenio(request):
             email = request.session['cuentaAdmin']
             cuentasEncConvenio = EncConvenio.objects.all()
             data = {
-                'email':email,
-                'cuentasEncConvenio':cuentasEncConvenio,
+                'email': email,
+                'cuentasEncConvenio': cuentasEncConvenio,
                 'error': error_message,
                 'values': value,
             }
@@ -543,10 +541,10 @@ def editar_cuenta_enc_convenio(request):
         cuentasEncConvenio = EncConvenio.objects.all()
         email = request.session['cuentaAdmin']
         data = {
-            'email':email,
+            'email': email,
             'error': error_message,
             'cuentaEncConvenio': cuentaEncConvenio,
-            'cuentasEncConvenio':cuentasEncConvenio
+            'cuentasEncConvenio': cuentasEncConvenio
         }
         return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data)
 
@@ -718,7 +716,7 @@ def editar_cuenta_repartidor(request):
 
     elif not cuentaRepartidor.tipo_veh:
         error_message = 'Tipo de vehiculo requerido'
-        
+
     elif not cuentaRepartidor.celular:
         error_message = 'EL celular es requierodo'
     elif len(cuentaRepartidor.celular) < 7:
