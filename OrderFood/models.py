@@ -42,27 +42,40 @@ class Cajero(models.Model):
         db_table = 'cajero'
 
 
+class Carta(models.Model):
+    tipo_plato = models.CharField(max_length=50)  # This field type is a guess.
+    # This field type is a guess.
+    estilo_comida = models.CharField(max_length=50)
+    restaurant_id_restaurante = models.ForeignKey(
+        'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante', primary_key=True)
+    plato_id_plato = models.ForeignKey(
+        'Plato', models.DO_NOTHING, db_column='plato_id_plato')
+    enc_cocina_id_enc_cocina = models.ForeignKey(
+        'EncCocina', models.DO_NOTHING, db_column='enc_cocina_id_enc_cocina')
+
+    class Meta:
+        db_table = 'carta'
+        unique_together = (('restaurant_id_restaurante', 'plato_id_plato'),)
+
 
 class Cliente(models.Model):
     # This field type is a guess.
     rut_cli = models.CharField(max_length=50, primary_key=True)
-    nombre_cli = models.CharField(max_length=50)  # This field type is a guess.
-    # This field type is a guess.
+    nombre_cli = models.CharField(db_column='nombre_cli',max_length=50)  # This field type is a guess.
     apaterno_cli = models.CharField(max_length=50)
-    # This field type is a guess.
     amaterno_cli = models.CharField(max_length=50)
     fono_cli = models.IntegerField()
     email_cli = models.CharField(max_length=50)  # This field type is a guess.
     saldo_cli = models.IntegerField()
     # Field renamed because it was a Python reserved word. This field type is a guess.
-    pass_field = models.TextField(db_column='pass')
+    password = models.TextField(db_column='password')
     # This field type is a guess.
-    direccion_cliente = models.CharField(max_length=50)
+    # Domicilio = models.CharField(max_length=50)
+    Domicilio = models.TextField(db_column='direccion_cliente')
     convenio = models.CharField(max_length=1)
 
     class Meta:
         db_table = 'cliente'
-
 
 class Convenio(models.Model):
     rut_cli = models.CharField(max_length=50)  # This field type is a guess.
@@ -118,9 +131,6 @@ class Empresa(models.Model):
     cant_trabajadores = models.IntegerField()
     enc_convenio_id_enc_conv = models.ForeignKey(
         'EncConvenio', models.DO_NOTHING, db_column='enc_convenio_id_enc_conv')
-
-    def __str__(self):
-        return self.nom_emp
 
     class Meta:
         db_table = 'empresa'
@@ -195,10 +205,6 @@ class EncConvenio(models.Model):
         db_table = 'enc_convenio'
 
 
-    def __str__(self):
-        return self.nom_enc_conv
-
-
 class Informes(models.Model):
     id_pedido = models.IntegerField()
     id_plato = models.IntegerField()
@@ -210,6 +216,16 @@ class Informes(models.Model):
 
     class Meta:
         db_table = 'informes'
+
+
+class Ingrediente(models.Model):
+    id_ing = models.AutoField(primary_key=True)
+    nom_ing = models.CharField(max_length=50)  # This field type is a guess.
+    descp_ing = models.CharField(max_length=50)   # This field type is a guess.
+    tipo_ing = models.CharField(max_length=50)  # This field type is a guess.
+
+    class Meta:
+        db_table = 'ingrediente'
 
 
 class Pago(models.Model):
@@ -261,30 +277,21 @@ class Plato(models.Model):
         db_table = 'plato'
 
 
-class Ingrediente(models.Model):
-    id_ing = models.AutoField(primary_key=True)
-    nom_ing = models.CharField(max_length=50)  # This field type is a guess.
-    descp_ing = models.CharField(max_length=50)   # This field type is a guess.
-    tipo_ing = models.CharField(max_length=50)  # This field type is a guess.
+class Preparacin(models.Model):
+    id_prepa = models.BigIntegerField(primary_key=True)
+    # This field type is a guess.
+    desc_preparacion = models.CharField(max_length=50)
+    plato_id_plato = models.ForeignKey(
+        Plato, models.DO_NOTHING, db_column='plato_id_plato')
+    ingrediente_id_ing = models.ForeignKey(
+        Ingrediente, models.DO_NOTHING, db_column='ingrediente_id_ing')
+    lista_ing = models.CharField(max_length=50)  # This field type is a guess.
 
     class Meta:
-        db_table = 'ingrediente'
+        db_table = 'preparación'
+        unique_together = (
+            ('id_prepa', 'plato_id_plato', 'ingrediente_id_ing'),)
 
-
-class Restaurant(models.Model):
-    id_restaurante = models.AutoField(primary_key=True)
-    # This field type is a guess.
-    nombre_rest = models.CharField(max_length=50)
-    # This field type is a guess.
-    direccion_rest = models.CharField(max_length=50)
-    # This field type is a guess.
-    comuna_rest = models.CharField(max_length=50)
-    enc_cocina = models.ForeignKey(
-        'EncCocina', models.DO_NOTHING, db_column='enc_cocina_id_enc_cocina', null=True)
-
-
-    class Meta:
-        db_table = 'restaurant'
 
 class Proveedor(models.Model):
     id_proveedor = models.AutoField(primary_key=True)
@@ -347,6 +354,18 @@ class Repartidor(models.Model):
     class Meta:
         db_table = 'repartidor'
 
+
+class Restaurant(models.Model):
+    id_restaurante = models.AutoField(primary_key=True)
+    # This field type is a guess.
+    nombre_rest = models.CharField(max_length=50)
+    # This field type is a guess.
+    direccion_rest = models.CharField(max_length=50)
+    # This field type is a guess.
+    comuna_rest = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'restaurant'
 
 
 class Suscripcion(models.Model):

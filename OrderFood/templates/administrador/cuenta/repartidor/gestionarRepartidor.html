@@ -46,6 +46,14 @@
                             <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
                                 value="{{values.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
                         </div>
+                        <!-- <div class="form-group">
+                            <select class="form-control" id="validationCustom04 tipo_veh" name="tipo_veh" required
+                                value="{{values.tipo_veh}}" onchange="showInp()">
+                                <option selected disabled value="">--- Seleccionar Tipo de Vehiculo ---</option>
+                                <option value="moto">Moto</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div> -->
                         <div class="form-group">
                             <select class="form-control" value="{{values.tipo_veh}}" name="tipo_veh" id="tipo_veh" onclick="showInp(this);">
                                 <option value="{{values.tipo_veh}}">--- Seleccionar Tipo de Vehículo ---</option>
@@ -90,8 +98,8 @@
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
-                        <th>Tipo Vehículo</th>
-                        <th>Patente Vehículo</th>
+                        <th>Patente Vehiculo</th>
+                        <th>Tipo Vehiculo</th>
                         <th>Celular</th>
                         <th>Opciones</th>
                     </tr>
