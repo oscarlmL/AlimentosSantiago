@@ -14,9 +14,10 @@ from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, Gestion
 def home(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
-    platos = Plato.get_all_platos()
-    data = {'email': email, 'platos': platos}
-    return render(request, 'home.html', data)
+    platos = Plato.objects.all()
+    rest = Restaurant.objects.all()    
+    data = {'email':email, 'platos':platos, 'rest':rest}
+    return render(request, 'home.html',data)
 
 # Modulo administracion
 def editar_perfil_admin(request):
@@ -876,10 +877,11 @@ def agregar_plato(request):
     }
 
     if request.method == 'POST':
-        formulario = PlatoForm(request.POST)
+        formulario = PlatoForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "Plato guardado correctamente"
+            messages.success(request, "Agregado Correctamente")
+            return redirect(to="agregar_plato")
         else:
             data["form"] = formulario
 
@@ -903,7 +905,7 @@ def modificar_plato(request, id_plato):
         'form': PlatoForm(instance=plato)
     }
     if request.method == 'POST':
-        formulario = PlatoForm(data=request.POST, instance=plato)
+        formulario = PlatoForm(data=request.POST, instance=plato, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificado Correctamente")

@@ -48,8 +48,7 @@
                         <a class="dropdown-item" href="/editar-perfil">Editar Perfil</a>
                         {% elif request.session.cuentaEncCocina %}
                         <a class="dropdown-item" href="/agregar-plato">Agregar Plato</a>
-                        <a class="dropdown-item" href="/listar-platos">Ver Menú</a>
-                        <a class="dropdown-item" href="/modificar-plato">Modificar Menú</a>
+                        <a class="dropdown-item" href="/listar-platos">Gestionar Menú</a>
                         <a class="dropdown-item" href="/editar-perfil-enc-cocina">Editar Perfil</a>
                         {% elif request.session.cuentaEncConvenio %}
                         <a class="dropdown-item" href="/agregar-empresa">Agregar Empresa</a>
@@ -81,8 +80,13 @@
         </nav>
     </head>
     <div>
+        {% if messages %}
+            {%for m in messages %}
+                {{m}}
+            {% endfor %}
+        {% endif %}
+
         {% block contenido %}
-        
         {% endblock %}
     </div>
     <script src="{% static 'app/js/mycart.js' %}"></script>

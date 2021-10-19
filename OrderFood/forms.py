@@ -2,7 +2,6 @@ from django import forms
 from django.db.models import fields
 from django.forms import widgets
 from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa
-from multiselectfield import MultiSelectField
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
@@ -35,8 +34,7 @@ class PlatoForm(forms.ModelForm):
 
     class Meta:
         model = Plato
-        fields = ['nom_plato', 'valor_plato','descripcion','Ingrediente','Restaurant']
-    Ingrediente = forms.CharField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
+        fields = '__all__'
 
         
 
