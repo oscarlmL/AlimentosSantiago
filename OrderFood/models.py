@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import TranslatorCommentWarning
-from multiselectfield import MultiSelectField
 
 
 class Administrador(models.Model):
@@ -42,22 +41,6 @@ class Cajero(models.Model):
         db_table = 'cajero'
 
 
-class Carta(models.Model):
-    tipo_plato = models.CharField(max_length=50)  # This field type is a guess.
-    # This field type is a guess.
-    estilo_comida = models.CharField(max_length=50)
-    restaurant_id_restaurante = models.ForeignKey(
-        'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante', primary_key=True)
-    plato_id_plato = models.ForeignKey(
-        'Plato', models.DO_NOTHING, db_column='plato_id_plato')
-    enc_cocina_id_enc_cocina = models.ForeignKey(
-        'EncCocina', models.DO_NOTHING, db_column='enc_cocina_id_enc_cocina')
-
-    class Meta:
-        db_table = 'carta'
-        unique_together = (('restaurant_id_restaurante', 'plato_id_plato'),)
-
-
 class Cliente(models.Model):
     # This field type is a guess.
     rut_cli = models.CharField(max_length=50, primary_key=True)
@@ -71,7 +54,7 @@ class Cliente(models.Model):
     password = models.TextField(db_column='password')
     # This field type is a guess.
     # Domicilio = models.CharField(max_length=50)
-    Domicilio = models.TextField(db_column='direccion_cliente')
+    Domicilio = models.TextField(db_column='direccion_cliente', null=True)
     convenio = models.CharField(max_length=1)
 
     class Meta:
@@ -263,11 +246,10 @@ class Plato(models.Model):
     id_plato = models.AutoField(primary_key=True)
     nom_plato = models.CharField(max_length=50)   # This field type is a guess.
     valor_plato = models.IntegerField()
-    # This field type is a guess.
     descripcion = models.CharField(max_length=50)
     Ingrediente = models.ForeignKey('Ingrediente', on_delete=models.PROTECT, null=True)
     Restaurant = models.ForeignKey('Restaurant', on_delete=models.PROTECT, null=True)
-    
+    Imagen = models.ImageField(default = None, upload_to="platos")
 
     @staticmethod
     def get_all_platos():
@@ -275,22 +257,6 @@ class Plato(models.Model):
 
     class Meta:
         db_table = 'plato'
-
-
-class Preparacin(models.Model):
-    id_prepa = models.BigIntegerField(primary_key=True)
-    # This field type is a guess.
-    desc_preparacion = models.CharField(max_length=50)
-    plato_id_plato = models.ForeignKey(
-        Plato, models.DO_NOTHING, db_column='plato_id_plato')
-    ingrediente_id_ing = models.ForeignKey(
-        Ingrediente, models.DO_NOTHING, db_column='ingrediente_id_ing')
-    lista_ing = models.CharField(max_length=50)  # This field type is a guess.
-
-    class Meta:
-        db_table = 'preparación'
-        unique_together = (
-            ('id_prepa', 'plato_id_plato', 'ingrediente_id_ing'),)
 
 
 class Proveedor(models.Model):

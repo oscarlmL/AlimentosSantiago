@@ -114,7 +114,7 @@
                         <th>{{cuentasRepartidor.patente_veh}}</th>
                         <th>{{cuentasRepartidor.celular}}</th>
                         <td>
-                            <a href="{% url 'edicion-cuenta-repartidor' cuentasRepartidor.id_repartidor %}"
+                            <a href="{% url 'editar-cuenta-repartidor' %}?id_repartidor={{cuentasRepartidor.id_repartidor}}"
                                 class="btn btn-dark btn-sm">Modificar</a>
                             <a href="{% url 'eliminar-cuenta-repartidor' cuentasRepartidor.id_repartidor %}"
                                 class="btn btn-danger btn-sm">Eliminar</a>

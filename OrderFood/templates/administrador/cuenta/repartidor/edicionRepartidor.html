@@ -16,7 +16,7 @@
         </div>
         {% endfor %}
         {% endif %}
-        <form method="POST" action="/editar-cuenta-repartidor/">
+        <form method="POST" action="">
             {% csrf_token %}
             <div class="form-group">
                 <input type="hidden" class="form-control" name="id_repartidor" placeholder="Rut" id=""
@@ -44,10 +44,24 @@
             </div>
             <div class="form-group">
                 <select class="form-control" value="{{cuentaRepartidor.tipo_veh}}" name="tipo_veh" id="tipo_veh" onclick="showInp(this);">
-                    <option value="{{cuentaRepartidor.tipo_veh}}">--- Seleccionar Tipo de Vehículo ---</option>
+                    <option value="">--- Seleccionar Tipo de Vehículo ---</option>
+                    {% if cuentaRepartidor.tipo_veh == "Auto" %}
+                    <option value="Auto" selected>Auto</option>
+                    {% else %}
                     <option value="Auto">Auto</option>
+                    {% endif %}
+
+                    {% if cuentaRepartidor.tipo_veh == "Bicicleta" %}
+                    <option value="Bicicleta" selected>Bicicleta</option>
+                    {% else %}
                     <option value="Bicicleta">Bicicleta</option>
-                    <option value="Moto">Moto</option>
+                    {% endif %}
+
+                    {% if cuentaRepartidor.tipo_veh == "Moto" %}
+                    <option value="Moto" selected>Moto</option>
+                    {% else %}
+                    <option value="Moto" >Moto</option>
+                    {% endif %}
                 </select>
             </div>
             <div class="form-group">
@@ -59,6 +73,10 @@
                 <input type="text" class="form-control"  style="display: none" id="patente_veh_auto" name="patente_veh_auto"
                     value="{{cuentaRepartidor.patente_veh}}" maxlength="8" onkeyup="formatoPatenteAuto(this);"
                     placeholder="Patente del Auto">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control"  style="display: none" id="Bicicleta" name="Bicicleta"
+                    value="{{cuentaRepartidor.patente_veh}}" maxlength="1" placeholder="Bicicleta">
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary btn-round btn-block" value="Editar">

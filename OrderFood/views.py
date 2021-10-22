@@ -14,11 +14,14 @@ from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, Gestion
 def home(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
-    platos = Plato.get_all_platos()
-    data = {'email': email, 'platos': platos}
+    platos = Plato.objects.all()
+    rest = Restaurant.objects.all()
+    data = {'email': email, 'platos': platos, 'rest': rest}
     return render(request, 'home.html', data)
 
 # Modulo administracion
+
+
 def editar_perfil_admin(request):
     check = Administrador.objects.filter(
         email_admin=request.session['cuentaAdmin'])
@@ -311,70 +314,66 @@ def generar_cuenta_enc_cocina(request):
         return render(request, 'administrador/cuenta/encargadoCocina/gestionarEncCocina.html', data)
 
 
-def obtener_datos_cuenta_enc_cocina(request, id_enc_coc):
+def editar_cuenta_enc_cocina(request):
     email = request.session['cuentaAdmin']
-    cuentaEncCocina = EncCocina.objects.get(id_enc_coc=id_enc_coc)
-    data = {
+    id_enc_coc = request.GET["id_enc_coc"]
+    cuentaEncCocina = get_object_or_404(EncCocina, id_enc_coc=id_enc_coc)
+    data1 = {
         'email': email,
         'cuentaEncCocina': cuentaEncCocina
     }
-    return render(request, 'administrador/cuenta/encargadoCocina/edicionEncCocina.html', data)
 
+    if request.method == "POST":
+        nom_enc_coc = request.POST["nom_enc_coc"]
+        titulo = request.POST["titulo"]
+        exp_laboral = request.POST["exp_laboral"]
+        celular = request.POST["celular"]
+        email_enc_coc = request.POST["email_enc_coc"]
 
-def editar_cuenta_enc_cocina(request):
-    postData = request.POST
-    id_enc_coc = postData.get('id_enc_coc')
-    nom_enc_coc = postData.get('nom_enc_coc')
-    titulo = postData.get('titulo')
-    exp_laboral = postData.get('exp_laboral')
-    celular = postData.get('celular')
-    email_enc_coc = postData.get('email_enc_coc')
+        cuentaEncCocina.nom_enc_coc = nom_enc_coc
+        cuentaEncCocina.titulo = titulo
+        cuentaEncCocina.exp_laboral = exp_laboral
+        cuentaEncCocina.celular = celular
+        cuentaEncCocina.email_enc_coc = email_enc_coc
 
-    cuentaEncCocina = EncCocina.objects.get(id_enc_coc=id_enc_coc)
-    cuentaEncCocina.nom_enc_coc = nom_enc_coc
-    cuentaEncCocina.titulo = titulo
-    cuentaEncCocina.exp_laboral = exp_laboral
-    cuentaEncCocina.celular = celular
-    cuentaEncCocina.email_enc_coc = email_enc_coc
+        error_message = None
+        if(not cuentaEncCocina.nom_enc_coc):
+            error_message = 'El nombre es requerido'
+        elif len(cuentaEncCocina.nom_enc_coc) < 4:
+            error_message = 'El nombre debe tener mas de 4 caracteres'
 
-    error_message = None
-    if(not cuentaEncCocina.nom_enc_coc):
-        error_message = 'El nombre es requerido'
-    elif len(cuentaEncCocina.nom_enc_coc) < 4:
-        error_message = 'El nombre debe tener mas de 4 caracteres'
+        elif not cuentaEncCocina.titulo:
+            error_message = 'El titulo es requerido'
+        elif len(cuentaEncCocina.titulo) < 4:
+            error_message = 'El titulo debe tener mas de 4 caracteres'
+        elif not cuentaEncCocina.exp_laboral:
+            error_message = 'La experiencia laboral es requerida'
+        elif len(cuentaEncCocina.exp_laboral) < 0:
+            error_message = 'La experiencia laboral debe ser mayor a 0'
 
-    elif not cuentaEncCocina.titulo:
-        error_message = 'El titulo es requerido'
-    elif len(cuentaEncCocina.titulo) < 4:
-        error_message = 'El titulo debe tener mas de 4 caracteres'
+        elif not cuentaEncCocina.celular:
+            error_message = 'EL celular es requierodo'
+        elif len(cuentaEncCocina.celular) < 7:
+            error_message = 'El celular debe tener mas de 7 digitos'
+        elif len(cuentaEncCocina.celular) > 9:
+            error_message = 'El celular no puede tener mas de 9 digitos'
 
-    elif not cuentaEncCocina.exp_laboral:
-        error_message = 'La experiencia laboral es requerida'
-    elif len(cuentaEncCocina.exp_laboral) < 0:
-        error_message = 'La experiencia laboral debe ser mayor a 0'
-
-    elif not cuentaEncCocina.celular:
-        error_message = 'EL celular es requierodo'
-    elif len(cuentaEncCocina.celular) < 7:
-        error_message = 'El celular debe tener mas de 7 digitos'
-    elif len(cuentaEncCocina.celular) > 9:
-        error_message = 'El celular no puede tener mas de 9 digitos'
-
-    # guardar datos de cuenta
-    if not error_message:
-        cuentaEncCocina.save()
-        messages.success(request, "Cuenta Encargado Cocina Editada")
-        return redirect('gestionar-encCocina')
-    else:
-        email = request.session['cuentaAdmin']
-        cuentasEncCocina = EncCocina.objects.all()
-        data = {
-            'email': email,
-            'cuentasEncCocina': cuentasEncCocina,
-            'error': error_message,
-            'cuentaEncCocina': cuentaEncCocina
-        }
-    return render(request, 'administrador/cuenta/encargadoCocina/edicionEncCocina.html', data)
+        # guardar datos de cuenta
+        if not error_message:
+            cuentaEncCocina.save()
+            messages.success(request, "Cuenta Encargado Cocina Editada")
+            return redirect('gestionar-encCocina')
+        else:
+            email = request.session['cuentaAdmin']
+            cuentasEncCocina = EncCocina.objects.all()
+            data = {
+                'email': email,
+                'cuentasEncCocina': cuentasEncCocina,
+                'error': error_message,
+                'cuentaEncCocina': cuentaEncCocina
+            }
+        return render(request, 'administrador/cuenta/encargadoCocina/edicionEncCocina.html', data)
+    return render(request, 'administrador/cuenta/encargadoCocina/edicionEncCocina.html', data1)
 
 
 def eliminar_cuenta_enc_cocina(request, id_enc_coc):
@@ -478,75 +477,72 @@ def generar_cuenta_enc_convenio(request):
         return render(request, 'administrador/cuenta/encargadoConvenio/gestionarEncConvenio.html', data)
 
 
-def obtener_datos_cuenta_enc_convenio(request, id_enc_conv):
+def editar_cuenta_enc_convenio(request):
     email = request.session['cuentaAdmin']
-    cuentaEncConvenio = EncConvenio.objects.get(id_enc_conv=id_enc_conv)
-    data = {
+    id_enc_conv = request.GET["id_enc_conv"]
+    cuentaEncConvenio = get_object_or_404(EncConvenio, id_enc_conv=id_enc_conv)
+    data1 = {
         'email': email,
         'cuentaEncConvenio': cuentaEncConvenio
     }
-    return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data)
 
+    if request.method == "POST":
+        rut_enc_conv = request.POST['rut_enc_conv']
+        nom_enc_conv = request.POST['nom_enc_conv']
+        ap_enc_conv = request.POST['ap_enc_conv']
+        email_enc_conv = request.POST['email_enc_conv']
+        celular = request.POST['celular']
 
-def editar_cuenta_enc_convenio(request):
-    postData = request.POST
-    id_enc_conv = postData.get('id_enc_conv')
-    rut_enc_conv = postData.get('rut_enc_conv')
-    nom_enc_conv = postData.get('nom_enc_conv')
-    ap_enc_conv = postData.get('ap_enc_conv')
-    email_enc_conv = postData.get('email_enc_conv')
-    celular = postData.get('celular')
+        cuentaEncConvenio.rut_enc_conv = rut_enc_conv
+        cuentaEncConvenio.nom_enc_conv = nom_enc_conv
+        cuentaEncConvenio.ap_enc_conv = ap_enc_conv
+        cuentaEncConvenio.email_enc_conv = email_enc_conv
+        cuentaEncConvenio.celular = celular
 
-    cuentaEncConvenio = EncConvenio.objects.get(id_enc_conv=id_enc_conv)
-    cuentaEncConvenio.rut_enc_conv = rut_enc_conv
-    cuentaEncConvenio.nom_enc_conv = nom_enc_conv
-    cuentaEncConvenio.ap_enc_conv = ap_enc_conv
-    cuentaEncConvenio.email_enc_conv = email_enc_conv
-    cuentaEncConvenio.celular = celular
+        error_message = None
+        if(not cuentaEncConvenio.rut_enc_conv):
+            error_message = 'El Rut es requerido'
+        elif len(cuentaEncConvenio.rut_enc_conv) < 8:
+            error_message = 'El Rut debe tener mas de 8 digitos'
+        elif len(cuentaEncConvenio.rut_enc_conv) > 12:
+            error_message = 'El Rut no debe tener mas de 12 digitos'
 
-    error_message = None
-    if(not cuentaEncConvenio.rut_enc_conv):
-        error_message = 'El Rut es requerido'
-    elif len(cuentaEncConvenio.rut_enc_conv) < 8:
-        error_message = 'El Rut debe tener mas de 8 digitos'
-    elif len(cuentaEncConvenio.rut_enc_conv) > 12:
-        error_message = 'El Rut no debe tener mas de 12 digitos'
+        elif not cuentaEncConvenio.nom_enc_conv:
+            error_message = 'El Nombre es requerido'
+        elif len(cuentaEncConvenio.nom_enc_conv) < 4:
+            error_message = 'El Nombre debe tener mas de 4 caracteres'
 
-    elif not cuentaEncConvenio.nom_enc_conv:
-        error_message = 'El Nombre es requerido'
-    elif len(cuentaEncConvenio.nom_enc_conv) < 4:
-        error_message = 'El Nombre debe tener mas de 4 caracteres'
+        elif not cuentaEncConvenio.ap_enc_conv:
+            error_message = 'El Apellido  es requerida'
+        elif len(cuentaEncConvenio.ap_enc_conv) < 2:
+            error_message = 'EL appelido debe tener mas de 2'
 
-    elif not cuentaEncConvenio.ap_enc_conv:
-        error_message = 'El Apellido  es requerida'
-    elif len(cuentaEncConvenio.ap_enc_conv) < 2:
-        error_message = 'EL appelido debe tener mas de 2'
+        elif not cuentaEncConvenio.email_enc_conv:
+            error_message = 'El email es requerido'
 
-    elif not cuentaEncConvenio.email_enc_conv:
-        error_message = 'El email es requerido'
+        elif not cuentaEncConvenio.celular:
+            error_message = 'EL celular es requierodo'
+        elif len(cuentaEncConvenio.celular) < 7:
+            error_message = 'El celular debe tener mas de 7 digitos'
+        elif len(cuentaEncConvenio.celular) > 9:
+            error_message = 'El celular no debe tener mas de 9 digitos'
 
-    elif not cuentaEncConvenio.celular:
-        error_message = 'EL celular es requierodo'
-    elif len(cuentaEncConvenio.celular) < 7:
-        error_message = 'El celular debe tener mas de 7 digitos'
-    elif len(cuentaEncConvenio.celular) > 9:
-        error_message = 'El celular no debe tener mas de 9 digitos'
-
-    # guardar datos de cuenta
-    if not error_message:
-        cuentaEncConvenio.save()
-        messages.success(request, "Cuenta Encargado Convenio Editada")
-        return redirect('gestionar-enc-convenio')
-    else:
-        cuentasEncConvenio = EncConvenio.objects.all()
-        email = request.session['cuentaAdmin']
-        data = {
-            'email': email,
-            'error': error_message,
-            'cuentaEncConvenio': cuentaEncConvenio,
-            'cuentasEncConvenio': cuentasEncConvenio
-        }
+        # guardar datos de cuenta
+        if not error_message:
+            cuentaEncConvenio.save()
+            messages.success(request, "Cuenta Encargado Convenio Editada")
+            return redirect('gestionar-enc-convenio')
+        else:
+            email = request.session['cuentaAdmin']
+            cuentasEncConvenio = EncConvenio.objects.all()
+            data = {
+                'email': email,
+                'error': error_message,
+                'cuentasEncConvenio': cuentasEncConvenio,
+                'cuentaEncConvenio': cuentaEncConvenio
+            }
         return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data)
+    return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data1)
 
 
 def eliminar_cuenta_enc_convenio(request, id_enc_conv):
@@ -663,80 +659,79 @@ def generar_cuenta_repartidor(request):
             }
         return render(request, 'administrador/cuenta/repartidor/gestionarRepartidor.html', data)
 
-
-def obtener_datos_cuenta_repartidor(request, id_repartidor):
-    email = request.session['cuentaAdmin']
-    cuentaRepartidor = Repartidor.objects.get(id_repartidor=id_repartidor)
-    data = {'email': email,
-            'cuentaRepartidor': cuentaRepartidor}
-    return render(request, 'administrador/cuenta/repartidor/edicionRepartidor.html', data)
-
-
 def editar_cuenta_repartidor(request):
-    postData = request.POST
-    id_repartidor = postData.get('id_repartidor')
-    rut_repartidor = postData.get('rut_repartidor')
-    nombre_repartidor = postData.get('nombre_repartidor')
-    apellido_repartidor = postData.get('apellido_repartidor')
-    email_repartidor = postData.get('email_repartidor')
-    tipo_veh = postData.get('tipo_veh')
-    patente_veh_moto = postData.get('patente_veh_moto')
-    patente_veh_auto = postData.get('patente_veh_auto')
-    celular = postData.get('celular')
+    email = request.session['cuentaAdmin']
+    id_repartidor = request.GET["id_repartidor"]
+    cuentaRepartidor = get_object_or_404(Repartidor, id_repartidor=id_repartidor)
+    data1 = {
+        'email': email,
+        'cuentaRepartidor': cuentaRepartidor
+    }
+    if request.method == "POST":
+        rut_repartidor = request.POST['rut_repartidor']
+        nombre_repartidor = request.POST['nombre_repartidor']
+        apellido_repartidor = request.POST['apellido_repartidor']
+        email_repartidor = request.POST['email_repartidor']
+        tipo_veh = request.POST['tipo_veh']
+        patente_veh_moto = request.POST['patente_veh_moto']
+        patente_veh_auto = request.POST['patente_veh_auto']
+        celular = request.POST['celular']
 
-    cuentaRepartidor = Repartidor.objects.get(id_repartidor=id_repartidor)
-    cuentaRepartidor.rut_repartidor = rut_repartidor
-    cuentaRepartidor.nombre_repartidor = nombre_repartidor
-    cuentaRepartidor.apellido_repartidor = apellido_repartidor
-    cuentaRepartidor.email_repartidor = email_repartidor
-    cuentaRepartidor.tipo_veh = tipo_veh
-    cuentaRepartidor.patente_veh = (patente_veh_moto or patente_veh_auto)
-    cuentaRepartidor.celular = celular
+        cuentaRepartidor.rut_repartidor = rut_repartidor
+        cuentaRepartidor.nombre_repartidor = nombre_repartidor
+        cuentaRepartidor.apellido_repartidor = apellido_repartidor
+        cuentaRepartidor.email_repartidor = email_repartidor
+        cuentaRepartidor.tipo_veh = tipo_veh
+        cuentaRepartidor.patente_veh = (patente_veh_moto or patente_veh_auto)
+        cuentaRepartidor.celular = celular
 
-    error_message = None
-    if(not cuentaRepartidor.rut_repartidor):
-        error_message = 'El Rut es requerido'
-    elif len(cuentaRepartidor.rut_repartidor) < 8:
-        error_message = 'El Rut debe tener mas de 8 digitos'
-    elif len(cuentaRepartidor.rut_repartidor) > 12:
-        error_message = 'El Rut no debe tener mas de 12 digitos'
+        error_message = None
+        if(not cuentaRepartidor.rut_repartidor):
+            error_message = 'El Rut es requerido'
+        elif len(cuentaRepartidor.rut_repartidor) < 8:
+            error_message = 'El Rut debe tener mas de 8 digitos'
+        elif len(cuentaRepartidor.rut_repartidor) > 12:
+            error_message = 'El Rut no debe tener mas de 12 digitos'
 
-    elif not cuentaRepartidor.nombre_repartidor:
-        error_message = 'El Nombre es requerido'
-    elif len(cuentaRepartidor.nombre_repartidor) < 4:
-        error_message = 'El Nombre debe tener mas de 4 caracteres'
+        elif not cuentaRepartidor.nombre_repartidor:
+            error_message = 'El Nombre es requerido'
+        elif len(cuentaRepartidor.nombre_repartidor) < 4:
+            error_message = 'El Nombre debe tener mas de 4 caracteres'
 
-    elif not cuentaRepartidor.apellido_repartidor:
-        error_message = 'El Apellido  es requerida'
-    elif len(cuentaRepartidor.apellido_repartidor) < 2:
-        error_message = 'EL appelido debe tener mas de 2'
+        elif not cuentaRepartidor.apellido_repartidor:
+            error_message = 'El Apellido  es requerida'
+        elif len(cuentaRepartidor.apellido_repartidor) < 2:
+            error_message = 'EL appelido debe tener mas de 2'
 
-    elif not cuentaRepartidor.email_repartidor:
-        error_message = 'El email es requerido'
+        elif not cuentaRepartidor.email_repartidor:
+            error_message = 'El email es requerido'
 
-    elif not cuentaRepartidor.tipo_veh:
-        error_message = 'Tipo de vehiculo requerido'
+        elif not cuentaRepartidor.tipo_veh:
+            error_message = 'Tipo de vehiculo requerido'
 
-    elif not cuentaRepartidor.celular:
-        error_message = 'EL celular es requierodo'
-    elif len(cuentaRepartidor.celular) < 7:
-        error_message = 'El celular debe tener mas de 7 digitos'
-    elif len(cuentaRepartidor.celular) > 9:
-        error_message = 'El celular no puede tener mas de 9 digitos'
+        elif not cuentaRepartidor.celular:
+            error_message = 'EL celular es requierodo'
+        elif len(cuentaRepartidor.celular) < 7:
+            error_message = 'El celular debe tener mas de 7 digitos'
+        elif len(cuentaRepartidor.celular) > 9:
+            error_message = 'El celular no puede tener mas de 9 digitos'
 
-    # guardar datos de cuenta
-    if not error_message:
-        cuentaRepartidor.save()
-        messages.success(request, "Cuenta Repartidor Editada")
-        return redirect('gestionar-repartidor')
-    else:
-        email = request.session['cuentaAdmin']
-        data = {
-            'email': email,
-            'error': error_message,
-            'cuentaRepartidor': cuentaRepartidor
-        }
+        # guardar datos de cuenta
+        if not error_message:
+            cuentaRepartidor.save()
+            messages.success(request, "Cuenta Repartidor Editada")
+            return redirect('gestionar-repartidor')
+        else:
+            email = request.session['cuentaAdmin']
+            cuentasRepartidor = Repartidor.objects.all()
+            data = {
+                'email': email,
+                'error': error_message,
+                'cuentasRepartidor': cuentasRepartidor,
+                'cuentaRepartidor': cuentaRepartidor
+            }
         return render(request, 'administrador/cuenta/repartidor/edicionRepartidor.html', data)
+    return render(request, 'administrador/cuenta/repartidor/edicionRepartidor.html', data1)
 
 
 def eliminar_cuenta_repartidor(request, id_repartidor):
@@ -876,10 +871,11 @@ def agregar_plato(request):
     }
 
     if request.method == 'POST':
-        formulario = PlatoForm(request.POST)
+        formulario = PlatoForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "Plato guardado correctamente"
+            messages.success(request, "Agregado Correctamente")
+            return redirect(to="agregar_plato")
         else:
             data["form"] = formulario
 
@@ -903,7 +899,8 @@ def modificar_plato(request, id_plato):
         'form': PlatoForm(instance=plato)
     }
     if request.method == 'POST':
-        formulario = PlatoForm(data=request.POST, instance=plato)
+        formulario = PlatoForm(
+            data=request.POST, instance=plato, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificado Correctamente")

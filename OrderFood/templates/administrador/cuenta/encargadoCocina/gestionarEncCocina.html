@@ -76,6 +76,8 @@
                         <th>Experiencia Laboral</th>
                         <th>Email</th>
                         <th>Celular</th>
+                        <th>Opciones</th>
+
                     </tr>
 
                     {% for cuentasEncCocina in cuentasEncCocina %}
@@ -86,7 +88,7 @@
                         <th>{{cuentasEncCocina.email_enc_coc}}</th>
                         <th>{{cuentasEncCocina.celular}}</th>
                         <td>
-                            <a href="{% url 'edicion-cuenta-enc-cocina' cuentasEncCocina.id_enc_coc %}"
+                            <a href="{% url 'editar-cuenta-enc-cocina' %}?id_enc_coc={{cuentasEncCocina.id_enc_coc}}"
                                 class="btn btn-dark btn-sm">Modificar</a>
                             <a href="{% url 'eliminar-cuenta-enc-cocina' cuentasEncCocina.id_enc_coc %}"
                                 class="btn btn-danger btn-sm">Eliminar</a>
