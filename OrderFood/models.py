@@ -69,7 +69,7 @@ class Cliente(models.Model):
     direccion_cliente = models.CharField(max_length=50)
     convenio = models.CharField(max_length=1, null=True)
     contraseña1 = models.CharField(max_length=100)
-    contraseña2 = models.CharField(max_length=100)
+    contraseña2 = models.CharField(max_length=110)
     
     class Meta:
         db_table = 'cliente'
