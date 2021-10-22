@@ -58,20 +58,19 @@ class Carta(models.Model):
 
 class Cliente(models.Model):
     # This field type is a guess.
-    rut_cli = models.CharField(max_length=50, primary_key=True)
-    nombre_cli = models.CharField(db_column='nombre_cli',max_length=50)  # This field type is a guess.
+    id_cliente = models.AutoField(primary_key=True)
+    rut_cli = models.CharField(max_length=50, null=True)
+    nombre_cli = models.CharField(max_length=50)  # This field type is a guess.
     apaterno_cli = models.CharField(max_length=50)
     amaterno_cli = models.CharField(max_length=50)
     fono_cli = models.IntegerField()
     email_cli = models.CharField(max_length=50)  # This field type is a guess.
-    saldo_cli = models.IntegerField()
-    # Field renamed because it was a Python reserved word. This field type is a guess.
-    password = models.TextField(db_column='password')
-    # This field type is a guess.
-    # Domicilio = models.CharField(max_length=50)
-    Domicilio = models.TextField(db_column='direccion_cliente')
-    convenio = models.CharField(max_length=1)
-
+    saldo_cli = models.IntegerField(null=True)
+    direccion_cliente = models.CharField(max_length=50)
+    convenio = models.CharField(max_length=1, null=True)
+    contraseña1 = models.CharField(max_length=100)
+    contraseña2 = models.CharField(max_length=100)
+    
     class Meta:
         db_table = 'cliente'
 
