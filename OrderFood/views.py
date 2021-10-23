@@ -803,7 +803,39 @@ def proveedor(request):
     return render(request, 'proveedor/contactoProveedor.html', data)
 
 
-# Home repartidor
+def listar_proveedor(request):
+    proveedores = Proveedor.objects.all()
+    data = {
+        'proveedores': proveedores
+    }
+
+    return render(request, 'proveedor/listar.html', data)
+
+
+def modificar_proveedor(request, id):
+
+    proveedor = get_object_or_404(Proveedor, id_proveedor=id)
+
+    data = {
+        'form': ProveedorForm(instance=proveedor)
+    }
+
+    if request.method == 'POST':
+        formulario = ProveedorForm(data=request.POST, instance=proveedor)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to="listar_proveedor")
+        data["form"] = formulario
+
+    return render(request, 'proveedor/modificar.html', data)
+
+
+def eliminar_proveedor(request, id):
+
+    proveedor = get_object_or_404(Proveedor, id_proveedor=id)
+    proveedor.delete()
+    return redirect(to="listar_proveedor")
+
 
 # pedidos
 

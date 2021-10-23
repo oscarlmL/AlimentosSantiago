@@ -27,20 +27,26 @@ urlpatterns = [
     path('editar-cuenta-repartidor/', auth_middleware(editar_cuenta_repartidor), name='editar-cuenta-repartidor'),
     path('eliminar-cuenta-repartidor/<id_repartidor>/', eliminar_cuenta_repartidor, name='eliminar-cuenta-repartidor'),
 
+    #path Proveedor
     path('proveedor', proveedor, name="proveedor"),
+    path('listar-proveedor/', listar_proveedor, name="listar_proveedor"),
+    path('modificar-proveedor/<id>/', modificar_proveedor, name="modificar_proveedor"),
+    path('eliminar-proveedor/<id>/', eliminar_proveedor, name="eliminar_proveedor"),
+    #End Path
 
-    
-    path('proveedor/', proveedor, name="proveedor"),
-    path('agregar-plato/', agregar_plato, name="agregar_plato"),
-    path('listar-platos/', listar_platos, name='listar_plato'),
-    path('modificar-plato/<id_plato>/', modificar_plato, name="modificar_plato"),
-    path('eliminar-plato/<id_plato>/', eliminar_plato, name="eliminar_plato"),
-   # path('repartidor', repartidor, name="repartidor"),
+    #path Pedidos
     path('agregar-pedido/', agregar_pedido, name="agregar_pedido"),
     path('listar-pedido/', listar_pedido, name="listar_pedido"),
     path('modificar-pedido/<id>/', modificar_pedido, name="modificar_pedido"),
     path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
+    #End Path
 
+    path('agregar-plato/', agregar_plato, name="agregar_plato"),
+    path('listar-platos/', listar_platos, name='listar_plato'),
+    path('modificar-plato/<id_plato>/', modificar_plato, name="modificar_plato"),
+    path('eliminar-plato/<id_plato>/', eliminar_plato, name="eliminar_plato"),
+    #path('repartidor', repartidor, name="repartidor"),
+ 
     #path encargadoEmpresasConvenio
     path('agregar-empresa', agregar_empresa , name='agregar_empresa'),
     path('listar-empresa', listar_empresa, name='listar_empresa'),
