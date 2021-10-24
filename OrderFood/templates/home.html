@@ -17,11 +17,23 @@
     <div class="container">
         <section id="menu">
             <div class="block menu1">
-                <div class="buttons-container">
+                <div class="form-group">
+                    <form class="d-flex mx-auto formBuscar" action=""  method="GET">
+                        {{buscar_plato.form.nom_plato}}
+                        {{buscar_plato.form.Restaurant}}
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-round btn-block rounded" value="Buscar">
+                            </div>
+                    </form> 
+                </div>
+                <br>
+                <br>
+
+                <!-- <div class="buttons-container">
                     {% for r in rest %}
                         <a href="#" class="button button--is-active" data-target="pizzaMenu">{{r.nombre_rest}}</a>
                     {% endfor %}
-                </div>
+                </div> -->
                 
                 {% for plato in platos %}
                     <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">

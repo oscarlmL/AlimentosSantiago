@@ -8,6 +8,8 @@ from django.views import View
 from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm, ClienteForm
 from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm
+from .filters import buscarPlato
+
 
 
 # Create your views here.
@@ -16,7 +18,9 @@ def home(request):
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
     platos = Plato.objects.all()
     rest = Restaurant.objects.all()
-    data = {'email': email, 'platos': platos, 'rest': rest}
+    buscar_plato = buscarPlato(request.GET, queryset=platos)
+    platos = buscar_plato.qs
+    data = {'email': email, 'platos': platos, 'rest': rest,'buscar_plato':buscar_plato}
     return render(request, 'home.html', data)
 
 # Modulo administracion

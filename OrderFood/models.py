@@ -206,6 +206,9 @@ class Ingrediente(models.Model):
     descp_ing = models.CharField(max_length=50)   # This field type is a guess.
     tipo_ing = models.CharField(max_length=50)  # This field type is a guess.
 
+    def __str__(self):
+        return self.nom_ing
+
     class Meta:
         db_table = 'ingrediente'
 
@@ -246,8 +249,8 @@ class Plato(models.Model):
     nom_plato = models.CharField(max_length=50)   # This field type is a guess.
     valor_plato = models.IntegerField()
     descripcion = models.CharField(max_length=50)
-    Ingrediente = models.ForeignKey('Ingrediente', on_delete=models.PROTECT, null=True)
-    Restaurant = models.ForeignKey('Restaurant', on_delete=models.PROTECT, null=True)
+    Ingrediente = models.ForeignKey('Ingrediente', on_delete=models.CASCADE, null=True)
+    Restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE, null=True)
     Imagen = models.ImageField(default = None, upload_to="platos")
 
     @staticmethod
@@ -331,6 +334,9 @@ class Restaurant(models.Model):
 
     class Meta:
         db_table = 'restaurant'
+
+    def __str__(self):
+        return self.nombre_rest
 
 
 class Suscripcion(models.Model):
