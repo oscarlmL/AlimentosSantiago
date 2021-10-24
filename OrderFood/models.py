@@ -263,11 +263,10 @@ class Plato(models.Model):
 
 class Proveedor(models.Model):
     id_proveedor = models.AutoField(primary_key=True)
-    rol_local = models.CharField(max_length=50)  # This field type is a guess.
-    # This field type is a guess.models.CharField(max_length=50)
     nom_proveedor = models.CharField(max_length=50)
+    rol_local = models.CharField(max_length=50)  
     celular = models.IntegerField()
-    descripcion = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=500)
 
     class Meta:
         db_table = 'proveedor'

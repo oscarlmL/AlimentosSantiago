@@ -1,4 +1,5 @@
 from django import forms
+import django
 from django.db.models import fields
 from django.forms import widgets
 from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa
@@ -6,16 +7,35 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
 
+
 class ProveedorForm(forms.ModelForm):
+
+    nom_proveedor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del proveedor'}))
+    rol_local = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Rol del local'}))
+    celular = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'+56970932589'}))
+    descripcion = forms.CharField(max_length=500, widget=forms.Textarea(attrs={'class': 'form-control','placeholder':'Tu oferta de productos'}))
+
+
+    def clean_nom_proveedor(self):
+        nom_proveedor = self.cleaned_data["nom_proveedor"]
+        existe = Proveedor.objects.filter(nom_proveedor__iexact=nom_proveedor).exists()
+
+        if existe:
+            raise ValidationError("Este nombre ya existe")
+
+        return nom_proveedor
+
 
     class Meta: 
         model = Proveedor
-        fields = ['rol_local', 'nom_proveedor','celular','descripcion']
+        fields = ['nom_proveedor','rol_local','celular','descripcion']
 
-    rol_local = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    nom_proveedor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    celular = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    descripcion = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+
+        
+
+
+
 
 
 class PedidoForm(forms.ModelForm):
