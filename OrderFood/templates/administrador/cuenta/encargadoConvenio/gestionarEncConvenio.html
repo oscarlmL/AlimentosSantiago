@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% block contenido %}
 {% load static %}
+{% block js %}
+<script>
+    function eliminarEncConvenio(id_enc_conv){
+        Swal.fire({
+            "title":"¿Estas seguro?",
+            "text":"esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"Cancelar",
+            "confirmButtonText":"Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545",
+            "cancelButtonColor":"#303030"
+
+
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminar-cuenta-enc-convenio/"+id_enc_conv+"/"
+            }
+        })
+    }
+</script>
+{% endblock %}
 <br>
 <br>
 <br>
@@ -88,7 +112,7 @@
                     <td>
                         <a href="{% url 'editar-cuenta-enc-convenio' %}?id_enc_conv={{cuentasEncConvenio.id_enc_conv}} "
                             class="btn btn-dark btn-sm">Modificar</a>
-                        <a href="{% url 'eliminar-cuenta-enc-convenio' cuentasEncConvenio.id_enc_conv %}"
+                        <a href="#" onclick="eliminarEncConvenio({{cuentasEncConvenio.id_enc_conv}}) "
                             class="btn btn-danger btn-sm">Eliminar</a> 
                     </td>
                 </tr>

@@ -1,7 +1,30 @@
 {% extends 'base.html' %}
 {% block contenido %}
 {% load static %}
+{% block js %}
+<script>
+    function eliminarRepartidor(id_repartidor){
+        Swal.fire({
+            "title":"¿Estas seguro?",
+            "text":"esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"Cancelar",
+            "confirmButtonText":"Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545",
+            "cancelButtonColor":"#303030"
 
+
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminar-cuenta-repartidor/"+id_repartidor+"/"
+            }
+        })
+    }
+</script>
+{% endblock %}
 <br>
 <br>
 <br>
@@ -116,7 +139,7 @@
                         <td>
                             <a href="{% url 'editar-cuenta-repartidor' %}?id_repartidor={{cuentasRepartidor.id_repartidor}}"
                                 class="btn btn-dark btn-sm">Modificar</a>
-                            <a href="{% url 'eliminar-cuenta-repartidor' cuentasRepartidor.id_repartidor %}"
+                            <a href="#" onclick="eliminarRepartidor({{cuentasRepartidor.id_repartidor}})"
                                 class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
