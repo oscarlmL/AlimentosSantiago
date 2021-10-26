@@ -16,22 +16,32 @@
         {% endfor %}
         {% endif %}
         <h1>Editar datos Encargado Cocina</h1>
-        <form method="POST" action="/editar-cuenta-enc-cocina/">
+        <form method="POST" action="">
             {% csrf_token %}
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <input type="hidden" class="form-control" name="id_enc_coc" placeholder="" id=""
                     value="{{cuentaEncCocina.id_enc_coc}}" readonly required maxlength="12">
-            </div>
+            </div> -->
             <div class="form-group">
                 <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo" id=""
                     value="{{cuentaEncCocina.nom_enc_coc}}">
             </div>
             <div class="form-group">
                 <select class="form-control" id="validationCustom04" name="titulo" required
-                    value="{{cuentaEncCocina.titulo}}">
-                    <option selected disabled value="">--- Seleccionar Tipo de Titulo ---</option>
+                    value="">
+                    <option value="">--- Seleccionar Tipo de Titulo ---</option>
+                    {% if cuentaEncCocina.titulo == "Tecnico" %}
+                    <option value="Tecnico" selected>Técnico</option>
+                    {% else %}
                     <option value="Tecnico">Técnico</option>
+                    {% endif %}
+
+                    {% if cuentaEncCocina.titulo == "Profesional" %}
+                    <option value="Profesional"selected>Profesional</option>
+                    {% else %}
                     <option value="Profesional">Profesional</option>
+                    {% endif %}
+
                 </select>
             </div>
             <div class="form-group">

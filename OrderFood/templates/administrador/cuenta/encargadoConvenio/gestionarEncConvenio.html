@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% block contenido %}
 {% load static %}
+{% block js %}
+<script>
+    function eliminarEncConvenio(id_enc_conv){
+        Swal.fire({
+            "title":"¿Estas seguro?",
+            "text":"esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"Cancelar",
+            "confirmButtonText":"Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545",
+            "cancelButtonColor":"#303030"
+
+
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminar-cuenta-enc-convenio/"+id_enc_conv+"/"
+            }
+        })
+    }
+</script>
+{% endblock %}
 <br>
 <br>
 <br>
@@ -74,6 +98,8 @@
                     <th>Apellido</th>
                     <th>Email</th>
                     <th>Celular</th>
+                    <th>Opciones</th>
+
                 </tr>
             
                 {% for cuentasEncConvenio in cuentasEncConvenio %}
@@ -84,9 +110,9 @@
                     <th>{{cuentasEncConvenio.email_enc_conv}}</th>
                     <th>{{cuentasEncConvenio.celular}}</th>
                     <td>
-                        <a href="{% url 'edicion-cuenta-enc-convenio' cuentasEncConvenio.id_enc_conv %}"
+                        <a href="{% url 'editar-cuenta-enc-convenio' %}?id_enc_conv={{cuentasEncConvenio.id_enc_conv}} "
                             class="btn btn-dark btn-sm">Modificar</a>
-                        <a href="{% url 'eliminar-cuenta-enc-convenio' cuentasEncConvenio.id_enc_conv %}"
+                        <a href="#" onclick="eliminarEncConvenio({{cuentasEncConvenio.id_enc_conv}}) "
                             class="btn btn-danger btn-sm">Eliminar</a> 
                     </td>
                 </tr>

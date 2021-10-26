@@ -84,12 +84,12 @@ WSGI_APPLICATION = 'AlimentosSantiago.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
-       'NAME': '44.196.189.75:51521/xe',
+       'ENGINE': 'django.db.backends.oracle',
+      'NAME': '44.196.189.75:51521/xe',
        'USER': 'C##GRUPO',
-        'PASSWORD': '1234',
+       'PASSWORD': '1234',
         'TEST': {
-           'USER': 'default_test',
+          'USER': 'default_test',
             'TBLSPACE': 'default_test_tbls',
            'TBLSPACE_TMP': 'default_test_tbls_tmp',
         },
