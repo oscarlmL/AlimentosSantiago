@@ -24,8 +24,6 @@ def home(request):
     return render(request, 'home.html', data)
 
 # Modulo administracion
-
-
 def editar_perfil_admin(request):
     check = Administrador.objects.filter(
         email_admin=request.session['cuentaAdmin'])
@@ -73,6 +71,60 @@ def editar_perfil_admin(request):
                 'error': error_message,
             }
     return render(request, 'administrador/editarPerfil.html', data)
+
+def cambiar_contraseña_admin(request):
+    check = Administrador.objects.filter(
+        email_admin=request.session['cuentaAdmin'])
+    if len(check) > 0:
+        email = request.session['cuentaAdmin']
+        data = Administrador.objects.get(
+            email_admin=request.session['cuentaAdmin'])
+        data = {'data': data, 'email': email}
+    if request.method=="POST":
+        contraseña_actual = request.POST['contraseña_actual']
+        contraseña1 = request.POST['nueva_contraseña']
+        contraseña2 = request.POST['con_nueva_contraseña']
+        cuentaAdmin = Administrador.get_admin_by_email(email)
+        if cuentaAdmin:
+            flag = check_password(contraseña_actual, cuentaAdmin.contraseña1)
+            error_message = None
+            if flag:
+                admin = Administrador.objects.get(email_admin=request.session['cuentaAdmin'])
+                admin.contraseña1 = contraseña1
+                admin.contraseña2 = contraseña2
+
+                error_message = None
+                if len(contraseña1 and contraseña2) < 5:
+                    error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+                elif len(contraseña1 and contraseña2) > 10:
+                    error_message = 'Las contraseñas no pueden tener más de 10 caracteres'
+                elif contraseña2 != contraseña1:
+                    error_message = 'Las contraseñas no coinciden'
+                    
+                if not error_message:
+                    admin.contraseña1 = make_password(admin.contraseña1)
+                    admin.contraseña2 = make_password(admin.contraseña2)
+                    admin.save()
+                    messages.success(request, "Contraseña Cambiada Correctamente")
+                    return redirect('cambiar-contraseña')
+                else:
+                    email = request.session['cuentaAdmin']
+                    data = {
+                        'email': email,
+                        'error': error_message,
+            
+                    }
+                return render(request, 'administrador/cambiar_contraseña.html', data)
+            else:
+                error_message = 'La contraseña actual es incorrecta'
+                email = request.session['cuentaAdmin']
+                data = {
+                        'email': email,
+                        'error': error_message,
+            
+                    }
+            return render(request, 'administrador/cambiar_contraseña.html', data)
+    return render(request,"administrador/cambiar_contraseña.html")
 
 
 def editar_perfil_enc_cocina(request):
@@ -631,7 +683,7 @@ def generar_cuenta_repartidor(request):
             error_message = 'Las contraseñas deben tener mas de 5 caracteres'
 
         elif len(contraseña1 and contraseña2) > 10:
-            error_message = 'Las contraseñas no puede ser mayor a 10 caracteres'
+            error_message = 'Las contraseñas no puedem tener más de 10 caracteres'
 
         elif contraseña2 != contraseña1:
             error_message = 'Las contraseñas no coinciden'

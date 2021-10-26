@@ -31,6 +31,8 @@ class Administrador(models.Model):
 
 
 
+
+
 class Cajero(models.Model):
     id_cajero = models.AutoField(primary_key=True)
     nom_cajero = models.CharField(max_length=50)  # This field type is a guess.
@@ -43,7 +45,6 @@ class Cajero(models.Model):
 
 class Cliente(models.Model):
     # This field type is a guess.
-    id_cliente = models.AutoField(primary_key=True)
     rut_cli = models.CharField(max_length=50, null=True)
     nombre_cli = models.CharField(max_length=50)  # This field type is a guess.
     apaterno_cli = models.CharField(max_length=50)
@@ -51,7 +52,6 @@ class Cliente(models.Model):
     fono_cli = models.IntegerField()
     email_cli = models.CharField(max_length=50)  # This field type is a guess.
     saldo_cli = models.IntegerField(null=True)
-    direccion_cliente = models.CharField(max_length=50)
     convenio = models.CharField(max_length=1, null=True)
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
@@ -235,8 +235,8 @@ class Pedido(models.Model):
     estado = models.CharField(max_length=50, choices=estado_pedido)   # This field type is a guess.
     # This field type is a guess.
     fecha_pedido = models.CharField(max_length=50)
-    cliente_rut_cli = models.ForeignKey(
-        Cliente, models.DO_NOTHING, db_column='cliente_rut_cli')
+    cliente_id = models.ForeignKey(
+        Cliente, models.DO_NOTHING, db_column='cliente_id')
     restaurant_id_restaurante = models.ForeignKey(
         'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
 

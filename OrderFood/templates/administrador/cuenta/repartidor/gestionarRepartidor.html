@@ -47,9 +47,10 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="">
+                    <form method="POST" action="" id="form-repartidor">
                         {% csrf_token %}
                         <div class="form-group">
+                            <label for="">ruuuuuuuut</label>
                             <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
                                 value="{{values.rut_repartidor}}" maxlength="12" onkeyup="formatoRut(this)">
                         </div>
