@@ -1248,5 +1248,15 @@ def eliminar_empresa(request, rut_emp):
 
 # registro de cliente sin convenio
 
-
-
+def registro(request):
+    data = {
+        'form': ClienteForm()
+    }
+    if request.method == 'POST':
+        formulario = ClienteForm(request.POST)
+        if formulario.is_valid():
+            formulario.save() 
+            data["mensaje"] = "Guardado correctamente"
+        else:
+            data["form"] = formulario
+    return render(request, 'registro.html', data)
