@@ -1259,4 +1259,4 @@ def registro(request):
             data["mensaje"] = "Guardado correctamente"
         else:
             data["form"] = formulario
-    return render(request, 'registro.html', data)
+    return render(request, 'registration/registro.html', data)
