@@ -618,7 +618,8 @@ def editar_cuenta_enc_cocina(request):
     return render(request, 'administrador/cuenta/encargadoCocina/edicionEncCocina.html', data1)
 
 
-def eliminar_cuenta_enc_cocina(request, id_enc_coc):
+def eliminar_cuenta_enc_cocina(request):
+    id_enc_coc = request.GET["id_enc_coc"]
     cuentasEncCocina = EncCocina.objects.get(id_enc_coc=id_enc_coc)
     cuentasEncCocina.delete()
     return redirect('gestionar-encCocina')
@@ -787,7 +788,8 @@ def editar_cuenta_enc_convenio(request):
     return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data1)
 
 
-def eliminar_cuenta_enc_convenio(request, id_enc_conv):
+def eliminar_cuenta_enc_convenio(request):
+    id_enc_conv = request.GET["id_enc_conv"]
     cuentaEncConvenio = EncConvenio.objects.get(id_enc_conv=id_enc_conv)
     cuentaEncConvenio.delete()
     return redirect('gestionar-enc-convenio')
@@ -978,15 +980,14 @@ def editar_cuenta_repartidor(request):
     return render(request, 'administrador/cuenta/repartidor/edicionRepartidor.html', data1)
 
 
-def eliminar_cuenta_repartidor(request, id_repartidor):
+def eliminar_cuenta_repartidor(request):
+    id_repartidor = request.GET["id_repartidor"]
     cuentaRepartidor = get_object_or_404(
         Repartidor, id_repartidor=id_repartidor)
     cuentaRepartidor.delete()
     return redirect('gestionar-repartidor')
 
 # Fin Modulo Administración
-
-
 class Login(View):
     def get(self, request):
         return render(request, 'login.html')
@@ -1060,9 +1061,9 @@ def listar_proveedor(request):
     return render(request, 'proveedor/listar.html', data)
 
 
-def modificar_proveedor(request, id):
-
-    proveedor = get_object_or_404(Proveedor, id_proveedor=id)
+def modificar_proveedor(request):
+    id_proveedor = request.GET["id_proveedor"]
+    proveedor = get_object_or_404(Proveedor, id_proveedor=id_proveedor)
 
     data = {
         'form': ProveedorForm(instance=proveedor)
@@ -1078,9 +1079,9 @@ def modificar_proveedor(request, id):
     return render(request, 'proveedor/modificar.html', data)
 
 
-def eliminar_proveedor(request, id):
-
-    proveedor = get_object_or_404(Proveedor, id_proveedor=id)
+def eliminar_proveedor(request):
+    id_proveedor = request.GET["id_proveedor"]
+    proveedor = get_object_or_404(Proveedor, id_proveedor=id_proveedor)
     proveedor.delete()
     return redirect(to="listar_proveedor")
 
@@ -1171,8 +1172,8 @@ def listar_platos(request):
     return render(request, 'menu/listar.html', data)
 
 
-def modificar_plato(request, id_plato):
-
+def modificar_plato(request):
+    id_plato = request.GET["id_plato"]
     plato = get_object_or_404(Plato, id_plato=id_plato)
 
     data = {
@@ -1191,7 +1192,8 @@ def modificar_plato(request, id_plato):
     return render(request, 'menu/modificar.html', data)
 
 
-def eliminar_plato(request, id_plato):
+def eliminar_plato(request):
+    id_plato = request.GET["id_plato"]
     plato = get_object_or_404(Plato, id_plato=id_plato)
     plato.delete()
     messages.success(request, "Eliminado Correctamente")

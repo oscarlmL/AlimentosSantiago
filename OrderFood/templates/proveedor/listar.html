@@ -19,7 +19,7 @@
         })
         .then(function(result){
             if(result.isConfirmed){
-                window.location.href = "/eliminar-proveedor/"+id_proveedor+"/"
+                window.location.href = "{% url 'eliminar_proveedor' %}?id_proveedor="+id_proveedor+""
             }
         })
     }
@@ -46,7 +46,7 @@
                 <td>{{p.celular}}</td>
                 <td>{{p.descripcion}}</td>
                 <td>
-                    <a href="{% url 'modificar_proveedor' p.id_proveedor %}" class="btn btn-primary btn-sm">Modificar</a>
+                    <a href="{% url 'modificar_proveedor'%}?id_proveedor={{p.id_proveedor}}" class="btn btn-primary btn-sm">Modificar</a>
                     <a href="#" onclick="eliminarProveedor({{p.id_proveedor}}) " class="btn btn-danger btn-sm">Eliminar</a> 
                 </td>
             </tr>
