@@ -999,6 +999,7 @@ class Login(View):
         cuentaEncCocina = EncCocina.get_enc_cocina_by_email(email)
         cuentaEncConvenio = EncConvenio.get_enc_convenio_by_email(email)
         cuentaRepartidor = Repartidor.get_repartidor_by_email(email)
+        cuentaCliente = Cliente.get_cliente_by_email(email)
         error_message = None
         if cuentaAdmin:
             flag = check_password(contraseña, cuentaAdmin.contraseña1)
@@ -1031,6 +1032,14 @@ class Login(View):
                 print('eres :',email)
                 return redirect('home')
             else:
+                error_message = 'Email o Contraseña incorrecto'
+        elif cuentaCliente:
+            flag = check_password(contraseña, cuentaCliente.contraseña1),
+            if flag:
+                request.session['cuentaCliente'] = cuentaCliente.email_cli
+                print('eres: ', email)
+                return redirect('home')
+            else:    
                 error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
 
