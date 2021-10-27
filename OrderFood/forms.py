@@ -92,9 +92,7 @@ class GestionEmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
         fields = ['rut_emp','nom_emp', 'nom_gerente', 'cant_trabajadores','enc_convenio_id_enc_conv']
-        labels = {' display:none; '}
 
-    rut_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','onkeyup':'formatoRut(this)','placeholder':'Run Empresa'}))
         #fields = 'all'
 
 
@@ -103,4 +101,4 @@ class GestionEmpresaForm(forms.ModelForm):
     nom_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre Empresa'}))
     nom_gerente = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre Gerente'}))
     cant_trabajadores = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad Trabajadores'}))
-    #rut_emp = forms.CharField(max_length=9)    
+    #rut_emp = forms.CharField(max_length=9)
