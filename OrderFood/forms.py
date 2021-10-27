@@ -66,23 +66,25 @@ class RepartidorForm(forms.ModelForm):
     
 
 
+    
 class ClienteForm(forms.ModelForm):
 
     class Meta:
         model = Cliente
-        fields = ['rut_cli','nombre_cli', 'apaterno_cli','amaterno_cli', 'fono_cli', 'email_cli', 'saldo_cli', 'password', 'Domicilio', 'convenio']
+        fields = ['rut_cli','nombre_cli', 'apaterno_cli','amaterno_cli', 'fono_cli', 'email_cli', 'saldo_cli','convenio', 'contraseña1', 'contraseña2']
+        
+        
 
-
-    # RUT = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # apaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
-    # amaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
-    # fono_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    # email_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # saldo_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    Domicilio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # convenio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    rut_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Rut','label':''}),label = '')
+    nombre_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),label = '') 
+    apaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Apellido Paterno'}),label = '') 
+    amaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Apellido Materno'}),label = '') 
+    fono_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control','placeholder': 'Teléfono'}),label = '')
+    email_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Email'}),label = '')
+    saldo_cli = forms.CharField(widget=forms.HiddenInput(), initial=0)
+    convenio = forms.CharField(widget=forms.HiddenInput(), initial=0)
+    contraseña1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Contraseña'}),label = '')
+    contraseña2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Confirme Contraseña'}),label = '')
 
 
 class GestionEmpresaForm(forms.ModelForm):
