@@ -11,8 +11,9 @@ from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, Gestion
 from .filters import buscarPlato
 
 
-
 # Create your views here.
+
+
 def home(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
@@ -20,10 +21,13 @@ def home(request):
     rest = Restaurant.objects.all()
     buscar_plato = buscarPlato(request.GET, queryset=platos)
     platos = buscar_plato.qs
-    data = {'email': email, 'platos': platos, 'rest': rest,'buscar_plato':buscar_plato}
+    data = {'email': email, 'platos': platos,
+            'rest': rest, 'buscar_plato': buscar_plato}
     return render(request, 'home.html', data)
 
 # Modulo administracion
+
+
 def editar_perfil_admin(request):
     check = Administrador.objects.filter(
         email_admin=request.session['cuentaAdmin'])
@@ -72,6 +76,7 @@ def editar_perfil_admin(request):
             }
     return render(request, 'administrador/editarPerfil.html', data)
 
+
 def cambiar_contraseña_admin(request):
     check = Administrador.objects.filter(
         email_admin=request.session['cuentaAdmin'])
@@ -80,7 +85,7 @@ def cambiar_contraseña_admin(request):
         data = Administrador.objects.get(
             email_admin=request.session['cuentaAdmin'])
         data = {'data': data, 'email': email}
-    if request.method=="POST":
+    if request.method == "POST":
         contraseña_actual = request.POST['contraseña_actual']
         contraseña1 = request.POST['nueva_contraseña']
         contraseña2 = request.POST['con_nueva_contraseña']
@@ -89,7 +94,8 @@ def cambiar_contraseña_admin(request):
             flag = check_password(contraseña_actual, cuentaAdmin.contraseña1)
             error_message = None
             if flag:
-                admin = Administrador.objects.get(email_admin=request.session['cuentaAdmin'])
+                admin = Administrador.objects.get(
+                    email_admin=request.session['cuentaAdmin'])
                 admin.contraseña1 = contraseña1
                 admin.contraseña2 = contraseña2
 
@@ -100,31 +106,32 @@ def cambiar_contraseña_admin(request):
                     error_message = 'Las contraseñas no pueden tener más de 10 caracteres'
                 elif contraseña2 != contraseña1:
                     error_message = 'Las contraseñas no coinciden'
-                    
+
                 if not error_message:
                     admin.contraseña1 = make_password(admin.contraseña1)
                     admin.contraseña2 = make_password(admin.contraseña2)
                     admin.save()
-                    messages.success(request, "Contraseña Cambiada Correctamente")
+                    messages.success(
+                        request, "Contraseña Cambiada Correctamente")
                     return redirect('cambiar-contraseña')
                 else:
                     email = request.session['cuentaAdmin']
                     data = {
                         'email': email,
                         'error': error_message,
-            
+
                     }
                 return render(request, 'administrador/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
                 email = request.session['cuentaAdmin']
                 data = {
-                        'email': email,
-                        'error': error_message,
-            
-                    }
+                    'email': email,
+                    'error': error_message,
+
+                }
             return render(request, 'administrador/cambiar_contraseña.html', data)
-    return render(request,"administrador/cambiar_contraseña.html")
+    return render(request, "administrador/cambiar_contraseña.html", data)
 
 
 def editar_perfil_enc_cocina(request):
@@ -178,6 +185,64 @@ def editar_perfil_enc_cocina(request):
     return render(request, 'encargadoCocina/editarPerfil.html', data)
 
 
+def cambiar_contraseña_enc_cocina(request):
+    check = EncCocina.objects.filter(
+        email_enc_coc=request.session['cuentaEncCocina'])
+    if len(check) > 0:
+        email = request.session['cuentaEncCocina']
+        data = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina'])
+        data = {'data': data, 'email': email}
+    if request.method == "POST":
+        contraseña_actual_cocina = request.POST['contraseña_actual_cocina']
+        contraseña1 = request.POST['nueva_contraseña_cocina']
+        contraseña2 = request.POST['con_nueva_contraseña_cocina']
+        cuentaEncCocina = EncCocina.get_enc_cocina_by_email(email)
+        if cuentaEncCocina:
+            flag = check_password(contraseña_actual_cocina,
+                                  cuentaEncCocina.contraseña1)
+            error_message = None
+            if flag:
+                enCocina = EncCocina.objects.get(
+                    email_enc_coc=request.session['cuentaEncCocina'])
+                enCocina.contraseña1 = contraseña1
+                enCocina.contraseña2 = contraseña2
+
+                error_message = None
+                if len(contraseña1 and contraseña2) < 5:
+                    error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+                elif len(contraseña1 and contraseña2) > 10:
+                    error_message = 'Las contraseñas no pueden tener más de 10 caracteres'
+                elif contraseña2 != contraseña1:
+                    error_message = 'Las contraseñas no coinciden'
+
+                if not error_message:
+                    enCocina.contraseña1 = make_password(enCocina.contraseña1)
+                    enCocina.contraseña2 = make_password(enCocina.contraseña2)
+                    enCocina.cuentaEncargadoCocina()
+                    messages.success(
+                        request, "Contraseña Cambiada Correctamente")
+                    return redirect('cambiar-contraseña-enc-cocina')
+                else:
+                    email = request.session['cuentaEncCocina']
+                    data = {
+                        'email': email,
+                        'error': error_message,
+
+                    }
+                return render(request, 'encargadoCocina/cambiar_contraseña.html', data)
+            else:
+                error_message = 'La contraseña actual es incorrecta'
+                email = request.session['cuentaEncCocina']
+                data = {
+                    'email': email,
+                    'error': error_message,
+
+                }
+            return render(request, 'encargadoCocina/cambiar_contraseña.html', data)
+    return render(request, "encargadoCocina/cambiar_contraseña.html", data)
+
+
 def editar_perfil_enc_convenio(request):
     check = EncConvenio.objects.filter(
         email_enc_conv=request.session['cuentaEncConvenio'])
@@ -227,6 +292,66 @@ def editar_perfil_enc_convenio(request):
                 'error': error_message,
             }
     return render(request, 'encargadoConvenio/editarPerfil.html', data)
+
+
+def cambiar_contraseña_enc_convenio(request):
+    check = EncConvenio.objects.filter(
+        email_enc_conv=request.session['cuentaEncConvenio'])
+    if len(check) > 0:
+        email = request.session['cuentaEncConvenio']
+        data = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
+        data = {'data': data, 'email': email}
+    if request.method == "POST":
+        contraseña_actual = request.POST['contraseña_actual']
+        contraseña1 = request.POST['nueva_contraseña']
+        contraseña2 = request.POST['con_nueva_contraseña']
+        cuentaEncConvenio = EncConvenio.get_enc_convenio_by_email(email)
+        if cuentaEncConvenio:
+            flag = check_password(
+                contraseña_actual, cuentaEncConvenio.contraseña1)
+            error_message = None
+            if flag:
+                enConvenio = EncConvenio.objects.get(
+                    email_enc_conv=request.session['cuentaEncConvenio'])
+                enConvenio.contraseña1 = contraseña1
+                enConvenio.contraseña2 = contraseña2
+
+                error_message = None
+                if len(contraseña1 and contraseña2) < 5:
+                    error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+                elif len(contraseña1 and contraseña2) > 10:
+                    error_message = 'Las contraseñas no pueden tener más de 10 caracteres'
+                elif contraseña2 != contraseña1:
+                    error_message = 'Las contraseñas no coinciden'
+
+                if not error_message:
+                    enConvenio.contraseña1 = make_password(
+                        enConvenio.contraseña1)
+                    enConvenio.contraseña2 = make_password(
+                        enConvenio.contraseña2)
+                    enConvenio.save()
+                    messages.success(
+                        request, "Contraseña Cambiada Correctamente")
+                    return redirect('cambiar-contraseña-enc-convenio')
+                else:
+                    email = request.session['cuentaEncConvenio']
+                    data = {
+                        'email': email,
+                        'error': error_message,
+
+                    }
+                return render(request, 'encargadoConvenio/cambiar_contraseña.html', data)
+            else:
+                error_message = 'La contraseña actual es incorrecta'
+                email = request.session['cuentaEncConvenio']
+                data = {
+                    'email': email,
+                    'error': error_message,
+
+                }
+            return render(request, 'encargadoConvenio/cambiar_contraseña.html', data)
+    return render(request, "encargadoConvenio/cambiar_contraseña.html", data)
 
 
 def editar_perfil_repartidor(request):
@@ -282,6 +407,67 @@ def editar_perfil_repartidor(request):
                 'error': error_message,
             }
     return render(request, 'repartidor/editarPerfil.html', data)
+
+
+def cambiar_contraseña_repartidor(request):
+    check = Repartidor.objects.filter(
+        email_repartidor=request.session['cuentaRepartidor'])
+    if len(check) > 0:
+        email = request.session['cuentaRepartidor']
+        data = Repartidor.objects.get(
+            email_repartidor=request.session['cuentaRepartidor'])
+        data = {'data': data, 'email': email}
+    if request.method == "POST":
+        contraseña_actual = request.POST['contraseña_actual']
+        contraseña1 = request.POST['nueva_contraseña']
+        contraseña2 = request.POST['con_nueva_contraseña']
+        cuentaRepartidor = Repartidor.get_repartidor_by_email(email)
+        if cuentaRepartidor:
+            flag = check_password(
+                contraseña_actual, cuentaRepartidor.contraseña1)
+            error_message = None
+            if flag:
+                repartidor = Repartidor.objects.get(
+                    email_repartidor=request.session['cuentaRepartidor'])
+                repartidor.contraseña1 = contraseña1
+                repartidor.contraseña2 = contraseña2
+
+                error_message = None
+                if len(contraseña1 and contraseña2) < 5:
+                    error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+                elif len(contraseña1 and contraseña2) > 10:
+                    error_message = 'Las contraseñas no pueden tener más de 10 caracteres'
+                elif contraseña2 != contraseña1:
+                    error_message = 'Las contraseñas no coinciden'
+
+                if not error_message:
+                    repartidor.contraseña1 = make_password(
+                        repartidor.contraseña1)
+                    repartidor.contraseña2 = make_password(
+                        repartidor.contraseña2)
+                    repartidor.save()
+                    messages.success(
+                        request, "Contraseña Cambiada Correctamente")
+                    return redirect('cambiar-contraseña-repartidor')
+                else:
+                    email = request.session['cuentaRepartidor']
+                    data = {
+                        'email': email,
+                        'error': error_message,
+
+                    }
+                return render(request, 'repartidor/cambiar_contraseña.html', data)
+            else:
+                error_message = 'La contraseña actual es incorrecta'
+                email = request.session['cuentaRepartidor']
+                data = {
+                    'email': email,
+                    'error': error_message,
+
+                }
+            return render(request, 'repartidor/cambiar_contraseña.html', data)
+    return render(request, "encargadoConvenio/cambiar_contraseña.html", data)
+
 
 
 def generar_cuenta_enc_cocina(request):
@@ -715,10 +901,12 @@ def generar_cuenta_repartidor(request):
             }
         return render(request, 'administrador/cuenta/repartidor/gestionarRepartidor.html', data)
 
+
 def editar_cuenta_repartidor(request):
     email = request.session['cuentaAdmin']
     id_repartidor = request.GET["id_repartidor"]
-    cuentaRepartidor = get_object_or_404(Repartidor, id_repartidor=id_repartidor)
+    cuentaRepartidor = get_object_or_404(
+        Repartidor, id_repartidor=id_repartidor)
     data1 = {
         'email': email,
         'cuentaRepartidor': cuentaRepartidor
@@ -820,25 +1008,29 @@ class Login(View):
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncCocina:
-            flag = check_password(contraseña, cuentaEncCocina.contraseña1),
+            flag = check_password(contraseña, cuentaEncCocina.contraseña1)
             if flag:
                 request.session['cuentaEncCocina'] = cuentaEncCocina.email_enc_coc
                 print('eres: ', email)
                 return redirect('home')
+            else:
+                error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncConvenio:
-            flag = check_password(contraseña, cuentaEncConvenio.contraseña1),
+            flag = check_password(contraseña, cuentaEncConvenio.contraseña1)
             if flag:
                 request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
-                print('eres: ', email)
+                print('eres :',email)
                 return redirect('home')
+            else:
+                error_message = 'Email o Contraseña incorrecto'
         elif cuentaRepartidor:
-            flag = check_password(contraseña, cuentaRepartidor.contraseña1),
+            flag = check_password(contraseña, cuentaRepartidor.contraseña1)
             if flag:
                 request.session['cuentaRepartidor'] = cuentaRepartidor.email_repartidor
-                print('eres: ', email)
+                print('eres :',email)
                 return redirect('home')
-        else:
-            error_message = 'Email o Contraseña incorrecto'
+            else:
+                error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
 
 

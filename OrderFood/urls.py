@@ -14,7 +14,10 @@ urlpatterns = [
     path("editar-perfil-enc-convenio/",editar_perfil_enc_convenio,name="editar-perfil-enc-convenio"),
     path("editar-perfil-repartidor/",editar_perfil_repartidor,name="editar-perfil-repartidor"),
 
-    path("cambiar-contraseña/",cambiar_contraseña_admin,name="cambiar-contraseña"),
+    path("cambiar-contraseña/",auth_middleware(cambiar_contraseña_admin),name="cambiar-contraseña"),
+    path("cambiar-contraseña-enc-cocina/",cambiar_contraseña_enc_cocina,name="cambiar-contraseña-enc-cocina"),
+    path("cambiar-contraseña-enc-convenio/",cambiar_contraseña_enc_convenio,name="cambiar-contraseña-enc-convenio"),
+    path("cambiar-contraseña-repartidor/",cambiar_contraseña_repartidor,name="cambiar-contraseña-repartidor"),
 
 
     path('gestionar-enc-cocina/', auth_middleware(generar_cuenta_enc_cocina), name="gestionar-encCocina"),
