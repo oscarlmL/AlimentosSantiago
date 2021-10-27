@@ -56,9 +56,27 @@ class Cliente(models.Model):
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
     
+    def rutExiste(self):
+        if Cliente.objects.filter(rut_cli=self.rut_cli):
+            return True
+        return False
+
+    def emailExiste(self):
+        if Cliente.objects.filter(email_cli=self.email_cli):
+            return True
+        return False
+
+
+    @staticmethod
+    def get_cliente_by_email(email_cli):
+        try:
+            return Cliente.objects.get(email_cli=email_cli)
+        except:
+            return False
+
     class Meta:
         db_table = 'cliente'
-
+		
 class Convenio(models.Model):
     rut_cli = models.CharField(max_length=50)  # This field type is a guess.
     nom_cli = models.CharField(max_length=50)  # This field type is a guess.
@@ -162,6 +180,9 @@ class EncConvenio(models.Model):
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.nom_enc_conv
+
     def cuentaEncargadoConvenio(self):
         self.save()
 
@@ -185,6 +206,7 @@ class EncConvenio(models.Model):
 
     class Meta:
         db_table = 'enc_convenio'
+
 
 
 class Informes(models.Model):
