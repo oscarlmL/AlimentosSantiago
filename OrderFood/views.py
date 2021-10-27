@@ -1198,21 +1198,6 @@ def eliminar_plato(request, id_plato):
     return redirect(to="listar_plato")
 
 
-def registro(request):
-    data = {
-        'form': ClienteForm()
-    }
-    if request.method == 'POST':
-        formulario = ClienteForm(request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            data["mensaje"] = "Guardado correctamente"
-        else:
-            data["form"] = formulario
-
-    return render(request, 'registro.html', data)
-
-
 # encargadoConvenioEmpresa
 def agregar_empresa(request):
     data = {
@@ -1257,3 +1242,9 @@ def eliminar_empresa(request, rut_emp):
     return redirect(to="listar_empresa")
 # fin encargadoConvenioEmpresa
 # fin encargadoConvenioEmpresa
+
+
+# registro de cliente sin convenio
+
+
+
