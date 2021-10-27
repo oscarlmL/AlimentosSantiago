@@ -58,6 +58,9 @@ urlpatterns = [
     path('listar-empresa', listar_empresa, name='listar_empresa'),
     path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
     path('eliminar-empresa/<rut_emp>/', eliminar_empresa, name='eliminar_empresa'),
-
+    #path cuentasTrabajador
+    path('gestionar-cuentaTrabEmp', generar_cuenta_trab_emp, name='gestionar-cuentaTrabEmp'),
+    path('editar-cuentaTrabEmp', editar_cuenta_trab_emp, name='editar-cuentaTrabEmp'),
+    path('eliminar-cuentaTrabEmp/<id>/', eliminar_cuenta_trab_emp, name='eliminar-cuentaTrabEmp'),
     
 ]
