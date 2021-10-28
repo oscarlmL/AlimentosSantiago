@@ -55,10 +55,8 @@
                         <a class="dropdown-item" href="/listar-proveedor">Gestionar Proveedores</a>
                         <a class="dropdown-item" href="/editar-perfil-enc-cocina">Editar Perfil</a>
                         {% elif request.session.cuentaEncConvenio %}
-                        <a class="dropdown-item" href="/agregar-empresa">Agregar Empresa</a>
-                        <a class="dropdown-item" href="/listar-empresa">Listar Empresas Afiliadas</a>
+                        <a class="dropdown-item" href="/gestionar-empresa">Gestionar Empresas</a>
                         <a class="dropdown-item" href="/editar-perfil-enc-convenio">Editar Perfil</a>
-                        <a class="dropdown-item" href="/gestionar-cuentaTrabEmp">Gestionar Cuentas Trabajadores</a>
                         {% elif request.session.cuentaRepartidor %}
                         <a class="dropdown-item" href="/editar-perfil-repartidor">Editar Perfil</a>
                         {% endif %}

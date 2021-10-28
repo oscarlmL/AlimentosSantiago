@@ -1211,24 +1211,22 @@ def eliminar_plato(request):
 
 # encargadoConvenioEmpresa
 def agregar_empresa(request):
+    request.session.set_expiry(10000)
+    email = request.session['cuentaEncConvenio']
+    empresa = Empresa.objects.all()
     data = {
-        'form': GestionEmpresaForm()
-    }
+            'email':email,
+            'empresa': empresa,
+            'form': GestionEmpresaForm()
+
+        }
     if request.method == 'POST':
         formula = GestionEmpresaForm(data=request.POST, files=request.FILES)
         if formula.is_valid():
             formula.save()
         else:
             data["form"] = formula
-    return render(request, 'encargadoConvenio/agregarEmpConv.html', data)
-
-
-def listar_empresa(request):
-    empresa = Empresa.objects.all()
-    data = {
-        'empresa': empresa
-    }
-    return render(request, 'encargadoConvenio/listarEmpConv.html', data)
+    return render(request, 'encargadoConvenio/empresas/gestionarEmpresa.html', data)
 
 
 def modificar_convenio(request, rut_emp):
@@ -1241,16 +1239,16 @@ def modificar_convenio(request, rut_emp):
 
         if formulario.is_valid():
             formulario.save()
-            return redirect(to="listar_empresa")
+            return redirect(to="gestionar-empresa")
         else:
             data['form'] = formulario
-    return render(request, 'encargadoConvenio/modificarEmpConv.html', data)
+    return render(request, 'encargadoConvenio/empresas/modificarEmpConv.html', data)
 
 
 def eliminar_empresa(request, rut_emp):
     empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
     empresa.delete()
-    return redirect(to="listar_empresa")
+    return redirect(to="gestionar-empresa")
 # fin encargadoConvenioEmpresa
 # fin encargadoConvenioEmpresa
 
@@ -1271,93 +1269,45 @@ def registro(request):
     return render(request, 'registration/registro.html', data)
 
 #cuentasTrabajadorEmpresa
-
-def generar_cuenta_trab_emp(request):
-    request.session.set_expiry(10000)
-    if request.method == 'GET':
-        email = request.session['cuentaEncConvenio']
-        cuentaClienteConvenio = Cliente.objects.all
-        data = {
-            'email': email,
-            'cuentaClienteConvenio': cuentaClienteConvenio
-        }
-        return render(request, 'encargadoConvenio/cuentasEmpresas/gestionarCuentaEmpresa.html', data)
-    else:
-        postData = request.POST
-
-        rut_cli = postData.get('rut_cli')
-        nombre_cli = postData.get('nombre_cli')
-        apaterno_cli = postData.get('apaterno_cli')
-        amaterno_cli = postData.get('amaterno_cli')
-        fono_cli = postData.get('fono_cli')
-        email_cli = postData.get('email_cli')
+def generar_cuenta_empleado(request):
+    id = request.GET["rut_emp"]
+    empresa = get_object_or_404(Empresa,rut_emp=id)
+    email = request.session['cuentaEncConvenio']
+    data = {'empresa':empresa, 'email':email}
+    if request.method == 'POST':
+        nombre_cli = request.POST["nombre_cli"]
+        apaterno_cli = request.POST["apaterno_cli"]
+        amaterno_cli = request.POST["amaterno_cli"]
+        fono_cli = request.POST["fono_cli"]
+        email_cli = request.POST["email_cli"]
         #saldo_cli = postData.get('')
-        convenio = postData.get('convenio')
-        contraseña1 = postData.get('contraseña1')
-        contraseña2 = postData.get('contraseña2')
+        empresa_rut_empresa = request.POST['empresa_rut_empresa']
+        contraseña1 = request.POST["contraseña1"]
+        contraseña2 = request.POST["contraseña2"]
         # validaciones
         value = {
-            'rut_cli': rut_cli,
             'nombre_cli': nombre_cli,
-            'apaterno_cli': apaterno_cli,
-            'amaterno_cli': amaterno_cli,
-            'fono_cli': fono_cli,
-            'email_cli': email_cli,
-            'convenio': convenio,
-            'contraseña1': contraseña1,
-            'contraseña2': contraseña2,
             
         }
         error_message = None
-        trabEmp = Cliente(    rut_cli=rut_cli,
-                              nombre_cli=nombre_cli,
+        trabEmp = Cliente(nombre_cli=nombre_cli,
                               apaterno_cli=apaterno_cli,
                               amaterno_cli=amaterno_cli,
                               fono_cli=fono_cli,
                               email_cli=email_cli,
-                              convenio= convenio,
+                              empresa_rut_empresa_id= empresa_rut_empresa,
                               contraseña1= contraseña1,
-                              contraseña2= contraseña2,)
+                              contraseña2= contraseña2)
 
-        if(not rut_cli):
-            error_message = 'El Rut es requerido'
-        elif len(rut_cli) < 8:
-            error_message = 'El Rut debe tener mas de 8 digitos'
-        elif len(rut_cli) > 12:
-            error_message = 'El Rut no debe tener mas de 12 digitos'
-        elif len(nombre_cli) < 4:
+        if len(nombre_cli) < 4:
             error_message = 'El nombre debe tener mas de 4 caracteres'
-        elif len(apaterno_cli) < 4:
-            error_message = 'El Apellido Paterno debe tener mas de 4 caracteres'
-        elif len(amaterno_cli) < 4:
-            error_message = 'El Apellido Materno debe tener mas de 4 caracteres'
-        elif not fono_cli:
-            error_message = 'El Telefono es requerido'
-        elif len(fono_cli) < 8:
-            error_message = 'El Telefono debe tener mas de 8 digitos'
-        elif not email_cli:
-            error_message = 'El email es requerido'
-
-
-        elif len(contraseña1 and contraseña2) < 5:
-            error_message = 'Las contraseñas deben tener mas de 5 caracteres'
-
-        elif contraseña2 != contraseña1:
-            error_message = 'Las contraseñas no coinciden'
-
-        elif trabEmp.emailExiste():
-            error_message = 'El email ya tiene una cuenta'
-        elif trabEmp.rutExiste():
-            error_message = 'El rut ya tiene una cuenta'
-        
-
         # guadar datos de cuenta
         if not error_message:
             trabEmp.contraseña1 = make_password(trabEmp.contraseña1)
             trabEmp.contraseña2 = make_password(trabEmp.contraseña2)
             trabEmp.save()
             messages.success(request, "Cuenta Trabajador Empresa Generada")
-            return redirect('gestionar-cuentaTrabEmp')
+            return redirect('gestionar-empresa')
         else:
             email = request.session['cuentaEncConvenio']
             cuentaClienteConvenio = Cliente.objects.all()
@@ -1367,7 +1317,9 @@ def generar_cuenta_trab_emp(request):
                 'error': error_message,
                 'values': value,
             }
-        return render(request, 'encargadoConvenio/cuentasEmpresas/gestionarCuentaEmpresa.html', data)
+        return render(request, 'encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html',data)
+    return render(request, 'encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html',data)
+    
 
 
 def editar_cuenta_trab_emp(request):

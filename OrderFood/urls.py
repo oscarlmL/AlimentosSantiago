@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina
+from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_middleware_enc_convenio
 
 
 urlpatterns = [
@@ -24,7 +24,7 @@ urlpatterns = [
     path('editar-cuenta-enc-cocina/', auth_middleware(editar_cuenta_enc_cocina), name='editar-cuenta-enc-cocina'),
     path('eliminar-cuenta-enc-cocina/', auth_middleware(eliminar_cuenta_enc_cocina), name='eliminar-cuenta-enc-cocina'),
 
-    path('gestionar-enc-convenio', auth_middleware(generar_cuenta_enc_convenio), name="gestionar-enc-convenio"),
+    path('gestionar-enc-convenio', generar_cuenta_enc_convenio, name="gestionar-enc-convenio"),
     path('editar-cuenta-enc-convenio/', auth_middleware(editar_cuenta_enc_convenio), name='editar-cuenta-enc-convenio'),
     path('eliminar-cuenta-enc-convenio/', auth_middleware(eliminar_cuenta_enc_convenio), name='eliminar-cuenta-enc-convenio'),
 
@@ -54,12 +54,11 @@ urlpatterns = [
     #path('repartidor', repartidor, name="repartidor"),
  
     #path encargadoEmpresasConvenio
-    path('agregar-empresa', agregar_empresa , name='agregar_empresa'),
-    path('listar-empresa', listar_empresa, name='listar_empresa'),
+    path('gestionar-empresa/', agregar_empresa , name='gestionar-empresa'),
     path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
-    path('eliminar-empresa/<rut_emp>/', eliminar_empresa, name='eliminar_empresa'),
+    path('eliminar-empresa//<slug:rut_emp>/', eliminar_empresa, name='eliminar-empresa'),
     #path cuentasTrabajador
-    path('gestionar-cuentaTrabEmp', generar_cuenta_trab_emp, name='gestionar-cuentaTrabEmp'),
+    path('generar-cuenta-empleado/', generar_cuenta_empleado, name='generar-cuenta-empleado'),
     path('editar-cuentaTrabEmp', editar_cuenta_trab_emp, name='editar-cuentaTrabEmp'),
     path('eliminar-cuentaTrabEmp/<id>/', eliminar_cuenta_trab_emp, name='eliminar-cuentaTrabEmp'),
     

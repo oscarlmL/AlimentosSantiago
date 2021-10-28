@@ -45,22 +45,18 @@ class Cajero(models.Model):
 
 class Cliente(models.Model):
     # This field type is a guess.
-    rut_cli = models.CharField(max_length=50, null=True)
+    id_cliente = models.AutoField(primary_key=True)
     nombre_cli = models.CharField(max_length=50)  # This field type is a guess.
     apaterno_cli = models.CharField(max_length=50)
     amaterno_cli = models.CharField(max_length=50)
     fono_cli = models.IntegerField()
     email_cli = models.CharField(max_length=50)  # This field type is a guess.
-    saldo_cli = models.IntegerField(null=True)
-    convenio = models.CharField(max_length=1, null=True)
+    saldo_cli = models.IntegerField(null=True, default=0)
+    empresa_rut_empresa = models.ForeignKey(
+        'Empresa', models.DO_NOTHING, db_column='empresa_rut_empresa',null=True)
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
     
-    def rutExiste(self):
-        if Cliente.objects.filter(rut_cli=self.rut_cli):
-            return True
-        return False
-
     def emailExiste(self):
         if Cliente.objects.filter(email_cli=self.email_cli):
             return True
@@ -265,6 +261,13 @@ class Pedido(models.Model):
     class Meta:
         db_table = 'pedido'
 
+class carrito(models.Model): 
+    id = models.AutoField(primary_key=True)
+    idplato = models.IntegerField()
+    cantidad = models.IntegerField() 
+
+    class Meta:
+        db_table = 'carrito'
 
 class Plato(models.Model):
     id_plato = models.AutoField(primary_key=True)
