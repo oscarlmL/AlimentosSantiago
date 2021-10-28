@@ -51,7 +51,7 @@ class Cliente(models.Model):
     amaterno_cli = models.CharField(max_length=50)
     fono_cli = models.IntegerField()
     email_cli = models.CharField(max_length=50)  # This field type is a guess.
-    saldo_cli = models.IntegerField(null=True, default=0)
+    saldo_cli = models.IntegerField(null=True, default=0) 
     empresa_rut_empresa = models.ForeignKey(
         'Empresa', models.DO_NOTHING, db_column='empresa_rut_empresa',null=True)
     contraseña1 = models.CharField(max_length=100)
@@ -74,13 +74,9 @@ class Cliente(models.Model):
         db_table = 'cliente'
 		
 class Convenio(models.Model):
-    rut_cli = models.CharField(max_length=50)  # This field type is a guess.
-    nom_cli = models.CharField(max_length=50)  # This field type is a guess.
-    nom_emp = models.CharField(max_length=50)  # This field type is a guess.
-    rut_emp = models.CharField(max_length=50)  # This field type is a guess.
-    # This field type is a guess.
-    tipo_suscrip = models.CharField(max_length=50)
-
+    rut_emp = models.CharField(max_length=50)
+    saldo_cli = models.IntegerField(null=True, default=0)
+    
     class Meta:
         db_table = 'convenio'
 
