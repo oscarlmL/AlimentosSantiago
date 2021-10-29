@@ -19,7 +19,7 @@
         })
         .then(function(result){
             if(result.isConfirmed){
-                window.location.href = "/eliminar-cuenta-repartidor/?id_repartidor="+id_repartidor+""
+                window.location.href = "/eliminar-cuenta-repartidor/"+id_repartidor+"/"
             }
         })
     }
@@ -50,6 +50,7 @@
                     <form method="POST" action="" id="form-repartidor">
                         {% csrf_token %}
                         <div class="form-group">
+                            <label for="">ruuuuuuuut</label>
                             <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
                                 value="{{values.rut_repartidor}}" maxlength="12" onkeyup="formatoRut(this)">
                         </div>

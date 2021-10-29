@@ -16,12 +16,12 @@
                     {% csrf_token %}
                     {{form | crispy}}
 
-                    <input type="button" onclick="history.back();" value="Volver" class="btn btn-info btn-sm">
+                    <input type="button" onclick="history.back();" value="Volver" class="btn btn-info btn-round">
                     
                     <div class="d-flex justify-content-center">
-                        <input type="reset" value="Deshacer" class="btn btn-secondary btn-sm">
+                        <input type="reset" value="Deshacer" class="btn btn-secondary btn-round">
                         &nbsp;
-                        <input type="submit" value="Aceptar" class="btn btn-primary btn-sm ">
+                        <input type="submit" value="Aceptar" class="btn btn-primary btn-round ">
                     </div>
                 </form>
                 {{mensaje}}

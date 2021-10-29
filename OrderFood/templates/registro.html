@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block contenido %}
+
+{% load crispy_forms_tags %}
+
+
+    <div class="p-4 m-4">
+         <div class="col-lg-5 mx-auto border rounded pt-4">
+
+             <h2 class="text-center">Formulario de Registro</h2>
+
+                 <div class="card-body">
+
+                    {{mensaje}}
+                    <form action="" method="post" id="custom-general.js">
+                            {% csrf_token %}
+
+                            {{ form | crispy }}
+                            <br>
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" value="Cancelar" class="btn btn-secondary">Cancelar</button>
+                                 &nbsp;
+                                <button type="submit" class="btn btn-primary" id="guardar">Registrarme</button>
+                            </div>
+                    </form>
+
+                </div>
+         </div>
+    </div>
+ 
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js%22%3E</script> -->
+    <script src="{% static 'https://unpkg.com/aos@2.3.1/dist/aos.js' %}"></script>
+    <script>
+        AOS.init();
+    </script>
+    <!-- <script src="js/custom-general.js"></script> -->
+    <script src="{% static 'js/custom-general.js' %}"></script>
+
+
+
+{% endblock %}
