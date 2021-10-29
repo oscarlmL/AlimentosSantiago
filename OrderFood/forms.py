@@ -66,23 +66,25 @@ class RepartidorForm(forms.ModelForm):
     
 
 
+    
 class ClienteForm(forms.ModelForm):
 
     class Meta:
         model = Cliente
-        fields = ['rut_cli','nombre_cli', 'apaterno_cli','amaterno_cli', 'fono_cli', 'email_cli', 'saldo_cli', 'password', 'Domicilio', 'convenio']
+        fields = ['rut_cli','nombre_cli', 'apaterno_cli','amaterno_cli', 'fono_cli', 'email_cli', 'saldo_cli','convenio', 'contraseña1', 'contraseña2']
+        
+        
 
-
-    # RUT = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # apaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
-    # amaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'})) 
-    # fono_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    # email_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # saldo_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    Domicilio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # convenio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    rut_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Rut','label':''}),label = '')
+    nombre_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),label = '') 
+    apaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Apellido Paterno'}),label = '') 
+    amaterno_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Apellido Materno'}),label = '') 
+    fono_cli = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control','placeholder': 'Teléfono'}),label = '')
+    email_cli = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Email'}),label = '')
+    saldo_cli = forms.CharField(widget=forms.HiddenInput(), initial=0)
+    convenio = forms.CharField(widget=forms.HiddenInput(), initial=0)
+    contraseña1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Contraseña'}),label = '')
+    contraseña2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Confirme Contraseña'}),label = '')
 
 
 class GestionEmpresaForm(forms.ModelForm):
@@ -90,9 +92,7 @@ class GestionEmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
         fields = ['rut_emp','nom_emp', 'nom_gerente', 'cant_trabajadores','enc_convenio_id_enc_conv']
-        labels = {' display:none; '}
 
-    rut_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','onkeyup':'formatoRut(this)','placeholder':'Run Empresa'}))
         #fields = 'all'
 
 
@@ -101,4 +101,4 @@ class GestionEmpresaForm(forms.ModelForm):
     nom_emp = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre Empresa'}))
     nom_gerente = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre Gerente'}))
     cant_trabajadores = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Cantidad Trabajadores'}))
-    #rut_emp = forms.CharField(max_length=9)    
+    #rut_emp = forms.CharField(max_length=9)

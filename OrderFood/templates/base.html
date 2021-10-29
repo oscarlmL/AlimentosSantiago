@@ -9,10 +9,13 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
     <script src="{% static '/app/js/jquery.min.js' %}"></script>
     <link rel="icon" href="{% static 'app/img/icon.png' %}" />
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
     <title>OrderFood Delivery</title>
 </head>
 
@@ -33,7 +36,6 @@
                     <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Nuestro Menú</a>
                     </li>
                 </ul>
-
                 {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor %}
                 <div class="dropdown">
                     <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -45,19 +47,28 @@
                         <a class="dropdown-item" href="/gestionar-repartidor">Gestionar Repartidor</a>
                         <a class="dropdown-item" href="/gestionar-enc-cocina">Gestionar Encargado Cocina</a>
                         <a class="dropdown-item" href="/gestionar-enc-convenio">Gestionar Encargado Convenio</a>
+                        <a class="dropdown-item" href="/listar-pedido/">Historial de Pedidos</a>
                         <a class="dropdown-item" href="/editar-perfil">Editar Perfil</a>
                         {% elif request.session.cuentaEncCocina %}
                         <a class="dropdown-item" href="/agregar-plato">Agregar Plato</a>
                         <a class="dropdown-item" href="/listar-platos">Gestionar Menú</a>
+                        <a class="dropdown-item" href="/listar-proveedor">Gestionar Proveedores</a>
                         <a class="dropdown-item" href="/editar-perfil-enc-cocina">Editar Perfil</a>
                         {% elif request.session.cuentaEncConvenio %}
-                        <a class="dropdown-item" href="/agregar-empresa">Agregar Empresa</a>
-                        <a class="dropdown-item" href="/listar-empresa">Listar Empresas Afiliadas</a>
+                        <a class="dropdown-item" href="/gestionar-empresa">Gestionar Empresas</a>
                         <a class="dropdown-item" href="/editar-perfil-enc-convenio">Editar Perfil</a>
                         {% elif request.session.cuentaRepartidor %}
                         <a class="dropdown-item" href="/editar-perfil-repartidor">Editar Perfil</a>
                         {% endif %}
-                        <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
+                        <li class="border-top">
+                            <a href="/logout" class="dropdown-item">
+                                <i class="fa fa-sign-out btn btn-danger rounded" style="display: block;">
+                                    <span class="">Cerrar Sesión</span>
+                                </i>                            
+                            </a>
+                        </li>
+
+                        
                     </div>
                 </div>
                 {% else %}
@@ -72,23 +83,17 @@
                         <span>Registrate, ¡Es Gratis!</span>
                     </a>
                 </li>
-                
-
                 {% endif %}
 
             </div>
         </nav>
     </head>
     <div>
-        {% if messages %}
-            {%for m in messages %}
-                {{m}}
-            {% endfor %}
-        {% endif %}
 
         {% block contenido %}
         {% endblock %}
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{% static 'app/js/mycart.js' %}"></script>
     <script src="/static/app/js/mycart-custom.js"></script>
     <script src="{% static 'app/js/js.js' %}"></script>
