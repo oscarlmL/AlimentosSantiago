@@ -2,7 +2,29 @@
 {% block contenido %}
 {% load static %}
 {% load crispy_forms_tags %}
-
+{% block js %}
+<!--Delete Function-->
+<script>
+    function eliminarProveedor(id_proveedor){
+        Swal.fire({
+            "title":"¿Estas seguro?",
+            "text":"esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"Cancelar",
+            "confirmButtonText":"Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545",
+            "cancelButtonColor":"#303030"
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "{% url 'eliminar_proveedor' %}?id_proveedor="+id_proveedor+""
+            }
+        })
+    }
+</script>
+{% endblock %}
 
 <div class="card">
     <div class="card-body">
@@ -24,25 +46,13 @@
                 <td>{{p.celular}}</td>
                 <td>{{p.descripcion}}</td>
                 <td>
-                    <a href="{% url 'modificar_proveedor' p.id_proveedor %}" class="btn btn-primary btn-round">Modificar</a>
-                    <a href="{% url 'eliminar_proveedor' p.id_proveedor %}" class="btn btn-danger btn-round">Eliminar</a>
+                    <a href="{% url 'modificar_proveedor'%}?id_proveedor={{p.id_proveedor}}" class="btn btn-primary btn-sm">Modificar</a>
+                    <a href="#" onclick="eliminarProveedor({{p.id_proveedor}}) " class="btn btn-danger btn-sm">Eliminar</a> 
                 </td>
-
-
             </tr>
-
-
-
 
             {% endfor %}
             </table>
     </div>
 </div>
-
-
-
-
-
-
-
 {% endblock %}

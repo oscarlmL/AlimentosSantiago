@@ -8,8 +8,8 @@
     <div class="row justify-content-center">
         <div class="col-2">
             <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="/editar-perfil">Editar Perfil</a>
-                <a class="list-group-item list-group-item-action active" href="/cambiar-contraseña">Cambiar Contraseña</a>
+                <a class="list-group-item list-group-item-action" href="/editar-perfil-enc-cocina">Editar Perfil</a>
+                <a class="list-group-item list-group-item-action active" href="/cambiar-contraseña-enc-cocina">Cambiar Contraseña</a>
             </div>
         </div>
         <div class="col-4">
@@ -31,15 +31,15 @@
                     <form method="POST" action="">
                         {% csrf_token %}
                         <div class="form-group">
-                            <input type="password" class="form-control" name="contraseña_actual" placeholder="Contraseña Actual"
+                            <input type="password" class="form-control" name="contraseña_actual_cocina" placeholder="Contraseña Actual"
                                 value="">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="nueva_contraseña" placeholder="Nueva Contraseña"
+                            <input type="password" class="form-control" name="nueva_contraseña_cocina" placeholder="Nueva Contraseña"
                                 value="">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="con_nueva_contraseña" placeholder="Confirmar Nueva Contraseña"
+                            <input type="password" class="form-control" name="con_nueva_contraseña_cocina" placeholder="Confirmar Nueva Contraseña"
                                 value="">
                         </div>
                         <div class="form-group">
