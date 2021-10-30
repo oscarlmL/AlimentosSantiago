@@ -76,7 +76,7 @@ class Cliente(models.Model):
 class Convenio(models.Model):
     rut_emp = models.CharField(max_length=50)
     saldo_cli = models.IntegerField(null=True, default=0)
-    
+        
     class Meta:
         db_table = 'convenio'
 
