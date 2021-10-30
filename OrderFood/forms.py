@@ -11,19 +11,19 @@ from django.core.exceptions import ValidationError
 class ProveedorForm(forms.ModelForm):
 
     nom_proveedor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Nombre del proveedor'}))
-    rol_local = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Rol del local'}))
-    celular = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'+56970932589'}))
-    descripcion = forms.CharField(max_length=500, widget=forms.Textarea(attrs={'class': 'form-control','placeholder':'Tu oferta de productos'}))
+    rol_local = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Ej: comida china, japonesa, peruana, insumos'}))
+    celular = forms.CharField(min_length=9,max_length=9, widget=forms.NumberInput(attrs={'class': 'form-control','placeholder':'tu celular ej: 977079248'}))
+    descripcion = forms.CharField(max_length=500, widget=forms.Textarea(attrs={'class': 'form-control','placeholder':'Tu oferta de productos, empresa, dirección'}))
 
 
-    def clean_nom_proveedor(self):
-        nom_proveedor = self.cleaned_data["nom_proveedor"]
-        existe = Proveedor.objects.filter(nom_proveedor__iexact=nom_proveedor).exists()
+    #def clean_nom_proveedor(self):
+        #nom_proveedor = self.cleaned_data["nom_proveedor"]
+        #existe = Proveedor.objects.filter(nom_proveedor__iexact=nom_proveedor).exists()
 
-        if existe:
-            raise ValidationError("Este nombre ya existe")
+        #if existe:
+            #raise ValidationError("Este nombre ya existe")
 
-        return nom_proveedor
+        #return nom_proveedor
 
 
     class Meta: 

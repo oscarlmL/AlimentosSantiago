@@ -37,7 +37,7 @@ urlpatterns = [
     path('modificar-plato/', auth_middleware_enc_cocina(modificar_plato), name="modificar_plato"),
     path('eliminar-plato/', auth_middleware_enc_cocina(eliminar_plato), name="eliminar_plato"),
     #path Proveedor
-    path('proveedor', auth_middleware_enc_cocina(proveedor), name="proveedor"),
+    path('proveedor',proveedor, name="proveedor"),
     path('listar-proveedor/', auth_middleware_enc_cocina(listar_proveedor), name="listar_proveedor"),
     path('modificar-proveedor/', auth_middleware_enc_cocina(modificar_proveedor), name="modificar_proveedor"),
     path('eliminar-proveedor/', auth_middleware_enc_cocina(eliminar_proveedor), name="eliminar_proveedor"),
