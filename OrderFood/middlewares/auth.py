@@ -27,3 +27,13 @@ def auth_middleware_enc_convenio(get_response):
         response = get_response(request)
         return response
     return middleware
+
+def auth_middleware_repartidor(get_response):
+    def middleware(request):
+        print(request.session.get('cuentaRepartidor'))
+        if not request.session.get('cuentaRepartidor'):            
+            return redirect('login')
+        response = get_response(request)
+        return response
+    return middleware
+
