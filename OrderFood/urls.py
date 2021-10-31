@@ -44,20 +44,20 @@ urlpatterns = [
     #FIN ENCARGADO COCINA
 
     #ENCARGADO CONVENIO
-    path("editar-perfil-enc-convenio/",editar_perfil_enc_convenio,name="editar-perfil-enc-convenio"),
-    path("cambiar-contraseña-enc-convenio/",cambiar_contraseña_enc_convenio,name="cambiar-contraseña-enc-convenio"),
-    path('gestionar-empresa/', agregar_empresa , name='gestionar-empresa'),
+    path("editar-perfil-enc-convenio/",auth_middleware_enc_convenio(editar_perfil_enc_convenio),name="editar-perfil-enc-convenio"),
+    path("cambiar-contraseña-enc-convenio/",auth_middleware_enc_convenio(cambiar_contraseña_enc_convenio),name="cambiar-contraseña-enc-convenio"),
+    path('gestionar-empresa/', auth_middleware_enc_convenio(agregar_empresa) , name='gestionar-empresa'),
     path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
     path('eliminar-empresa//<slug:rut_emp>/', eliminar_empresa, name='eliminar-empresa'),
-    path('generar-cuenta-empleado/', generar_cuenta_empleado, name='generar-cuenta-empleado'),
-    path('editar-cuentaTrabEmp', editar_cuenta_trab_emp, name='editar-cuentaTrabEmp'),
+    path('generar-cuenta-empleado/', auth_middleware_enc_convenio(generar_cuenta_empleado), name='generar-cuenta-empleado'),
+    path('editar-cuentaTrabEmp', auth_middleware_enc_convenio(editar_cuenta_trab_emp), name='editar-cuentaTrabEmp'),
     path('eliminar-cuentaTrabEmp/<id>/', eliminar_cuenta_trab_emp, name='eliminar-cuentaTrabEmp'),
     #FIN ENCARGADO CONVENIO
 
 
     #REPARTIDOR
-    path("editar-perfil-repartidor/",editar_perfil_repartidor,name="editar-perfil-repartidor"),
-    path("cambiar-contraseña-repartidor/",cambiar_contraseña_repartidor,name="cambiar-contraseña-repartidor"),
+    path("editar-perfil-repartidor/",auth_middleware_repartidor(editar_perfil_repartidor),name="editar-perfil-repartidor"),
+    path("cambiar-contraseña-repartidor/",auth_middleware_repartidor(cambiar_contraseña_repartidor),name="cambiar-contraseña-repartidor"),
     #FIN REPARTIDOR
 
 
