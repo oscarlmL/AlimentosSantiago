@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block contenido %}
 {% load static %}
-
-<div class="p-4 m-4">
-    <div class="col-lg-5 mx-auto border rounded pt-4">
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-lg-5  mx-auto col-md-6 offset-md-3">
         {% if error %}
         <div class="alert alert-danger" role="alert">
             {{error}}
@@ -16,39 +18,46 @@
         </div>
         {% endfor %}
         {% endif %}
-        <h1>Editar datos Encargado Convenio</h1>
-    
-        <form method="POST" action="">
-            {% csrf_token %}
 
-            <div class="form-group">
-                <input readonly required  type="hidden" class="form-control" name="id_enc_conv" placeholder="" id=""
-                    value="{{cuentaEncConvenio.id_enc_conv}}" maxlength="12">
+        <div class="card">
+            <div class="card-body">
+                <h2>Editar datos Encargado Convenio</h2>
+                <hr>
+                <form method="POST" action="">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <input readonly required type="hidden" class="form-control" name="id_enc_conv" placeholder=""
+                            id="" value="{{cuentaEncConvenio.id_enc_conv}}" maxlength="12">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""
+                            value="{{cuentaEncConvenio.rut_enc_conv}}" maxlength="12" onkeyup="formatoRut(this)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" name="nom_enc_conv" aria-describedby=""
+                            placeholder="Nombres" value="{{cuentaEncConvenio.nom_enc_conv}}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" name="ap_enc_conv" aria-describedby=""
+                            placeholder="Apellidos" value="{{cuentaEncConvenio.ap_enc_conv}}">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="" name="email_enc_conv" aria-describedby=""
+                            value="{{cuentaEncConvenio.email_enc_conv}}"
+                            placeholder="ejemplo: encargadoConvenio@dominio.com">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                            value="{{cuentaEncConvenio.celular}}" placeholder="Celular ej: 912345678">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-dark btn-round btn-block" value="Editar">
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""
-                    value="{{cuentaEncConvenio.rut_enc_conv}}" maxlength="12" onkeyup="formatoRut(this)">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="" name="nom_enc_conv" aria-describedby=""
-                    placeholder="Nombres" value="{{cuentaEncConvenio.nom_enc_conv}}">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="" name="ap_enc_conv" aria-describedby=""
-                    placeholder="Apellidos" value="{{cuentaEncConvenio.ap_enc_conv}}">
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" id="" name="email_enc_conv" aria-describedby=""
-                    value="{{cuentaEncConvenio.email_enc_conv}}" placeholder="ejemplo: encargadoConvenio@dominio.com">
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" id="" name="celular" aria-describedby=""
-                    value="{{cuentaEncConvenio.celular}}" placeholder="Celular ej: 912345678">
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-round btn-block" value="Editar">
-            </div>
-        </form>
+        </div>
+
     </div>
 </div>
 

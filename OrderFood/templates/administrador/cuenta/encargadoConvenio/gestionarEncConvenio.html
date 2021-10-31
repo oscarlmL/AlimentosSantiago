@@ -3,25 +3,25 @@
 {% load static %}
 {% block js %}
 <script>
-    function eliminarEncConvenio(id_enc_conv){
+    function eliminarEncConvenio(id_enc_conv) {
         Swal.fire({
-            "title":"¿Estas seguro?",
-            "text":"esta acción no se puede deshacer",
-            "icon":"question",
-            "showCancelButton":true,
-            "cancelButtonText":"Cancelar",
-            "confirmButtonText":"Eliminar",
-            "reverseButtons":true,
-            "confirmButtonColor":"#dc3545",
-            "cancelButtonColor":"#303030"
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
 
 
         })
-        .then(function(result){
-            if(result.isConfirmed){
-                window.location.href = "/eliminar-cuenta-enc-convenio/?id_enc_conv="+id_enc_conv+""
-            }
-        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminar-cuenta-enc-convenio/?id_enc_conv=" + id_enc_conv + ""
+                }
+            })
     }
 </script>
 {% endblock %}
@@ -43,87 +43,87 @@
             </div>
             {% endfor %}
             {% endif %}
-            <h2>Ingresar Encargado Convenio</h2>
-
             <div class="card">
                 <div class="card-body">
-                <form method="POST" action="">
-                    {% csrf_token %}
+                    <h2>Ingresar Encargado Convenio</h2>
+                    <hr>
+                    <form method="POST" action="">
+                        {% csrf_token %}
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""
-                            value="{{values.rut_enc_conv}}" maxlength="12" onkeyup="formatoRut(this)">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" name="nom_enc_conv" aria-describedby=""
-                            placeholder="Nombres" value="{{values.nom_enc_conv}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" name="ap_enc_conv" aria-describedby=""
-                            placeholder="Apellidos" value="{{values.ap_enc_conv}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="" name="email_enc_conv" aria-describedby=""
-                            value="{{values.email_enc_conv}}" placeholder="ejemplo: encargadoConvenio@dominio.com">
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="" name="celular" aria-describedby=""
-                            value="{{values.celular}}" placeholder="Celular ej: 912345678">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
-                            placeholder="Ingresar Contraseña">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
-                            placeholder="Confirmar Contraseña">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""
+                                value="{{values.rut_enc_conv}}" maxlength="12" onkeyup="formatoRut(this)">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="nom_enc_conv" aria-describedby=""
+                                placeholder="Nombres" value="{{values.nom_enc_conv}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="ap_enc_conv" aria-describedby=""
+                                placeholder="Apellidos" value="{{values.ap_enc_conv}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="" name="email_enc_conv" aria-describedby=""
+                                value="{{values.email_enc_conv}}" placeholder="ejemplo: encargadoConvenio@dominio.com">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                                value="{{values.celular}}" placeholder="Celular ej: 912345678">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
+                                placeholder="Ingresar Contraseña">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
+                                placeholder="Confirmar Contraseña">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
 
 
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h2>Cuentas Encargado Convenio</h2>
-        <div class="table-responsive py-2">
-            <table class="table table-striped">
-                <tr class="table-active">
-                    <th>Rut</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Celular</th>
-                    <th>Opciones</th>
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Cuentas Encargado Convenio</h2>
+            <div class="table-responsive py-2">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Rut</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Opciones</th>
 
-                </tr>
-            
-                {% for cuentasEncConvenio in cuentasEncConvenio %}
-                <tr class="table-light">
-                    <th>{{cuentasEncConvenio.rut_enc_conv}}</th>
-                    <th>{{cuentasEncConvenio.nom_enc_conv}}</th>
-                    <th>{{cuentasEncConvenio.ap_enc_conv}}</th>
-                    <th>{{cuentasEncConvenio.email_enc_conv}}</th>
-                    <th>{{cuentasEncConvenio.celular}}</th>
-                    <td>
-                        <a href="{% url 'editar-cuenta-enc-convenio' %}?id_enc_conv={{cuentasEncConvenio.id_enc_conv}} "
-                            class="btn btn-dark btn-sm">Modificar</a>
-                        <a href="#" onclick="eliminarEncConvenio({{cuentasEncConvenio.id_enc_conv}}) "
-                            class="btn btn-danger btn-sm">Eliminar</a> 
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-            
+                    </tr>
+
+                    {% for cuentasEncConvenio in cuentasEncConvenio %}
+                    <tr class="table-light">
+                        <th>{{cuentasEncConvenio.rut_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.nom_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.ap_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.email_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.celular}}</th>
+                        <td>
+                            <a href="{% url 'editar-cuenta-enc-convenio' %}?id_enc_conv={{cuentasEncConvenio.id_enc_conv}} "
+                                class="btn btn-dark btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarEncConvenio({{cuentasEncConvenio.id_enc_conv}}) "
+                                class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
         </div>
-    </div> 
-    
 
 
 
-</div>
-{% endblock %}
+
+    </div>
+    {% endblock %}

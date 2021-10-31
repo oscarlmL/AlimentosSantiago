@@ -50,8 +50,7 @@
                         <a class="dropdown-item" href="/listar-pedido/">Historial de Pedidos</a>
                         <a class="dropdown-item" href="/editar-perfil">Editar Perfil</a>
                         {% elif request.session.cuentaEncCocina %}
-                        <a class="dropdown-item" href="/agregar-plato">Agregar Plato</a>
-                        <a class="dropdown-item" href="/listar-platos">Gestionar Menú</a>
+                        <a class="dropdown-item" href="/gestionar-plato/">Gestionar Plato</a>
                         <a class="dropdown-item" href="/listar-proveedor">Gestionar Proveedores</a>
                         <a class="dropdown-item" href="/editar-perfil-enc-cocina">Editar Perfil</a>
                         {% elif request.session.cuentaEncConvenio %}
@@ -61,14 +60,13 @@
                         <a class="dropdown-item" href="/editar-perfil-repartidor">Editar Perfil</a>
                         {% endif %}
                         <li class="border-top">
-                            <a href="/logout" class="dropdown-item">
+                            <a href="/logout" class="dropdown-item" style="background-color: white;">
                                 <i class="fa fa-sign-out btn btn-danger rounded" style="display: block;">
                                     <span class="">Cerrar Sesión</span>
                                 </i>                            
                             </a>
                         </li>
 
-                        
                     </div>
                 </div>
                 {% else %}
