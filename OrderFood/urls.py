@@ -9,7 +9,8 @@ urlpatterns = [
     path('logout', logout, name="logout"),
 
     #CLIENTE
-    path('registro/', registro, name="registro"),
+    path('registro/', generarCuentaCliente , name="auto-registro-cliente"),
+    path("editar-perfil-cliente/", editar_perfil_cliente, name="editar-perfil-cliente"),
 
     #ADMINITRACION
     path("editar-perfil/",auth_middleware(editar_perfil_admin),name="editar-perfil"),
