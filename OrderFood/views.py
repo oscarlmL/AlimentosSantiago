@@ -1476,3 +1476,57 @@ def generarCuentaCliente(request):
             # messages.success(request, "Tu cuenta ha sido creada")
             # return redirect('login')
         return render(request, 'cliente/autoRegistroCliente.html')
+    
+    
+    
+    
+    
+def editar_perfil_cliente(request):  
+    check = Cliente.objects.filter(
+        email_cli=request.session['cuentaCliente'])
+    if len(check) > 0:
+        email = request.session['cuentaCliente']
+        data = Cliente.objects.get(
+            email_cli=request.session['cuentaCliente'])
+        data = {'data': data, 'email': email}
+    if request.method == 'POST':
+        nombre_cli = request.POST["nombre_cli"]
+        apaterno_cli = request.POST["apaterno_cli"]
+        amaterno_cli = request.POST["amaterno_cli"]
+        fono_cli = request.POST["fono_cli"]
+        email_cli = request.POST["email_cli"]
+
+        cliente = Cliente.objects.get(
+            email_cli=request.session['cuentaCliente'])
+        cliente.nombre_cli = nombre_cli
+        cliente.apaterno_cli = apaterno_cli
+        cliente.amaterno_cli = amaterno_cli
+        cliente.fono_cli = fono_cli
+        cliente.email_cli = email_cli
+        
+
+        error_message = None
+        if(not cliente.nombre_cli):
+            error_message = 'El Nombre es requerido'
+        elif not cliente.apaterno_cli:
+            error_message = 'El Apellido es requerido'
+        elif not cliente.amaterno_cli:
+            error_message = 'El Apellido es requerido'
+        elif len(cliente.fono_cli) >9:
+            error_message = 'El número no puede tener más de 9 digitos.'
+        elif not cliente.email_cli:
+            error_message = 'El email es requerido'
+
+        # guardar datos de cuenta
+        if not error_message:
+            cliente.save()
+            messages.success(request, "Datos modificados correctamente")
+            return redirect('editar-perfil-cliente')
+        else:
+            email = request.session['cuentaCliente']
+            data = {
+                'email': email,
+                'error': error_message,
+            }
+    return render(request, 'cliente/editarPerfilCliente.html', data)
+
