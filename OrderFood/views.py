@@ -990,7 +990,7 @@ def eliminar_plato(request):
     return redirect(to="gestionar-plato")
 
 
-#contado proveedor realizando oferta que vera el encargado cocina
+#contacto proveedor que realiza una oferta la vera el encargado cocina en su modulo
 def proveedor(request):
     data = {
         'form': ProveedorForm()

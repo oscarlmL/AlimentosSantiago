@@ -48,15 +48,15 @@ class PlatoForm(forms.ModelForm):
         fields = ['nom_plato', 
                 'descripcion',
                  'valor_plato',
-                'Ingrediente',
-                'Restaurant',
+                # 'Ingrediente',
+                # 'Restaurant',
                 'Imagen'
                 ]
         labels = {'nom_plato':'Nombre del Plato',
             'descripcion':'Descripción',
             'valor_plato': 'Valor del Plato',
-            'Ingrediente':'Seleccionar Ingrediente',
-            'Restaurant':'Seleccionar Restaurante',
+            # 'Ingrediente':'Seleccionar Ingrediente',
+            # 'Restaurant':'Seleccionar Restaurante',
             'Imagen':'Subir Imagen del Plato'
 
             
@@ -102,18 +102,20 @@ class GestionEmpresaForm(forms.ModelForm):
 
     class Meta:
         model = Empresa
-        fields = ['rut_emp', 'nom_emp', 'nom_gerente',
-                  'cant_trabajadores', 'enc_convenio_id_enc_conv']
-
-        #fields = 'all'
+        fields = ['rut_emp', 
+                'nom_emp', 
+                'nom_gerente',
+                'cant_trabajadores', 
+                'enc_convenio_id_enc_conv']
+        labels = {'enc_convenio_id_enc_conv':'Encargado de Convenio'}
 
     #labels = {'rut_emp':'Run Empresa'}
     rut_emp = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control', 'onkeyup': 'formatoRut(this)', 'placeholder': 'Run Empresa', 'display': None}))
+        attrs={'class': 'form-control', 'onkeyup': 'formatoRut(this)', 'placeholder': 'Run Empresa', 'display': None}), label='Run Empresa')
     nom_emp = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Nombre Empresa'}))
+        attrs={'class': 'form-control', 'placeholder': 'Nombre Empresa'}), label='Nombre de la Empresa')
     nom_gerente = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Nombre Gerente'}))
+        attrs={'class': 'form-control', 'placeholder': 'Nombre Gerente'}), label='Nombre del Gerente')
     cant_trabajadores = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Cantidad Trabajadores'}))
+        attrs={'class': 'form-control', 'placeholder': 'Cantidad Trabajadores'}), label='Cantidad de Trabajadores')
     #rut_emp = forms.CharField(max_length=9)

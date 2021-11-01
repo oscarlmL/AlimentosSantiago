@@ -69,5 +69,4 @@ urlpatterns = [
     path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
     #End Path
 
-    
 ]
