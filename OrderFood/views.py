@@ -1524,3 +1524,65 @@ def editar_perfil_cliente(request):
                 'error': error_message,
             }
     return render(request, 'cliente/editarPerfilCliente.html', data)
+
+
+
+#cambiar contraseña cliente
+def cambiar_contraseña_cliente(request):
+    check = Cliente.objects.filter(
+        email_cli=request.session['cuentaCliente'])
+    if len(check) > 0:
+        email = request.session['cuentaCliente']
+        data = Cliente.objects.get(
+            email_cli=request.session['cuentaCliente'])
+        data = {'data': data, 'email': email}
+    if request.method == "POST":
+        contraseña_actual = request.POST['contraseña_actual']
+        contraseña1 = request.POST['nueva_contraseña']
+        contraseña2 = request.POST['con_nueva_contraseña']
+        cuentaCliente = Cliente.get_cliente_by_email(email)
+        if cuentaCliente:
+            flag = check_password(
+                contraseña_actual, cuentaCliente.contraseña1)
+            error_message = None
+            if flag:
+                cliente = Cliente.objects.get(
+                    email_cli=request.session['cuentaCliente'])
+                cliente.contraseña1 = contraseña1
+                cliente.contraseña2 = contraseña2
+
+                error_message = None
+                if len(contraseña1 and contraseña2) < 5:
+                    error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+                elif len(contraseña1 and contraseña2) > 10:
+                    error_message = 'Las contraseñas no pueden tener más de 10 caracteres'
+                elif contraseña2 != contraseña1:
+                    error_message = 'Las contraseñas no coinciden'
+
+                if not error_message:
+                    cliente.contraseña1 = make_password(
+                        cliente.contraseña1)
+                    cliente.contraseña2 = make_password(
+                        cliente.contraseña2)
+                    cliente.save()
+                    messages.success(
+                        request, "Contraseña Cambiada Correctamente")
+                    return redirect('cambiar-contraseña-cliente')
+                else:
+                    email = request.session['cuentaCliente']
+                    data = {
+                        'email': email,
+                        'error': error_message,
+
+                    }
+                return render(request, 'cliente/cambiar_contraseña.html', data)
+            else:
+                error_message = 'La contraseña actual es incorrecta'
+                email = request.session['cuentaClienter']
+                data = {
+                    'email': email,
+                    'error': error_message,
+
+                }
+            return render(request, 'cliente/cambiar_contraseña.html', data)
+    return render(request, "cliente/cambiar_contraseña.html", data)
