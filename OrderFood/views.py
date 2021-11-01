@@ -14,7 +14,7 @@ from .filters import buscarPlato
 #Funciones Generales
 def home(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
-        'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor')
+        'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente')
     platos = Plato.objects.all()
     rest = Restaurant.objects.all()
     buscar_plato = buscarPlato(request.GET, queryset=platos)
@@ -1394,15 +1394,85 @@ def eliminar_cuenta_trab_emp(request, id):
 
 
 #Modulo Cliente
-def registro(request):
-    data = {
-        'form': ClienteForm()
-    }
-    if request.method == 'POST':
-        formulario = ClienteForm(request.POST)
-        if formulario.is_valid():
-            formulario.save() 
-            data["mensaje"] = "Guardado correctamente"
-        else:
-            data["form"] = formulario
-    return render(request, 'registration/registro.html', data)
+def generarCuentaCliente(request):
+
+
+    if request.method == 'GET':
+        return render(request , 'cliente/autoRegistroCliente.html')
+    else:
+        nombre_cli = request.POST["nombre_cli"]
+        apaterno_cli = request.POST["apaterno_cli"]
+        amaterno_cli = request.POST["amaterno_cli"]
+        fono_cli = request.POST["fono_cli"]
+        email_cli = request.POST["email_cli"]
+        #saldo_cli = postData.get('')
+        #empresa_rut_empresa = request.POST['empresa_rut_empresa']
+        contraseña1 = request.POST["contraseña1"]
+        contraseña2 = request.POST["contraseña2"]
+
+        # validaciones
+        value = {
+            'nombre_cli': nombre_cli,
+            'apaterno_cli': apaterno_cli,
+            'amaterno_cli': amaterno_cli,
+            'fono_cli': fono_cli,
+            'email_cli': email_cli,
+            'contraseña1': contraseña1,
+            'contraseña2': contraseña2,
+        }
+        error_message = None
+        cliente = Cliente(nombre_cli=nombre_cli,
+                                apaterno_cli=apaterno_cli,
+                                amaterno_cli=amaterno_cli,
+                                fono_cli=fono_cli,
+                                email_cli=email_cli,
+                                contraseña1=contraseña1,
+                                contraseña2=contraseña2)
+    
+        if not nombre_cli:
+            error_message = 'El Nombre es requerido'
+        elif len(nombre_cli) < 4:
+            error_message = 'El Nombre debe tener mas de 4 caracteres'
+        elif not apaterno_cli:
+            error_message = 'El Apellido Paterno es requerido'
+        elif len(apaterno_cli) < 2:
+            error_message = 'El apellido debe tener mas de 2 caracteres'
+        elif not amaterno_cli:
+            error_message = 'El Apellido Materno es requerido'
+        elif len(amaterno_cli) < 2:
+            error_message = 'El Apellido debe tener mas de 2 caracteres'
+        elif not fono_cli:
+            error_message = 'El Telefono es requerido'
+        elif len(fono_cli) < 7:
+            error_message = 'El Telefono debe tener mas de 7 digitos'
+        elif not email_cli:
+            error_message = 'El Email es requerido'
+        elif len(contraseña1 and contraseña2) < 5:
+            error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+
+        elif len(contraseña1 and contraseña2) > 10:
+            error_message = 'Las contraseñas no puedem tener más de 10 caracteres'
+
+        elif contraseña2 != contraseña1:
+            error_message = 'Las contraseñas no coinciden'
+
+        elif cliente.emailExiste():
+            error_message = 'El email ya tiene una cuenta'
+        # guardar datos de cuenta
+        if not error_message:
+            cliente.contraseña1 = make_password(cliente.contraseña1)
+            cliente.contraseña2 = make_password(cliente.contraseña2)
+            cliente.save()
+
+            if cliente:
+                email=request.POST.get('email_cli')
+                flag = check_password(contraseña1, cliente.contraseña1)
+                if flag:
+                    request.session['cuentaCliente']=cliente.email_cli
+                    print('Eres',email)
+                    return redirect('home')
+                else:
+                    error_message = 'Email o Contraseña Incorrecta'
+            # messages.success(request, "Tu cuenta ha sido creada")
+            # return redirect('login')
+        return render(request, 'cliente/autoRegistroCliente.html')
