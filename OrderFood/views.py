@@ -999,7 +999,7 @@ def proveedor(request):
         formulario = ProveedorForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "Contacto enviado"
+            messages.success(request, "Hemos recibido tu oferta, pronto nos contactaremos contigo")
         else:
             data["form"] = formulario
 
