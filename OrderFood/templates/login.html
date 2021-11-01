@@ -44,6 +44,13 @@
                             {{error}}
                         </div>
                         {% endif %}
+                        {% if messages %}
+                        {% for m in messages %}
+                        <div class="alert alert-success" role="alert">
+                            {{m}}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
                         <div class="form-group">
                             <input type="email" class="form-control" name="email" aria-describedby="emailHelp"
                                 placeholder="E-mail" required="">

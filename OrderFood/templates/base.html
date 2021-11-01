@@ -36,7 +36,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Nuestro Menú</a>
                     </li>
                 </ul>
-                {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor %}
+                {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor or request.session.cuentaCliente %}
                 <div class="dropdown">
                     <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,6 +58,8 @@
                         <a class="dropdown-item" href="/editar-perfil-enc-convenio">Editar Perfil</a>
                         {% elif request.session.cuentaRepartidor %}
                         <a class="dropdown-item" href="/editar-perfil-repartidor">Editar Perfil</a>
+                        {% elif request.session.cuentaCliente %}
+                        <a class="dropdown-item" href="/editar-perfil-cliente">Editar Perfil</a>
                         {% endif %}
                         <li class="border-top">
                             <a href="/logout" class="dropdown-item" style="background-color: white;">
