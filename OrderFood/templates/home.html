@@ -18,6 +18,11 @@
         <section id="menu">
             <div class="block menu1">
                 <div class="form-group">
+                    <div class="text-center">
+                        <h2>Búsqueda de Plato</h2>
+                    <hr>
+                    </div>
+
                     <form class="d-flex mx-auto formBuscar" action=""  method="GET">
                         {{buscar_plato.form.nom_plato}}
                         {{buscar_plato.form.Restaurant}}
@@ -33,7 +38,7 @@
                         <div class="item row align-items-center">
                             <div class="col-{% load static %}sm-3 pr-5">
                                 {% if plato.Imagen %}
-                                    <img src="{{ plato.Imagen.url }}" alt="Imagen Platos">
+                                    <img src="{{ plato.Imagen.url }}" width="230px" height="200px"  alt="Imagen Platos">
                                 {% endif %}
                             </div>
                             <div class="details col-sm-9">

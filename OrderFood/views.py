@@ -1458,7 +1458,6 @@ def generarCuentaCliente(request):
             cliente.contraseña1 = make_password(cliente.contraseña1)
             cliente.contraseña2 = make_password(cliente.contraseña2)
             cliente.save()
-
             if cliente:
                 email = request.POST.get('email_cli')
                 flag = check_password(contraseña1, cliente.contraseña1)
@@ -1470,7 +1469,14 @@ def generarCuentaCliente(request):
                     error_message = 'Email o Contraseña Incorrecta'
             # messages.success(request, "Tu cuenta ha sido creada")
             # return redirect('login')
-        return render(request, 'cliente/autoRegistroCliente.html')
+        else:
+            data = {
+                'value':value,
+                'error': error_message,
+
+            }
+        return render(request, 'cliente/autoRegistroCliente.html',data)
+
 
 
 def editar_perfil_cliente(request):
