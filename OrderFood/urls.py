@@ -11,6 +11,8 @@ urlpatterns = [
     #CLIENTE
     path('registro/', generarCuentaCliente , name="auto-registro-cliente"),
     path("editar-perfil-cliente/", editar_perfil_cliente, name="editar-perfil-cliente"),
+    path("cambiar-contraseña-cliente/",cambiar_contraseña_cliente,name="cambiar-contraseña-cliente"),
+    
 
     #ADMINITRACION
     path("editar-perfil/",auth_middleware(editar_perfil_admin),name="editar-perfil"),
