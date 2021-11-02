@@ -1276,7 +1276,6 @@ def agregar_carrito (request):
 #fin agregar al carro 
 
 def listar_carrito(request):
-
     raw_sql = "select a.id, a.cantidad, b.nom_plato, b.valor_plato from carrito a inner join plato b on a.idplato = b.id_plato"
     #carritoproductos = Carrito.objects.all()
     carritoproductos = Carrito.objects.raw(raw_sql)
