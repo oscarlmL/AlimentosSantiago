@@ -30,7 +30,7 @@ class ProveedorForm(forms.ModelForm):
     rol_local = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Ej: comida china, japonesa, peruana, insumos'}), label='Rol del Local')
     celular = forms.CharField(min_length=9, max_length=9, widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'placeholder': 'tu celular ej: 977079248'}), label='Telefono/Celular de Contacto')
+        attrs={'class': 'form-control', 'placeholder': 'tu celular ej: 977079248'}), label='Celular de Contacto')
     descripcion = forms.CharField(max_length=500, widget=forms.Textarea(
         attrs={'class': 'form-control', 'placeholder': 'Tu oferta de productos, empresa, dirección'}), label='Descripción de la oferta a realizar')
 
