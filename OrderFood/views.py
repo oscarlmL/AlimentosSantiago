@@ -1001,8 +1001,7 @@ def proveedor(request):
         formulario = ProveedorForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            messages.success(
-                request, "Hemos recibido tu oferta, pronto nos contactaremos contigo")
+            messages.success(request, "Hemos recibido tu oferta, pronto nos contactaremos contigo")
         else:
             data["form"] = formulario
 
@@ -1035,6 +1034,7 @@ def modificar_proveedor(request):
         formulario = ProveedorForm(data=request.POST, instance=proveedor)
         if formulario.is_valid():
             formulario.save()
+            messages.success(request, "Modificación exitosa")
             return redirect(to="listar_proveedor")
         data["form"] = formulario
 
@@ -1045,6 +1045,7 @@ def eliminar_proveedor(request):
     id_proveedor = request.GET["id_proveedor"]
     proveedor = get_object_or_404(Proveedor, id_proveedor=id_proveedor)
     proveedor.delete()
+    messages.success(request, "Eliminación exitosa")
     return redirect(to="listar_proveedor")
 
 
