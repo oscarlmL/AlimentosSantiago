@@ -35,6 +35,8 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Nuestro Menú</a>
                     </li>
+                    <li class="nav-item"> <a class="nav-link" href="{% url 'listar_carrito' %}">Ver mi pedido</a>
+                    </li>
                 </ul>
                 {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor or request.session.cuentaCliente %}
                 <div class="dropdown">
@@ -97,7 +99,7 @@
     <script src="{% static 'app/js/mycart.js' %}"></script>
     <script src="/static/app/js/mycart-custom.js"></script>
     <script src="{% static 'app/js/js.js' %}"></script>
-    <div class="nav-item my-cart-icon">
+    <div class="nav-item my-cart-icon d-none">
         <img src="{% static 'app/img/cart.svg' %}" style="width:20px;"> <span class="badge badge-notify my-cart-badge">
         </span>
     </div>

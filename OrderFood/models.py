@@ -372,3 +372,14 @@ class Suscripcion(models.Model):
 
     class Meta:
         db_table = 'suscripción'
+
+
+
+class Carrito(models.Model): 
+    id = models.AutoField(primary_key=True)
+    idplato = models.IntegerField()
+    cantidad = models.IntegerField() 
+
+    class Meta:
+        db_table = 'carrito'
+

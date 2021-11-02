@@ -7,7 +7,7 @@ from .models import *
 from django.views import View
 from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm, ClienteForm
-from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm
+from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm, CarritoForm
 from .filters import buscarPlato
 
 
@@ -1255,6 +1255,49 @@ def modificar_convenio(request, rut_emp):
 def eliminar_empresa(request, rut_emp):
     empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
     empresa.delete()
+<<<<<<< HEAD
+    return redirect(to="listar_empresa")
+# fin encargadoConvenioEmpresa
+# fin encargadoConvenioEmpresa
+
+
+def agregar_carrito (request):
+    data = {
+        "form": CarritoForm()
+    }
+    if request.method == "POST":
+        formulario = CarritoForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Guardado correctamente"
+        else:
+            data["form"] = formulario
+
+    return redirect(to="listar_carrito")
+
+#fin agregar al carro 
+
+def listar_carrito(request):
+
+    raw_sql = "select a.id, a.cantidad, b.nom_plato, b.valor_plato from carrito a inner join plato b on a.idplato = b.id_plato"
+    #carritoproductos = Carrito.objects.all()
+    carritoproductos = Carrito.objects.raw(raw_sql)
+    data = {
+        'carritoproductos': carritoproductos
+    }
+
+    return render(request, 'carritoproductos/listar.html', data)
+
+#fin listado carro
+
+def eliminar_item_carrito(request, id):
+    carrito = get_object_or_404(Carrito, id=id)
+    carrito.delete()
+    return redirect(to="listar_carrito")
+ 
+
+#fin eliminar item carrito
+=======
     return redirect(to="gestionar-empresa")
 
 
@@ -1592,3 +1635,4 @@ def cambiar_contraseña_cliente(request):
                 }
             return render(request, 'cliente/cambiar_contraseña.html', data)
     return render(request, "cliente/cambiar_contraseña.html", data)
+>>>>>>> master
