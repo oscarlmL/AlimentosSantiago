@@ -1,66 +1,78 @@
 {% extends 'base.html' %}
 {% block contenido %}
 {% load static %}
-<div class="p-4 m-4">
-    <div class="col-lg-5 mx-auto border rounded pt-4">
-        {% if error %}
-        <div class="alert alert-danger" role="alert">
-            {{error}}
-        </div>
-        {% endif %}
-        {% if messages %}
-        {% for m in messages %}
-        <div class="alert alert-success" role="alert">
-            {{m}}
-        </div>
-        {% endfor %}
-        {% endif %}
-        <h1>Editar datos Encargado Cocina</h1>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <!-- <div class="form-group">
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-5  mx-auto col-md-6 offset-md-3">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
+            {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-success" role="alert">
+                {{m}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <h2>Editar datos Encargado Cocina</h2>
+                    <hr>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <!-- <div class="form-group">
                 <input type="hidden" class="form-control" name="id_enc_coc" placeholder="" id=""
                     value="{{cuentaEncCocina.id_enc_coc}}" readonly required maxlength="12">
             </div> -->
-            <div class="form-group">
-                <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo" id=""
-                    value="{{cuentaEncCocina.nom_enc_coc}}">
-            </div>
-            <div class="form-group">
-                <select class="form-control" id="validationCustom04" name="titulo" required
-                    value="">
-                    <option value="">--- Seleccionar Tipo de Titulo ---</option>
-                    {% if cuentaEncCocina.titulo == "Tecnico" %}
-                    <option value="Tecnico" selected>Técnico</option>
-                    {% else %}
-                    <option value="Tecnico">Técnico</option>
-                    {% endif %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo"
+                                id="" value="{{cuentaEncCocina.nom_enc_coc}}">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="validationCustom04" name="titulo" required value="">
+                                <option value="">--- Seleccionar Tipo de Titulo ---</option>
+                                {% if cuentaEncCocina.titulo == "Tecnico" %}
+                                <option value="Tecnico" selected>Técnico</option>
+                                {% else %}
+                                <option value="Tecnico">Técnico</option>
+                                {% endif %}
 
-                    {% if cuentaEncCocina.titulo == "Profesional" %}
-                    <option value="Profesional"selected>Profesional</option>
-                    {% else %}
-                    <option value="Profesional">Profesional</option>
-                    {% endif %}
+                                {% if cuentaEncCocina.titulo == "Profesional" %}
+                                <option value="Profesional" selected>Profesional</option>
+                                {% else %}
+                                <option value="Profesional">Profesional</option>
+                                {% endif %}
 
-                </select>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="" name="exp_laboral" aria-describedby=""
+                                placeholder="Experiencia laboral en años" value="{{cuentaEncCocina.exp_laboral}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                                placeholder="912345678" value="{{cuentaEncCocina.celular}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="" name="email_enc_coc"
+                                aria-describedby="email_enc_cocina" value="{{cuentaEncCocina.email_enc_coc}}"
+                                placeholder="ejemplo: encargadococina@dominio.com">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-dark btn-round btn-block" value="Editar">
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="number" class="form-control" id="" name="exp_laboral" aria-describedby=""
-                    placeholder="Experiencia laboral en años" value="{{cuentaEncCocina.exp_laboral}}">
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" id="" name="celular" aria-describedby=""
-                    placeholder="912345678" value="{{cuentaEncCocina.celular}}">
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" id="" name="email_enc_coc" aria-describedby="email_enc_cocina"
-                    value="{{cuentaEncCocina.email_enc_coc}}" placeholder="ejemplo: encargadococina@dominio.com">
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-round btn-block" value="Editar">
-            </div>
-        </form>
+
+        </div>
     </div>
 </div>
+
 
 {% endblock %}

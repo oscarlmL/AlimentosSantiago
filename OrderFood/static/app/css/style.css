@@ -43,6 +43,8 @@
 *::after {
   box-sizing: border-box; }
 
+
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -69,8 +71,6 @@ body {
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
 
-
-  
 hr {
   box-sizing: content-box;
   height: 0;
