@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_middleware_enc_convenio,auth_middleware_repartidor
+from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_middleware_enc_convenio,auth_middleware_repartidor,auth_middleware_cliente
 
 
 urlpatterns = [
@@ -10,8 +10,8 @@ urlpatterns = [
 
     #CLIENTE
     path('registro/', generarCuentaCliente , name="auto-registro-cliente"),
-    path("editar-perfil-cliente/", editar_perfil_cliente, name="editar-perfil-cliente"),
-    path("cambiar-contraseña-cliente/",cambiar_contraseña_cliente,name="cambiar-contraseña-cliente"),
+    path("editar-perfil-cliente/", auth_middleware_cliente(editar_perfil_cliente), name="editar-perfil-cliente"),
+    path("cambiar-contraseña-cliente/",auth_middleware_cliente(cambiar_contraseña_cliente),name="cambiar-contraseña-cliente"),
     
 
     #ADMINITRACION

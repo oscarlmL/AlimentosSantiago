@@ -17,11 +17,6 @@ class ProveedorForm(forms.ModelForm):
     #raise ValidationError("Este nombre ya existe")
 
     # return nom_proveedor
-
-    class Meta:
-        model = Proveedor
-        fields = ['nom_proveedor','rol_local','celular','descripcion']
-
     class Meta:
         model = Proveedor
         fields = ['nom_proveedor', 'rol_local', 'celular', 'descripcion']

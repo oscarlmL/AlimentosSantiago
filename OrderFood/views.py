@@ -70,10 +70,10 @@ class Login(View):
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaCliente:
-            flag = check_password(contraseña, cuentaCliente.contraseña1),
+            flag = check_password(contraseña, cuentaCliente.contraseña1)
             if flag:
                 request.session['cuentaCliente'] = cuentaCliente.email_cli
-                print('eres: ', email)
+                print('eres :',email)
                 return redirect('home')
             else:
                 error_message = 'Email o Contraseña incorrecto'
@@ -1560,6 +1560,7 @@ def editar_perfil_cliente(request):
                 messages.success(request, "Email modificado, vuelva a iniciar sessión")
                 return redirect('login')
             else:
+                cliente.save()
                 messages.success(request, "Datos modificados correctamente")
                 return redirect('editar-perfil-cliente')
         else:
@@ -1605,10 +1606,8 @@ def cambiar_contraseña_cliente(request):
                     error_message = 'Las contraseñas no coinciden'
 
                 if not error_message:
-                    cliente.contraseña1 = make_password(
-                        cliente.contraseña1)
-                    cliente.contraseña2 = make_password(
-                        cliente.contraseña2)
+                    cliente.contraseña1 = make_password(cliente.contraseña1)
+                    cliente.contraseña2 = make_password(cliente.contraseña2)
                     cliente.save()
                     messages.success(
                         request, "Contraseña Cambiada Correctamente")

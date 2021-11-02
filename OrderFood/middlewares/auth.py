@@ -37,3 +37,12 @@ def auth_middleware_repartidor(get_response):
         return response
     return middleware
 
+def auth_middleware_cliente(get_response):
+    def middleware(request):
+        print(request.session.get('cuentaCliente'))
+        if not request.session.get('cuentaCliente'):            
+            return redirect('login')
+        response = get_response(request)
+        return response
+    return middleware
+
