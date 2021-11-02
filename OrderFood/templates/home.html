@@ -35,27 +35,34 @@
                     {% endfor %}
                 </div> -->
                 
-                {% for plato in platos %}
-                    <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">
-                        <div class="item row align-items-center">
-                            <div class="col-{% load static %}sm-3 pr-5">
-                                {% if plato.Imagen %}
-                                    <img src="{{ plato.Imagen.url }}" alt="Imagen Platos">
-                                {% endif %}
-                            </div>
-                            <div class="details col-sm-9">
-                                <div class="item__header">
-                                    <h3 class="item__title">{{plato.nom_plato}}</h3>
-                                    <span class="item__dots"></span>
-                                    <span class="item__price">${{plato.valor_plato}}</span>
+                {% for plato in platos %}+
+                    <form action = "agregar_carrito" method="POST">
+                        {% csrf_token %}
+                        <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">
+                            <div class="item row align-items-center">
+                                <div class="col-{% load static %}sm-3 pr-5">
+                                    {% if plato.Imagen %}
+                                        <img src="{{ plato.Imagen.url }}" alt="Imagen Platos">
+                                    {% endif %}
                                 </div>
-                                <p class="item__description">{{plato.descripcion}}</p>
-                                <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id={{plato.id_plato}}
-                                    data-name={{plato.nom_plato}} data-price={{plato.valor_plato}} data-quantity="1"
-                                    data-image="{{ plato.Imagen.url }}">Agregar al Carro</button>
-                            </div>
-                        </div>                    
-                    </div>                
+                                <div class="details col-sm-9">
+                                    <div class="item__header">
+                                        <h3 class="item__title">{{plato.nom_plato}}</h3>
+                                        <span class="item__dots"></span>
+                                        <span class="item__price">${{plato.valor_plato}}</span>
+                                    </div>
+                                    <p class="item__description">{{plato.descripcion}}</p>
+
+                                    <input type="hidden" readonly id="idplato" name="idplato" value={{plato.id_plato}} />
+                                    <input type="hidden" readonly id="cantidad" name="cantidad" value="1" />
+
+                                    <button type="submit" id="carrito" class="btn btn-sm btn-outline-primary my-cart-btn" data-id={{plato.id_plato}}
+                                        data-name={{plato.nom_plato}} data-price={{plato.valor_plato}} data-quantity="1"
+                                        data-image="{{ plato.Imagen.url }}">Agregar al Carro</button>
+                                </div>
+                            </div>                    
+                        </div> 
+                    </form>               
                 {% endfor %}            
             </div>
         </section>

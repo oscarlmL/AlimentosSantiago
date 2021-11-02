@@ -2,7 +2,7 @@ from django import forms
 import django
 from django.db.models import fields
 from django.forms import widgets
-from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa
+from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa, Carrito
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
@@ -33,8 +33,11 @@ class ProveedorForm(forms.ModelForm):
     
 
         
+class CarritoForm(forms.ModelForm):
 
-
+    class Meta:
+        model = Carrito
+        fields = ['idplato', 'cantidad']
 
 
 

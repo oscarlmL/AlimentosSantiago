@@ -56,5 +56,7 @@ urlpatterns = [
     path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
     path('eliminar-empresa/<rut_emp>/', eliminar_empresa, name='eliminar_empresa'),
 
-    
+    path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
+    path('listar_carrito', listar_carrito, name='listar_carrito'),
+    path('eliminar_item_carrito/<id>/', eliminar_item_carrito, name='eliminar_item_carrito'),   
 ]
