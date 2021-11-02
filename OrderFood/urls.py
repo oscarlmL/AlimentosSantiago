@@ -71,22 +71,8 @@ urlpatterns = [
     path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
     #End Path
 
-<<<<<<< HEAD
-    path('agregar-plato/', agregar_plato, name="agregar_plato"),
-    path('listar-platos/', listar_platos, name='listar_plato'),
-    path('modificar-plato/<id_plato>/', modificar_plato, name="modificar_plato"),
-    path('eliminar-plato/<id_plato>/', eliminar_plato, name="eliminar_plato"),
-    #path('repartidor', repartidor, name="repartidor"),
  
-    #path encargadoEmpresasConvenio
-    path('agregar-empresa', agregar_empresa , name='agregar_empresa'),
-    path('listar-empresa', listar_empresa, name='listar_empresa'),
-    path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
-    path('eliminar-empresa/<rut_emp>/', eliminar_empresa, name='eliminar_empresa'),
-
     path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
     path('listar_carrito', listar_carrito, name='listar_carrito'),
     path('eliminar_item_carrito/<id>/', eliminar_item_carrito, name='eliminar_item_carrito'),   
-=======
->>>>>>> master
 ]

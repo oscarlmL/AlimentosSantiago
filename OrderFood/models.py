@@ -257,13 +257,6 @@ class Pedido(models.Model):
     class Meta:
         db_table = 'pedido'
 
-class carrito(models.Model): 
-    id = models.AutoField(primary_key=True)
-    idplato = models.IntegerField()
-    cantidad = models.IntegerField() 
-
-    class Meta:
-        db_table = 'carrito'
 
 class Plato(models.Model):
     id_plato = models.AutoField(primary_key=True)

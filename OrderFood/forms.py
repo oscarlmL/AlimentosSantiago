@@ -2,11 +2,7 @@ from django import forms
 import django
 from django.db.models import fields
 from django.forms import widgets
-<<<<<<< HEAD
 from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa, Carrito
-=======
-from .models import Cliente, Proveedor, Plato, Repartidor, Pedido, Empresa
->>>>>>> master
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
@@ -24,7 +20,6 @@ class ProveedorForm(forms.ModelForm):
 
     class Meta:
         model = Proveedor
-<<<<<<< HEAD
         fields = ['nom_proveedor','rol_local','celular','descripcion']
 
     
@@ -36,7 +31,6 @@ class CarritoForm(forms.ModelForm):
         model = Carrito
         fields = ['idplato', 'cantidad']
 
-=======
         fields = ['nom_proveedor', 'rol_local', 'celular', 'descripcion']
     nom_proveedor = forms.CharField(max_length=49,widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Nombre del proveedor'}), label='Nombre del Proveedor')
@@ -46,7 +40,6 @@ class CarritoForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'tu celular ej: 977079248'}), label='Telefono/Celular de Contacto')
     descripcion = forms.CharField(max_length=500, widget=forms.Textarea(
         attrs={'class': 'form-control', 'placeholder': 'Tu oferta de productos, empresa, dirección'}), label='Descripción de la oferta a realizar')
->>>>>>> master
 
 
 class PedidoForm(forms.ModelForm):

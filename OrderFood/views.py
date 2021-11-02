@@ -1255,9 +1255,7 @@ def modificar_convenio(request, rut_emp):
 def eliminar_empresa(request, rut_emp):
     empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
     empresa.delete()
-<<<<<<< HEAD
-    return redirect(to="listar_empresa")
-# fin encargadoConvenioEmpresa
+    return redirect(to="gestionar-empresa")
 # fin encargadoConvenioEmpresa
 
 
@@ -1297,8 +1295,6 @@ def eliminar_item_carrito(request, id):
  
 
 #fin eliminar item carrito
-=======
-    return redirect(to="gestionar-empresa")
 
 
 def generar_cuenta_empleado(request):
@@ -1635,4 +1631,3 @@ def cambiar_contraseña_cliente(request):
                 }
             return render(request, 'cliente/cambiar_contraseña.html', data)
     return render(request, "cliente/cambiar_contraseña.html", data)
->>>>>>> master

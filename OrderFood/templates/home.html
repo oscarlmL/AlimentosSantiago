@@ -33,7 +33,6 @@
                 </div>
                 <br>
                 <br>
-<<<<<<< HEAD
 
                 <!-- <div class="buttons-container">
                     {% for r in rest %}
@@ -41,30 +40,15 @@
                     {% endfor %}
                 </div> -->
                 
-                {% for plato in platos %}+
+                {% for plato in platos %}
                     <form action = "agregar_carrito" method="POST">
                         {% csrf_token %}
                         <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">
                             <div class="item row align-items-center">
                                 <div class="col-{% load static %}sm-3 pr-5">
                                     {% if plato.Imagen %}
-                                        <img src="{{ plato.Imagen.url }}" alt="Imagen Platos">
+                                        <img src="{{ plato.Imagen.url }}" width="250px" height="200px" alt="Imagen Platos">
                                     {% endif %}
-=======
-                {% for plato in platos %}
-                    <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">
-                        <div class="item row align-items-center">
-                            <div class="col-{% load static %}sm-3 pr-5">
-                                {% if plato.Imagen %}
-                                    <img src="{{ plato.Imagen.url }}" width="230px" height="200px"  alt="Imagen Platos">
-                                {% endif %}
-                            </div>
-                            <div class="details col-sm-9">
-                                <div class="item__header">
-                                    <h3 class="item__title">{{plato.nom_plato}}</h3>
-                                    <span class="item__dots"></span>
-                                    <span class="item__price">${{plato.valor_plato}}</span>
->>>>>>> master
                                 </div>
                                 <div class="details col-sm-9">
                                     <div class="item__header">
