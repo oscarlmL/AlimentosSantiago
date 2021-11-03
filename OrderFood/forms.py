@@ -9,14 +9,7 @@ from django.core.exceptions import ValidationError
 
 class ProveedorForm(forms.ModelForm):
 
-    # def clean_nom_proveedor(self):
-    #nom_proveedor = self.cleaned_data["nom_proveedor"]
-    #existe = Proveedor.objects.filter(nom_proveedor__iexact=nom_proveedor).exists()
-
-    # if existe:
-    #raise ValidationError("Este nombre ya existe")
-
-    # return nom_proveedor
+    
     class Meta:
         model = Proveedor
         fields = ['nom_proveedor', 'rol_local', 'celular', 'descripcion']
@@ -30,6 +23,39 @@ class ProveedorForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Tu oferta de productos, empresa, dirección'}), label='Descripción de la oferta a realizar')
 
 
+#Validación solo letras no numeros
+    def clean_nom_proveedor(self):
+        nombre = self.cleaned_data['nom_proveedor']
+        if not nombre.isalpha():
+            raise forms.ValidationError('El nombre no puede contener números')
+        return nombre
+
+#Validación solo letras no numeros
+    def clean_celular(self):
+        nombre = self.cleaned_data['celular']
+        if not nombre.isdigit():
+            raise forms.ValidationError('El celular no puede contener letras')
+        return nombre
+
+#INFORMACIÓN VALIDACIONES      
+# Check if a string contains only decimal: str.isdecimal()
+# Check if a string contains only digits: str.isdigit()
+# Check if a string contains only numeric: str.isnumeric()
+# Check if a string contains only alphabetic: str.isalpha()
+# Check if a string contains only alphanumeric: str.isalnum()
+# Check if a string contains only ASCII: str.isascii()
+# Check if a string is empty
+# Check if a string is a number (= can be converted to numeric value)
+
+#INFORMACIÓN VALIDAR SIN REPETIR EL NOMBRE
+ # def clean_nom_proveedor(self):
+    #nom_proveedor = self.cleaned_data["nom_proveedor"]
+    #existe = Proveedor.objects.filter(nom_proveedor__iexact=nom_proveedor).exists()
+
+    # if existe:
+    #raise ValidationError("Este nombre ya existe")
+
+    # return nom_proveedor
 
         
 class CarritoForm(forms.ModelForm):
