@@ -506,7 +506,9 @@ def editar_cuenta_enc_convenio(request):
                 'cuentasEncConvenio': cuentasEncConvenio,
                 'cuentaEncConvenio': cuentaEncConvenio
             }
-    return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data)
+        return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data)
+    return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data1)
+
 
 
 def eliminar_cuenta_enc_convenio(request):
@@ -1315,7 +1317,11 @@ def generar_cuenta_empleado(request):
         # validaciones
         value = {
             'nombre_cli': nombre_cli,
-
+            'apaterno_cli': apaterno_cli,
+            'amaterno_cli':amaterno_cli,
+            'fono_cli':fono_cli,
+            'email_cli':email_cli,
+            'empresa_rut_empresa':empresa_rut_empresa,
         }
         error_message = None
         trabEmp = Cliente(nombre_cli=nombre_cli,
@@ -1510,7 +1516,7 @@ def generarCuentaCliente(request):
             # return redirect('login')
         else:
             data = {
-                'value':value,
+                'values':value,
                 'error': error_message,
 
             }
@@ -1622,7 +1628,7 @@ def cambiar_contraseña_cliente(request):
                 return render(request, 'cliente/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
-                email = request.session['cuentaClienter']
+                email = request.session['cuentaCliente']
                 data = {
                     'email': email,
                     'error': error_message,

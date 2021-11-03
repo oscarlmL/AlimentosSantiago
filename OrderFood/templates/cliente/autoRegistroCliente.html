@@ -36,30 +36,37 @@
 
                     {% csrf_token %}
                     <div class="form-group">
+                        <label for="">Nombre</label>
                         <input type="text" class="form-control" name="nombre_cli" placeholder="Nombre" id=""
                         value="{{values.nombre_cli}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Apellido Paterno</label>
                         <input type="text" class="form-control" name="apaterno_cli" placeholder="Apellido Paterno" id=""
                         value="{{values.apaterno_cli}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Apellido Materno</label>
                         <input type="text" class="form-control" name="amaterno_cli" placeholder="Apellido Materno" id=""
                         value="{{values.amaterno_cli}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Celular</label>
                         <input type="number" class="form-control" id="" name="fono_cli" placeholder="Teléfono" 
                         value="{{values.fono_cli}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Email</label>
                         <input type="email" class="form-control" id="" name="email_cli" aria-describedby="email_cli"
                             value="{{values.email_cli}}" placeholder="Email, ejemplo: tobilius@gmail.com">
                     </div>
                     <div class="form-group">
+                        <label for="">Contraseña</label>
                         <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
                             placeholder="Ingresar Contraseña">
                     </div>
                     <div class="form-group">
+                        <label for="">Confirmar Contraseña</label>
                         <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
                             placeholder="Confirmar Contraseña">
                     </div>

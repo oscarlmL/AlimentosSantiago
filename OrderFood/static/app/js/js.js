@@ -72,9 +72,36 @@ function showInp() {
     document.getElementById("bicicleta").style.display = "none";
 
   }else if (getSelectValue == "Bicicleta") {
-    document.getElementById("Bicicleta").style.display = "inline-block";
+    document.getElementById("bicicleta").style.display = "inline-block";
     document.getElementById("patente_veh_moto").style.display = "none";
     document.getElementById("patente_veh_auto").style.display = "none";
 
+  }
+}
+
+function mostrarContrasena() {
+  var tipo = document.getElementById("password");
+  if (tipo.type == "password") {
+      tipo.type = "text";
+  } else {
+      tipo.type = "password";
+  }
+}
+
+function mostrarContrasena1() {
+  var tipo = document.getElementById("password1");
+  if (tipo.type == "password") {
+      tipo.type = "text";
+  } else {
+      tipo.type = "password";
+  }
+}
+
+function mostrarContrasena2() {
+  var tipo = document.getElementById("password2");
+  if (tipo.type == "password") {
+      tipo.type = "text";
+  } else {
+      tipo.type = "password";
   }
 }

@@ -31,17 +31,26 @@
                     <hr>
                     <form method="POST" action="">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="contraseña_actual_cocina" placeholder="Contraseña Actual"
-                                value="">
+                        <Label>Contraseña Actual</Label>
+                        <div class="input-group mb-3 border border"> 
+                            <input type="password" id="password" placeholder="" name="contraseña_actual_cocina"  class="form-control border-0">
+                            <div class="input-group-append">
+                              <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span class="iconify" data-icon="bi:eye-fill" data-inline="true" onclick="mostrarContrasena()"></span></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="nueva_contraseña_cocina" placeholder="Nueva Contraseña"
-                                value="">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="con_nueva_contraseña_cocina" placeholder="Confirmar Nueva Contraseña"
-                                value="">
+                          <Label>Nueva Contraseña</Label>
+                        <div class="input-group mb-3 border border"> 
+                            <input type="password" id="password1" placeholder="" name="nueva_contraseña_cocina"  class="form-control border-0">
+                            <div class="input-group-append">
+                              <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span class="iconify" data-icon="bi:eye-fill" data-inline="true" onclick="mostrarContrasena1()"></span></span>
+                            </div>
+                         </div>
+                          <Label>Confirmar Nueva Contraseña</Label>
+                        <div class="input-group mb-3 border border"> 
+                            <input type="password" id="password2" placeholder="" name="con_nueva_contraseña_cocina"  class="form-control border-0">
+                            <div class="input-group-append">
+                              <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span class="iconify" data-icon="bi:eye-fill" data-inline="true" onclick="mostrarContrasena2()"></span></span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-round btn-block" value="Cambiar">

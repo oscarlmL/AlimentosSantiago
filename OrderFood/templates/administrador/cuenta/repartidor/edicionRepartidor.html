@@ -29,26 +29,32 @@
                             value="{{cuentaRepartidor.id_repartidor}}" readonly required maxlength="12">
                     </div>
                     <div class="form-group">
+                        <label for="">Rut Repartidor</label>
                         <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
                             value="{{cuentaRepartidor.rut_repartidor}}" onkeyup="formatoRut(this)" maxlength="12">
                     </div>
                     <div class="form-group">
+                        <label for="">Nombres</label>
                         <input type="text" class="form-control" name="nombre_repartidor" placeholder="Nombre" id=""
                             value="{{cuentaRepartidor.nombre_repartidor}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Apellidos</label>
                         <input type="text" class="form-control" id="" name="apellido_repartidor" aria-describedby=""
                             placeholder="Apellido" value="{{cuentaRepartidor.apellido_repartidor}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Celular de contacto</label>
                         <input type="number" class="form-control" id="" name="celular" aria-describedby=""
                             placeholder="celular ej: 912345678" value="{{cuentaRepartidor.celular}}">
                     </div>
                     <div class="form-group">
+                        <label for="">Email de trabajo</label>
                         <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
                             value="{{cuentaRepartidor.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
                     </div>
                     <div class="form-group">
+                        <label for="">Tipo de Vehiculo</label>
                         <select class="form-control" value="{{cuentaRepartidor.tipo_veh}}" name="tipo_veh" id="tipo_veh"
                             onclick="showInp(this);">
                             <option value="">--- Seleccionar Tipo de Vehículo ---</option>
@@ -82,7 +88,7 @@
                             onkeyup="formatoPatenteAuto(this);" placeholder="Patente del Auto">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" style="display: none" id="Bicicleta" name="Bicicleta"
+                        <input type="text" class="form-control" style="display: none" id="bicicleta" name="bicicleta"
                             value="{{cuentaRepartidor.patente_veh}}" maxlength="1" placeholder="Bicicleta">
                     </div>
                     <div class="form-group">

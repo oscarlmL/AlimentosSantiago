@@ -50,22 +50,27 @@
                     <form method="POST" action="" id="form-repartidor">
                         {% csrf_token %}
                         <div class="form-group">
+                            <label for="">Rut Repartidor</label>
                             <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut" id=""
                                 value="{{values.rut_repartidor}}" maxlength="12" onkeyup="formatoRut(this)">
                         </div>
                         <div class="form-group">
+                            <label for="">Nombres</label>
                             <input type="text" class="form-control" name="nombre_repartidor" placeholder="Nombre" id=""
                                 value="{{values.nombre_repartidor}}">
                         </div>
                         <div class="form-group">
+                            <label for="">Apellidos</label>
                             <input type="text" class="form-control" id="" name="apellido_repartidor" aria-describedby=""
                                 placeholder="Apellido" value="{{values.apellido_repartidor}}">
                         </div>
                         <div class="form-group">
+                            <label for="">Celular de contacto</label>
                             <input type="tel" class="form-control" id="" name="celular" aria-describedby=""
                                 placeholder="celular ej: 912345678" value="{{values.celular}}">
                         </div>
                         <div class="form-group">
+                            <label for="">Email de trabajo</label>
                             <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
                                 value="{{values.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
                         </div>
@@ -78,6 +83,7 @@
                             </select>
                         </div> -->
                         <div class="form-group">
+                            <label for="">Tipo de Vehiculo</label>
                             <select class="form-control" value="{{values.tipo_veh}}" name="tipo_veh" id="tipo_veh" onclick="showInp(this);">
                                 <option value="{{values.tipo_veh}}">--- Seleccionar Tipo de Vehículo ---</option>
                                 <option value="Auto">Auto</option>
@@ -96,10 +102,17 @@
                                 placeholder="Patente del Auto">
                         </div>
                         <div class="form-group">
+                            <input type="text" class="form-control"  style="display: none" id="Bicicleta" name="bicicleta"
+                                value="-" 
+                                placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <Label>Contraseña</Label>
                             <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
                                 placeholder="Ingresar Contraseña">
                         </div>
                         <div class="form-group">
+                            <label for="">Confirmar Contraseña</label>
                             <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
                                 placeholder="Confirmar Contraseña">
                         </div>
