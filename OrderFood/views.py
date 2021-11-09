@@ -1402,6 +1402,12 @@ def generar_cuenta_empleado(request):
     return render(request, 'encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html', data)
 
 
+def listar_cuenta_empleados(request):
+    id = request.GET["rut_emp"]
+    cuentas_empleados = Cliente.objects.filter(empresa_rut_empresa_id=id)
+    data = {'cuentas_empleados':cuentas_empleados}
+    return render(request,'encargadoConvenio/cuentasEmpleados/listar_cuentas_empleados.html',data)
+
 def editar_cuenta_trab_emp(request):
     email = request.session['cuentaEncConvenio']
     rut_cli = request.GET["rut_cli"]

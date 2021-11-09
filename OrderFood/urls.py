@@ -59,6 +59,8 @@ urlpatterns = [
     path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
     path('eliminar-empresa//<slug:rut_emp>/', eliminar_empresa, name='eliminar-empresa'),
     path('generar-cuenta-empleado/', auth_middleware_enc_convenio(generar_cuenta_empleado), name='generar-cuenta-empleado'),
+    path('gestionar-empresa/listar-cuentas-empleados/', listar_cuenta_empleados, name='listar-cuentas-empleados'),
+
     path('editar-cuentaTrabEmp', auth_middleware_enc_convenio(editar_cuenta_trab_emp), name='editar-cuentaTrabEmp'),
     path('eliminar-cuentaTrabEmp/<id>/', eliminar_cuenta_trab_emp, name='eliminar-cuentaTrabEmp'),
     #FIN ENCARGADO CONVENIO

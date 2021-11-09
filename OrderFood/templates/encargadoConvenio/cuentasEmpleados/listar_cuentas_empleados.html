@@ -1,12 +1,29 @@
-{% for n in trabajadores %}
-<tr class="table-light">
-    <td>{{ n.nombre_cli | title }}</td>
-    <td>{{ n.apaterno_cli | title }}</td>
-    <td>{{ n.amaterno_cli | title }}</td>
-    <td>{{ n.email_cli | title }}</td>
-    <td>{{ n.empresa_rut_empresa | title }}</td>
-</tr>
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+
+<div class="container-fluid">
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>Lista de empleados la empresa</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <tr class="table-active">
+                    <th>Nombre empleado</th>
+                    <th>Apellidos empleado</th>
+                    <th>Email</th>
+                </tr>
+
+                {% for n in cuentas_empleados %}
+                <tr class="table-light">
+                    <td>{{ n.nombre_cli | title }}</td>
+                    <td>{{ n.apaterno_cli | title }} {{ n.amaterno_cli | title }}</td>
+                    <td>{{ n.email_cli | title }}</td>
+                </tr>
 
 
+                {% endfor %}
+            </table>
 
-{% endfor %}
+        </div>
+    </div>
+{% endblock %}
