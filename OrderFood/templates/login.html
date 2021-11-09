@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -55,12 +55,15 @@
                             <input type="email" class="form-control" name="email" aria-describedby="emailHelp"
                                 placeholder="E-mail" required="">
                         </div>
-                        <div class="input-group mb-3 border border"> 
-                            <input type="password" id="password" placeholder="Contraseña" name="contraseña"  class="form-control border-0" aria-label="Amount (to the nearest dollar)" required>
+
+                        <div class="input-group mb-3 border border">
+                            <input type="password" id="password" placeholder="Contraseña" name="contraseña" class="form-control border-0" aria-label="Amount (to the nearest dollar)" required>
                             <div class="input-group-append">
-                              <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span class="iconify" data-icon="bi:eye-fill" data-inline="true" onclick="mostrarContrasena()"></span></span>
+                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                        onclick="mostrarContrasena()"></span></span>
                             </div>
-                          </div>
+                        </div>
                         <input type="submit" value="Ingresar" class="btn btn-primary btn-round btn-block">
                         <hr>
                         <div class="">
@@ -68,7 +71,7 @@
                             <a class="" href="{% url 'auto-registro-cliente' %}">
                                 <span>Registrate, ¡Es Gratis!</span>
                             </a>
-                             <hr>
+                            <hr>
                             ¿Desea regresar a la página principal?
                             <a class="mb-4 text-center" href="{% url 'home' %}">
                                 <span>Click Aquí</span>
@@ -88,7 +91,7 @@
                 tipo.type = "password";
             }
         }
-        </script>
+    </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
