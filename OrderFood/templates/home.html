@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block contenido %}
 {% load static %}
+{% load carro %}
+{% load humanize %}
+
 <div class="block hero1 my-auto"
     style="background-image:url(https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80);">
     <div class="container-fluid text-center">
@@ -20,16 +23,16 @@
                 <div class="form-group">
                     <div class="text-center">
                         <h2>Búsqueda de Plato</h2>
-                    <hr>
+                        <hr>
                     </div>
 
-                    <form class="d-flex mx-auto formBuscar" action=""  method="GET">
+                    <form class="d-flex mx-auto formBuscar" action="/#{{form.nom_plato}}" method="GET">
                         {{buscar_plato.form.nom_plato}}
                         {{buscar_plato.form.Restaurant}}
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary btn-round btn-block rounded" value="Buscar">
-                            </div>
-                    </form> 
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-round btn-block rounded" value="Buscar">
+                        </div>
+                    </form>
                 </div>
                 <br>
                 <br>
@@ -39,42 +42,129 @@
                         <a href="#" class="button button--is-active" data-target="pizzaMenu">{{r.nombre_rest}}</a>
                     {% endfor %}
                 </div> -->
-                
                 {% for plato in platos %}
-                    <form action = "agregar_carrito" method="POST">
-                        {% csrf_token %}
-                        <div class="menu menu--is-visible" id="pizzaMenu" data-aos="fade-up">
-                            <div class="item row align-items-center">
-                                <div class="col-{% load static %}sm-3 pr-5">
-                                    {% if plato.Imagen %}
-                                        <img src="{{ plato.Imagen.url }}" width="250px" height="200px" alt="Imagen Platos">
-                                    {% endif %}
-                                </div>
-                                <div class="details col-sm-9">
-                                    <div class="item__header">
-                                        <h3 class="item__title">{{plato.nom_plato}}</h3>
-                                        <span class="item__dots"></span>
-                                        <span class="item__price">${{plato.valor_plato}}</span>
-                                    </div>
-                                    <p class="item__description">{{plato.descripcion}}</p>
+                {% csrf_token %}
+                <div class="menu menu--is-visible" data-aos="fade-up" id="{{plato.id_plato}}">
+                    <div class="item row align-items-center">
+                        <div class="col-sm-3 pr-5">
+                            {% if plato.Imagen %}
+                            <img src="{{ plato.Imagen.url }}" width="250px" height="200px" alt="Imagen Platos">
+                            {% endif %}
+                        </div>
+                        <div class="details col-sm-9">
+                            <div class="item__header">
+                                <h3 class="item__title">{{plato.nom_plato}}</h3>
+                            </div>
+                            <p class="item__description">{{plato.descripcion}}</p>
+                            <span class="item__price">${{plato.valor_plato | intcomma}}</span>
 
-                                    <input type="hidden" readonly id="idplato" name="idplato" value={{plato.id_plato}} />
-                                    <input type="hidden" readonly id="cantidad" name="cantidad" value="1" />
-
-                                    <button type="submit" id="carrito" class="btn btn-sm btn-outline-primary my-cart-btn" data-id={{plato.id_plato}}
-                                        data-name={{plato.nom_plato}} data-price={{plato.valor_plato}} data-quantity="1"
-                                        data-image="{{ plato.Imagen.url }}">Agregar al Carro</button>
+                            <div class="">
+                                {% if plato|is_in_cart:request.session.carro %}
+                                <div class="row no-gutters">
+                                    <form action="/#{{plato.id_plato}}" method="post" class="col-xs">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                        <input hidden type="text" name="remove" value="True">
+                                        <input type="submit" value=" - " class="col-xs rounded-circle btn btn-primary">
+                                    </form>
+                                    <div class="text-center col-md-3">{{plato|carro_quantity:request.session.carro}} en carro</div>
+                                    <form action="/#{{plato.id_plato}}" method="post" class="col-xs">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                        <input type="submit" value=" + " class="col-xs rounded-circle btn btn-primary">
+                                    </form>
                                 </div>
-                            </div>                    
-                        </div> 
-                    </form>               
-                {% endfor %}            
+                                {% else %}
+                                <form action="/#{{plato.id_plato}}" method="POST" class="btn-block">
+                                    {% csrf_token %}
+                                    <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                    <input type="submit" class="btn btn-sm btn-outline-primary my-cart-btn"
+                                        value="agregar al carro">
+                                </form>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </section>
     </div>
 </div>
+
+<!-- MODAL CARRITO -->
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Tú carrito
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-image">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Plato</th>
+                            <th scope="col">Valor unitario</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for platos_en_carro in platos_en_carro %}
+                        <tr>
+                            <td><img class="rounded-circle" src="{{platos_en_carro.Imagen.url}}" alt=""
+                                    style="height: 60px; width: 80px;"></td>
+                            <td>{{platos_en_carro.nom_plato}}</td>
+                            <td>$ {{platos_en_carro.valor_plato | intcomma}}</td>
+                            <td>{{platos_en_carro|carro_quantity:request.session.carro}}</td>
+                            <td>$ {{platos_en_carro|precio_total:request.session.carro | intcomma}}</td>
+                            <!-- <td>
+                            <td>
+                                <a href="#" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </td> -->
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th class="" colspan="">Total</th>
+                            <th>$ {{platos|precio_total_carro:request.session.carro | intcomma}}</th>
+                        </tr>
+
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <div class="m-3 p-3">
+                    <a href="{% url 'realizar-pedido' %}" class="btn btn-primary border float-right" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Realizar Compra
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="icon-cart" style="position: fixed; background: inherit;" data-toggle="modal" data-target="#cartModal">
+    <img src="{% static 'app/img/cart.svg' %}" style="width:30px;"> <span class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}
+    </span>
+</div>
+
 <div class="text-center">
     <a class="text-center btn btn-outline-dark" href="{% url 'proveedor' %}">¿Eres proveedor? ¡Click aca!</a>
 </div>
-
 {% endblock %}

@@ -14,3 +14,4 @@ class AdminNCempresa(admin.ModelAdmin):
 admin.site.register(Empresa,AdminNCempresa)
 admin.site.register(EncConvenio,AdminNCconvenio)
 admin.site.register(Cliente)
+admin.site.register(Pedido)

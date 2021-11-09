@@ -4,8 +4,14 @@ from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_mi
 
 
 urlpatterns = [
-    path('', home, name="home"),
+    path('ubicacion', ubicacion, name="ubicacion"),
+    path('', home.as_view(), name="home"),
     path('login', Login.as_view(), name="login"),
+    path('realizar-pedido', realizar_pedido.as_view(), name="realizar-pedido"),
+    path('pagar', realizar_pedido.as_view(), name="pagar"),
+    path('mis-pedidos', pedidos.as_view(), name="mis-pedidos"),
+
+
     path('logout', logout, name="logout"),
 
     #CLIENTE
@@ -72,7 +78,7 @@ urlpatterns = [
     #End Path
 
  
-    path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
-    path('listar_carrito', listar_carrito, name='listar_carrito'),
-    path('eliminar_item_carrito/<id>/', eliminar_item_carrito, name='eliminar_item_carrito'),   
+    # path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
+    # path('listar_carrito', listar_carrito, name='listar_carrito'),
+    # path('eliminar_item_carrito/<id>/', eliminar_item_carrito, name='eliminar_item_carrito'),   
 ]

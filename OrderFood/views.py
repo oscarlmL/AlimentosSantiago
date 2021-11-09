@@ -7,21 +7,58 @@ from .models import *
 from django.views import View
 from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm, ClienteForm
-from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm, CarritoForm
+from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm
 from .filters import buscarPlato
 
 
 # Funciones Generales
-def home(request):
-    email = request.session.get('cuentaAdmin') or request.session.get(
+
+def ubicacion(request):
+    return render(request, 'ubicacion.html')
+
+class home(View):
+    def post(self,request):
+        #PLATO ES EL NOMBRE QUE SE LE DA AL BOT
+        plato = request.POST.get('plato')
+        remove = request.POST.get('remove')
+        carro = request.session.get('carro')
+        if carro:
+            quantity = carro.get(plato)
+            if quantity:
+                if remove:
+                    if quantity <= 1:
+                        carro.pop(plato)
+                    else:
+                        carro[plato] = quantity-1
+                else:
+                    carro[plato] = quantity+1
+            else:
+                carro[plato] = 1
+        else:
+            carro = {}
+            carro[plato] = 1
+        request.session['carro'] = carro
+        print('carro',request.session['carro'])
+        return redirect('home')
+
+    def get(self, request):
+        carro = request.session.get('carro')
+        if not carro:
+            request.session['carro'] = {}
+        email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente')
-    platos = Plato.objects.all()
-    rest = Restaurant.objects.all()
-    buscar_plato = buscarPlato(request.GET, queryset=platos)
-    platos = buscar_plato.qs
-    data = {'email': email, 'platos': platos,
-            'rest': rest, 'buscar_plato': buscar_plato}
-    return render(request, 'home.html', data)
+        platos = Plato.objects.all()
+        rest = Restaurant.objects.all()
+        buscar_plato = buscarPlato(request.GET, queryset=platos)
+        platos = buscar_plato.qs
+        #MODAL CARRITO
+        id_plato = (list(request.session.get('carro').keys()))
+        platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
+        print(platos_en_carro)
+        #FIN MODAL CARRITO
+        data = {'email': email, 'platos': platos,
+                'rest': rest, 'buscar_plato': buscar_plato,'platos_en_carro':platos_en_carro}
+        return render(request, 'home.html', data)
 
 
 class Login(View):
@@ -72,12 +109,60 @@ class Login(View):
         elif cuentaCliente:
             flag = check_password(contraseña, cuentaCliente.contraseña1)
             if flag:
-                request.session['cuentaCliente'] = cuentaCliente.email_cli
+                request.session['cuentaCliente'] = cuentaCliente.id_cliente
                 print('eres :',email)
                 return redirect('home')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
+
+
+class realizar_pedido(View):
+    def get(self, request):
+         #MODAL CARRITO
+        id_plato = (list(request.session.get('carro').keys()))
+        platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
+        print(platos_en_carro)
+        #FIN MODAL CARRITO
+        platos = Plato.objects.all()
+        tipo_pago = Pago.objects.all()
+        data = {'platos':platos,'tipo_pago':tipo_pago,'platos_en_carro':platos_en_carro}
+        return render(request, 'realizarPedido.html',data)
+
+    def post(self, request):
+        direccion = request.POST.get('direccion')
+        tipo_entrega = request.POST.get('tipo_entrega')
+        tipo_pago = request.POST.get('tipo_pago')
+        celular_contacto = request.POST.get('celular_contacto')
+        cuentaCliente = request.session.get('cuentaCliente')
+        carro = request.session.get('carro')
+        platos = Plato.get_plato_by_id_plato(list(carro.keys()))
+        print(direccion, tipo_entrega, tipo_pago, celular_contacto, cuentaCliente, carro,platos)
+
+        for plato in platos:
+            print(carro.get(str(plato.id_plato)))
+            pedido = Pedido(cliente_id=Cliente(id_cliente=cuentaCliente),
+                          plato_id=plato,
+                          precio=plato.valor_plato,
+                          tipo_entrega=tipo_entrega,
+                          tipo_pago_id=tipo_pago,
+                          direccion=direccion,
+                          celular=celular_contacto,
+                          cantidad=carro.get(str(plato.id_plato)))
+            pedido.pedido()
+        request.session['carro'] = {}
+        return redirect('pagar')
+
+class pedidos(View):
+    def get(self, request):
+        cuentaCliente = request.session.get('cuentaCliente')
+        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente)
+        print(pedidos)
+        return render(request, 'pedidos.html',{'pedidos':pedidos})
+
+
+
+
 
 
 def logout(request):
@@ -1261,44 +1346,6 @@ def eliminar_empresa(request, rut_emp):
     return redirect(to="gestionar-empresa")
 # fin encargadoConvenioEmpresa
 
-
-def agregar_carrito (request):
-    data = {
-        "form": CarritoForm()
-    }
-    if request.method == "POST":
-        formulario = CarritoForm(request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            data["mensaje"] = "Guardado correctamente"
-        else:
-            data["form"] = formulario
-
-    return redirect(to="listar_carrito")
-
-#fin agregar al carro 
-
-def listar_carrito(request):
-    raw_sql = "select a.id, a.cantidad, b.nom_plato, b.valor_plato from carrito a inner join plato b on a.idplato = b.id_plato"
-    #carritoproductos = Carrito.objects.all()
-    carritoproductos = Carrito.objects.raw(raw_sql)
-    data = {
-        'carritoproductos': carritoproductos
-    }
-
-    return render(request, 'carritoproductos/listar.html', data)
-
-#fin listado carro
-
-def eliminar_item_carrito(request, id):
-    carrito = get_object_or_404(Carrito, id=id)
-    carrito.delete()
-    return redirect(to="listar_carrito")
- 
-
-#fin eliminar item carrito
-
-
 def generar_cuenta_empleado(request):
     id = request.GET["rut_emp"]
     empresa = get_object_or_404(Empresa, rut_emp=id)
@@ -1507,7 +1554,7 @@ def generarCuentaCliente(request):
                 email = request.POST.get('email_cli')
                 flag = check_password(contraseña1, cliente.contraseña1)
                 if flag:
-                    request.session['cuentaCliente'] = cliente.email_cli
+                    request.session['cuentaCliente'] = cliente.id_cliente
                     print('Eres', email)
                     return redirect('home')
                 else:
@@ -1523,14 +1570,13 @@ def generarCuentaCliente(request):
         return render(request, 'cliente/autoRegistroCliente.html',data)
 
 
-
 def editar_perfil_cliente(request):
     check = Cliente.objects.filter(
-        email_cli=request.session['cuentaCliente'])
+        id_cliente=request.session['cuentaCliente'])
     if len(check) > 0:
         email = request.session['cuentaCliente']
         data = Cliente.objects.get(
-            email_cli=request.session['cuentaCliente'])
+            id_cliente=request.session['cuentaCliente'])
         data = {'data': data, 'email': email}
     if request.method == 'POST':
         nombre_cli = request.POST["nombre_cli"]
@@ -1540,7 +1586,7 @@ def editar_perfil_cliente(request):
         email_cli = request.POST["email_cli"]
 
         cliente = Cliente.objects.get(
-            email_cli=request.session['cuentaCliente'])
+            id_cliente=request.session['cuentaCliente'])
         cliente.nombre_cli = nombre_cli
         cliente.apaterno_cli = apaterno_cli
         cliente.amaterno_cli = amaterno_cli
@@ -1560,8 +1606,9 @@ def editar_perfil_cliente(request):
             error_message = 'El email es requerido'
 
         # guardar datos de cuenta
+        #corregir cuenta empleado y cliente
         if not error_message:
-            if email != cliente.email_cli:
+            if email_cli != cliente.email_cli:
                 cliente.save()
                 messages.success(request, "Email modificado, vuelva a iniciar sessión")
                 return redirect('login')

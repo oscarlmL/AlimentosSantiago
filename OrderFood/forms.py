@@ -57,13 +57,6 @@ class ProveedorForm(forms.ModelForm):
 
     # return nom_proveedor
 
-        
-class CarritoForm(forms.ModelForm):
-
-    class Meta:
-        model = Carrito
-        fields = ['idplato', 'cantidad']
-
 
 class PedidoForm(forms.ModelForm):
 

@@ -35,7 +35,6 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Nuestro Menú</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{% url 'listar_carrito' %}">Ver mi pedido</a>
                     </li>
                 </ul>
                 {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor or request.session.cuentaCliente %}
@@ -61,6 +60,7 @@
                         {% elif request.session.cuentaRepartidor %}
                         <a class="dropdown-item" href="/editar-perfil-repartidor">Editar Perfil</a>
                         {% elif request.session.cuentaCliente %}
+                        <a class="dropdown-item" href="/mis-pedidos">Mis pedidos</a>
                         <a class="dropdown-item" href="/editar-perfil-cliente">Editar Perfil</a>
                         {% endif %}
                         <li class="border-top">
@@ -74,6 +74,12 @@
                     </div>
                 </div>
                 {% else %}
+                <!-- <li class="nav-item nav">
+                    <a class="fa fa-shopping-cart nav-link active" data-toggle="modal" data-target="#cartModal" href="">
+                        <span class="">Carrito - </span>
+                        <span class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}</span>
+                    </a>                            
+                </li> -->
                 <li class="nav-item nav">
                     <a class="nav-link active" href="{% url 'login' %}">
                         <span>Iniciar Sesión</span>
@@ -99,10 +105,10 @@
     <script src="{% static 'app/js/mycart.js' %}"></script>
     <script src="/static/app/js/mycart-custom.js"></script>
     <script src="{% static 'app/js/js.js' %}"></script>
-    <div class="nav-item my-cart-icon d-none">
+    <!-- <div class="nav-item my-cart-icon">
         <img src="{% static 'app/img/cart.svg' %}" style="width:20px;"> <span class="badge badge-notify my-cart-badge">
         </span>
-    </div>
+    </div> -->
     <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>

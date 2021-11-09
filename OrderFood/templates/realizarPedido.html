@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+{% load carro %}
+{% load humanize %}
+
+<div class="maincontent">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+                <form action="/pagar" method="post">
+                    {% csrf_token %}
+                    <div class="list-group list-group-horizontal">
+                        <a class="list-group-item list-group-item-action" href="/realizar-pedido/delivery">Delivery</a>
+                        <a class="list-group-item list-group-item-action" href="/realizar-pedido/retiro-en-local">Retiro en local</a>
+                    </div>
+                    <div id="map"></div>
+                    <br>
+                    <div class="form-group">
+                        <label for="">Dirección</label>
+                        <input type="text" class="form-control" placeholder="Tú dirección" name="direccion"
+                        id="direccion_cliente">                    
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tipo de entrega</label>
+                        <select name="tipo_entrega" id="" class="form-control">
+                            <option value="" selected>--- Seleccionar tipo de entrega ---</option>
+                            <option value="Delivery">Delivery</option>
+                            <option value="Retiro en local">Retiro en local</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tipo Pago</label>
+                        <select name="tipo_pago" id="" class="form-control">
+                            <option value="" selected>--- Seleccionar tipo de pago ---</option>
+                            {% for tipo_pago in tipo_pago %}
+                            <option value="{{tipo_pago.id_pago}}">{{tipo_pago.tipo_pago}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Celular de contacto</label>
+                        <input type="tel" class="form-control" name="celular_contacto" placeholder="" value="">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-round btn-block" value="Pagar">
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4 col-md-6 col-lg-4 col-xl-4">
+                <div class="">
+                    <div class="">
+                        <h2 class="font-weight-bold">Tus platos</h2>
+                        <hr>
+                        {% for platos_en_carro in platos_en_carro %}
+                        <ul class="list-group">
+                            <li class="list-group">Cantidad {{platos_en_carro|carro_quantity:request.session.carro}}
+                            </li>
+                            <li class="list-group">{{platos_en_carro.nom_plato}}</li>
+                            <li class="list-group">{{platos_en_carro.descripcion}}</li>
+                            <li class="list-group">$ {{platos_en_carro.valor_plato | intcomma}}</li>
+                            <hr>
+                        </ul>
+                        {% endfor %}
+                        <hr>
+                        <li class="list-group font-weight-bold" style="font-size: 22px;">TOTAL A PAGAR <span>$
+                                {{platos|precio_total_carro:request.session.carro | intcomma}}</span></li>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap" async defer></script>
+<script>
+    function initMap() {
+        var input = document.getElementById('direccion_cliente');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            document.getElementById('location-snap').
+                innerHTML = place.formatted_address;
+            document.getElementById('lat-span').
+                innerHTML = place.geometry.location.lat();
+            document.getElementById('lon-span').
+                innerHTML = place.geometry.location.lng();
+        });
+    }
+</script>
+
+
+   
+{% endblock %}

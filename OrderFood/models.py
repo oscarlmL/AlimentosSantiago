@@ -1,6 +1,5 @@
 from django.db import models
-from django.utils.translation import TranslatorCommentWarning
-
+import datetime
 
 class Administrador(models.Model):
     # This field type is a guess.
@@ -57,6 +56,10 @@ class Cliente(models.Model):
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
     
+    def __str__(self):
+        return self.nombre_cli
+
+
     def emailExiste(self):
         if Cliente.objects.filter(email_cli=self.email_cli):
             return True
@@ -233,9 +236,16 @@ class Pago(models.Model):
 
     class Meta:
         db_table = 'pago'
+    
+    def __str__(self):
+        return self.tipo_pago
 
 
 #OPCIONES ESTADO PEDIDO
+tipo_entrega = [
+    ['Delivery','Delivery'],
+    ['Retiro en local','Retiro en local']
+]
 estado_pedido = [
     ['Pendiente', "Pendiente"],
     ['Confirmado', "Confirmado"],
@@ -243,20 +253,32 @@ estado_pedido = [
     ['Entregado', "Entregado"]
 
 ]
-
 class Pedido(models.Model):
     id_pedido = models.AutoField(primary_key=True)
-    estado = models.CharField(max_length=50, choices=estado_pedido)   # This field type is a guess.
-    # This field type is a guess.
-    fecha_pedido = models.CharField(max_length=50)
-    cliente_id = models.ForeignKey(
-        Cliente, models.DO_NOTHING, db_column='cliente_id')
-    restaurant_id_restaurante = models.ForeignKey(
-        'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
+    plato_id = models.ForeignKey('Plato',on_delete=models.CASCADE)
+    cliente_id = models.ForeignKey(Cliente, models.CASCADE, db_column='cliente_id')
+    cantidad = models.IntegerField(default=1)
+    precio = models.IntegerField()
+    direccion = models.CharField(max_length=100, default='', blank=True)
+    tipo_entrega = models.CharField(max_length=50, choices=tipo_entrega)
+    tipo_pago = models.ForeignKey(Pago, models.CASCADE, db_column='tipo_pago')
+    celular = models.CharField(max_length=10, default='', blank=True)
+    fecha_pedido = models.DateField(default=datetime.datetime.today)
+    estado = models.CharField(max_length=50, choices=estado_pedido, default='Pendiente')
+    # restaurant_id_restaurante = models.ForeignKey(
+    #     'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
 
     class Meta:
         db_table = 'pedido'
 
+    def pedido(self):
+        self.save()
+
+    def get_pedidos_by_cliente(cliente_id):
+        return Pedido\
+            .objects\
+            .filter(cliente_id=cliente_id)\
+            .order_by('tipo_entrega')
 
 class Plato(models.Model):
     id_plato = models.AutoField(primary_key=True)
@@ -271,8 +293,15 @@ class Plato(models.Model):
     def get_all_platos():
         return Plato.objects.all()
 
+    @staticmethod
+    def get_plato_by_id_plato(id_plato):
+        return Plato.objects.filter(id_plato__in=id_plato)
+
     class Meta:
         db_table = 'plato'
+
+    def __str__(self):
+        return self.nom_plato
 
 
 class Proveedor(models.Model):

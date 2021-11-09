@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'OrderFood',
     'crispy_forms',
+    'django.contrib.humanize',
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

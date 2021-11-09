@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+{% load carro %}
+{% load humanize %}
+
+<div class="maincontent">
+    <div class="container">
+        <div class="modal-body">
+            <table class="table table-image table-responsive">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Nro. Pedido</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Fecha del pedido</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedidos in pedidos %}
+                    <tr>
+                        <td scope="row">{{pedidos.id_pedido}}</td>
+                        <td><img class="rounded-circle" src="{{pedidos.plato_id.Imagen.url}}" alt=""
+                                style="height: 60px; width: 80px;"></td>
+                        <td>{{pedidos.plato_id.nom_plato}}</td>
+                        <td>{{pedidos.fecha_pedido}}</td>
+                        <td>$ {{pedidos.precio| intcomma}}</td>
+                        <td>{{pedidos.cantidad}}</td>
+                        <td>$ {{pedidos.cantidad|multiplicar:pedidos.precio| intcomma}}</td>
+                        {% if pedidos.estado == 'Pendiente' %}
+                        <td><small class="badge badge-danger">Pendiente</small></td>
+                        {% elif pedidos.estado == 'Confirmado' %}
+                        <td><small class="badge badge-warning">Pendiente</small></td>
+                        {% elif pedidos.estado == 'En ruta' %}
+                        <td><small class="badge badge-primary">Pendiente</small></td>
+                        {% else %}
+                        <td><small class="badge badge-success">Entregado</small></td>
+                        {% endif %}
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
