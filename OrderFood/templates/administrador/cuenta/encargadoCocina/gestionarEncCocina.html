@@ -3,27 +3,28 @@
 {% load static %}
 {% block js %}
 <script>
-    function eliminarEncCocina(id_enc_coc){
+    function eliminarEncCocina(id_enc_coc) {
         Swal.fire({
-            "title":"¿Estas seguro?",
-            "text":"esta acción no se puede deshacer",
-            "icon":"question",
-            "showCancelButton":true,
-            "cancelButtonText":"Cancelar",
-            "confirmButtonText":"Eliminar",
-            "reverseButtons":true,
-            "confirmButtonColor":"#dc3545",
-            "cancelButtonColor":"#303030"
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
 
 
         })
-        .then(function(result){
-            if(result.isConfirmed){
-                window.location.href = "/eliminar-cuenta-enc-cocina/?id_enc_coc="+id_enc_coc+""
-            }
-        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminar-cuenta-enc-cocina/?id_enc_coc=" + id_enc_coc + ""
+                }
+            })
     }
 </script>
+
 {% endblock %}
 <br>
 <br>
@@ -52,12 +53,13 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <Label>Nombre Completo</Label>
-                            <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo" id=""
-                                value="{{values.nom_enc_coc}}">
+                            <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo"
+                                id="" value="{{values.nom_enc_coc}}" onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Título que poseé</label>
-                            <select class="form-control" id="validationCustom04" name="titulo" required value="{{values.titulo}}">
+                            <select class="form-control" id="validationCustom04" name="titulo" required
+                                value="{{values.titulo}}">
                                 <option selected disabled value="">--- Seleccionar Tipo de Titulo ---</option>
                                 <option value="Tecnico">Técnico</option>
                                 <option value="Profesional">Profesional</option>
@@ -66,28 +68,44 @@
                         <div class="form-group">
                             <label for="">Experiencia Laboral</label>
                             <input type="number" class="form-control" id="" name="exp_laboral" aria-describedby=""
-                                placeholder="Experiencia laboral en años" value="{{values.exp_laboral}}">
+                                placeholder="Experiencia laboral en años" value="{{values.exp_laboral}}"
+                                onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <Label>Telefono/Celular de contacto</Label>
                             <input type="number" class="form-control" id="" name="celular" aria-describedby=""
-                                placeholder="912345678" value="{{values.celular}}">
+                                placeholder="912345678" value="{{values.celular}}"
+                                onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <label for="">Email de trabajo</label>
-                            <input type="email" class="form-control" id="" name="email_enc_coc" aria-describedby="email_enc_cocina"
-                                value="{{values.email_enc_coc}}" placeholder="ejemplo: encargadococina@dominio.com">
+                            <input type="email" class="form-control" id="" name="email_enc_coc"
+                                aria-describedby="email_enc_cocina" value="{{values.email_enc_coc}}"
+                                placeholder="ejemplo: encargadococina@dominio.com">
                         </div>
-                        <div class="form-group">
-                            <Label>Contraseña</Label>
-                            <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
-                                placeholder="Ingresar Contraseña">
+
+                        <Label>Contraseña</Label>
+                        <div class="input-group mb-3 border border">
+                            <input type="password" class="form-control" id="password" name="contraseña1"
+                                aria-describedby="" placeholder="Ingresar Contraseña">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                        onclick="mostrarContrasena()"></span></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Confirmar Contraseña</label>
-                            <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
-                                placeholder="Confirmar Contraseña">
+
+                        <label for="">Confirmar Contraseña</label>
+                        <div class="input-group mb-3 border border">
+                            <input type="password" class="form-control border-0" id="password2" name="contraseña2"
+                                aria-describedby="" placeholder="Confirmar Contraseña">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                        onclick="mostrarContrasena2()"></span></span>
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
                         </div>
@@ -133,8 +151,5 @@
 
     </div>
 </div>
-
-
-
 
 {% endblock %}
