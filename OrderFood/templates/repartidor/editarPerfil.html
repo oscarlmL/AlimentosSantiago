@@ -34,17 +34,17 @@
                         <div class="form-group">
                             <label for="">Rut Repartidor</label>
                             <input type="text" class="form-control" name="rut_repartidor" placeholder="Rut"
-                                value="{{data.rut_repartidor}}">
+                                value="{{data.rut_repartidor}}" onkeyup="formatoRut(this)">
                         </div>
                         <div class="form-group">
                             <label for="">Nombres</label>
                             <input type="text" class="form-control" name="nombre_repartidor"
-                                placeholder="Nombre" value="{{data.nombre_repartidor}}">
+                                placeholder="Nombre" value="{{data.nombre_repartidor}}" onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Apellidos</label>
                             <input type="text" class="form-control" name="apellido_repartidor"
-                                placeholder="Apellido" value="{{data.apellido_repartidor}}">
+                                placeholder="Apellido" value="{{data.apellido_repartidor}}" onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Email de trabajo</label>
@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label for="">Celular de contacto</label>
                             <input type="number" class="form-control" name="celular" placeholder="Celular Ej: 912345678"
-                                value="{{data.celular}}">
+                                value="{{data.celular}}" onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-round btn-block" value="Editar">

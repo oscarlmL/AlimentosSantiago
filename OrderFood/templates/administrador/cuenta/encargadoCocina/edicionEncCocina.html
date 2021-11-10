@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <Label>Nombre Completo</Label>
                             <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo"
-                                id="" value="{{cuentaEncCocina.nom_enc_coc}}">
+                                id="" value="{{cuentaEncCocina.nom_enc_coc}}" onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Título que poseé</label>
@@ -55,12 +55,12 @@
                         <div class="form-group">
                             <label for="">Experiencia Laboral</label>
                             <input type="number" class="form-control" id="" name="exp_laboral" aria-describedby=""
-                                placeholder="Experiencia laboral en años" value="{{cuentaEncCocina.exp_laboral}}">
+                                placeholder="Experiencia laboral en años" value="{{cuentaEncCocina.exp_laboral}}" onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <Label>Telefono/Celular de contacto</Label>
                             <input type="number" class="form-control" id="" name="celular" aria-describedby=""
-                                placeholder="912345678" value="{{cuentaEncCocina.celular}}">
+                                placeholder="912345678" value="{{cuentaEncCocina.celular}}" onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <label for="">Email de trabajo</label>
