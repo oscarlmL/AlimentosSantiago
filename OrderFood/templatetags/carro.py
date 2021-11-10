@@ -32,7 +32,7 @@ def precio_total_carro(plato, carro):
 
     return sum
 
+#mis pedidos
 @register.filter(name='multiplicar')
 def multiplicar(num, num1):
     return num*num1
-

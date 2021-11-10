@@ -73,6 +73,13 @@ class Cliente(models.Model):
         except:
             return False
 
+    @staticmethod
+    def get_cliente_by_id(id_cliente):
+        try:
+            return Cliente.objects.get(id_cliente=id_cliente)
+        except:
+            return False
+
     class Meta:
         db_table = 'cliente'
 		
@@ -259,6 +266,7 @@ class Pedido(models.Model):
     cliente_id = models.ForeignKey(Cliente, models.CASCADE, db_column='cliente_id')
     cantidad = models.IntegerField(default=1)
     precio = models.IntegerField()
+    horario_entrega = models.DateTimeField()
     direccion = models.CharField(max_length=100, default='', blank=True)
     tipo_entrega = models.CharField(max_length=50, choices=tipo_entrega)
     tipo_pago = models.ForeignKey(Pago, models.CASCADE, db_column='tipo_pago')

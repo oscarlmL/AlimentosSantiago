@@ -67,7 +67,8 @@
                                         <input hidden type="text" name="remove" value="True">
                                         <input type="submit" value=" - " class="col-xs rounded-circle btn btn-primary">
                                     </form>
-                                    <div class="text-center col-md-3">{{plato|carro_quantity:request.session.carro}} en carro</div>
+                                    <div class="text-center col-md-3">{{plato|carro_quantity:request.session.carro}} en
+                                        carro</div>
                                     <form action="/#{{plato.id_plato}}" method="post" class="col-xs">
                                         {% csrf_token %}
                                         <input hidden type="text" name="plato" value="{{plato.id_plato}}">
@@ -106,61 +107,72 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <table class="table table-image">
-                    <thead class="table-primary">
-                        <tr>
-                            <th scope="col">Imagen</th>
-                            <th scope="col">Plato</th>
-                            <th scope="col">Valor unitario</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for platos_en_carro in platos_en_carro %}
-                        <tr>
-                            <td><img class="rounded-circle" src="{{platos_en_carro.Imagen.url}}" alt=""
-                                    style="height: 60px; width: 80px;"></td>
-                            <td>{{platos_en_carro.nom_plato}}</td>
-                            <td>$ {{platos_en_carro.valor_plato | intcomma}}</td>
-                            <td>{{platos_en_carro|carro_quantity:request.session.carro}}</td>
-                            <td>$ {{platos_en_carro|precio_total:request.session.carro | intcomma}}</td>
-                            <!-- <td>
+
+            {% if request.session.carro %}
+            <div class="table-responsive">
+                <div class="modal-body">
+                    <table class="table table-image">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Plato</th>
+                                <th scope="col">Valor unitario</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for platos_en_carro in platos_en_carro %}
+                            <tr>
+                                <td><img class="rounded-circle" src="{{platos_en_carro.Imagen.url}}" alt=""
+                                        style="height: 60px; width: 80px;"></td>
+                                <td>{{platos_en_carro.nom_plato}}</td>
+                                <td>$ {{platos_en_carro.valor_plato | intcomma}}</td>
+                                <td>{{platos_en_carro|carro_quantity:request.session.carro}}</td>
+                                <td>$ {{platos_en_carro|precio_total:request.session.carro | intcomma}}</td>
+                                <!-- <td>
                             <td>
                                 <a href="#" class="btn btn-danger btn-sm">
                                     <i class="fa fa-times"></i>
                                 </a>
                             </td> -->
-                        </tr>
-                        {% endfor %}
-
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="4"></th>
-                            <th class="" colspan="">Total</th>
-                            <th>$ {{platos|precio_total_carro:request.session.carro | intcomma}}</th>
-                        </tr>
-
-                    </tfoot>
-                </table>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <div class="d-flex justify-content-end" style="float: right;">
+                            <tr>
+                                <th colspan="3"></th>
+                                <th class="" colspan="">Total</th>
+                                <th>$ {{platos|precio_total_carro:request.session.carro | intcomma}}</th>
+                            </tr>
+                        </div>
+                    </table>
+                </div>
             </div>
+
             <div class="modal-footer border-top-0 d-flex justify-content-between">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <div class="m-3 p-3">
-                    <a href="{% url 'realizar-pedido' %}" class="btn btn-primary border float-right" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Realizar Compra
+                    <a href="{% url 'realizar-pedido' %}" class="btn btn-primary border float-right"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Pagar
                     </a>
                 </div>
             </div>
+            {% else %}
+
+            <div class="col">
+                <h4 class="alert alert-danger text-center">Por favor agregar un plato al carro de compras</h4>
+            </div>
+
+            {% endif %}
         </div>
     </div>
 </div>
 
 <div class="icon-cart" style="position: fixed; background: inherit;" data-toggle="modal" data-target="#cartModal">
-    <img src="{% static 'app/img/cart.svg' %}" style="width:30px;"> <span class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}
+    <img src="{% static 'app/img/cart.svg' %}" style="width:30px;"> <span
+        class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}
     </span>
 </div>
 

@@ -6,8 +6,8 @@ from django import views
 from .models import *
 from django.views import View
 from django.contrib import messages
-from .forms import ProveedorForm, PlatoForm, ClienteForm
-from .forms import ProveedorForm, PlatoForm, RepartidorForm, PedidoForm, GestionEmpresaForm
+from .forms import ProveedorForm, PlatoForm
+from .forms import ProveedorForm, PlatoForm, PedidoForm, GestionEmpresaForm
 from .filters import buscarPlato
 
 
@@ -42,6 +42,11 @@ class home(View):
         return redirect('home')
 
     def get(self, request):
+        check = Cliente.objects.filter(
+            id_cliente=request.session['cuentaCliente'])
+        if len(check) > 0:
+            clienteeee = Cliente.objects.get(
+                id_cliente=request.session['cuentaCliente'])
         carro = request.session.get('carro')
         if not carro:
             request.session['carro'] = {}
@@ -56,7 +61,7 @@ class home(View):
         platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
         print(platos_en_carro)
         #FIN MODAL CARRITO
-        data = {'email': email, 'platos': platos,
+        data = {'clienteeee':clienteeee,'email': email, 'platos': platos,
                 'rest': rest, 'buscar_plato': buscar_plato,'platos_en_carro':platos_en_carro}
         return render(request, 'home.html', data)
 
@@ -133,6 +138,7 @@ class realizar_pedido(View):
         direccion = request.POST.get('direccion')
         tipo_entrega = request.POST.get('tipo_entrega')
         tipo_pago = request.POST.get('tipo_pago')
+        horario_entrega = request.POST.get('programar_horario_entrega')
         celular_contacto = request.POST.get('celular_contacto')
         cuentaCliente = request.session.get('cuentaCliente')
         carro = request.session.get('carro')
@@ -144,14 +150,18 @@ class realizar_pedido(View):
             pedido = Pedido(cliente_id=Cliente(id_cliente=cuentaCliente),
                           plato_id=plato,
                           precio=plato.valor_plato,
+                          horario_entrega=horario_entrega,
                           tipo_entrega=tipo_entrega,
                           tipo_pago_id=tipo_pago,
                           direccion=direccion,
                           celular=celular_contacto,
                           cantidad=carro.get(str(plato.id_plato)))
             pedido.pedido()
-        request.session['carro'] = {}
-        return redirect('pagar')
+            return redirect('mis-pedidos')
+
+
+
+
 
 class pedidos(View):
     def get(self, request):
@@ -159,10 +169,6 @@ class pedidos(View):
         pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente)
         print(pedidos)
         return render(request, 'pedidos.html',{'pedidos':pedidos})
-
-
-
-
 
 
 def logout(request):
@@ -1635,24 +1641,23 @@ def editar_perfil_cliente(request):
 #cambiar contraseña cliente
 def cambiar_contraseña_cliente(request):
     check = Cliente.objects.filter(
-        email_cli=request.session['cuentaCliente'])
+        id_cliente=request.session['cuentaCliente'])
     if len(check) > 0:
         email = request.session['cuentaCliente']
         data = Cliente.objects.get(
-            email_cli=request.session['cuentaCliente'])
+            id_cliente=request.session['cuentaCliente'])
         data = {'data': data, 'email': email}
     if request.method == "POST":
         contraseña_actual = request.POST['contraseña_actual']
         contraseña1 = request.POST['nueva_contraseña']
         contraseña2 = request.POST['con_nueva_contraseña']
-        cuentaCliente = Cliente.get_cliente_by_email(email)
+        cuentaCliente = Cliente.get_cliente_by_id(email)
         if cuentaCliente:
-            flag = check_password(
-                contraseña_actual, cuentaCliente.contraseña1)
+            flag = check_password(contraseña_actual, cuentaCliente.contraseña1)
             error_message = None
             if flag:
                 cliente = Cliente.objects.get(
-                    email_cli=request.session['cuentaCliente'])
+                    id_cliente=request.session['cuentaCliente'])
                 cliente.contraseña1 = contraseña1
                 cliente.contraseña2 = contraseña2
 
@@ -1689,3 +1694,4 @@ def cambiar_contraseña_cliente(request):
                 }
             return render(request, 'cliente/cambiar_contraseña.html', data)
     return render(request, "cliente/cambiar_contraseña.html", data)
+
