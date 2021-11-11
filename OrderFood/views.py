@@ -42,11 +42,11 @@ class home(View):
         return redirect('home')
 
     def get(self, request):
-        check = Cliente.objects.filter(
-            id_cliente=request.session['cuentaCliente'])
-        if len(check) > 0:
-            clienteeee = Cliente.objects.get(
-                id_cliente=request.session['cuentaCliente'])
+        # check = Cliente.objects.filter(
+        #     id_cliente=request.session['cuentaCliente'])
+        # if len(check) > 0:
+        #     clienteeee = Cliente.objects.get(
+        #         id_cliente=request.session['cuentaCliente'])
         carro = request.session.get('carro')
         if not carro:
             request.session['carro'] = {}
@@ -61,9 +61,16 @@ class home(View):
         platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
         print(platos_en_carro)
         #FIN MODAL CARRITO
-        data = {'clienteeee':clienteeee,'email': email, 'platos': platos,
+
+        platos = Plato.objects.all()
+        context = {'platos': platos,
+                'categoria':reversed(categoriaPlato.objects.all()),
+                'platos_categoria':reversed(categoriaPlato.objects.all()),
+                'platos_en_carro':platos_en_carro
+        }
+        data = {'email': email, 'platos': platos,
                 'rest': rest, 'buscar_plato': buscar_plato,'platos_en_carro':platos_en_carro}
-        return render(request, 'home.html', data)
+        return render(request, 'home.html', context)
 
 
 class Login(View):

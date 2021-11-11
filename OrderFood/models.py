@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 
+from django.db.models.base import Model
+
 class Administrador(models.Model):
     # This field type is a guess.
     rut_adm = models.CharField(max_length=50, primary_key=True)
@@ -268,7 +270,7 @@ class Pedido(models.Model):
     precio = models.IntegerField()
     horario_entrega = models.DateTimeField()
     direccion = models.CharField(max_length=100, default='', blank=True)
-    tipo_entrega = models.CharField(max_length=50, choices=tipo_entrega)
+    tipo_entrega = models.CharField(max_length=50, choices=tipo_entrega, null=False)
     tipo_pago = models.ForeignKey(Pago, models.CASCADE, db_column='tipo_pago')
     celular = models.CharField(max_length=10, default='', blank=True)
     fecha_pedido = models.DateField(default=datetime.datetime.today)
@@ -288,8 +290,23 @@ class Pedido(models.Model):
             .filter(cliente_id=cliente_id)\
             .order_by('tipo_entrega')
 
+
+class categoriaPlato(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'categoria_plato'
+    
+    def __str__(self):
+        return self.nombre
+
+    
+    def get_all_categorias():
+        return categoriaPlato.objects.all()
+
 class Plato(models.Model):
     id_plato = models.AutoField(primary_key=True)
+    categoria = models.ForeignKey(categoriaPlato, on_delete=models.CASCADE, default=1)
     nom_plato = models.CharField(max_length=50)   # This field type is a guess.
     valor_plato = models.IntegerField()
     descripcion = models.CharField(max_length=50)
@@ -310,6 +327,13 @@ class Plato(models.Model):
 
     def __str__(self):
         return self.nom_plato
+
+    def get_all_platos_by_categoria_id(categoria_id):
+        if categoria_id:
+            return Plato.objects.filter(categoria=categoria_id)
+        else:
+            return Plato.get_all_platos();
+
 
 
 class Proveedor(models.Model):

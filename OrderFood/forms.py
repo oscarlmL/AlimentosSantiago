@@ -72,14 +72,15 @@ class PlatoForm(forms.ModelForm):
 
     class Meta:
         model = Plato
-        fields = ['nom_plato', 
+        fields = ['categoria',
+                'nom_plato', 
                 'descripcion',
                  'valor_plato',
                 # 'Ingrediente',
                 # 'Restaurant',
                 'Imagen'
                 ]
-        labels = {'nom_plato':'Nombre del Plato',
+        labels = {'categoria':'Categoria del plato','nom_plato':'Nombre del Plato',
             'descripcion':'Descripción',
             'valor_plato': 'Valor del Plato',
             # 'Ingrediente':'Seleccionar Ingrediente',
