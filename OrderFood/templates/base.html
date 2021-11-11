@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -16,12 +15,7 @@
     <link rel="icon" href="{% static 'app/img/icon.png' %}" />
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
 
-    <title>OrderFood Delivery</title>
-</head>
 
-<body>
-
-    <head id="">
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white"> <a class="navbar-brand"
                 href="{% url 'home' %}"><img src="/static/app/img/logo.png"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -70,16 +64,10 @@
                                 </i>                            
                             </a>
                         </li>
-
                     </div>
                 </div>
                 {% else %}
-                <!-- <li class="nav-item nav">
-                    <a class="fa fa-shopping-cart nav-link active" data-toggle="modal" data-target="#cartModal" href="">
-                        <span class="">Carrito - </span>
-                        <span class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}</span>
-                    </a>                            
-                </li> -->
+               
                 <li class="nav-item nav">
                     <a class="nav-link active" href="{% url 'login' %}">
                         <span>Iniciar Sesión</span>
@@ -95,33 +83,14 @@
 
             </div>
         </nav>
-    </head>
+    
     <div>
 
         {% block contenido %}
         {% endblock %}
     </div>
 
-    <script>
-        function mostrarContrasena() {
-            var tipo = document.getElementById("password");
-            if (tipo.type == "password") {
-                tipo.type = "text";
-            } else {
-                tipo.type = "password";
-            }
-        }
-    </script>
-    <script>
-        function mostrarContrasena2() {
-            var tipo = document.getElementById("password2");
-            if (tipo.type == "password2") {
-                tipo.type = "text";
-            } else {
-                tipo.type = "password2";
-            }
-        }
-    </script>
+<!--solo numeros-->
     <script type="text/javascript">
         function valideKey(evt) {
     
@@ -136,7 +105,8 @@
                 return false;
             }
         }
-    </script>
+    </script> 
+<!--solo letras-->
     <script>
         function soloLetras(e) {
             key = e.keyCode || e.which;
@@ -180,7 +150,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{% static 'app/js/custom-general.js' %}"></script>
     
-</body>
+
 <footer class="">
 </footer>
 
