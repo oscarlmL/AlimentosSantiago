@@ -105,3 +105,4 @@ function mostrarContrasena2() {
     tipo.type = "password";
   }
 }
+

@@ -30,7 +30,7 @@ class ProveedorForm(forms.ModelForm):
             raise forms.ValidationError('El nombre no puede contener números')
         return nombre
 
-#Validación solo letras no numeros
+#Validación solo numeros
     def clean_celular(self):
         nombre = self.cleaned_data['celular']
         if not nombre.isdigit():
@@ -89,6 +89,22 @@ class PlatoForm(forms.ModelForm):
 
             
         }
+        fields = ['nom_plato', 'descripcion','valor_plato','Imagen']
+    nom_plato = forms.CharField(max_length=49,widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Nombre del plato'}), label='Nombre del Plato')
+    descripcion = forms.CharField(max_length=49,widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Descripción'}), label='Descripción')
+    valor_plato = forms.CharField(widget=forms.NumberInput(
+        attrs={'class': 'form-control', 'placeholder': 'Valor del plato'}), label='Precio')
+    Imagen = forms.ImageField()
+        
+    
+#Validación solo numeros
+    def clean_valor_plato(self):
+        nombre = self.cleaned_data['valor_plato']
+        if not nombre.isnumeric():
+            raise forms.ValidationError('El valor no puede contener letras')
+        return nombre
 
 
 class RepartidorForm(forms.ModelForm):
