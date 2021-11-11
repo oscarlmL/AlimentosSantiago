@@ -4,7 +4,7 @@
 {% load carro %}
 {% load humanize %}
 
-<div class="block hero1 my-auto"
+<div class="block hero1 my-auto" 
     style="background-image:url(https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80);">
     <div class="container-fluid text-center">
         <h1 class="display-2 text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="0">El Comilon
@@ -16,79 +16,128 @@
     </div>
     <div class="clearfix"></div>
 </div>
-<div class="maincontent">
-    <div class="container">
-        <section id="menu">
-            <div class="block menu1">
-                <div class="form-group">
-                    <div class="text-center">
-                        <h2>Búsqueda de Plato</h2>
-                        <hr>
-                    </div>
-
-                    <form class="d-flex mx-auto formBuscar" action="/#{{form.nom_plato}}" method="GET">
-                        {{buscar_plato.form.nom_plato}}
-                        {{buscar_plato.form.Restaurant}}
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-primary btn-round btn-block rounded" value="Buscar">
+<br>
+<br>
+<div class="">
+    <div class="container-fluid mt-3">
+        <section id="">
+            <div class="row">
+                <!-- <div class="col-lg-3 mx-auto">
+                    <div class="form-group">
+                        <div class="text-center">
+                            <h2>Búsqueda de Plato</h2>
+                            <hr>
                         </div>
-                    </form>
-                </div>
-                <br>
-                <br>
 
+                        <form class="d-flex mx-auto formBuscar" action="/#{{form.nom_plato}}" method="GET">
+                            {{buscar_plato.form.nom_plato}}
+                            {{buscar_plato.form.Restaurant}}
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-round btn-block rounded" value="Buscar">
+                            </div>
+                        </form>
+                    </div>
+                </div> -->
+                                
+                <div class="col-md-2 " style="padding-left: 30px;">
+                    <div class="list-group" style="position: -webkit-sticky; position: sticky; display: block;">
+                        <li class="list-group-item list-group-item-light list-group-item-hover onclick-highlight"
+                            style="color:#ff9d2f;background-color:white;border-right:1px solid #818182;border-left:1px solid #818182;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
+                            onclick="openItems('All'), highlightCategoryText(this)">
+                            <i class="category-side-display-element">Todas</i>
+                        </li>
+                        {% for categoria in platos_categoria %}
+                        <li class="list-group-item list-group-item-hover onclick-highlight"
+                            style="color:#aeaeae;border-right:1px solid #818182;border-left:1px solid #818182;box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2)"
+                            onclick="openItems('{{categoria}}'), highlightCategoryText(this)">
+                            {{categoria}}
+                        </li>
+                        {% endfor %}
+                    </div>
+                </div>
                 <!-- <div class="buttons-container">
                     {% for r in rest %}
                         <a href="#" class="button button--is-active" data-target="pizzaMenu">{{r.nombre_rest}}</a>
                     {% endfor %}
                 </div> -->
-                {% for plato in platos %}
+
                 {% csrf_token %}
-                <div class="menu menu--is-visible" data-aos="fade-up" id="{{plato.id_plato}}">
-                    <div class="item row align-items-center">
-                        <div class="col-sm-3 pr-5">
-                            {% if plato.Imagen %}
-                            <img src="{{ plato.Imagen.url }}" width="250px" height="200px" alt="Imagen Platos">
-                            {% endif %}
-                        </div>
-                        <div class="details col-sm-9">
-                            <div class="item__header">
-                                <h3 class="item__title">{{plato.nom_plato}}</h3>
-                            </div>
-                            <p class="item__description">{{plato.descripcion}}</p>
-                            <span class="item__price">${{plato.valor_plato | intcomma}}</span>
+                <div class="col-md-10 item-select">
 
-                            <div class="">
-                                {% if plato|is_in_cart:request.session.carro %}
-                                <div class="row no-gutters">
-                                    <form action="/#{{plato.id_plato}}" method="post" class="col-xs">
-                                        {% csrf_token %}
-                                        <input hidden type="text" name="plato" value="{{plato.id_plato}}">
-                                        <input hidden type="text" name="remove" value="True">
-                                        <input type="submit" value=" - " class="col-xs rounded-circle btn btn-primary">
-                                    </form>
-                                    <div class="text-center col-md-3">{{plato|carro_quantity:request.session.carro}} en
-                                        carro</div>
-                                    <form action="/#{{plato.id_plato}}" method="post" class="col-xs">
-                                        {% csrf_token %}
-                                        <input hidden type="text" name="plato" value="{{plato.id_plato}}">
-                                        <input type="submit" value=" + " class="col-xs rounded-circle btn btn-primary">
-                                    </form>
+                    {% for categoria in categoria %}
+                    <div id="{{categoria}}" class="items" style="margin-bottom:35px;">
+                        <div class="category-header-name" style="text-align:left;">
+                            <h3 class="category-display" style="color:#aeaeae;margin-bottom:25px;">{{categoria}}</h3>
+                        </div>
+                        <div class="row">
+                            {% for plato in platos %}
+                            {% if plato.categoria == categoria %}
+                            <div class="col-lg-3">
+                                <div class="">
+                                    <div class="card mx-auto mb-3" id="{{plato.id_plato}}" style="width: 18rem;">
+                                        {% if plato.Imagen %}
+                                        <img class="card-img-top" src="{{ plato.Imagen.url }}" height="180px"
+                                            alt="Card image cap">
+                                        {% endif %}
+                                        <div class="card-body" style="height: 10rem;">
+                                            <div class="no-gutters">
+                                                <p class="card-title" style="font-weight: bold; font-size: 24px;">
+                                                    {{plato.nom_plato}}</p>
+                                                <p class="card-text">{{plato.descripcion}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="no-gutters">
+                                                <span class="item__price ">${{plato.valor_plato | intcomma}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="no-gutters">
+                                            {% if plato|is_in_cart:request.session.carro %}
+                                            <div class="row no-gutters">
+                                                <form action="/#{{plato.id_plato}}" method="post" class="col-2">
+                                                    {% csrf_token %}
+                                                    <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                                    <input hidden type="text" name="remove" value="True">
+                                                    <input type="submit" value=" - "
+                                                        class="btn btn-block rounded-circle  btn-primary border-right">
+                                                </form>
+                                                <div class="text-center col">
+                                                    {{plato|carro_quantity:request.session.carro}}
+                                                    en
+                                                    carro
+                                                </div>
+                                                <form action="/#{{plato.id_plato}}" method="post" class="col-2">
+                                                    {% csrf_token %}
+                                                    <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                                    <input type="submit" value=" + "
+                                                        class="btn btn-block rounded-circle  btn-primary border-left">
+                                                </form>
+                                            </div>
+                                            {% else %}
+                                            <form action="/#{{plato.id_plato}}" method="POST" class="btn-block">
+                                                {% csrf_token %}
+                                                <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                                <input type="submit"
+                                                    class="float-right btn btn-primary  form-control my-cart-btn"
+                                                    value="agregar al carro">
+                                            </form>
+                                            {% endif %}
+
+
+                                        </div>
+                                    </div>
+
                                 </div>
-                                {% else %}
-                                <form action="/#{{plato.id_plato}}" method="POST" class="btn-block">
-                                    {% csrf_token %}
-                                    <input hidden type="text" name="plato" value="{{plato.id_plato}}">
-                                    <input type="submit" class="btn btn-sm btn-outline-primary my-cart-btn"
-                                        value="agregar al carro">
-                                </form>
-                                {% endif %}
-
                             </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
+
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+
             </div>
         </section>
     </div>
@@ -179,4 +228,46 @@
 <div class="text-center">
     <a class="text-center btn btn-outline-dark" href="{% url 'proveedor' %}">¿Eres proveedor? ¡Click aca!</a>
 </div>
+
+<script type="text/javascript">
+
+    /*
+    This script will: once clicked on a category in the left side nav menu, items of that
+    category will be displayed and the text of that category on the side nav menu will
+    be highlighted until a new category is selected
+    */
+
+    function openItems(category) {
+        var i;
+        var x = document.getElementsByClassName("items");
+
+        if (category == 'All') {
+            var display = 'block'
+        }
+        else {
+            var display = 'none'
+        }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = display;
+        }
+
+        if (category != 'All')
+            document.getElementById(category).style.display = "block";
+
+    }
+
+    function highlightCategoryText(element) {
+
+        all_elements = document.querySelectorAll(".list-group-item-hover");
+
+        for (var i = 0; i < all_elements.length; i++) {
+            all_elements[i].style.color = '#aeaeae'; // light gray
+            // all_elements[i].style.boxShadow = ''; // light gray
+        }
+
+        element.style.color = '#ff9d2f'; //highlighted blue
+        // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
+    }
+
+</script>
 {% endblock %}
