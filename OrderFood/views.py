@@ -66,7 +66,8 @@ class home(View):
         context = {'platos': platos,
                 'categoria':reversed(categoriaPlato.objects.all()),
                 'platos_categoria':reversed(categoriaPlato.objects.all()),
-                'platos_en_carro':platos_en_carro
+                'platos_en_carro':platos_en_carro,
+                'email': email
         }
         data = {'email': email, 'platos': platos,
                 'rest': rest, 'buscar_plato': buscar_plato,'platos_en_carro':platos_en_carro}
