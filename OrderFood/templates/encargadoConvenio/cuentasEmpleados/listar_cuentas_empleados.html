@@ -11,6 +11,7 @@
                     <th>Nombre empleado</th>
                     <th>Apellidos empleado</th>
                     <th>Email</th>
+                    <th>Opciones</th>
                 </tr>
 
                 {% for n in cuentas_empleados %}
@@ -18,8 +19,8 @@
                     <td>{{ n.nombre_cli | title }}</td>
                     <td>{{ n.apaterno_cli | title }} {{ n.amaterno_cli | title }}</td>
                     <td>{{ n.email_cli | title }}</td>
+                    <td>MODIFICAR </td>
                 </tr>
-
 
                 {% endfor %}
             </table>

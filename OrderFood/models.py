@@ -31,18 +31,32 @@ class Administrador(models.Model):
             return False
 
 
-
-
-
 class Cajero(models.Model):
     id_cajero = models.AutoField(primary_key=True)
     nom_cajero = models.CharField(max_length=50)  # This field type is a guess.
-    restaurant_id_restaurante = models.ForeignKey(
-        'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
+    email_cajero = models.CharField(max_length=50)
+    contraseña1 = models.CharField(max_length=100)
+    contraseña2 = models.CharField(max_length=100)
+    # restaurant_id_restaurante = models.ForeignKey(
+    #     'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
 
     class Meta:
         db_table = 'cajero'
 
+    @staticmethod
+    def get_cajero_by_email(email_cajero):
+        try:
+            return Cajero.objects.get(email_cajero=email_cajero)
+        except:
+            return False
+
+    def cuentaCajero(self):
+        self.save()
+
+    def emailExiste(self):
+        if Cajero.objects.filter(email_cajero=self.email_cajero):
+            return True
+        return False
 
 class Cliente(models.Model):
     # This field type is a guess.
@@ -61,12 +75,10 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nombre_cli
 
-
     def emailExiste(self):
         if Cliente.objects.filter(email_cli=self.email_cli):
             return True
         return False
-
 
     @staticmethod
     def get_cliente_by_email(email_cli):
@@ -92,7 +104,6 @@ class Convenio(models.Model):
     class Meta:
         db_table = 'convenio'
 
-
 class DetPago(models.Model):
     precio_unidad = models.IntegerField()
     total = models.IntegerField()
@@ -109,7 +120,6 @@ class DetPago(models.Model):
         db_table = 'det_pago'
         unique_together = (('pago_id_pago', 'pedido_id_pedido'),)
 
-
 class DetalleInsumos(models.Model):
     id_det_ins = models.IntegerField(primary_key=True)
     # This field type is a guess.
@@ -125,7 +135,6 @@ class DetalleInsumos(models.Model):
         unique_together = (
             ('id_det_ins', 'ingrediente_id_ing', 'proveedor_id_proveedor'),)
 
-
 class Empresa(models.Model):
     # This field type is a guess.
     rut_emp = models.CharField(max_length=50, primary_key=True)
@@ -138,7 +147,6 @@ class Empresa(models.Model):
 
     class Meta:
         db_table = 'empresa'
-
 
 class EncCocina(models.Model):
     id_enc_coc = models.AutoField(primary_key=True)

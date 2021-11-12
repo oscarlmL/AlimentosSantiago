@@ -51,7 +51,7 @@ class home(View):
         if not carro:
             request.session['carro'] = {}
         email = request.session.get('cuentaAdmin') or request.session.get(
-        'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente')
+        'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
         platos = Plato.objects.all()
         rest = Restaurant.objects.all()
         buscar_plato = buscarPlato(request.GET, queryset=platos)
@@ -85,6 +85,7 @@ class Login(View):
         cuentaEncConvenio = EncConvenio.get_enc_convenio_by_email(email)
         cuentaRepartidor = Repartidor.get_repartidor_by_email(email)
         cuentaCliente = Cliente.get_cliente_by_email(email)
+        cuentaCajero = Cajero.get_cajero_by_email(email)
         error_message = None
         if cuentaAdmin:
             flag = check_password(contraseña, cuentaAdmin.contraseña1)
@@ -124,6 +125,14 @@ class Login(View):
                 request.session['cuentaCliente'] = cuentaCliente.id_cliente
                 print('eres :',email)
                 return redirect('home')
+            else:
+                error_message = 'Email o Contraseña incorrecto'
+        elif cuentaCajero:
+            flag = check_password(contraseña, cuentaCajero.contraseña1)
+            if flag:
+                request.session['cuentaCajero'] = cuentaCajero.email_cajero
+                print('eres :',email)
+                return redirect('listar-pedidos-pendientes')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
@@ -808,6 +817,122 @@ def eliminar_cuenta_repartidor(request):
     cuentaRepartidor.delete()
     return redirect('gestionar-repartidor')
 
+def generar_cuenta_cajero(request):
+    request.session.set_expiry(10000)
+    if request.method == 'GET':
+        email = request.session['cuentaAdmin']
+        cuentaCajero = Cajero.objects.all()
+        data = {
+            'cuentasCajero': cuentaCajero,
+            'email': email
+        }
+        return render(request, 'administrador/cuenta/cajero/gestionarCajero.html', data)
+    else:
+        postData = request.POST
+        nom_cajero = postData.get('nom_cajero')
+        email_cajero = postData.get('email_cajero')
+        contraseña1 = postData.get('contraseña1')
+        contraseña2 = postData.get('contraseña2')
+
+        # validaciones
+        value = {
+            'nom_cajero': nom_cajero,
+            'email_cajero': email_cajero,
+            'contraseña1': contraseña1,
+            'contraseña2':contraseña2
+            }
+        error_message = None
+        cajero = Cajero(nom_cajero=nom_cajero,
+                                email_cajero=email_cajero,
+                                contraseña1=contraseña1,
+                                contraseña2=contraseña2
+        )
+
+        if not nom_cajero:
+            error_message = 'El Nombre es requerido'
+        elif len(nom_cajero) < 4:
+            error_message = 'El Nombre debe tener mas de 4 caracteres'
+
+        elif len(contraseña1 and contraseña2) < 5:
+            error_message = 'Las contraseñas deben tener mas de 5 caracteres'
+
+        elif len(contraseña1 and contraseña2) > 10:
+            error_message = 'Las contraseñas no puede ser mayor a 10 caracteres'
+
+        elif contraseña2 != contraseña1:
+            error_message = 'Las contraseñas no coinciden'
+
+        elif not email_cajero:
+            error_message = 'El email es requerido'
+
+        elif cajero.emailExiste():
+            error_message = 'El email ya tiene una cuenta'
+
+        # guardar datos de cuenta
+        if not error_message:
+            cajero.contraseña1 = make_password(cajero.contraseña1)
+            cajero.contraseña2 = make_password(cajero.contraseña2)
+            cajero.cuentaCajero()
+            messages.success(request, "Cuenta Cajero Generada")
+            return redirect('gestionar-cajero')
+        else:
+            email = request.session['cuentaAdmin']
+            cuentasCajero = Cajero.objects.all()
+            data = {
+                'email': email,
+                'cuentasCajero': cuentasCajero,
+                'error': error_message,
+                'values': value
+            }
+        return render(request, 'administrador/cuenta/cajero/gestionarCajero.html', data)
+
+def editar_cuenta_cajero(request):
+    email = request.session['cuentaAdmin']
+    id_cajero = request.GET["id_cajero"]
+    cuentaCajero = get_object_or_404(
+        Cajero, id_cajero=id_cajero)
+    data1 = {
+        'email': email,
+        'cuentaCajero': cuentaCajero
+    }
+    if request.method == "POST":
+        nom_cajero = request.POST['nom_cajero']
+        email_cajero = request.POST['email_cajero']
+
+        cuentaCajero.nom_cajero = nom_cajero
+        cuentaCajero.email_cajero = email_cajero
+
+        error_message = None
+        if not cuentaCajero.nom_cajero:
+            error_message = 'El Nombre es requerido'
+        elif len(cuentaCajero.nom_cajero) < 4:
+            error_message = 'El Nombre debe tener mas de 4 caracteres'
+        elif not cuentaCajero.email_cajero:
+            error_message = 'El email es requerido'
+
+        # guardar datos de cuenta
+        if not error_message:
+            cuentaCajero.save()
+            messages.success(request, "Cuenta Cajero Editada")
+            return redirect('gestionar-cajero')
+        else:
+            email = request.session['cuentaAdmin']
+            cuentasCajero = Cajero.objects.all()
+            data = {
+                'email': email,
+                'error': error_message,
+                'cuentasCajero': cuentasCajero,
+                'cuentaCajero': cuentaCajero
+            }
+        return render(request, 'administrador/cuenta/cajero/edicionCajero.html', data)
+    return render(request, 'administrador/cuenta/cajero/edicionCajero.html', data1)
+
+def eliminar_cuenta_cajero(request):
+    id_cajero = request.GET["id_cajero"]
+    cuentaCajero = get_object_or_404(
+        Cajero, id_cajero=id_cajero)
+    cuentaCajero.delete()
+    return redirect('gestionar-cajero')
 
 # Fin modulo administracion
 
@@ -1643,7 +1768,12 @@ def editar_perfil_cliente(request):
             }
     return render(request, 'cliente/editarPerfilCliente.html', data)
 
-
+#Modulo Cajero -----------------------------------------------------------------------------
+def listar_pedidos_pendientes(request):
+    pedidos_pendientes = Pedido.objects.filter(estado='Pendiente')
+    data = {'pedidos_pendientes':pedidos_pendientes}
+    return render(request,'cajero/pedidosPendientes.html',data)
+#Fin Modulo Cajero -------------------------------------------------------------------------
 
 #cambiar contraseña cliente
 def cambiar_contraseña_cliente(request):
@@ -1701,4 +1831,3 @@ def cambiar_contraseña_cliente(request):
                 }
             return render(request, 'cliente/cambiar_contraseña.html', data)
     return render(request, "cliente/cambiar_contraseña.html", data)
-

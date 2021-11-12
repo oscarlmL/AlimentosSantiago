@@ -24,3 +24,17 @@ function showInp(){
       document.getElementById("patente_veh_auto").style.display = "inline-block";
     }
   }
+
+  // function showPendiente(){
+  //   getSelectValue = document.getElementById("estado").value;
+  //   if(getSelectValue=="Pendiente"){
+  //     document.getElementById("").style.display = "inline-block";
+  //     document.getElementById("").style.display = "none";
+  //   }else if(getSelectValue=="Confirmado"){
+  //     document.getElementById("").style.display = "none";
+  //     document.getElementById("").style.display = "inline-block";
+  //   }else if(getSelectValue=="En ruta"){
+  //     document.getElementById("").style.display = "none";
+  //     document.getElementById("").style.display = "inline-block";
+  //   }
+  // }

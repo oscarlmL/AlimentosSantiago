@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+{% block js %}
+<script>
+    function eliminarCajero(id_cajero) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
+
+
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminar-cuenta-cajero/?id_cajero=" + id_cajero + ""
+                }
+            })
+    }
+</script>
+{% endblock %}
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
+            {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-success" role="alert">
+                {{m}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <h2>Ingresar Cajero</h2>
+                    <hr>
+                    <form method="POST" action="" id="form-cajero">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="">Nombres</label>
+                            <input type="text" class="form-control" name="nom_cajero" placeholder="Nombre Cajero" id=""
+                                value="{{values.nom_cajero}}" onkeypress="return soloLetras(event)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" class="form-control" name="email_cajero" placeholder="Email Cajero" id=""
+                                value="{{values.email_cajero}}" placeholder="ejemplo: cajero@dominio.com">
+                        </div>
+
+                        <Label>Contraseña</Label>
+                        <div class="input-group mb-3 border border">
+
+                            <input type="password" class="form-control border-0" id="password" name="contraseña1"
+                                aria-describedby="" placeholder="Ingresar Contraseña">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                        onclick="mostrarContrasena()"></span></span>
+                            </div>
+                        </div>
+                        <label for="">Confirmar Contraseña</label>
+                        <div class="input-group mb-3 border border">
+                            <input type="password" class="form-control border-0" id="password2" name="contraseña2"
+                                aria-describedby="" placeholder="Confirmar Contraseña">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;">
+                                <span class="iconify" data-icon="bi:eye-fill" data-inline="true" onclick="mostrarContrasena2()">
+                                </span>
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Lista Cajeros</h2>
+            <div class="table-responsive py-2">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+
+                    </tr>
+
+                    {% for cuentasCajero in cuentasCajero %}
+                    <tr class="table-light">
+                        <th>{{cuentasCajero.id_cajero}}</th>
+                        <th>{{cuentasCajero.nom_cajero}}</th>
+                        <th>{{cuentasCajero.email_cajero}}</th>
+                        <td>
+                            <a href="{% url 'editar-cuenta-cajero' %}?id_cajero={{cuentasCajero.id_cajero}}"
+                                class="btn btn-dark btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarCajero({{cuentasCajero.id_cajero}})"
+                                class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

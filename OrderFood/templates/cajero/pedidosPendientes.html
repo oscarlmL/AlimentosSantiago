@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+{% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor or request.session.cuentaCliente or request.session.cuentaCajero %}
+<div class="container-fluid">
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>Lista de Pedidos Pendientes</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <tr class="table-active">
+                    <th>ID Pedido</th>
+                    <th>Estado</th>
+                    <th>Nombre Cliente</th>
+                    <th>Fecha Pedido</th>
+                    <th>Direccion</th>
+                    <th>Horario Entrega</th>
+                    <th>Tipo Entrega</th>
+                    <th>Tipo Pago</th>
+                    <th>Opciones</th>
+                </tr>
+
+                {% for n in pedidos_pendientes %}
+                <tr class="table-light">
+                    <td>{{ n.id_pedido | title }}</td>
+                    <td>{{ n.estado | title }}</td>
+                    <td>{{ n.nombre_cli | title }}</td>
+                    <td>{{ n.fecha_pedido | title }}</td>
+                    <td>{{ n.direccion | title }}</td>
+                    <td>{{ n.horario_entrega | title }}</td>
+                    <td>{{ n.tipo_entrega | title }}</td>
+                    <td>{{ n.tipo_pago | title }}</td>
+                    <!-- <div class="form-group">
+                        <select class="form-control" value="{{cuentaCajero.estado}}" name="estado" id="estado"
+                            onclick="showInp(this);">
+                            <option value="">--- Seleccionar Estado Pedido ---</option>
+                            {% if cuentaCajero.estado == "Pendiente" %}
+                            <option value="Pendiente" selected>Pendiente</option>
+                            {% else %}
+                            <option value="Confirmado">Confirmado</option>
+                            {% endif %}
+
+                            {% if cuentaCajero.estado == "En ruta" %}
+                            <option value="En Ruta" selected>En ruta</option>
+                            {% else %}
+                            <option value="En Ruta">En Ruta</option>
+                            {% endif %}
+
+                            {% if cuentaCajero.estado == "Confirmado" %}
+                            <option value="Confirmado" selected>Confirmado</option>
+                            {% else %}
+                            <option value="En Ruta">En Ruta</option>
+                            {% endif %}
+                        </select>
+                    </div> -->
+                    
+                </tr>
+
+                {% endfor %}
+            </table>
+
+            <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+                <h2>Lista de Repartidores</h2>
+                <div class="table-responsive py-2">
+                    <table class="table table-striped">
+                        <tr class="table-active">
+                            <th>Rut</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                            <th>Patente Vehiculo</th>
+                            <th>Tipo Vehiculo</th>
+                            <th>Celular</th>
+                        </tr>
+    
+                        {% for cuentasRepartidor in cuentasRepartidor %}
+                        <tr class="table-light">
+                            <th>{{cuentasRepartidor.rut_repartidor}}</th>
+                            <th>{{cuentasRepartidor.nombre_repartidor}}</th>
+                            <th>{{cuentasRepartidor.apellido_repartidor}}</th>
+                            <th>{{cuentasRepartidor.email_repartidor}}</th>
+                            <th>{{cuentasRepartidor.tipo_veh}}</th>
+                            <th>{{cuentasRepartidor.patente_veh}}</th>
+                            <th>{{cuentasRepartidor.celular}}</th>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

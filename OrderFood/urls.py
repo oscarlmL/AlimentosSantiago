@@ -29,10 +29,13 @@ urlpatterns = [
     path('editar-cuenta-enc-convenio/', auth_middleware(editar_cuenta_enc_convenio), name='editar-cuenta-enc-convenio'),
     path('eliminar-cuenta-enc-convenio/', auth_middleware(eliminar_cuenta_enc_convenio), name='eliminar-cuenta-enc-convenio'),
 
-
     path('gestionar-repartidor/', auth_middleware(generar_cuenta_repartidor), name='gestionar-repartidor'),
     path('editar-cuenta-repartidor/', auth_middleware(editar_cuenta_repartidor), name='editar-cuenta-repartidor'),
     path('eliminar-cuenta-repartidor/', auth_middleware(eliminar_cuenta_repartidor), name='eliminar-cuenta-repartidor'),
+
+    path('gestionar-cajero/', auth_middleware(generar_cuenta_cajero), name='gestionar-cajero'),
+    path('editar-cuenta-cajero/', auth_middleware(editar_cuenta_cajero), name='editar-cuenta-cajero'),
+    path('eliminar-cuenta-cajero/', auth_middleware(eliminar_cuenta_cajero), name='eliminar-cuenta-cajero'),
     #FIN ADMINITRACION
 
     #ENCARGADO COCINA
@@ -75,6 +78,10 @@ urlpatterns = [
     path('modificar-pedido/<id>/', modificar_pedido, name="modificar_pedido"),
     path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
     #End Path
+
+    #path CAJERO
+    path('listar-pedidos-pendientes/',listar_pedidos_pendientes, name="listar-pedidos-pendientes")
+    #END CAJERO
 
  
     # path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
