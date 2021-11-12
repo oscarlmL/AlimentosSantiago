@@ -4,7 +4,9 @@
 {% load carro %}
 {% load humanize %}
 
-<div class="block hero1 my-auto" 
+
+<!-- IMAGEN COMENTADA -->
+<!-- <div class="block hero1 my-auto"
     style="background-image:url(https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80);">
     <div class="container-fluid text-center">
         <h1 class="display-2 text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="0">El Comilon
@@ -14,8 +16,9 @@
         <a href="#menu" class="btn-text lead d-inline-block text-white border-top border-bottom mt-4 pt-1 pb-1"
             data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1200">Visita Nuestro Menú</a>
     </div>
-    <div class="clearfix"></div>
-</div>
+    <div class="clearfix">
+    </div>
+</div> -->
 <br>
 <br>
 <div class="">
@@ -38,7 +41,7 @@
                         </form>
                     </div>
                 </div> -->
-                                
+
                 <div class="col-md-2 " style="padding-left: 30px;">
                     <div class="list-group" style="position: -webkit-sticky; position: sticky; display: block;">
                         <li class="list-group-item list-group-item-light list-group-item-hover onclick-highlight"
@@ -230,17 +233,9 @@
 </div>
 
 <script type="text/javascript">
-
-    /*
-    This script will: once clicked on a category in the left side nav menu, items of that
-    category will be displayed and the text of that category on the side nav menu will
-    be highlighted until a new category is selected
-    */
-
     function openItems(category) {
         var i;
         var x = document.getElementsByClassName("items");
-
         if (category == 'All') {
             var display = 'block'
         }
@@ -255,9 +250,7 @@
             document.getElementById(category).style.display = "block";
 
     }
-
     function highlightCategoryText(element) {
-
         all_elements = document.querySelectorAll(".list-group-item-hover");
 
         for (var i = 0; i < all_elements.length; i++) {
@@ -268,6 +261,9 @@
         element.style.color = '#ff9d2f'; //highlighted blue
         // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
     }
-
 </script>
+
+
+
+
 {% endblock %}
