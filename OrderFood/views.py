@@ -190,7 +190,7 @@ class pedidos(View):
 
 def logout(request):
     request.session.clear()
-    return redirect('login')
+    return redirect('home')
 
 
 # Modulo administracion

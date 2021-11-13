@@ -33,8 +33,10 @@
                 <div class="side-inner">
 
                     <div class="profile">
-                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Image" class="img-fluid">
-                        <h3 class="name mb-4">{{email}}<span class="icon-check_circle verified"></span></h3>
+                        <div class="text-center">
+                            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Image" class="img-fluid center" width="150" height="150">
+                        </div>
+                        <h3 class="name mb-4 text-center">{{email}}<span class="icon-check_circle verified"></span></h3>
                         <div class="list-group list-group-flush" >
                             {% if request.session.cuentaAdmin %}
                             <a class="list-group-item" href="/gestionar-repartidor">
@@ -62,7 +64,10 @@
                                 <span class="links_name">Editar Perfil</span>
                             </a>
                             {% elif request.session.cuentaEncCocina %}
-                            <a class="list-group-item" href="/gestionar-plato/">Gestionar Plato</a>
+                            <a class="list-group-item" href="/gestionar-plato/">
+                                <i class="fa fa-cutlery" aria-hidden="true"></i>
+                                <span class="links_name">Gestionar Plato</span>  
+                            </a>
                             <a class="list-group-item" href="/listar-proveedor">Gestionar Proveedores</a>
                             <a class="list-group-item" href="/editar-perfil-enc-cocina">Editar Perfil</a>
                             {% elif request.session.cuentaEncConvenio %}
@@ -99,40 +104,55 @@
                         <a class="navbar-brand" href="{% url 'home' %}"><img src="/static/app/img/logo.png"></a>
                     </span>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"> <span
-                        class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active"> <a class="nav-link" href="{% url 'home' %}">Bienvenido<span
+                        <li class="nav-item active"> <a class="nav-link" href="{% url 'home' %}">Inicio<span
                                     class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Nuestro Menú</a>
-                        </li>
-                        </li>
+                            <form class="form-inline formBuscar" style="margin-left: 1000px; margin-right: 100px;"action="/#{{form.nom_plato}}" method="GET">
+                                <input class="form-control mr-sm-2 " type="" placeholder="Buscar Plato" aria-label="" size="40" maxlength="40">
+                                <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+                            </form>
                     </ul>
                     {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor or request.session.cuentaCliente or request.session.cuentaCajero %}
                     <div class="dropdown">
-                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{clienteeee.nombre_cli}}
-
-                        </button>
+                        <!-- <li class="nav-item nav">
+                            <a class="nav-link active" href="{% url 'login' %}">
+                                {{email}}
+                            </a>
+                        </li>  -->
+                        
                     </div>
                     {% else %}
-                    <li class="nav-item nav">
-                        <a class="nav-link active" href="{% url 'login' %}">
-                            <span>Iniciar Sesión</span>
+                     <li class="nav-item nav">
+                        <a class="redondo" href="{% url 'login' %}">
+                            <style>
+                                .redondo{
+                                    padding: 12px 12px;
+                                    display: block;
+                                    height: 36px;
+                                    background: #EEEEEE;
+                                    border-radius: 500px;
+                                    line-height: 16px;
+                                    font-weight: 500;
+                                    font-size: 14px;
+                                    align-items: center;
+                                    white-space: nowrap;
+                                    box-sizing: border-box;
+                                    color: #000000;
+                                    cursor: pointer;
+                                }
+                            </style>
+                            Iniciar sesión
                         </a>
-                    </li>
+                    </li> 
                     <!-- <li class="btn btn-outline-dark">
                         <a class="nav-link active" href="{% url 'auto-registro-cliente' %}">
                             <span>Registrate, ¡Es Gratis!</span>
                         </a>
                     </li> -->
                     {% endif %}
-
+                   
                 </div>
             </nav>
 
@@ -195,6 +215,36 @@
     </script>
     <script>
         AOS.init();
+    </script>
+    <script type="text/javascript">
+        function openItems(category) {
+            var i;
+            var x = document.getElementsByClassName("items");
+            if (category == 'All') {
+                var display = 'block'
+            }
+            else {
+                var display = 'none'
+            }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = display;
+            }
+    
+            if (category != 'All')
+                document.getElementById(category).style.display = "block";
+    
+        }
+        function highlightCategoryText(element) {
+            all_elements = document.querySelectorAll(".list-group-item-hover");
+    
+            for (var i = 0; i < all_elements.length; i++) {
+                all_elements[i].style.color = '#aeaeae'; // light gray
+                // all_elements[i].style.boxShadow = ''; // light gray
+            }
+    
+            element.style.color = '#ff9d2f'; //highlighted blue
+            // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
+        }
     </script>
     <script src="{% static 'app/js/mycart.js' %}"></script>
     <script src="{% static 'app/js/mycart-custom.js' %}"></script>

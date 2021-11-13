@@ -77,7 +77,7 @@
                             {% if plato.categoria == categoria %}
                             <div class="col-lg-3">
                                 <div class="">
-                                    <div class="card mx-auto mb-3" id="{{plato.id_plato}}" style="width: 18rem;">
+                                    <div class="card mx-auto mb-3 border-bottom-0" id="{{plato.id_plato}}" style="width: 18rem;">
                                         {% if plato.Imagen %}
                                         <img class="card-img-top" src="{{ plato.Imagen.url }}" height="180px"
                                             alt="Card image cap">
@@ -122,7 +122,7 @@
                                                 {% csrf_token %}
                                                 <input hidden type="text" name="plato" value="{{plato.id_plato}}">
                                                 <input type="submit"
-                                                    class="float-right btn btn-primary  form-control my-cart-btn"
+                                                    class="float-right btn btn-primary form-control my-cart-btn"
                                                     value="agregar al carro">
                                             </form>
                                             {% endif %}
@@ -223,7 +223,8 @@
 </div>
 
 <div class="icon-cart" style="position: fixed; background: inherit;" data-toggle="modal" data-target="#cartModal">
-    <img src="{% static 'app/img/cart.svg' %}" style="width:30px;"> <span
+    <img src="{% static 'app/img/cart.svg' %}" style="width:30px;">
+     <span
         class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}
     </span>
 </div>
@@ -231,38 +232,6 @@
 <div class="text-center">
     <a class="text-center btn btn-outline-dark" href="{% url 'proveedor' %}">¿Eres proveedor? ¡Click aca!</a>
 </div>
-
-<script type="text/javascript">
-    function openItems(category) {
-        var i;
-        var x = document.getElementsByClassName("items");
-        if (category == 'All') {
-            var display = 'block'
-        }
-        else {
-            var display = 'none'
-        }
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = display;
-        }
-
-        if (category != 'All')
-            document.getElementById(category).style.display = "block";
-
-    }
-    function highlightCategoryText(element) {
-        all_elements = document.querySelectorAll(".list-group-item-hover");
-
-        for (var i = 0; i < all_elements.length; i++) {
-            all_elements[i].style.color = '#aeaeae'; // light gray
-            // all_elements[i].style.boxShadow = ''; // light gray
-        }
-
-        element.style.color = '#ff9d2f'; //highlighted blue
-        // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
-    }
-</script>
-
 
 
 
