@@ -52,10 +52,10 @@ class home(View):
             request.session['carro'] = {}
         email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
-        platos = Plato.objects.all()
+        platos1 = Plato.objects.all()
         rest = Restaurant.objects.all()
-        buscar_plato = buscarPlato(request.GET, queryset=platos)
-        platos = buscar_plato.qs
+        buscar_plato = buscarPlato(request.GET, queryset=platos1)
+        platos1 = buscar_plato.qs
         #MODAL CARRITO
         id_plato = (list(request.session.get('carro').keys()))
         platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
@@ -67,7 +67,7 @@ class home(View):
                 'categoria':reversed(categoriaPlato.objects.all()),
                 'platos_categoria':reversed(categoriaPlato.objects.all()),
                 'platos_en_carro':platos_en_carro,
-                'email': email
+                'buscar_plato': buscar_plato,
         }
         data = {'email': email, 'platos': platos,
                 'rest': rest, 'buscar_plato': buscar_plato,'platos_en_carro':platos_en_carro}

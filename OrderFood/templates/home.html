@@ -121,6 +121,8 @@
                                             <form action="/#{{plato.id_plato}}" method="POST" class="btn-block">
                                                 {% csrf_token %}
                                                 <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                                <input  type="text" name="restauranteeeee" value="{{plato.Restaurant}}">
+
                                                 <input type="submit"
                                                     class="float-right btn btn-primary  form-control my-cart-btn"
                                                     value="agregar al carro">
@@ -166,6 +168,7 @@
                     <table class="table table-image">
                         <thead class="table-primary">
                             <tr>
+                                <th scope="col">Restaurante</th>
                                 <th scope="col">Imagen</th>
                                 <th scope="col">Plato</th>
                                 <th scope="col">Valor unitario</th>
@@ -176,6 +179,7 @@
                         <tbody>
                             {% for platos_en_carro in platos_en_carro %}
                             <tr>
+                                <td>{{platos_en_carro.Restaurant}}</td>
                                 <td><img class="rounded-circle" src="{{platos_en_carro.Imagen.url}}" alt=""
                                         style="height: 60px; width: 80px;"></td>
                                 <td>{{platos_en_carro.nom_plato}}</td>

@@ -2,18 +2,17 @@ from django import forms
 import django
 from django.db.models import fields
 from django.forms import widgets
-from .models import Cliente, Proveedor, Plato, Repartidor,Pedido, Empresa, Carrito
+from .models import Cliente, Proveedor, Plato, Repartidor, Pedido, Empresa, Carrito
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
 
 class ProveedorForm(forms.ModelForm):
 
-    
     class Meta:
         model = Proveedor
         fields = ['nom_proveedor', 'rol_local', 'celular', 'descripcion']
-    nom_proveedor = forms.CharField(max_length=49,widget=forms.TextInput(
+    nom_proveedor = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Nombre del proveedor'}), label='Nombre del Proveedor')
     rol_local = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Ej: comida china, japonesa, peruana, insumos'}), label='Rol del Local')
@@ -23,21 +22,23 @@ class ProveedorForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Tu oferta de productos, empresa, dirección'}), label='Descripción de la oferta a realizar')
 
 
-#Validación solo letras no numeros
+# Validación solo letras no numeros
+
+
     def clean_nom_proveedor(self):
         nombre = self.cleaned_data['nom_proveedor']
         if not nombre.isalpha():
             raise forms.ValidationError('El nombre no puede contener números')
         return nombre
 
-#Validación solo numeros
+# Validación solo numeros
     def clean_celular(self):
         nombre = self.cleaned_data['celular']
         if not nombre.isdigit():
             raise forms.ValidationError('El celular no puede contener letras')
         return nombre
 
-#INFORMACIÓN VALIDACIONES      
+# INFORMACIÓN VALIDACIONES
 # Check if a string contains only decimal: str.isdecimal()
 # Check if a string contains only digits: str.isdigit()
 # Check if a string contains only numeric: str.isnumeric()
@@ -47,7 +48,7 @@ class ProveedorForm(forms.ModelForm):
 # Check if a string is empty
 # Check if a string is a number (= can be converted to numeric value)
 
-#INFORMACIÓN VALIDAR SIN REPETIR EL NOMBRE
+# INFORMACIÓN VALIDAR SIN REPETIR EL NOMBRE
  # def clean_nom_proveedor(self):
     #nom_proveedor = self.cleaned_data["nom_proveedor"]
     #existe = Proveedor.objects.filter(nom_proveedor__iexact=nom_proveedor).exists()
@@ -72,34 +73,29 @@ class PlatoForm(forms.ModelForm):
 
     class Meta:
         model = Plato
-        fields = ['categoria',
-                'nom_plato', 
-                'descripcion',
-                 'valor_plato',
-                # 'Ingrediente',
-                # 'Restaurant',
-                'Imagen'
-                ]
-        labels = {'categoria':'Categoria del plato','nom_plato':'Nombre del Plato',
-            'descripcion':'Descripción',
-            'valor_plato': 'Valor del Plato',
-            # 'Ingrediente':'Seleccionar Ingrediente',
-            # 'Restaurant':'Seleccionar Restaurante',
-            'Imagen':'Subir Imagen del Plato'
+        labels = {'categoria': 'Categoria del plato',
+                  'nom_plato': 'Nombre del Plato',
+                  'descripcion': 'Descripción',
+                  'valor_plato': 'Valor del Plato',
+                  # 'Ingrediente':'Seleccionar Ingrediente',
+                  'Restaurant': 'Seleccionar Restaurante',
+                  'Imagen': 'Subir Imagen del Plato'
 
-            
-        }
-        fields = ['nom_plato', 'descripcion','valor_plato','Imagen']
-    nom_plato = forms.CharField(max_length=49,widget=forms.TextInput(
+
+                  }
+        fields = ['categoria','nom_plato', 'descripcion', 'valor_plato', 'Imagen','Restaurant']
+    nom_plato = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Nombre del plato'}), label='Nombre del Plato')
-    descripcion = forms.CharField(max_length=49,widget=forms.TextInput(
+    descripcion = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Descripción'}), label='Descripción')
     valor_plato = forms.CharField(widget=forms.NumberInput(
         attrs={'class': 'form-control', 'placeholder': 'Valor del plato'}), label='Precio')
     Imagen = forms.ImageField()
-        
-    
-#Validación solo numeros
+
+
+# Validación solo numeros
+
+
     def clean_valor_plato(self):
         nombre = self.cleaned_data['valor_plato']
         if not nombre.isnumeric():
@@ -146,12 +142,12 @@ class GestionEmpresaForm(forms.ModelForm):
 
     class Meta:
         model = Empresa
-        fields = ['rut_emp', 
-                'nom_emp', 
-                'nom_gerente',
-                'cant_trabajadores', 
-                'enc_convenio_id_enc_conv']
-        labels = {'enc_convenio_id_enc_conv':'Encargado de Convenio'}
+        fields = ['rut_emp',
+                  'nom_emp',
+                  'nom_gerente',
+                  'cant_trabajadores',
+                  'enc_convenio_id_enc_conv']
+        labels = {'enc_convenio_id_enc_conv': 'Encargado de Convenio'}
 
     #labels = {'rut_emp':'Run Empresa'}
     rut_emp = forms.CharField(widget=forms.TextInput(

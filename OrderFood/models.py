@@ -314,7 +314,7 @@ class categoriaPlato(models.Model):
 
 class Plato(models.Model):
     id_plato = models.AutoField(primary_key=True)
-    categoria = models.ForeignKey(categoriaPlato, on_delete=models.CASCADE, default=1)
+    categoria = models.ForeignKey(categoriaPlato, on_delete=models.CASCADE)
     nom_plato = models.CharField(max_length=50)   # This field type is a guess.
     valor_plato = models.IntegerField()
     descripcion = models.CharField(max_length=50)
