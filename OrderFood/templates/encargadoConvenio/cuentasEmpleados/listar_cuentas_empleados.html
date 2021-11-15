@@ -9,8 +9,10 @@
             <table class="table table-striped">
                 <tr class="table-active">
                     <th>Nombre empleado</th>
-                    <th>Apellidos empleado</th>
+                    <th>Apellidos</th>
+                    <th>Fono Empleado</th>
                     <th>Email</th>
+                    <th>Saldo</th>
                     <th>Opciones</th>
                 </tr>
 
@@ -18,8 +20,12 @@
                 <tr class="table-light">
                     <td>{{ n.nombre_cli | title }}</td>
                     <td>{{ n.apaterno_cli | title }} {{ n.amaterno_cli | title }}</td>
+                    <td>{{ n.fono_cli | title }}</td>
                     <td>{{ n.email_cli | title }}</td>
-                    <td>MODIFICAR </td>
+                    <td>{{ n.saldo_cli | title }}</td>
+                    <td> 
+                            <a href="{% url 'editar-cuentaTrabEmp' %}?id_cliente={{n.id_cliente}}" class="btn btn-dark btn-round btn-block" value="Modificar">Modificar</a>
+                    </td>
                 </tr>
 
                 {% endfor %}
