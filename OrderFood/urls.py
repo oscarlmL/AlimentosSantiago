@@ -80,7 +80,10 @@ urlpatterns = [
     #End Path
 
     #path CAJERO
-    path('listar-pedidos-pendientes/',listar_pedidos_pendientes, name="listar-pedidos-pendientes")
+    path('listar-pedidos-pendientes/',listar_pedidos_pendientes, name="listar-pedidos-pendientes"),
+    path('confirmar-pedido/<int:id_pedido>/',confirmar_pedido, name="confirmar-pedido"),
+    path('listar-pedidos-confirmados/',listar_pedidos_confirmados, name="listar-pedidos-confirmados")
+    
     #END CAJERO
 
  

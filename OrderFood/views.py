@@ -1549,41 +1549,33 @@ def listar_cuenta_empleados(request):
 
 def editar_cuenta_trab_emp(request):
     email = request.session['cuentaEncConvenio']
-    rut_cli = request.GET["rut_cli"]
-    cuentaClienteConvenio = get_object_or_404(Cliente, rut_cli=rut_cli)
+    id_cliente = request.GET["id_cliente"]
+    cuentaClienteConvenio = get_object_or_404(Cliente, id_cliente=id_cliente)
     data1 = {
         'email': email,
         'cuentaClienteConvenio': cuentaClienteConvenio
     }
 
     if request.method == "POST":
-        rut_cli = request.POST["rut_cli"]
+        id_cliente = request.POST["id_cliente"]
         nombre_cli = request.POST["nombre_cli"]
         apaterno_cli = request.POST["apaterno_cli"]
         amaterno_cli = request.POST["amaterno_cli"]
         fono_cli = request.POST["fono_cli"]
         email_cli = request.POST["email_cli"]
-        convenio = request.POST["convenio"]
         contraseña1 = request.POST["contraseña1"]
         contraseña2 = request.POST["contraseña2"]
 
-        cuentaClienteConvenio.rut_cli = rut_cli
+        cuentaClienteConvenio.id_cliente = id_cliente
         cuentaClienteConvenio.nombre_cli = nombre_cli
         cuentaClienteConvenio.apaterno_cli = apaterno_cli
         cuentaClienteConvenio.amaterno_cli = amaterno_cli
         cuentaClienteConvenio.fono_cli = fono_cli
         cuentaClienteConvenio.email_cli = email_cli
-        cuentaClienteConvenio.convenio = convenio
         cuentaClienteConvenio.contraseña1 = contraseña1
         cuentaClienteConvenio.contraseña2 = contraseña2
 
-        if(not rut_cli):
-            error_message = 'El Rut es requerido'
-        elif len(rut_cli) < 8:
-            error_message = 'El Rut debe tener mas de 8 digitos'
-        elif len(rut_cli) > 12:
-            error_message = 'El Rut no debe tener mas de 12 digitos'
-        elif len(nombre_cli) < 4:
+        if len(nombre_cli) < 4:
             error_message = 'El nombre debe tener mas de 4 caracteres'
         elif len(apaterno_cli) < 4:
             error_message = 'El Apellido Paterno debe tener mas de 4 caracteres'
@@ -1616,8 +1608,8 @@ def editar_cuenta_trab_emp(request):
                 'error': error_message,
                 'cuentaClienteConvenio': cuentaClienteConvenio
             }
-        return render(request, 'encargadoConvenio/cuentaEmpresas/editarCuentaTrabEmpresa', data)
-    return render(request, 'encargadoConvenio/cuentaEmpresas/editarCuentaTrabEmpresa', data1)
+        return render(request, 'encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data)
+    return render(request, 'encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data1)
 
 
 def eliminar_cuenta_trab_emp(request, id):
@@ -1772,8 +1764,28 @@ def editar_perfil_cliente(request):
 #Modulo Cajero -----------------------------------------------------------------------------
 def listar_pedidos_pendientes(request):
     pedidos_pendientes = Pedido.objects.filter(estado='Pendiente')
-    data = {'pedidos_pendientes':pedidos_pendientes}
+    repartidores_disponibles = Repartidor.objects.all()
+    data = {
+            'pedidos_pendientes':pedidos_pendientes,
+            'repartidores_disponibles':repartidores_disponibles
+            }
     return render(request,'cajero/pedidosPendientes.html',data)
+
+def confirmar_pedido(request, id_pedido):
+    pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
+    if (request.method == 'GET') and ("confirmar" in request.GET):
+        pedido.estado = 'Confirmado'
+        pedido.save()
+        return redirect('listar-pedidos-pendientes')
+    else:
+        return redirect('listar-pedidos-pendientes')
+
+def listar_pedidos_confirmados(request):
+    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
+    data = {
+        'pedidos_confirmados':pedidos_confirmados
+    }
+    return render (request ,'cajero/pedidosConfirmados.html',data)
 #Fin Modulo Cajero -------------------------------------------------------------------------
 
 #cambiar contraseña cliente
@@ -1832,3 +1844,4 @@ def cambiar_contraseña_cliente(request):
                 }
             return render(request, 'cliente/cambiar_contraseña.html', data)
     return render(request, "cliente/cambiar_contraseña.html", data)
+
