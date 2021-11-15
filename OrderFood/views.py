@@ -19,6 +19,7 @@ def ubicacion(request):
 class home(View):
     def post(self,request):
         #PLATO ES EL NOMBRE QUE SE LE DA AL BOT
+        resta = request.POST.get('resta')
         plato = request.POST.get('plato')
         remove = request.POST.get('remove')
         carro = request.session.get('carro')
@@ -39,7 +40,7 @@ class home(View):
             carro[plato] = 1
         request.session['carro'] = carro
         print('carro',request.session['carro'])
-        return redirect('home')
+        return redirect('platos/'+ resta)
 
     def get(self, request):
         # check = Cliente.objects.filter(
@@ -53,7 +54,7 @@ class home(View):
         email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
         platos1 = Plato.objects.all()
-        rest = Restaurant.objects.all()
+        restaurant = Restaurant.objects.all()
         buscar_plato = buscarPlato(request.GET, queryset=platos1)
         platos1 = buscar_plato.qs
         #MODAL CARRITO
@@ -68,11 +69,29 @@ class home(View):
                 'platos_categoria':reversed(categoriaPlato.objects.all()),
                 'platos_en_carro':platos_en_carro,
                 'buscar_plato': buscar_plato,
+                'restaurant':restaurant,
         }
-        data = {'email': email, 'platos': platos,
-                'rest': rest, 'buscar_plato': buscar_plato,'platos_en_carro':platos_en_carro}
+        request.session['carro'] = {}
         return render(request, 'home.html', context)
 
+
+def listar_plato_restaurante(request,id_restaurante):
+    platos = Plato.objects.filter(Restaurant_id=id_restaurante)
+    platosCat = Plato.objects.filter(Restaurant_id=id_restaurante)
+
+    #MODAL CARRITO
+    id_plato = (list(request.session.get('carro').keys()))
+    platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
+    print(platos_en_carro)
+    #FIN MODAL CARRITO
+    data = {
+        'platosCat':platosCat,
+        'platos': platos,
+        'platos_en_carro':platos_en_carro,
+        'categoria':reversed(categoriaPlato.objects.all()),
+        'platos_categoria':reversed(categoriaPlato.objects.all()),
+    }
+    return render(request, 'platos.html', data)
 
 class Login(View):
     def get(self, request):
@@ -141,7 +160,7 @@ class Login(View):
 
 class realizar_pedido(View):
     def get(self, request):
-         #MODAL CARRITO
+        #MODAL CARRITO
         id_plato = (list(request.session.get('carro').keys()))
         platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
         print(platos_en_carro)
@@ -174,7 +193,8 @@ class realizar_pedido(View):
                           celular=celular_contacto,
                           cantidad=carro.get(str(plato.id_plato)))
             pedido.pedido()
-            return redirect('mis-pedidos')
+        request.session['carro'] = {}
+        return redirect('mis-pedidos')
 
 
 
@@ -190,7 +210,7 @@ class pedidos(View):
 
 def logout(request):
     request.session.clear()
-    return redirect('login')
+    return redirect('home')
 
 
 # Modulo administracion
@@ -1323,11 +1343,9 @@ def modificar_pedido(request, id):
 
 
 def eliminar_pedido(request, id):
-
     pedido = get_object_or_404(Pedido, id_pedido=id)
     pedido.delete()
     return redirect(to="listar_pedido")
-
 # fin pedido
 
 

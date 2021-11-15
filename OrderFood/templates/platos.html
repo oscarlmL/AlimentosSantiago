@@ -3,43 +3,12 @@
 {% load static %}
 {% load carro %}
 {% load humanize %}
-
-
-<!-- IMAGEN COMENTADA -->
-<!-- <div class="block hero1 my-auto"
-    style="background-image:url(https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80);">
-    <div class="container-fluid text-center">
-        <h1 class="display-2 text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="0">El Comilon
-        </h1>
-        <p class="lead text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">Las delicias de
-            nuestra Carta a la comodidad de su Hogar</p>
-        <a href="#menu" class="btn-text lead d-inline-block text-white border-top border-bottom mt-4 pt-1 pb-1"
-            data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1200">Visita Nuestro Menú</a>
-    </div>
-    <div class="clearfix">
-    </div>
-</div> -->
 <br>
 <br>
 <div class="">
     <div class="container-fluid mt-3">
         <section id="">
             <div class="row">
-                <!-- <div class="col-lg-3 mx-auto">
-                    <div class="form-group">
-                        <div class="text-center">
-                            <h2>Búsqueda de Plato</h2>
-                            <hr>
-                        </div>
-                        <form class="d-flex mx-auto formBuscar" action="/#{{form.nom_plato}}" method="GET">
-                            {{buscar_plato.form.nom_plato}}
-                            {{buscar_plato.form.Restaurant}}
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary btn-round btn-block rounded" value="Buscar">
-                            </div>
-                        </form>
-                    </div>
-                </div> -->
 
                 <div class="col-md-2 " style="padding-left: 30px;">
                     <div class="list-group" style="position: -webkit-sticky; position: sticky; display: block;">
@@ -57,25 +26,22 @@
                         {% endfor %}
                     </div>
                 </div>
-                <!-- <div class="buttons-container">
-                    {% for r in rest %}
-                        <a href="#" class="button button--is-active" data-target="pizzaMenu">{{r.nombre_rest}}</a>
-                    {% endfor %}
-                </div> -->
 
                 {% csrf_token %}
                 <div class="col-md-10 item-select">
+
                     {% for categoria in categoria %}
                     <div id="{{categoria}}" class="items" style="margin-bottom:35px;">
                         <div class="category-header-name" style="text-align:left;">
-                            <h3 class="category-display" style="color:#aeaeae;margin-bottom:25px;">{{categoria}}</h3>
+                            <!-- <h3 class="category-display" style="color:#aeaeae;margin-bottom:25px;">{{categoria}}</h3> -->
                         </div>
                         <div class="row">
                             {% for plato in platos %}
                             {% if plato.categoria == categoria %}
                             <div class="col-lg-3">
                                 <div class="">
-                                    <div class="card mx-auto mb-3 border-bottom-0" id="{{plato.id_plato}}" style="width: 18rem;">
+                                    <div class="card mx-auto mb-3 border-bottom-0" id="/{{plato.id_plato}}/"
+                                        style="width: 18rem;">
                                         {% if plato.Imagen %}
                                         <img class="card-img-top" src="{{ plato.Imagen.url }}" height="180px"
                                             alt="Card image cap">
@@ -96,9 +62,11 @@
                                         <div class="no-gutters">
                                             {% if plato|is_in_cart:request.session.carro %}
                                             <div class="row no-gutters">
-                                                <form action="/#{{plato.id_plato}}" method="post" class="col-2">
+                                                <form action="/#{{plato.id_plato}}/" method="post" class="col-2">
                                                     {% csrf_token %}
                                                     <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                                    <input hidden type="text" name="resta"
+                                                        value="{{plato.Restaurant_id}}">
                                                     <input hidden type="text" name="remove" value="True">
                                                     <input type="submit" value=" - "
                                                         class="btn btn-block rounded-circle  btn-primary border-right">
@@ -108,17 +76,21 @@
                                                     en
                                                     carro
                                                 </div>
-                                                <form action="/#{{plato.id_plato}}" method="post" class="col-2">
+                                                <form action="/#{{plato.id_plato}}/" method="post" class="col-2">
                                                     {% csrf_token %}
                                                     <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                                    <input hidden type="text" name="resta"
+                                                        value="{{plato.Restaurant_id}}">
+
                                                     <input type="submit" value=" + "
                                                         class="btn btn-block rounded-circle  btn-primary border-left">
                                                 </form>
                                             </div>
                                             {% else %}
-                                            <form action="/#{{plato.id_plato}}" method="POST" class="btn-block">
+                                            <form action="/#{{plato.id_plato}}/" method="POST" class="btn-block">
                                                 {% csrf_token %}
                                                 <input hidden type="text" name="plato" value="{{plato.id_plato}}">
+                                                <input hidden type="text" name="resta" value="{{plato.Restaurant_id}}">
                                                 <input type="submit"
                                                     class="float-right btn btn-primary form-control my-cart-btn"
                                                     value="agregar al carro">
@@ -134,14 +106,17 @@
                             {% endif %}
                             {% endfor %}
                         </div>
-
                     </div>
                     {% endfor %}
+
                 </div>
 
             </div>
-        </section>
     </div>
+
+</div>
+</section>
+</div>
 </div>
 
 <!-- MODAL CARRITO -->
@@ -164,6 +139,7 @@
                     <table class="table table-image">
                         <thead class="table-primary">
                             <tr>
+                                <th scope="col">Restaurante</th>
                                 <th scope="col">Imagen</th>
                                 <th scope="col">Plato</th>
                                 <th scope="col">Valor unitario</th>
@@ -174,6 +150,7 @@
                         <tbody>
                             {% for platos_en_carro in platos_en_carro %}
                             <tr>
+                                <td>{{platos_en_carro.Restaurant}}</td>
                                 <td><img class="rounded-circle" src="{{platos_en_carro.Imagen.url}}" alt=""
                                         style="height: 60px; width: 80px;"></td>
                                 <td>{{platos_en_carro.nom_plato}}</td>
@@ -222,13 +199,12 @@
 
 <div class="icon-cart" style="position: fixed; background: inherit;" data-toggle="modal" data-target="#cartModal">
     <img src="{% static 'app/img/cart.svg' %}" style="width:30px;">
-     <span
-        class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}
+    <span class="top-0 start-100 translate-middle badge rounded-pill badge">{{request.session.carro.keys|length}}
     </span>
 </div>
 
-<div class="text-center">
-    <a class="text-center btn btn-outline-dark" href="{% url 'proveedor' %}">¿Eres proveedor? ¡Click aca!</a>
-</div>
 
 
+
+
+{% endblock %}

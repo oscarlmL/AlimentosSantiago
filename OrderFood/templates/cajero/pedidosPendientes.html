@@ -29,6 +29,11 @@
                     <td>{{ n.horario_entrega | title }}</td>
                     <td>{{ n.tipo_entrega | title }}</td>
                     <td>{{ n.tipo_pago | title }}</td>
+                    <td>
+                        <form action="{% url 'confirmar-pedido' n.id_pedido %}" method="GET">
+                            <input type="submit" name="confirmar" class="btn btn-primary pull-right" value="Confirmar"/>
+                      </form>
+                    </td>
                     <!-- <div class="form-group">
                         <select class="form-control" value="{{cuentaCajero.estado}}" name="estado" id="estado"
                             onclick="showInp(this);">

@@ -6,6 +6,11 @@ from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_mi
 urlpatterns = [
     path('ubicacion', ubicacion, name="ubicacion"),
     path('', home.as_view(), name="home"),
+    path('platos/<int:id_restaurante>/',home.as_view() and listar_plato_restaurante, name='platos'),
+
+
+
+
     path('login', Login.as_view(), name="login"),
     path('logout', logout, name="logout"),
 
@@ -13,7 +18,7 @@ urlpatterns = [
     path('registro/', generarCuentaCliente , name="auto-registro-cliente"),
     path("editar-perfil-cliente/", auth_middleware_cliente(editar_perfil_cliente), name="editar-perfil-cliente"),
     path("cambiar-contraseña-cliente/",auth_middleware_cliente(cambiar_contraseña_cliente),name="cambiar-contraseña-cliente"),
-     path('realizar-pedido', auth_middleware_cliente(realizar_pedido.as_view()), name="realizar-pedido"),
+    path('realizar-pedido', auth_middleware_cliente(realizar_pedido.as_view()), name="realizar-pedido"),
     path('pagar', auth_middleware_cliente(realizar_pedido.as_view()), name="pagar"),
     path('mis-pedidos', auth_middleware_cliente(pedidos.as_view()), name="mis-pedidos"),
 
