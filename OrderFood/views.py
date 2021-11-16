@@ -43,23 +43,32 @@ class home(View):
         return redirect('platos/'+ resta)
 
     def get(self, request):
-        # clienteeee = Cliente.objects.get(
-        #          id_cliente=request.session['cuentaCliente'])
-        # if not Cliente:
-        #     request.session['cuentaCliente'] = {}
-
-        carro = request.session.get('carro')
-        if not carro:
-            request.session['carro'] = {}
-        email = request.session.get('cuentaAdmin') or request.session.get(
-        'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
-        restaurant = Restaurant.objects.all()
-        context = {
+        if request.session.get('cuentaCliente'):
+            clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
+            carro = request.session.get('carro')
+            if not carro:
+                request.session['carro'] = {}
+            email = request.session.get('cuentaAdmin') or request.session.get(
+            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
+            restaurant = Restaurant.objects.all()
+            context = {
                 'restaurant':restaurant,
-                'email':email
-        }
-        request.session['carro'] = {}
-        return render(request, 'home.html', context)
+                'clienteeee':clienteeee
+                }
+            return render(request, 'home.html', context)
+        else:
+            carro = request.session.get('carro')
+            if not carro:
+                request.session['carro'] = {}
+            email = request.session.get('cuentaAdmin') or request.session.get(
+            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
+            restaurant = Restaurant.objects.all()
+            context = {
+                    'restaurant':restaurant,
+                    'email':email,
+            }
+            request.session['carro'] = {}
+            return render(request, 'home.html', context)
 
 
 def listar_plato_restaurante(request,id_restaurante):
@@ -179,9 +188,6 @@ class realizar_pedido(View):
             pedido.pedido()
         request.session['carro'] = {}
         return redirect('mis-pedidos')
-
-
-
 
 
 class pedidos(View):
