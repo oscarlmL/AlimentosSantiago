@@ -56,8 +56,7 @@ class home(View):
         restaurant = Restaurant.objects.all()
         context = {
                 'restaurant':restaurant,
-                'email':email,
-                'clienteeee':clienteeee
+                'email':email
         }
         request.session['carro'] = {}
         return render(request, 'home.html', context)
@@ -1288,7 +1287,7 @@ def restaurant(request):
         'restaurantes': restaurantes
     }
     if request.method == 'POST':
-        formulario = RestaurantForm(request.POST)
+        formulario = RestaurantForm(request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Restaurant guardado correctamente")
@@ -1338,7 +1337,7 @@ def eliminar_restaurant(request):
     restaurant = get_object_or_404(Restaurant, id_restaurante=id_restaurante)
     restaurant.delete()
     messages.success(request, "Eliminación exitosa")
-    return redirect(to="listar_restaurant")
+    return redirect(to="restaurant")
 
 
 # Fin modulo encargado Cocina
