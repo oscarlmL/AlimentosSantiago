@@ -7,7 +7,7 @@ from .models import *
 from django.views import View
 from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm
-from .forms import ProveedorForm, PlatoForm, PedidoForm, GestionEmpresaForm
+from .forms import ProveedorForm, PlatoForm, PedidoForm, GestionEmpresaForm, RestaurantForm
 from .filters import buscarPlato
 
 
@@ -43,11 +43,11 @@ class home(View):
         return redirect('platos/'+ resta)
 
     def get(self, request):
-        # check = Cliente.objects.filter(
-        #     id_cliente=request.session['cuentaCliente'])
-        # if len(check) > 0:
-        #     clienteeee = Cliente.objects.get(
-        #         id_cliente=request.session['cuentaCliente'])
+        # clienteeee = Cliente.objects.get(
+        #          id_cliente=request.session['cuentaCliente'])
+        # if not Cliente:
+        #     request.session['cuentaCliente'] = {}
+
         carro = request.session.get('carro')
         if not carro:
             request.session['carro'] = {}
@@ -56,7 +56,8 @@ class home(View):
         restaurant = Restaurant.objects.all()
         context = {
                 'restaurant':restaurant,
-                'email':email
+                'email':email,
+                'clienteeee':clienteeee
         }
         request.session['carro'] = {}
         return render(request, 'home.html', context)
@@ -1279,8 +1280,68 @@ def eliminar_proveedor(request):
     return redirect(to="listar_proveedor")
 
 
-# Fin modulo encargado Cocina
+# Modulo Restaurant
+def restaurant(request):
+    restaurantes = Restaurant.objects.all()
+    data = {
+        'form': RestaurantForm(),
+        'restaurantes': restaurantes
+    }
+    if request.method == 'POST':
+        formulario = RestaurantForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Restaurant guardado correctamente")
+        else:
+            data["form"] = formulario
 
+    return render(request, 'encargadoCocina/restaurant/gestionarRestaurant.html', data)
+
+
+def listar_restaurant(request):
+    request.session.set_expiry(10000)
+    email = request.session['cuentaEncCocina']
+    restaurantes = Restaurant.objects.all()
+    data = {
+        'restaurantes': restaurantes,
+        'email': email
+    }
+    return render(request, 'encargadoCocina/restaurant/listarRestaurant.html', data)
+
+
+def modificar_restaurant(request):
+    request.session.set_expiry(10000)
+    email = request.session['cuentaEncCocina']
+    id_restaurante = request.GET["id_restaurante"]
+    restaurant = get_object_or_404(Restaurant, id_restaurante=id_restaurante)
+
+    data = {
+        'email': email,
+        'form': RestaurantForm(instance=restaurant),
+        
+        # 'restaurant': restaurant
+    }
+
+    if request.method == 'POST':
+        formulario = RestaurantForm(data=request.POST, instance=restaurant, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Modificación exitosa")
+            return redirect(to="listar-restaurant")
+        data["form"] = formulario
+
+    return render(request, 'encargadoCocina/restaurant/modificarRestaurant.html', data)
+
+
+def eliminar_restaurant(request):
+    id_restaurante = request.GET["id_restaurante"]
+    restaurant = get_object_or_404(Restaurant, id_restaurante=id_restaurante)
+    restaurant.delete()
+    messages.success(request, "Eliminación exitosa")
+    return redirect(to="listar_restaurant")
+
+
+# Fin modulo encargado Cocina
 
 # pedidos
 def agregar_pedido(request):
