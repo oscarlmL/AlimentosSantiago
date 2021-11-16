@@ -54,7 +54,13 @@ urlpatterns = [
     path('listar-proveedor/', auth_middleware_enc_cocina(listar_proveedor), name="listar_proveedor"),
     path('modificar-proveedor/', auth_middleware_enc_cocina(modificar_proveedor), name="modificar_proveedor"),
     path('eliminar-proveedor/', auth_middleware_enc_cocina(eliminar_proveedor), name="eliminar_proveedor"),
-    #End Path
+    #path Restaurant
+    path('restaurant', restaurant, name="restaurant"),
+    path('listar-restaurant/', auth_middleware_enc_cocina(listar_restaurant), name="listar-restaurant"),
+    path('modificar-restaurant/', auth_middleware_enc_cocina(modificar_restaurant), name="modificar-restaurant"),
+    path('eliminar-restaurant/', auth_middleware_enc_cocina(eliminar_restaurant), name="eliminar-restaurant"),
+
+
     #FIN ENCARGADO COCINA
 
     #ENCARGADO CONVENIO

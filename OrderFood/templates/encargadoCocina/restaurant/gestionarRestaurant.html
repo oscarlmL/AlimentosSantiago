@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block contenido %}
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div class="maincontent pt-0 pb-0">
+        <div class="d-md-flex h-md-100 align-items-center">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+
+                    <div class="card">
+                        {% if messages %}
+                        {% for m in messages %}
+                        <div class="alert alert-success" role="alert">
+                            {{m}}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h1 class="text-center">Agregar Restaurant</h1>
+                            <hr>
+                            <form action="" class="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{form}}
+                                <br>
+                                <input class="btn btn-primary btn-sm btn-block" type="submit" value="Guardar">
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

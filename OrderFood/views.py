@@ -7,7 +7,7 @@ from .models import *
 from django.views import View
 from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm
-from .forms import ProveedorForm, PlatoForm, PedidoForm, GestionEmpresaForm
+from .forms import ProveedorForm, PlatoForm, PedidoForm, GestionEmpresaForm, RestaurantForm
 from .filters import buscarPlato
 
 
@@ -1295,8 +1295,64 @@ def eliminar_proveedor(request):
     return redirect(to="listar_proveedor")
 
 
-# Fin modulo encargado Cocina
+# Modulo Restaurant
+def restaurant(request):
+    data = {
+        'form': RestaurantForm()
+    }
+    if request.method == 'POST':
+        formulario = RestaurantForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Restaurant guardado correctamente")
+        else:
+            data["form"] = formulario
 
+    return render(request, 'encargadoCocina/restaurant/gestionarRestaurant.html', data)
+
+
+def listar_restaurant(request):
+    request.session.set_expiry(10000)
+    email = request.session['cuentaEncCocina']
+    restaurantes = Restaurant.objects.all()
+    data = {
+        'restaurantes': restaurantes,
+        'email': email
+    }
+    return render(request, 'encargadoCocina/restaurant/listarRestaurant.html', data)
+
+
+def modificar_restaurant(request):
+    request.session.set_expiry(10000)
+    email = request.session['cuentaEncCocina']
+    id_restaurante = request.GET["id_restaurante"]
+    restaurant = get_object_or_404(Restaurant, id_restaurante=id_restaurante)
+
+    data = {
+        'form': RestaurantForm(instance=restaurant),
+        'email': email
+    }
+
+    if request.method == 'POST':
+        formulario = RestaurantForm(data=request.POST, instance=restaurant)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Modificación exitosa")
+            return redirect(to="listar_restaurant")
+        data["form"] = formulario
+
+    return render(request, 'encargadoCocina/restaurant/modificarRestaurant.html', data)
+
+
+def eliminar_restaurant(request):
+    id_restaurante = request.GET["id_restaurante"]
+    restaurant = get_object_or_404(Restaurant, id_restaurante=id_restaurante)
+    restaurant.delete()
+    messages.success(request, "Eliminación exitosa")
+    return redirect(to="listar_restaurant")
+
+
+# Fin modulo encargado Cocina
 
 # pedidos
 def agregar_pedido(request):
