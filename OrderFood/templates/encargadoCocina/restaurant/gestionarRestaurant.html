@@ -1,43 +1,93 @@
 {% extends 'base.html' %}
 {% block contenido %}
-{% load static %}
-{% load humanize %}
-<!DOCTYPE html>
-<html lang="en">
+{% load crispy_forms_tags %}
 
-<body>
-    <div class="maincontent pt-0 pb-0">
-        <div class="d-md-flex h-md-100 align-items-center">
-            <div class="container-fluid">
-                <div class="row justify-content-center">
+<script>
+    function eliminarRestaurant(id_restaurante) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'eliminar-restaurant' %}?id_restaurante=" + id_restaurante+ ""
+                }
+            })
+    }
+</script>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+            {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-success" role="alert">
+                {{m}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <h2>Agregar Restaurant</h2>
+                    <hr>
+                    <form action="" method="post" enctype="multipart/form-data">
 
-                    <div class="card">
-                        {% if messages %}
-                        {% for m in messages %}
-                        <div class="alert alert-success" role="alert">
-                            {{m}}
+                        {% csrf_token %}
+                        {{ form | crispy}}
+
+                        <div class="form-group">
+                            <input type="submit" value="Guardar" class="btn btn-dark btn-round btn-block">
                         </div>
-                        {% endfor %}
-                        {% endif %}
-
-                        <div class="card-body">
-                            <h1 class="text-center">Agregar Restaurant</h1>
-                            <hr>
-                            <form action="" class="" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {{form}}
-                                <br>
-                                <input class="btn btn-primary btn-sm btn-block" type="submit" value="Guardar">
-                            </form>
-                        </div>
-                    </div>
-
-
+                    </form>
                 </div>
             </div>
         </div>
+
+
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Lista de Platos</h2>
+            <div class="table-responsive py-2">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Nombre del restaurant</th>
+                        <th>Dirección</th>
+                        <th>Comuna</th>
+                        <th>Imagen</th>
+                        <th>Opciones</th>
+
+                    </tr>
+
+                    {% for r in restaurantes %}
+
+                    <tr class="table-light">
+                        <td>{{r.nombre_rest | title}}</td>
+                        <td>{{r.direccion_rest | title }}</td>
+                        <td>{{r.comuna_rest | title }}</td>
+                        <td>
+                            <a href="{% url 'modificar-restaurant'%}?id_restaurante={{r.id_restaurante}}"
+                                class="btn btn-dark btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarRestaurant({{r.id_restaurante}})"
+                                class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+        
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
     </div>
-</body>
-</html>
+</div>
+
 
 {% endblock %}

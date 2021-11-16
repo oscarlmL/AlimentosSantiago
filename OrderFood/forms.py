@@ -13,19 +13,20 @@ class RestaurantForm(forms.ModelForm):
 
     class Meta:
         model = Restaurant
-        fields = ['nombre_rest', 'direccion_rest', 'comuna_rest']
+        fields = ['nombre_rest', 'direccion_rest', 'comuna_rest', 'imagen']
     nombre_rest = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Nombre del restaurant'}), label='Nombre del Restaurant')
     direccion_rest = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Ej: Novena 849'}), label='Dirección')
     comuna_rest = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Ej: Valparaiso, Quilpué'}), label='Comuna')
+    imagen = forms.ImageField()
 
 
     def clean_nombre_rest(self):
         nombre = self.cleaned_data['nombre_rest']
-        if not nombre.isalpha():
-            raise forms.ValidationError('El nombre no puede contener números')
+        if not nombre.isalnum():
+            raise forms.ValidationError('El nombre no puede contener números ni espacios')
         return nombre
     
     def clean_comuna_rest(self):
@@ -58,7 +59,7 @@ class ProveedorForm(forms.ModelForm):
     def clean_nom_proveedor(self):
         nombre = self.cleaned_data['nom_proveedor']
         if not nombre.isalpha():
-            raise forms.ValidationError('El nombre no puede contener números')
+            raise forms.ValidationError('El nombre no puede contener números ni espacios')
         return nombre
 
 # Validación solo numeros

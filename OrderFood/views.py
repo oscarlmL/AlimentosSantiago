@@ -1281,8 +1281,10 @@ def eliminar_proveedor(request):
 
 # Modulo Restaurant
 def restaurant(request):
+    restaurantes = Restaurant.objects.all()
     data = {
-        'form': RestaurantForm()
+        'form': RestaurantForm(),
+        'restaurantes': restaurantes
     }
     if request.method == 'POST':
         formulario = RestaurantForm(request.POST)
@@ -1313,16 +1315,18 @@ def modificar_restaurant(request):
     restaurant = get_object_or_404(Restaurant, id_restaurante=id_restaurante)
 
     data = {
+        'email': email,
         'form': RestaurantForm(instance=restaurant),
-        'email': email
+        
+        # 'restaurant': restaurant
     }
 
     if request.method == 'POST':
-        formulario = RestaurantForm(data=request.POST, instance=restaurant)
+        formulario = RestaurantForm(data=request.POST, instance=restaurant, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificación exitosa")
-            return redirect(to="listar_restaurant")
+            return redirect(to="listar-restaurant")
         data["form"] = formulario
 
     return render(request, 'encargadoCocina/restaurant/modificarRestaurant.html', data)

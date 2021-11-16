@@ -5,7 +5,7 @@
 {% block js %}
 <!--Delete Function-->
 <script>
-    function eliminarProveedor(id_proveedor) {
+    function eliminarRestaurant(id_restaurante) {
         Swal.fire({
             "title": "¿Estas seguro?",
             "text": "esta acción no se puede deshacer",
@@ -19,7 +19,7 @@
         })
             .then(function (result) {
                 if (result.isConfirmed) {
-                    window.location.href = "{% url 'eliminar_proveedor' %}?id_proveedor=" + id_proveedor + ""
+                    window.location.href = "{% url 'eliminar-restaurant' %}?id_restaurante=" + id_restaurante+ ""
                 }
             })
     }
@@ -38,29 +38,28 @@
         </div>
         {% endfor %}
         {% endif %}
-        <h2 class="text-center">Ofertas recibidas de proveedores</h2>
+        <h2 class="text-center">Restaurantes</h2>
         <hr>
         <table class="table table-striped table-hover table-responsive-sm">
             <tr class="table-active">
-                <th>Nombre del proveedor</th>
-                <th>Rol del local</th>
-                <th>Celular</th>
-                <th>Descripción</th>
+                <th>Nombre del restaurant</th>
+                <th>Dirección</th>
+                <th>Comuna</th>
+                <th>Imagen</th>
                 <th>Opciones</th>
 
             </tr>
 
-            {% for p in proveedores %}
+            {% for r in restaurantes %}
 
             <tr class="table-light">
-                <td>{{p.nom_proveedor | title}}</td>
-                <td>{{p.rol_local | title }}</td>
-                <td>{{p.celular}}</td>
-                <td>{{p.descripcion}}</td>
+                <td>{{r.nombre_rest | title}}</td>
+                <td>{{r.direccion_rest | title }}</td>
+                <td>{{r.comuna_rest | title }}</td>
                 <td>
-                    <a href="{% url 'modificar_proveedor'%}?id_proveedor={{p.id_proveedor}}"
+                    <a href="{% url 'modificar-restaurant'%}?id_restaurante={{r.id_restaurante}}"
                         class="btn btn-dark btn-sm">Modificar</a>
-                    <a href="#" onclick="eliminarProveedor({{p.id_proveedor}}) "
+                    <a href="#" onclick="eliminarRestaurant({{r.id_restaurante}})"
                         class="btn btn-danger btn-sm">Eliminar</a>
                 </td>
             </tr>
