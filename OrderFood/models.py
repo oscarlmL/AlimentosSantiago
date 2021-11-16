@@ -414,11 +414,14 @@ class Restaurant(models.Model):
     # This field type is a guess.
     comuna_rest = models.CharField(max_length=50)
     imagen = models.ImageField(default = None, upload_to="restaurantes")
+
+
     class Meta:
         db_table = 'restaurant'
 
     def __str__(self):
         return self.nombre_rest
+
 
 
 class Suscripcion(models.Model):

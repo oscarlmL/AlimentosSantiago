@@ -53,23 +53,10 @@ class home(View):
             request.session['carro'] = {}
         email = request.session.get('cuentaAdmin') or request.session.get(
         'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
-        platos1 = Plato.objects.all()
         restaurant = Restaurant.objects.all()
-        buscar_plato = buscarPlato(request.GET, queryset=platos1)
-        platos1 = buscar_plato.qs
-        #MODAL CARRITO
-        id_plato = (list(request.session.get('carro').keys()))
-        platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
-        print(platos_en_carro)
-        #FIN MODAL CARRITO
-
-        platos = Plato.objects.all()
-        context = {'platos': platos,
-                'categoria':reversed(categoriaPlato.objects.all()),
-                'platos_categoria':reversed(categoriaPlato.objects.all()),
-                'platos_en_carro':platos_en_carro,
-                'buscar_plato': buscar_plato,
+        context = {
                 'restaurant':restaurant,
+                'email':email
         }
         request.session['carro'] = {}
         return render(request, 'home.html', context)
@@ -77,15 +64,12 @@ class home(View):
 
 def listar_plato_restaurante(request,id_restaurante):
     platos = Plato.objects.filter(Restaurant_id=id_restaurante)
-    platosCat = Plato.objects.filter(Restaurant_id=id_restaurante)
-
     #MODAL CARRITO
     id_plato = (list(request.session.get('carro').keys()))
     platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
     print(platos_en_carro)
     #FIN MODAL CARRITO
     data = {
-        'platosCat':platosCat,
         'platos': platos,
         'platos_en_carro':platos_en_carro,
         'categoria':reversed(categoriaPlato.objects.all()),

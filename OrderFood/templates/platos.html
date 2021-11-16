@@ -29,7 +29,6 @@
 
                 {% csrf_token %}
                 <div class="col-md-10 item-select">
-
                     {% for categoria in categoria %}
                     <div id="{{categoria}}" class="items" style="margin-bottom:35px;">
                         <div class="category-header-name" style="text-align:left;">
@@ -40,7 +39,7 @@
                             {% if plato.categoria == categoria %}
                             <div class="col-lg-3">
                                 <div class="">
-                                    <div class="card mx-auto mb-3 border-bottom-0" id="/{{plato.id_plato}}/"
+                                    <div class="card mx-auto mb-3 border-bottom-0" id="{{plato.id_plato}}"
                                         style="width: 18rem;">
                                         {% if plato.Imagen %}
                                         <img class="card-img-top" src="{{ plato.Imagen.url }}" height="180px"
@@ -62,7 +61,7 @@
                                         <div class="no-gutters">
                                             {% if plato|is_in_cart:request.session.carro %}
                                             <div class="row no-gutters">
-                                                <form action="/#{{plato.id_plato}}/" method="post" class="col-2">
+                                                <form action="/#{{plato.id_plato}}" method="post" class="col-2">
                                                     {% csrf_token %}
                                                     <input hidden type="text" name="plato" value="{{plato.id_plato}}">
                                                     <input hidden type="text" name="resta"
@@ -76,7 +75,7 @@
                                                     en
                                                     carro
                                                 </div>
-                                                <form action="/#{{plato.id_plato}}/" method="post" class="col-2">
+                                                <form action="/#{{plato.id_plato}}" method="post" class="col-2">
                                                     {% csrf_token %}
                                                     <input hidden type="text" name="plato" value="{{plato.id_plato}}">
                                                     <input hidden type="text" name="resta"
@@ -87,7 +86,7 @@
                                                 </form>
                                             </div>
                                             {% else %}
-                                            <form action="/#{{plato.id_plato}}/" method="POST" class="btn-block">
+                                            <form action="/#{{plato.id_plato}}" method="POST" class="btn-block">
                                                 {% csrf_token %}
                                                 <input hidden type="text" name="plato" value="{{plato.id_plato}}">
                                                 <input hidden type="text" name="resta" value="{{plato.Restaurant_id}}">
