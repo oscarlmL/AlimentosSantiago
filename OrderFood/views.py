@@ -43,11 +43,11 @@ class home(View):
         return redirect('platos/'+ resta)
 
     def get(self, request):
-        # clienteeee = Cliente.objects.get(
-        #          id_cliente=request.session['cuentaCliente'])
-        # if not Cliente:
-        #     request.session['cuentaCliente'] = {}
-
+        # p = request.session['cuentaCliente'] = {}
+        # if not p:
+        #      request.session['cuentaCliente'] = {}
+        # else:
+        #     clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
         carro = request.session.get('carro')
         if not carro:
             request.session['carro'] = {}
@@ -57,7 +57,6 @@ class home(View):
         context = {
                 'restaurant':restaurant,
                 'email':email,
-                'clienteeee':clienteeee
         }
         request.session['carro'] = {}
         return render(request, 'home.html', context)
@@ -180,9 +179,6 @@ class realizar_pedido(View):
             pedido.pedido()
         request.session['carro'] = {}
         return redirect('mis-pedidos')
-
-
-
 
 
 class pedidos(View):

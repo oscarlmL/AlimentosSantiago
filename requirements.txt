@@ -4,3 +4,5 @@ django-crispy-forms
 menuinst
 Pillow
 django-filter
+
+#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

@@ -66,7 +66,7 @@
                     <div class="form-group">
                         <label for="">Dirección</label>
                         <input type="text" class="form-control" placeholder="Tú dirección" name="direccion"
-                            id="direccion_cliente">
+                            id="clientAddress">
                     </div>
                     <div class="form-group">
                         <label for="">Tipo Pago</label>
@@ -88,7 +88,7 @@
 
 
 
-                <div class="col">
+                <!-- <div class="col">
                     <h1>Pasar para realizar el pedido</h1>
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0"
@@ -186,7 +186,7 @@
                                 id="submit_data" />
                         </fieldset>
                     </form>
-                </div>
+                </div> -->
 
             </div>
             <div class="">
@@ -215,31 +215,27 @@
     </div>
 </div>
 
-
-<script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap"
-    async defer></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap" async defer"></script>
 <script>
-    function initMap() {
-        var input = document.getElementById('direccion_cliente');
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.addListener('place_changed', function () {
-            var place = autocomplete.getPlace();
-            document.getElementById('location-snap').
-                innerHTML = place.formatted_address;
-            document.getElementById('lat-span').
-                innerHTML = place.geometry.location.lat();
-            document.getElementById('lon-span').
-                innerHTML = place.geometry.location.lng();
-        });
-    }
+function initMap() {
+   var input = document.getElementById('clientAddress');
+   var autocomplete = new google.maps.places.Autocomplete(input);
+   autocomplete.addListener('place_changed', function() {
+       var place = autocomplete.getPlace();
+       document.getElementById('location-snap').
+       innerHTML = place.formatted_address;  
+       document.getElementById('lat-span').
+       innerHTML = place.geometry.location.lat();
+       document.getElementById('lon-span').
+       innerHTML = place.geometry.location.lng();
+   });
+}
 </script>
 
 
 
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -315,6 +311,6 @@
 <style>
     #regiration_form fieldset:not(:first-of-type) {
         display: none;
-    }
+    } -->
 </style>
 {% endblock %}
