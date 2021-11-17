@@ -17,7 +17,7 @@ class RestaurantForm(forms.ModelForm):
     nombre_rest = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Nombre del restaurant'}), label='Nombre del Restaurant')
     direccion_rest = forms.CharField(max_length=49, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Ej: Novena 849'}), label='Dirección')
+        attrs={'class': 'form-control','id':'clientAddress', 'placeholder': 'Ej: Novena 849'}), label='Dirección')
     comuna_rest = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Ej: Valparaiso, Quilpué'}), label='Comuna')
     imagen = forms.ImageField()

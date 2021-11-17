@@ -29,7 +29,9 @@ def buscar_plato(request):
     return render(request,'home.html', {'platos': platos})
 
 def incio_trabajdor(request):
-    return render(request,'inicio_trabajador.html')
+    email = request.session.get('cuentaAdmin') or request.session.get(
+            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
+    return render(request,'inicio_trabajador.html',{'email':email})
 
 
 def ubicacion(request):
@@ -74,6 +76,7 @@ class home(View):
                 'restaurant':restaurant,
                 'clienteeee':clienteeee
                 }
+            request.session['carro'] = {}
             return render(request, 'home.html', context)
         else:
             carro = request.session.get('carro')
@@ -203,6 +206,7 @@ class realizar_pedido(View):
                           tipo_pago_id=tipo_pago,
                           direccion=direccion,
                           celular=celular_contacto,
+                          restaurant_id_restaurante=plato.Restaurant,
                           cantidad=carro.get(str(plato.id_plato)))
             pedido.pedido()
         request.session['carro'] = {}
@@ -1330,7 +1334,7 @@ def listar_restaurant(request):
         'restaurantes': restaurantes,
         'email': email
     }
-    return render(request, 'encargadoCocina/restaurant/listarRestaurant.html', data)
+    return render(request, 'encargadoCocina/restaurant/gestionarRestaurant.html', data)
 
 
 def modificar_restaurant(request):
@@ -1351,7 +1355,7 @@ def modificar_restaurant(request):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificación exitosa")
-            return redirect(to="listar-restaurant")
+            return redirect(to="restaurant")
         data["form"] = formulario
 
     return render(request, 'encargadoCocina/restaurant/modificarRestaurant.html', data)

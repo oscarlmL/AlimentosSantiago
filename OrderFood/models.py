@@ -283,8 +283,8 @@ class Pedido(models.Model):
     celular = models.CharField(max_length=10, default='', blank=True)
     fecha_pedido = models.DateField(default=datetime.datetime.today)
     estado = models.CharField(max_length=50, choices=estado_pedido, default='Pendiente')
-    # restaurant_id_restaurante = models.ForeignKey(
-    #     'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
+    restaurant_id_restaurante = models.ForeignKey(
+        'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
 
     class Meta:
         db_table = 'pedido'
