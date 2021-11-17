@@ -9,9 +9,27 @@ from django.contrib import messages
 from .forms import ProveedorForm, PlatoForm
 from .forms import ProveedorForm, PlatoForm, PedidoForm, GestionEmpresaForm, RestaurantForm
 from .filters import buscarPlato
+from django.db.models import Q
 
 
 # Funciones Generales
+
+def buscar_plato(request):
+    busqueda = request.GET.get("buscar")
+    platos = Plato.objects-all()
+
+    if busqueda:
+        platos = Plato.objects.filter(
+            Q(nom_plato__icontains = busqueda) |
+            Q(valor_plato__icontains = busqueda) |
+            Q(descripcion__icontains = busqueda) |
+            Q(Restaurant__icontains = busqueda) 
+        ).distinc()
+
+    return render(request,'home.html', {'platos': platos})
+
+
+
 
 def ubicacion(request):
     return render(request, 'ubicacion.html')

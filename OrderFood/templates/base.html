@@ -138,18 +138,27 @@
                         <li class="nav-item active"> <a class="nav-link" href="{% url 'home' %}">Inicio<span
                                     class="sr-only">(current)</span></a>
                         </li>
-                            <form class="form-inline formBuscar" style="margin-left: 1000px; margin-right: 100px;"action="/#{{form.nom_plato}}" method="GET">
-                                <input class="form-control mr-sm-2 " type="" placeholder="Buscar Plato" aria-label="" size="40" maxlength="40">
-                                <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
-                            </form>
+                       
+                       <!--   buscar plato
+                        <form action="" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="buscar" name="buscar" value="">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form> -->
+                  
+
+                            <!-- <form class="form-inline" style="margin-right:auto"action="/#{{form.nom_plato}}" method="GET">
+                                <input class="form-control" type="" placeholder="Buscar Plato" aria-label="" size="40" maxlength="40">
+                                <button class="btn btn-primary" type="submit">Buscar</button>
+                            </form> -->
                     </ul>
                     {% if request.session.cuentaAdmin or request.session.cuentaEncCocina or request.session.cuentaEncConvenio or request.session.cuentaRepartidor or request.session.cuentaCliente or request.session.cuentaCajero %}
                     <div class="dropdown">
-                        <!-- <li class="nav-item nav">
-                            <a class="nav-link active" href="{% url 'login' %}">
-                                {{email}}
-                            </a>
-                        </li>  -->
                         
                     </div>
                     {% else %}
@@ -175,11 +184,6 @@
                                 Iniciar sesión
                         </a>
                     </li> 
-                    <!-- <li class="btn btn-outline-dark">
-                        <a class="nav-link active" href="{% url 'auto-registro-cliente' %}">
-                            <span>Registrate, ¡Es Gratis!</span>
-                        </a>
-                    </li> -->
                     {% endif %}
                    
                 </div>

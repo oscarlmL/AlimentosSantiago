@@ -46,9 +46,12 @@ urlpatterns = [
     #ENCARGADO COCINA
     path("editar-perfil-enc-cocina/",auth_middleware_enc_cocina(editar_perfil_enc_cocina),name="editar-perfil-enc-cocina"),
     path("cambiar-contraseña-enc-cocina/",auth_middleware_enc_cocina(cambiar_contraseña_enc_cocina),name="cambiar-contraseña-enc-cocina"),
+    #path Platos
     path('gestionar-plato/', auth_middleware_enc_cocina(gestionar_plato), name="gestionar-plato"),
     path('modificar-plato/', auth_middleware_enc_cocina(modificar_plato), name="modificar_plato"),
     path('eliminar-plato/', auth_middleware_enc_cocina(eliminar_plato), name="eliminar_plato"),
+    path('buscar-plato/', (buscar_plato), name="buscar-plato"),
+
     #path Proveedor
     path('proveedor', proveedor, name="proveedor"),
     path('listar-proveedor/', auth_middleware_enc_cocina(listar_proveedor), name="listar_proveedor"),
@@ -59,7 +62,7 @@ urlpatterns = [
     path('listar-restaurant/', auth_middleware_enc_cocina(listar_restaurant), name="listar-restaurant"),
     path('modificar-restaurant/', auth_middleware_enc_cocina(modificar_restaurant), name="modificar-restaurant"),
     path('eliminar-restaurant/', auth_middleware_enc_cocina(eliminar_restaurant), name="eliminar-restaurant"),
-
+    
 
     #FIN ENCARGADO COCINA
 
