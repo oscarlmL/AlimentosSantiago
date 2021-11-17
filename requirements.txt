@@ -4,5 +4,7 @@ django-crispy-forms
 menuinst
 Pillow
 django-filter
+fontawesome-free
 
-#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
+
+#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

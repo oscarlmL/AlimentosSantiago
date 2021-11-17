@@ -1,0 +1,180 @@
+{% extends 'base_trabajador.html' %}
+{% block contenido %}
+{% load static %}
+{% load carro %}
+{% load humanize %}
+
+
+<div class="album py-5 bg-light">
+    <div class="container" >
+        <style>
+            img{
+                width: 50px; height: 50px;
+            }
+        </style>
+        <H1 class="text-center">Tus funciones</H1>
+        <hr>
+        {% if request.session.cuentaAdmin %}
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/gestionar-repartidor">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fa fa-motorcycle fa-5x" ></i> -->
+                            <img src="{% static 'app/iconos/bicicleta-de-reparto.png' %}">
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Gestionar Repartidor</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-md-4">
+                <a href="/gestionar-enc-cocina">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fa fa-cutlery" aria-hidden="true"></i> -->
+                            <img src="{% static 'app/iconos/sombrero-de-cocinero.png' %}" alt="">
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Gestionar Encargado Cocina</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-md-4">
+                <a href="/gestionar-enc-convenio">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fa fa-users" aria-hidden="true"></i> -->
+                            <img src="{% static 'app/iconos/hand-shake.png' %}" alt="">
+                            <div class="card-body text-center">
+                                <span class="links_name">Gestionar Encargado Convenio</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-md-4">
+                <a href="/gestionar-cajero">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fa fa-money" aria-hidden="true"></i> -->
+                            <img src="{% static 'app/iconos/cajero.png' %}" alt="">
+
+                            <div class="card-body text-center">
+                                <span class="links_name">Gestionar Cajero</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-md-4">
+                <a href="/listar-pedido/">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fa fa-history" aria-hidden="true"></i> -->
+                            <img src="{% static 'app/iconos/capa.png' %}" alt="">
+
+                            <div class="card-body text-center">
+                                <span class="links_name">Historial de Pedidos</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+        {% elif request.session.cuentaEncCocina %}
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/gestionar-plato/">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fas fa-hamburger"></i> -->
+                            <img src="{% static 'app/iconos/plato-de-servir.png' %}">
+
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Gestionar Plato</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-md-4">
+                <a href="/listar-proveedor">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fas fa-handshake"></i> -->
+                            <img src="{% static 'app/iconos/inventario.png' %}">
+
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Gestionar Proveedores</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="col-md-4">
+                <a href="/restaurant">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <i class="fa fa-cutlery" aria-hidden="true"></i>
+                            <img src="{% static 'app/iconos/restaurant.png' %}">
+                            <div class="card-body text-center">
+                                <span class="links_name">GGestionar Restaurantes</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+        {% elif request.session.cuentaEncConvenio %}
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/gestionar-empresa">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <!-- <i class="fas fa-building"></i> -->
+                            <img src="{% static 'app/iconos/enterprise.png' %}">
+
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Gestionar Empresa</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% elif request.session.cuentaRepartidor %}
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/editar-perfil-repartidor">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <i class="fa fa-cutlery" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Editar Perfil</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

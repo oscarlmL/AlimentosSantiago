@@ -19,6 +19,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
     <!-- Bootstrap AZUL 4.5 CSS -->
+    <script src="https://kit.fontawesome.com/9e06d751a2.js" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">  -->
 </head>
 
@@ -62,8 +63,8 @@
                     <span class="links_name">Historial de Pedidos</span>
                 </a>
                 <a class="list-group-item text-center" href="/editar-perfil">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    <span class="links_name">Editar Perfil</span>
+                  <i class="fas fa-edit"></i>
+                  <span class="links_name">Editar Perfil</span>
                 </a>
                 {% elif request.session.cuentaEncCocina %}
                 <div class="text-center">
@@ -72,24 +73,39 @@
                 </div>
                 <h3 class="name mb-4 text-center"> {{email}} <span class="icon-check_circle verified"></span></h3>
                 <a class="list-group-item text-center" href="/gestionar-plato/">
-                    <i class="fa fa-cutlery" aria-hidden="true"></i>
-                    <span class="links_name">Gestionar Plato</span>  
+                  <i class="fas fa-hamburger"></i>
+                  <span class="links_name">Gestionar Plato</span>  
                 </a>
                 <a class="list-group-item text-center" href="/listar-proveedor">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    <span class="links_name">Gestionar Proveedores</span>
+                  <i class="fas fa-handshake"></i>
+                  <span class="links_name">Gestionar Proveedores</span>
                 </a>
-                <a class="list-group-item text-center" href="/restaurant">Gestionar Restaurantes</a>
+                <a class="list-group-item text-center" href="/restaurant">
+                  <i class="fa fa-cutlery" aria-hidden="true"></i>
+                  <span class="links_name">Gestionar Restaurantes</span>
+                </a>
 
                 
-                <a class="list-group-item text-center" href="/editar-perfil-enc-cocina">Editar Perfil</a>
+                <a class="list-group-item text-center" href="/editar-perfil-enc-cocina">
+                  <i class="fas fa-edit"></i>
+                  <span class="links_name">Editar Perfil</span>
+                </a>
 
                 {% elif request.session.cuentaEncConvenio %}
-                <a class="list-group-item text-center" href="/gestionar-empresa">Gestionar Empresas</a>
-                <a class="list-group-item text-center" href="/editar-perfil-enc-convenio">Editar Perfil</a>
+                <a class="list-group-item text-center" href="/gestionar-empresa">
+                <i class="fas fa-building"></i>
+                  <span class="links_name">Gestionar Empresas</span>
+                </a>
+                <a class="list-group-item text-center" href="/editar-perfil-enc-convenio">
+                  <i class="fas fa-edit"></i>
+                  <span class="links_name">Editar Perfil</span>
+                </a>
 
                 {% elif request.session.cuentaRepartidor %}
-                <a class="list-group-item text-center" href="/editar-perfil-repartidor">Editar Perfil</a>
+                <a class="list-group-item text-center" href="/editar-perfil-repartidor">
+                  <i class="fas fa-edit"></i>
+                  <span class="links_name">Editar Perfil</span>
+                </a>
 
                 {% elif request.session.cuentaCliente %}
                 <div class="text-center">

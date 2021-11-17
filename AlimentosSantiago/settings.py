@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'OrderFood',
     'crispy_forms',
     'django.contrib.humanize',
-
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -28,7 +28,8 @@ def buscar_plato(request):
 
     return render(request,'home.html', {'platos': platos})
 
-
+def incio_trabajdor(request):
+    return render(request,'inicio_trabajador.html')
 
 
 def ubicacion(request):
@@ -123,7 +124,7 @@ class Login(View):
             if flag:
                 request.session['cuentaAdmin'] = cuentaAdmin.email_admin
                 print('eres: ', email)
-                return redirect('home')
+                return redirect('incio_trabajdor')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncCocina:
@@ -131,7 +132,7 @@ class Login(View):
             if flag:
                 request.session['cuentaEncCocina'] = cuentaEncCocina.email_enc_coc
                 print('eres: ', email)
-                return redirect('home')
+                return redirect('incio_trabajdor')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncConvenio:
@@ -139,7 +140,7 @@ class Login(View):
             if flag:
                 request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
                 print('eres :', email)
-                return redirect('home')
+                return redirect('incio_trabajdor')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaRepartidor:
@@ -147,7 +148,7 @@ class Login(View):
             if flag:
                 request.session['cuentaRepartidor'] = cuentaRepartidor.email_repartidor
                 print('eres :', email)
-                return redirect('home')
+                return redirect('incio_trabajdor')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaCliente:
