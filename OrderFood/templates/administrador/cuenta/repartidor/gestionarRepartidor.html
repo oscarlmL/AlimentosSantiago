@@ -1,30 +1,6 @@
 {% extends "base_trabajador.html" %}
 {% block contenido %}
 {% load static %}
-{% block js %}
-<script>
-    function eliminarRepartidor(id_repartidor) {
-        Swal.fire({
-            "title": "¿Estas seguro?",
-            "text": "esta acción no se puede deshacer",
-            "icon": "question",
-            "showCancelButton": true,
-            "cancelButtonText": "Cancelar",
-            "confirmButtonText": "Eliminar",
-            "reverseButtons": true,
-            "confirmButtonColor": "#dc3545",
-            "cancelButtonColor": "#303030"
-
-
-        })
-            .then(function (result) {
-                if (result.isConfirmed) {
-                    window.location.href = "/eliminar-cuenta-repartidor/?id_repartidor=" + id_repartidor + ""
-                }
-            })
-    }
-</script>
-{% endblock %}
 <br>
 <br>
 <br>
@@ -62,7 +38,8 @@
                         <div class="form-group">
                             <label for="">Apellidos</label>
                             <input type="text" class="form-control" id="" name="apellido_repartidor" aria-describedby=""
-                                placeholder="Apellido" value="{{values.apellido_repartidor}}" onkeypress="return soloLetras(event)">
+                                placeholder="Apellido" value="{{values.apellido_repartidor}}"
+                                onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Celular de contacto</label>
@@ -75,14 +52,6 @@
                             <input type="email" class="form-control" id="" name="email_repartidor" aria-describedby=""
                                 value="{{values.email_repartidor}}" placeholder="email ej: nombre@gmail.com">
                         </div>
-                        <!-- <div class="form-group">
-                            <select class="form-control" id="validationCustom04 tipo_veh" name="tipo_veh" required
-                                value="{{values.tipo_veh}}" onchange="showInp()">
-                                <option selected disabled value="">--- Seleccionar Tipo de Vehiculo ---</option>
-                                <option value="moto">Moto</option>
-                                <option value="auto">Auto</option>
-                            </select>
-                        </div> -->
                         <div class="form-group">
                             <label for="">Tipo de Vehiculo</label>
                             <select class="form-control" value="{{values.tipo_veh}}" name="tipo_veh" id="tipo_veh"
@@ -178,11 +147,31 @@
                     {% endfor %}
                 </table>
             </div>
-
-
         </div>
-
     </div>
 </div>
+{% block js %}
+<script>
+    function eliminarEncCocina(id_enc_coc) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
 
+
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminar-cuenta-enc-cocina/?id_enc_coc=" + id_enc_coc + ""
+                }
+            })
+    }
+</script>
+{% endblock %}
 {% endblock %}

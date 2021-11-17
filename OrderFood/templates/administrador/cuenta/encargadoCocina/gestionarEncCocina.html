@@ -1,31 +1,6 @@
 {% extends "base_trabajador.html" %}
 {% block contenido %}
 {% load static %}
-{% block js %}
-<script>
-    function eliminarEncCocina(id_enc_coc) {
-        Swal.fire({
-            "title": "¿Estas seguro?",
-            "text": "esta acción no se puede deshacer",
-            "icon": "question",
-            "showCancelButton": true,
-            "cancelButtonText": "Cancelar",
-            "confirmButtonText": "Eliminar",
-            "reverseButtons": true,
-            "confirmButtonColor": "#dc3545",
-            "cancelButtonColor": "#303030"
-
-
-        })
-            .then(function (result) {
-                if (result.isConfirmed) {
-                    window.location.href = "/eliminar-cuenta-enc-cocina/?id_enc_coc=" + id_enc_coc + ""
-                }
-            })
-    }
-</script>
-
-{% endblock %}
 <br>
 <br>
 <br>
@@ -126,7 +101,6 @@
                         <th>Email</th>
                         <th>Celular</th>
                         <th>Opciones</th>
-
                     </tr>
 
                     {% for cuentasEncCocina in cuentasEncCocina %}
@@ -145,11 +119,32 @@
                     </tr>
                     {% endfor %}
                 </table>
-
             </div>
         </div>
-
     </div>
 </div>
+{% block js %}
+<script>
+    function eliminarEncCocina(id_enc_coc) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
 
+
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminar-cuenta-enc-cocina/?id_enc_coc=" + id_enc_coc + ""
+                }
+            })
+    }
+</script>
+{% endblock %}
 {% endblock %}

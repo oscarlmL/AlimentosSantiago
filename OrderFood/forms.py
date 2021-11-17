@@ -8,28 +8,26 @@ from django.core.exceptions import ValidationError
 
 
 #MOD RESTAURANT
-
 class RestaurantForm(forms.ModelForm):
 
     class Meta:
         model = Restaurant
-        fields = ['nombre_rest', 'direccion_rest', 'comuna_rest', 'imagen']
+        fields = ['nombre_rest', 'direccion_rest', 'imagen']
     nombre_rest = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Nombre del restaurant'}), label='Nombre del Restaurant')
     direccion_rest = forms.CharField(max_length=49, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Ej: Novena 849'}), label='Dirección')
-    comuna_rest = forms.CharField(max_length=49, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Ej: Valparaiso, Quilpué'}), label='Comuna')
+    # comuna_rest = forms.CharField(max_length=49, widget=forms.TextInput(
+    #     attrs={'class': 'form-control', 'placeholder': 'Ej: Valparaiso, Quilpué'}), label='Comuna')
     imagen = forms.ImageField()
 
-    def clean_comuna_rest(self):
-        nombre = self.cleaned_data['comuna_rest']
-        if not nombre.isalpha():
-            raise forms.ValidationError('La comuna no puede contener números')
-        return nombre
+    # def clean_comuna_rest(self):
+    #     nombre = self.cleaned_data['comuna_rest']
+    #     if not nombre.isalpha():
+    #         raise forms.ValidationError('La comuna no puede contener números')
+    #     return nombre
 
 #MOD PROVEEDOR
-
 class ProveedorForm(forms.ModelForm):
 
     class Meta:

@@ -60,7 +60,6 @@
                     <tr class="table-active">
                         <th>Nombre del restaurant</th>
                         <th>Dirección</th>
-                        <th>Comuna</th>
                         <th>Opciones</th>
 
                     </tr>
@@ -70,7 +69,6 @@
                     <tr class="table-light">
                         <td>{{r.nombre_rest | title}}</td>
                         <td>{{r.direccion_rest | title }}</td>
-                        <td>{{r.comuna_rest | title }}</td>
                         <td>
                             <a href="{% url 'modificar-restaurant'%}?id_restaurante={{r.id_restaurante}}"
                                 class="btn btn-dark btn-sm">Modificar</a>
