@@ -3,6 +3,7 @@
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,16 +36,22 @@
                 <div class="side-inner">
                     {% if request.session.cuentaCliente %}
                     <div class="profile">
-                        <div class="list-group list-group-flush" >
+                        <div class="list-group list-group-flush">
                             {% if request.session.cuentaCliente %}
                             <div class="text-center">
-                                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Image" class="img-fluid center" width="150" height="150">
+                                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Image"
+                                    class="img-fluid center" width="150" height="150">
                             </div>
-                            <h3 class="name mb-4 text-center"> {{clienteeee.nombre_cli}} <span class="icon-check_circle verified"></span></h3>
+                            <h3 class="name mb-4 text-center"> {{clienteeee.nombre_cli}} <span
+                                    class="icon-check_circle verified"></span></h3>
                             <a class="list-group-item text-center" href="/mis-pedidos">Mis pedidos</a>
-                            <a class="list-group-item text-center" href="/editar-perfil-cliente">Editar Perfil</a>
-                            {% endif %}
-                            <a class="fa fa-sign-out btn btn-danger btn-block" style="display: block;" href="/logout"> Cerrar sesión</a>
+                            <a class="list-group-item text-center" href="/editar-perfil-cliente">
+                                <i class="fas fa-edit"></i>
+                                <span class="links_name">Editar Perfil</span>
+                                {% endif %}
+                            </a>
+                            <a class="fa fa-sign-out btn btn-danger btn-block" style="display: block;" href="/logout">
+                                Cerrar sesión</a>
                         </div>
                     </div>
                     {% else %}
@@ -56,7 +63,8 @@
                     {% endif %}
                     <br>
                     <div class="text-center">
-                        <a class="text-center btn btn-outline-dark btn-block" href="{% url 'proveedor' %}">¿Eres proveedor? ¡Click aca!</a>
+                        <a class="text-center btn btn-outline-dark btn-block" href="{% url 'proveedor' %}">¿Eres
+                            proveedor? ¡Click aca!</a>
                     </div>
                 </div>
             </aside>
@@ -65,8 +73,9 @@
         <div id="content">
 
             <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white">
-                <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar" style="margin-left: 15px; margin-right: 15px;">
-                    <span> 
+                <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar"
+                    style="margin-left: 15px; margin-right: 15px;">
+                    <span>
                         <a class="navbar-brand" href="{% url 'home' %}"><img src="/static/app/img/logo.png"></a>
                     </span>
                 </a>
@@ -75,8 +84,8 @@
                         <li class="nav-item active"> <a class="nav-link" href="{% url 'home' %}">Inicio<span
                                     class="sr-only">(current)</span></a>
                         </li>
-                       
-                       <!--   buscar plato
+
+                        <!--   buscar plato
                         <form action="" method="get">
                             <div class="input-group">
                                 <input type="text" class="form-control bg-light border-0 small" placeholder="buscar" name="buscar" value="">
@@ -87,9 +96,9 @@
                                 </div>
                             </div>
                         </form> -->
-                  
 
-                            <!-- <form class="form-inline" style="margin-right:auto"action="/#{{form.nom_plato}}" method="GET">
+
+                        <!-- <form class="form-inline" style="margin-right:auto"action="/#{{form.nom_plato}}" method="GET">
                                 <input class="form-control" type="" placeholder="Buscar Plato" aria-label="" size="40" maxlength="40">
                                 <button class="btn btn-primary" type="submit">Buscar</button>
                             </form> -->
@@ -98,10 +107,10 @@
                     <div class="dropdown">
                     </div>
                     {% else %}
-                     <li class="nav-item nav">
+                    <li class="nav-item nav">
                         <a class="redondo" href="{% url 'login' %}">
                             <style>
-                                .redondo{
+                                .redondo {
                                     padding: 12px 12px;
                                     display: block;
                                     height: 36px;
@@ -117,11 +126,11 @@
                                     cursor: pointer;
                                 }
                             </style>
-                                Iniciar sesión
+                            Iniciar sesión
                         </a>
-                    </li> 
+                    </li>
                     {% endif %}
-                   
+
                 </div>
             </nav>
 
@@ -136,140 +145,138 @@
         {% block contenido %}
         {% endblock %}
     </div>
-<!-- Footer -->
-<footer class="text-center text-lg-start bg-dark text-white">
-    <!-- Section: Social media -->
-    <section
-      class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
-    >
-      <!-- Left -->
-      <div class="me-5 d-none d-lg-block">
-        <span>Nuestras redes sociales:</span>
-      </div>
-      <!-- Left -->
-  
-      <!-- Right -->
-      <div>
-        <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="icon-facebook"></i>
-        </a>
+    <!-- Footer -->
+    <footer class="text-center text-lg-start bg-dark text-white">
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <!-- Left -->
+            <div class="me-5 d-none d-lg-block">
+                <span>Nuestras redes sociales:</span>
+            </div>
+            <!-- Left -->
 
-        <!-- Twitter -->
-        <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="icon-twitter"></i></a>
+            <!-- Right -->
+            <div>
+                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                    <i class="icon-facebook"></i>
+                </a>
 
-        <!-- Google -->
-        <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="icon-google"></i>
-        </a>
+                <!-- Twitter -->
+                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                    <i class="icon-twitter"></i></a>
 
-        <!-- Instagram -->
-        <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="icon-instagram"></i>
-        </a>
+                <!-- Google -->
+                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                    <i class="icon-google"></i>
+                </a>
 
-        <!-- Linkedin -->
-        <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="iconify" data-icon="simple-icons:tiktok"></i>
+                <!-- Instagram -->
+                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                    <i class="icon-instagram"></i>
+                </a>
+
+                <!-- Linkedin -->
+                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                    <i class="iconify" data-icon="simple-icons:tiktok"></i>
 
 
-        <!-- Github -->
-        <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                class="icon-github"></i></a>
-      </div>
-      <!-- Right -->
-    </section>
-    <!-- Section: Social media -->
-  
-    <!-- Section: Links  -->
-    <section class="">
-      <div class="container text-center text-md-start mt-5">
-        <!-- Grid row -->
-        <div class="row mt-3">
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              <i class="fas fa-gem me-3"></i>RNASSS.CL
-            </h6>
-            <p>
-              Here you can use rows and columns to organize your footer content. Lorem ipsum
-              dolor sit amet, consectetur adipisicing elit.
-            </p>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Products
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Angular</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">React</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Vue</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Laravel</a>
-            </p>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Useful links
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Pricing</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Settings</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Orders</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Help</a>
-            </p>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Información de contacto
-            </h6>
-            <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
-            <p>
-              <i class="fas fa-envelope me-3"></i>
-              info@example.com
-            </p>
-            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
-          </div>
-          <!-- Grid column -->
+                    <!-- Github -->
+                    <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                            class="icon-github"></i></a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3"></i>RNASSS.CL
+                        </h6>
+                        <p>
+                            Here you can use rows and columns to organize your footer content. Lorem ipsum
+                            dolor sit amet, consectetur adipisicing elit.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Products
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Angular</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">React</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Vue</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Laravel</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Useful links
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Pricing</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Settings</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Orders</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Help</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Información de contacto
+                        </h6>
+                        <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            info@example.com
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                        <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2021 Copyright:
+            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">RNASSS.CL</a>
         </div>
-        <!-- Grid row -->
-      </div>
-    </section>
-    <!-- Section: Links  -->
-  
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-      © 2021 Copyright:
-      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">RNASSS.CL</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
     <!--SCRIPTS-->
     <!--solo numeros-->
     <script type="text/javascript">
@@ -331,19 +338,19 @@
             for (i = 0; i < x.length; i++) {
                 x[i].style.display = display;
             }
-    
+
             if (category != 'All')
                 document.getElementById(category).style.display = "block";
-    
+
         }
         function highlightCategoryText(element) {
             all_elements = document.querySelectorAll(".list-group-item-hover");
-    
+
             for (var i = 0; i < all_elements.length; i++) {
                 all_elements[i].style.color = '#aeaeae'; // light gray
                 // all_elements[i].style.boxShadow = ''; // light gray
             }
-    
+
             element.style.color = '#ff9d2f'; //highlighted blue
             // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
         }
@@ -361,21 +368,24 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap" async defer"></script>
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap"
+        async defer"></script>
     <script>
-    function initMap() {
-    var input = document.getElementById('clientAddress');
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.addListener('place_changed', function() {
-        var place = autocomplete.getPlace();
-        document.getElementById('location-snap').
-        innerHTML = place.formatted_address;  
-        document.getElementById('lat-span').
-        innerHTML = place.geometry.location.lat();
-        document.getElementById('lon-span').
-        innerHTML = place.geometry.location.lng();
-    });
-    }
+        function initMap() {
+            var input = document.getElementById('clientAddress');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.addListener('place_changed', function () {
+                var place = autocomplete.getPlace();
+                document.getElementById('location-snap').
+                    innerHTML = place.formatted_address;
+                document.getElementById('lat-span').
+                    innerHTML = place.geometry.location.lat();
+                document.getElementById('lon-span').
+                    innerHTML = place.geometry.location.lng();
+            });
+        }
     </script>
 </body>
+
 </html>
