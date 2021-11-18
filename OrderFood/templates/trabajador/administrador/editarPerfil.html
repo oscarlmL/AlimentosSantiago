@@ -1,0 +1,69 @@
+{% extends "trabajador/base_trabajador.html" %}
+{% load static %}
+{% block contenido %}
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action active" href="/editar-perfil">Editar Perfil</a>
+                <a class="list-group-item list-group-item-action" href="/cambiar-contraseña">Cambiar Contraseña</a>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-6 col-lg-4 col-xl-4">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
+            {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-success" role="alert">
+                {{m}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <h2>Editar mis datos</h2>
+                    <hr>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="">Nombre</label>
+                            <input type="text" class="form-control" name="nombre_adm" placeholder="Nombre"
+                                value="{{data.nombre_adm}}" onkeypress="return soloLetras(event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Apellido Paterno</label>
+                            <input type="text" class="form-control" name="apat_adm" placeholder="Apellido Paterno"
+                                value="{{data.apat_adm}}" onkeypress="return soloLetras(event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Apellido Materno</label>
+                            <input type="text" class="form-control" name="amat_adm" placeholder="Apellido Materno"
+                                value="{{data.amat_adm}}" onkeypress="return soloLetras(event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email de trabajo</label>
+                            <input type="email" class="form-control" name="email_admin" placeholder="Email"
+                                value="{{data.email_admin}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Celular de contacto</label>
+                            <input type="number" class="form-control" name="fono_admin" placeholder="Fono de contacto"
+                                value="{{data.fono_admin}}" onkeypress="return valideKey(event);">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-round btn-block" value="Editar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

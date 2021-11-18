@@ -1,0 +1,58 @@
+{% extends 'trabajador/base_trabajador.html' %}
+{% block contenido %}
+{% load static %}
+
+<div class="p-4 m-4">
+    <div class="col-lg-5 mx-auto border rounded pt-4">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        {% endif %}
+        {% if messages %}
+        {% for m in messages %}
+        <div class="alert alert-success" role="alert">
+            {{m}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card">
+            <div class="card-body">
+                <h1>Editar datos Trabajador</h1>
+                <hr>
+                <form method="POST" action="">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" name="nombre_cli" aria-describedby=""
+                            placeholder="Nombres" value="{{cuentasClienteConvenio.nombre_cli}}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" name="apaterno_cli" aria-describedby=""
+                            placeholder="Apellido Paterno" value="{{cuentasClienteConvenio.apaterno_cli}}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" name="amaterno_cli" aria-describedby=""
+                            placeholder="Apellido Materno" value="{{cuentasClienteConvenio.amaterno_cli}}">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="" name="fono_cli" aria-describedby=""
+                            value="{{cuentasClienteConvenio.fono_cli}}" placeholder="Celular ej: 912345678">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="" name="email_cli" aria-describedby=""
+                            value="{{cuentasClienteConvenio.email_cli}}"
+                            placeholder="ejemplo: cuentasClienteConvenio@dominio.com">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-dark btn-round btn-block" value="Editar">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

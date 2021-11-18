@@ -1,0 +1,43 @@
+{% extends 'trabajador/base_trabajador.html' %}
+{% block contenido %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<br>
+<i class="iconify" style="margin-left: 100px;" data-icon="eva:arrow-ios-back-fill" onclick="history.back();">
+    <h1>Volver</h1>
+</i>
+
+<br>
+<br>
+<i class="bi bi-eye-fill"></i>
+
+<div class="row">
+    <div class="col-lg-5  mx-auto col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h2>Editar datos del Proveedor</h2>
+                <hr>
+                <form action="" method="post" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    {{form | crispy}}
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-dark btn-round btn-block">
+                    </div>
+                </form>
+                {{mensaje}}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}

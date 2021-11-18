@@ -1,0 +1,90 @@
+{% extends 'trabajador/base_trabajador.html' %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<script>
+    function eliminarRestaurant(id_restaurante) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'eliminar-restaurant' %}?id_restaurante=" + id_restaurante+ ""
+                }
+            })
+    }
+</script>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+            {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-success" role="alert">
+                {{m}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <h2>Agregar Restaurant</h2>
+                    <hr>
+                    <form action="" method="post" enctype="multipart/form-data">
+
+                        {% csrf_token %}
+                        {{ form | crispy}}
+
+                        <div class="form-group">
+                            <input type="submit" value="Guardar" class="btn btn-dark btn-round btn-block">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Lista de Platos</h2>
+            <div class="table-responsive py-2">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Nombre del restaurant</th>
+                        <th>Dirección</th>
+                        <th>Opciones</th>
+
+                    </tr>
+
+                    {% for r in restaurantes %}
+
+                    <tr class="table-light">
+                        <td>{{r.nombre_rest | title}}</td>
+                        <td>{{r.direccion_rest | title }}</td>
+                        <td>
+                            <a href="{% url 'modificar-restaurant'%}?id_restaurante={{r.id_restaurante}}"
+                                class="btn btn-dark btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarRestaurant({{r.id_restaurante}})"
+                                class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+        
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
