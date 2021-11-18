@@ -17,7 +17,6 @@
                     <th>Horario Entrega</th>
                     <th>Tipo Entrega</th>
                     <th>Tipo Pago</th>
-                    <th>Opciones</th>
                 </tr>
                 {% for n in pedidos_confirmados %}
                 <tr class="table-light">
@@ -29,10 +28,6 @@
                     <td>{{ n.horario_entrega | title }}</td>
                     <td>{{ n.tipo_entrega | title }}</td>
                     <td>{{ n.tipo_pago | title }}</td>
-                    <td> 
-                        <a href="" style="width: 80px" class="btn btn-danger btn-sm">Anular</a>
-                        <a href="" style="width: 80px" class="btn btn-dark btn-sm">Asignar Repartidor</a>
-                    </td>
                 </tr>
                 {% endfor %}
             </table>
