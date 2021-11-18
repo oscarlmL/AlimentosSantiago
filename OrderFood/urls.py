@@ -56,14 +56,14 @@ urlpatterns = [
     #path Platos
     path('gestionar-plato/', auth_middleware_enc_cocina(gestionar_plato), name="gestionar-plato"),
     path('modificar-plato/', auth_middleware_enc_cocina(modificar_plato), name="modificar_plato"),
-    path('eliminar-plato/', auth_middleware_enc_cocina(eliminar_plato), name="eliminar_plato"),
+    path('eliminar-plato/', auth_middleware_enc_cocina(eliminar_plato), name="eliminar-plato"),
     # path('buscar-plato/', (buscar_plato), name="buscar-plato"),
 
     #path Proveedor
     path('proveedor', proveedor, name="proveedor"),
-    path('listar-proveedor/', auth_middleware_enc_cocina(listar_proveedor), name="listar_proveedor"),
-    path('modificar-proveedor/', auth_middleware_enc_cocina(modificar_proveedor), name="modificar_proveedor"),
-    path('eliminar-proveedor/', auth_middleware_enc_cocina(eliminar_proveedor), name="eliminar_proveedor"),
+    path('listar-proveedor/', auth_middleware_enc_cocina(listar_proveedor), name="listar-proveedor"),
+    path('modificar-proveedor/', auth_middleware_enc_cocina(modificar_proveedor), name="modificar-proveedor"),
+    path('eliminar-proveedor/', auth_middleware_enc_cocina(eliminar_proveedor), name="eliminar-proveedor"),
     #path Restaurant
     path('restaurant', restaurant, name="restaurant"),
     path('listar-restaurant/', auth_middleware_enc_cocina(listar_restaurant), name="listar-restaurant"),
@@ -94,16 +94,14 @@ urlpatterns = [
     path('aceptar-pedido/<int:id_pedido>/',aceptar_pedido,name="aceptar-pedido"),
     path('listar-pedidos-aceptados',auth_middleware_repartidor(listar_pedidos_aceptados),name="listar-pedidos-aceptados"),
     path('entregar-pedido/<int:id_pedido>/',entregar_pedido,name="entregar-pedido"),
-
-
     #FIN REPARTIDOR
 
 
     #path Pedidos
-    path('agregar-pedido/', agregar_pedido, name="agregar_pedido"),
-    path('listar-pedido/', listar_pedido, name="listar_pedido"),
-    path('modificar-pedido/<id>/', modificar_pedido, name="modificar_pedido"),
-    path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar_pedido"),
+    path('agregar-pedido/', agregar_pedido, name="agregar-pedido"),
+    path('listar-pedido/', listar_pedido, name="listar-pedido"),
+    path('modificar-pedido/<id>/', modificar_pedido, name="modificar-pedido"),
+    path('eliminar-pedido/<id>/', eliminar_pedido, name="eliminar-pedido"),
     #End Path
 
     #path CAJERO
