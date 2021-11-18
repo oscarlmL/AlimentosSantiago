@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_middleware_enc_convenio,auth_middleware_repartidor,auth_middleware_cliente
+from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_middleware_enc_convenio,auth_middleware_repartidor,auth_middleware_cliente,auth_middleware_cajero
 
 
 urlpatterns = [
@@ -9,9 +9,6 @@ urlpatterns = [
     path('home', incio_trabajdor, name="incio_trabajdor"),
 
     path('platos/<int:id_restaurante>/',home.as_view() and listar_plato_restaurante, name='platos'),
-
-
-
 
     path('login', Login.as_view(), name="login"),
     path('logout', logout, name="logout"),
@@ -102,7 +99,7 @@ urlpatterns = [
     #End Path
 
     #path CAJERO
-    path('listar-pedidos-pendientes/',listar_pedidos_pendientes, name="listar-pedidos-pendientes"),
+    path('listar-pedidos-pendientes/',auth_middleware_cajero(listar_pedidos_pendientes), name="listar-pedidos-pendientes"),
     path('confirmar-pedido/<int:id_pedido>/',confirmar_pedido, name="confirmar-pedido"),
     path('listar-pedidos-confirmados/',listar_pedidos_confirmados, name="listar-pedidos-confirmados")
     

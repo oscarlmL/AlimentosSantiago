@@ -186,10 +186,25 @@
                 <a href="/listar-pedidos-aceptados">
                     <div class="card mb-4 box-shadow">
                         <div class="text-center">
-                            <img src="{% static 'app/iconos/sombrero-de-cocinero.png' %}" alt="">
+                            <img src="{% static 'app/iconos/ruta.png' %}" alt="">
                         </div>
                         <div class="card-body text-center">
                             <span class="links_name">Pedidos en Ruta</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% elif request.session.cuentaCajero %}
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/listar-pedidos-pendientes">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <img src="{% static 'app/iconos/pendiente.png' %}">
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Pedidos pendientes</span>
                         </div>
                     </div>
                 </a>

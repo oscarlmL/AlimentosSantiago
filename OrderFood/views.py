@@ -166,7 +166,7 @@ class Login(View):
             if flag:
                 request.session['cuentaCajero'] = cuentaCajero.email_cajero
                 print('eres :',email)
-                return redirect('listar-pedidos-pendientes')
+                return redirect('incio_trabajdor')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
@@ -1088,11 +1088,23 @@ def cambiar_contraseña_repartidor(request):
 
 #pedidos confirmados
 def listar_pedidos_activos(request):
+    email = request.session.get('cuentaAdmin') or request.session.get(
+            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
     pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
     data = {
-        'pedidos_confirmados':pedidos_confirmados
+        'pedidos_confirmados':pedidos_confirmados,
+        'email':email
     }
     return render (request ,'repartidor/pedidos_activos_local.html',data)
+
+
+def base_trabajador(request):
+    email = request.session.get('cuentaAdmin') or request.session.get(
+            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
+    data = {
+        'email':email
+    }
+    return render (request ,'base_trabajador.html',data)
 
 def aceptar_pedido(request, id_pedido):
      pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
