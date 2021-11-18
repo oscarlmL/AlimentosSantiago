@@ -14,9 +14,9 @@ def editar_perfil_admin(request):
         email_admin=request.session['cuentaAdmin'])
     if len(check) > 0:
         email = request.session['cuentaAdmin']
-        data = Administrador.objects.get(
+        admin = Administrador.objects.get(
             email_admin=request.session['cuentaAdmin'])
-        data = {'data': data, 'email': email}
+        data = {'admin': admin, 'email': email}
     if request.method == 'POST':
         nombre_adm = request.POST["nombre_adm"]
         apat_adm = request.POST["apat_adm"]
@@ -54,6 +54,7 @@ def editar_perfil_admin(request):
             data = {
                 'email': email,
                 'error': error_message,
+                'admin':admin
             }
     return render(request, 'trabajador/administrador/editarPerfil.html', data)
 
