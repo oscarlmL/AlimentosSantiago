@@ -28,10 +28,10 @@ def buscar_plato(request):
 
     return render(request,'home.html', {'platos': platos})
 
-def incio_trabajdor(request):
+def incio_trabajador(request):
     email = request.session.get('cuentaAdmin') or request.session.get(
             'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
-    return render(request,'inicio_trabajador.html',{'email':email})
+    return render(request,'trabajador/inicio_trabajador.html',{'email':email})
 
 
 def ubicacion(request):
@@ -90,7 +90,7 @@ class home(View):
                     'email':email,
             }
             request.session['carro'] = {}
-            return render(request, 'home.html', context)
+            return render(request, 'cliente/home.html', context)
 
 
 def listar_plato_restaurante(request,id_restaurante):
@@ -106,7 +106,7 @@ def listar_plato_restaurante(request,id_restaurante):
         'categoria':reversed(categoriaPlato.objects.all()),
         'platos_categoria':reversed(categoriaPlato.objects.all()),
     }
-    return render(request, 'platos.html', data)
+    return render(request, 'cliente/platos.html', data)
 
 class Login(View):
     def get(self, request):
@@ -127,7 +127,7 @@ class Login(View):
             if flag:
                 request.session['cuentaAdmin'] = cuentaAdmin.email_admin
                 print('eres: ', email)
-                return redirect('incio_trabajdor')
+                return redirect('incio_trabajador')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncCocina:
@@ -135,7 +135,7 @@ class Login(View):
             if flag:
                 request.session['cuentaEncCocina'] = cuentaEncCocina.email_enc_coc
                 print('eres: ', email)
-                return redirect('incio_trabajdor')
+                return redirect('incio_trabajador')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncConvenio:
@@ -143,7 +143,7 @@ class Login(View):
             if flag:
                 request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
                 print('eres :', email)
-                return redirect('incio_trabajdor')
+                return redirect('incio_trabajador')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaRepartidor:
@@ -151,7 +151,7 @@ class Login(View):
             if flag:
                 request.session['cuentaRepartidor'] = cuentaRepartidor.email_repartidor
                 print('eres :', email)
-                return redirect('incio_trabajdor')
+                return redirect('incio_trabajador')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaCliente:
@@ -167,7 +167,7 @@ class Login(View):
             if flag:
                 request.session['cuentaCajero'] = cuentaCajero.email_cajero
                 print('eres :',email)
-                return redirect('incio_trabajdor')
+                return redirect('incio_trabajador')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
@@ -183,7 +183,7 @@ class realizar_pedido(View):
         platos = Plato.objects.all()
         tipo_pago = Pago.objects.all()
         data = {'platos':platos,'tipo_pago':tipo_pago,'platos_en_carro':platos_en_carro}
-        return render(request, 'realizarPedido.html',data)
+        return render(request, 'cliente/realizarPedido.html',data)
 
     def post(self, request):
         direccion = request.POST.get('direccion')
@@ -218,7 +218,7 @@ class pedidos(View):
         cuentaCliente = request.session.get('cuentaCliente')
         pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente)
         print(pedidos)
-        return render(request, 'pedidos.html',{'pedidos':pedidos})
+        return render(request, 'cliente/pedidos.html',{'pedidos':pedidos})
 
 
 def logout(request):
@@ -273,7 +273,7 @@ def editar_perfil_admin(request):
                 'email': email,
                 'error': error_message,
             }
-    return render(request, 'administrador/editarPerfil.html', data)
+    return render(request, 'trabajador/administrador/editarPerfil.html', data)
 
 
 def cambiar_contraseña_admin(request):
@@ -320,7 +320,7 @@ def cambiar_contraseña_admin(request):
                         'error': error_message,
 
                     }
-                return render(request, 'administrador/cambiar_contraseña.html', data)
+                return render(request, 'trabajador/administrador/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
                 email = request.session['cuentaAdmin']
@@ -329,8 +329,8 @@ def cambiar_contraseña_admin(request):
                     'error': error_message,
 
                 }
-            return render(request, 'administrador/cambiar_contraseña.html', data)
-    return render(request, "administrador/cambiar_contraseña.html", data)
+            return render(request, 'trabajador/administrador/cambiar_contraseña.html', data)
+    return render(request, "trabajador/administrador/cambiar_contraseña.html", data)
 
 
 def generar_cuenta_enc_cocina(request):
@@ -342,7 +342,7 @@ def generar_cuenta_enc_cocina(request):
             'email': email,
             'cuentasEncCocina': cuentasEncCocina
         }
-        return render(request, 'administrador/cuenta/encargadoCocina/gestionarEncCocina.html', data)
+        return render(request, 'trabajador/administrador/cuenta/encargadoCocina/gestionarEncCocina.html', data)
     else:
         postData = request.POST
         nom_enc_coc = postData.get('nom_enc_coc')
@@ -416,7 +416,7 @@ def generar_cuenta_enc_cocina(request):
                 'error': error_message,
                 'values': value,
             }
-        return render(request, 'administrador/cuenta/encargadoCocina/gestionarEncCocina.html', data)
+        return render(request, 'trabajador/administrador/cuenta/encargadoCocina/gestionarEncCocina.html', data)
 
 
 def editar_cuenta_enc_cocina(request):
@@ -477,8 +477,8 @@ def editar_cuenta_enc_cocina(request):
                 'error': error_message,
                 'cuentaEncCocina': cuentaEncCocina
             }
-        return render(request, 'administrador/cuenta/encargadoCocina/edicionEncCocina.html', data)
-    return render(request, 'administrador/cuenta/encargadoCocina/edicionEncCocina.html', data1)
+        return render(request, 'trabajador/administrador/cuenta/encargadoCocina/edicionEncCocina.html', data)
+    return render(request, 'trabajador/administrador/cuenta/encargadoCocina/edicionEncCocina.html', data1)
 
 
 def eliminar_cuenta_enc_cocina(request):
@@ -497,7 +497,7 @@ def generar_cuenta_enc_convenio(request):
             'cuentasEncConvenio': cuentasEncConvenio,
             'email': email
         }
-        return render(request, 'administrador/cuenta/encargadoConvenio/gestionarEncConvenio.html', data)
+        return render(request, 'trabajador/administrador/cuenta/encargadoConvenio/gestionarEncConvenio.html', data)
     else:
         postData = request.POST
         rut_enc_conv = postData.get('rut_enc_conv')
@@ -580,7 +580,7 @@ def generar_cuenta_enc_convenio(request):
                 'error': error_message,
                 'values': value,
             }
-        return render(request, 'administrador/cuenta/encargadoConvenio/gestionarEncConvenio.html', data)
+        return render(request, 'trabajador/administrador/cuenta/encargadoConvenio/gestionarEncConvenio.html', data)
 
 
 def editar_cuenta_enc_convenio(request):
@@ -647,8 +647,8 @@ def editar_cuenta_enc_convenio(request):
                 'cuentasEncConvenio': cuentasEncConvenio,
                 'cuentaEncConvenio': cuentaEncConvenio
             }
-        return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data)
-    return render(request, 'administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data1)
+        return render(request, 'trabajador/administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data)
+    return render(request, 'trabajador/administrador/cuenta/encargadoConvenio/edicionEncConvenio.html', data1)
 
 
 
@@ -668,7 +668,7 @@ def generar_cuenta_repartidor(request):
             'cuentasRepartidor': cuentasRepartidor,
             'email': email
         }
-        return render(request, 'administrador/cuenta/repartidor/gestionarRepartidor.html', data)
+        return render(request, 'trabajador/administrador/cuenta/repartidor/gestionarRepartidor.html', data)
     else:
         postData = request.POST
         rut_repartidor = postData.get('rut_repartidor')
@@ -766,7 +766,7 @@ def generar_cuenta_repartidor(request):
                 'error': error_message,
                 'values': value
             }
-        return render(request, 'administrador/cuenta/repartidor/gestionarRepartidor.html', data)
+        return render(request, 'trabajador/administrador/cuenta/repartidor/gestionarRepartidor.html', data)
 
 
 def editar_cuenta_repartidor(request):
@@ -842,8 +842,8 @@ def editar_cuenta_repartidor(request):
                 'cuentasRepartidor': cuentasRepartidor,
                 'cuentaRepartidor': cuentaRepartidor
             }
-        return render(request, 'administrador/cuenta/repartidor/edicionRepartidor.html', data)
-    return render(request, 'administrador/cuenta/repartidor/edicionRepartidor.html', data1)
+        return render(request, 'trabajador/administrador/cuenta/repartidor/edicionRepartidor.html', data)
+    return render(request, 'trabajador/administrador/cuenta/repartidor/edicionRepartidor.html', data1)
 
 
 def eliminar_cuenta_repartidor(request):
@@ -862,7 +862,7 @@ def generar_cuenta_cajero(request):
             'cuentasCajero': cuentaCajero,
             'email': email
         }
-        return render(request, 'administrador/cuenta/cajero/gestionarCajero.html', data)
+        return render(request, 'trabajador/administrador/cuenta/cajero/gestionarCajero.html', data)
     else:
         postData = request.POST
         nom_cajero = postData.get('nom_cajero')
@@ -920,7 +920,7 @@ def generar_cuenta_cajero(request):
                 'error': error_message,
                 'values': value
             }
-        return render(request, 'administrador/cuenta/cajero/gestionarCajero.html', data)
+        return render(request, 'trabajador/administrador/cuenta/cajero/gestionarCajero.html', data)
 
 def editar_cuenta_cajero(request):
     email = request.session['cuentaAdmin']
@@ -960,8 +960,8 @@ def editar_cuenta_cajero(request):
                 'cuentasCajero': cuentasCajero,
                 'cuentaCajero': cuentaCajero
             }
-        return render(request, 'administrador/cuenta/cajero/edicionCajero.html', data)
-    return render(request, 'administrador/cuenta/cajero/edicionCajero.html', data1)
+        return render(request, 'trabajador/administrador/cuenta/cajero/edicionCajero.html', data)
+    return render(request, 'trabajador/administrador/cuenta/cajero/edicionCajero.html', data1)
 
 def eliminar_cuenta_cajero(request):
     id_cajero = request.GET["id_cajero"]
@@ -1026,7 +1026,7 @@ def editar_perfil_repartidor(request):
                 'email': email,
                 'error': error_message,
             }
-    return render(request, 'repartidor/editarPerfil.html', data)
+    return render(request, 'trabajador/repartidor/editarPerfil.html', data)
 
 
 def cambiar_contraseña_repartidor(request):
@@ -1076,7 +1076,7 @@ def cambiar_contraseña_repartidor(request):
                         'error': error_message,
 
                     }
-                return render(request, 'repartidor/cambiar_contraseña.html', data)
+                return render(request, 'trabajador/repartidor/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
                 email = request.session['cuentaRepartidor']
@@ -1085,8 +1085,8 @@ def cambiar_contraseña_repartidor(request):
                     'error': error_message,
 
                 }
-            return render(request, 'repartidor/cambiar_contraseña.html', data)
-    return render(request, "repartidor/cambiar_contraseña.html", data)
+            return render(request, 'trabajador/repartidor/cambiar_contraseña.html', data)
+    return render(request, "trabajador/repartidor/cambiar_contraseña.html", data)
 
 
 #pedidos confirmados
@@ -1098,7 +1098,7 @@ def listar_pedidos_activos(request):
         'pedidos_confirmados':pedidos_confirmados,
         'email':email
     }
-    return render (request ,'repartidor/pedidos_activos_local.html',data)
+    return render (request ,'trabajador/repartidor/pedidos_activos_local.html',data)
 
 
 def base_trabajador(request):
@@ -1107,7 +1107,7 @@ def base_trabajador(request):
     data = {
         'email':email
     }
-    return render (request ,'base_trabajador.html',data)
+    return render (request ,'trabajador/base_trabajador.html',data)
 
 def aceptar_pedido(request, id_pedido):
      pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
@@ -1134,7 +1134,7 @@ def listar_pedidos_aceptados(request):
     data = {
         'pedidos_aceptados': pedidos_aceptados
     }
-    return render (request ,'repartidor/pedidos_aceptados.html',data)
+    return render (request ,'trabajador/repartidor/pedidos_aceptados.html',data)
 
 
 
@@ -1190,7 +1190,7 @@ def editar_perfil_enc_cocina(request):
                 'email': email,
                 'error': error_message,
             }
-    return render(request, 'encargadoCocina/editarPerfil.html', data)
+    return render(request, 'trabajador/encargadoCocina/editarPerfil.html', data)
 
 
 def cambiar_contraseña_enc_cocina(request):
@@ -1238,7 +1238,7 @@ def cambiar_contraseña_enc_cocina(request):
                         'error': error_message,
 
                     }
-                return render(request, 'encargadoCocina/cambiar_contraseña.html', data)
+                return render(request, 'trabajador/encargadoCocina/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
                 email = request.session['cuentaEncCocina']
@@ -1247,8 +1247,8 @@ def cambiar_contraseña_enc_cocina(request):
                     'error': error_message,
 
                 }
-            return render(request, 'encargadoCocina/cambiar_contraseña.html', data)
-    return render(request, "encargadoCocina/cambiar_contraseña.html", data)
+            return render(request, 'trabajador/encargadoCocina/cambiar_contraseña.html', data)
+    return render(request, "trabajador/encargadoCocina/cambiar_contraseña.html", data)
 
 
 def gestionar_plato(request):
@@ -1270,7 +1270,7 @@ def gestionar_plato(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'encargadoCocina/menu/gestionarPlato.html', data)
+    return render(request, 'trabajador/encargadoCocina/menu/gestionarPlato.html', data)
 
 
 def modificar_plato(request):
@@ -1292,7 +1292,7 @@ def modificar_plato(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'encargadoCocina/menu/modificar.html', data)
+    return render(request, 'trabajador/encargadoCocina/menu/modificar.html', data)
 
 
 def eliminar_plato(request):
@@ -1316,7 +1316,7 @@ def proveedor(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'encargadoCocina/proveedor/contactoProveedor.html', data)
+    return render(request, 'trabajador/encargadoCocina/proveedor/contactoProveedor.html', data)
 
 
 def listar_proveedor(request):
@@ -1327,7 +1327,7 @@ def listar_proveedor(request):
         'proveedores': proveedores,
         'email': email
     }
-    return render(request, 'encargadoCocina/proveedor/listar.html', data)
+    return render(request, 'trabajador/encargadoCocina/proveedor/listar.html', data)
 
 
 def modificar_proveedor(request):
@@ -1349,7 +1349,7 @@ def modificar_proveedor(request):
             return redirect(to="listar_proveedor")
         data["form"] = formulario
 
-    return render(request, 'encargadoCocina/proveedor/modificar.html', data)
+    return render(request, 'trabajador/encargadoCocina/proveedor/modificar.html', data)
 
 
 def eliminar_proveedor(request):
@@ -1375,7 +1375,7 @@ def restaurant(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'encargadoCocina/restaurant/gestionarRestaurant.html', data)
+    return render(request, 'trabajador/encargadoCocina/restaurant/gestionarRestaurant.html', data)
 
 
 def listar_restaurant(request):
@@ -1386,7 +1386,7 @@ def listar_restaurant(request):
         'restaurantes': restaurantes,
         'email': email
     }
-    return render(request, 'encargadoCocina/restaurant/gestionarRestaurant.html', data)
+    return render(request, 'trabajador/encargadoCocina/restaurant/gestionarRestaurant.html', data)
 
 
 def modificar_restaurant(request):
@@ -1410,7 +1410,7 @@ def modificar_restaurant(request):
             return redirect(to="restaurant")
         data["form"] = formulario
 
-    return render(request, 'encargadoCocina/restaurant/modificarRestaurant.html', data)
+    return render(request, 'trabajador/encargadoCocina/restaurant/modificarRestaurant.html', data)
 
 
 def eliminar_restaurant(request):
@@ -1437,7 +1437,7 @@ def agregar_pedido(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'pedido/agregar.html', data)
+    return render(request, 'cliente/pedido/agregar.html', data)
 
 
 def listar_pedido(request):
@@ -1446,7 +1446,7 @@ def listar_pedido(request):
         'pedidos': pedidos
     }
 
-    return render(request, 'pedido/listar.html', data)
+    return render(request, 'cliente/pedido/listar.html', data)
 
 
 def modificar_pedido(request, id):
@@ -1464,7 +1464,7 @@ def modificar_pedido(request, id):
             return redirect(to="listar_pedido")
         data["form"] = formulario
 
-    return render(request, 'pedido/modificar.html', data)
+    return render(request, 'cliente/pedido/modificar.html', data)
 
 
 def eliminar_pedido(request, id):
@@ -1523,7 +1523,7 @@ def editar_perfil_enc_convenio(request):
                 'email': email,
                 'error': error_message,
             }
-    return render(request, 'encargadoConvenio/editarPerfil.html', data)
+    return render(request, 'trabajador/encargadoConvenio/editarPerfil.html', data)
 
 
 def cambiar_contraseña_enc_convenio(request):
@@ -1573,7 +1573,7 @@ def cambiar_contraseña_enc_convenio(request):
                         'error': error_message,
 
                     }
-                return render(request, 'encargadoConvenio/cambiar_contraseña.html', data)
+                return render(request, 'trabajador/encargadoConvenio/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
                 email = request.session['cuentaEncConvenio']
@@ -1582,8 +1582,8 @@ def cambiar_contraseña_enc_convenio(request):
                     'error': error_message,
 
                 }
-            return render(request, 'encargadoConvenio/cambiar_contraseña.html', data)
-    return render(request, "encargadoConvenio/cambiar_contraseña.html", data)
+            return render(request, 'trabajador/encargadoConvenio/cambiar_contraseña.html', data)
+    return render(request, "trabajador/encargadoConvenio/cambiar_contraseña.html", data)
 
 
 def agregar_empresa(request):
@@ -1603,7 +1603,7 @@ def agregar_empresa(request):
             messages.success(request, "Empresa Agregada Correctamente")
         else:
             data["form"] = formula
-    return render(request, 'encargadoConvenio/empresas/gestionarEmpresa.html', data)
+    return render(request, 'trabajador/encargadoConvenio/empresas/gestionarEmpresa.html', data)
 
 
 def modificar_convenio(request, rut_emp):
@@ -1619,7 +1619,7 @@ def modificar_convenio(request, rut_emp):
             return redirect(to="gestionar-empresa")
         else:
             data['form'] = formulario
-    return render(request, 'encargadoConvenio/empresas/modificarEmpConv.html', data)
+    return render(request, 'trabajador/encargadoConvenio/empresas/modificarEmpConv.html', data)
 
 
 def eliminar_empresa(request, rut_emp):
@@ -1680,15 +1680,15 @@ def generar_cuenta_empleado(request):
                 'error': error_message,
                 'values': value,
             }
-        return render(request, 'encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html', data)
-    return render(request, 'encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html', data)
+        return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html', data)
+    return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html', data)
 
 
 def listar_cuenta_empleados(request):
     id = request.GET["rut_emp"]
     cuentas_empleados = Cliente.objects.filter(empresa_rut_empresa_id=id)
     data = {'cuentas_empleados':cuentas_empleados}
-    return render(request,'encargadoConvenio/cuentasEmpleados/listar_cuentas_empleados.html',data)
+    return render(request,'trabajador/encargadoConvenio/cuentasEmpleados/listar_cuentas_empleados.html',data)
 
 def editar_cuenta_trab_emp(request):
     email = request.session['cuentaEncConvenio']
@@ -1751,8 +1751,8 @@ def editar_cuenta_trab_emp(request):
                 'error': error_message,
                 'cuentaClienteConvenio': cuentaClienteConvenio
             }
-        return render(request, 'encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data)
-    return render(request, 'encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data1)
+        return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data)
+    return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data1)
 
 
 def eliminar_cuenta_trab_emp(request, id):
@@ -1912,7 +1912,7 @@ def listar_pedidos_pendientes(request):
             'pedidos_pendientes':pedidos_pendientes,
             'repartidores_disponibles':repartidores_disponibles
             }
-    return render(request,'cajero/pedidosPendientes.html',data)
+    return render(request,'trabajador/cajero/pedidosPendientes.html',data)
 
 def confirmar_pedido(request, id_pedido):
     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
@@ -1928,7 +1928,7 @@ def listar_pedidos_confirmados(request):
     data = {
         'pedidos_confirmados':pedidos_confirmados
     }
-    return render (request ,'cajero/pedidosConfirmados.html',data)
+    return render (request ,'trabajador/cajero/pedidosConfirmados.html',data)
 #Fin Modulo Cajero -------------------------------------------------------------------------
 
 #cambiar contraseña cliente

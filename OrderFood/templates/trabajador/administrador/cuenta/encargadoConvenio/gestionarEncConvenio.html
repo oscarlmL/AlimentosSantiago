@@ -1,0 +1,222 @@
+{% extends "trabajador/base_trabajador.html" %}
+{% block contenido %}
+{% load static %}
+{% block js %}
+<script>
+    function eliminarEncConvenio(id_enc_conv) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
+
+
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminar-cuenta-enc-convenio/?id_enc_conv=" + id_enc_conv + ""
+                }
+            })
+    }
+</script>
+{% endblock %}
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
+            {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-success" role="alert">
+                {{m}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <h2>Ingresar Encargado Convenio</h2>
+                    <hr>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="">Rut</label>
+                            <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut" id=""
+                                value="{{values.rut_enc_conv}}" maxlength="12" onkeyup="formatoRut(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nombres</label>
+                            <input type="text" class="form-control" id="" name="nom_enc_conv" aria-describedby=""
+                                placeholder="Nombres" value="{{values.nom_enc_conv}}"
+                                onkeypress="return soloLetras(event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Apellidos</label>
+                            <input type="text" class="form-control" id="" name="ap_enc_conv" aria-describedby=""
+                                placeholder="Apellidos" value="{{values.ap_enc_conv}}"
+                                onkeypress="return soloLetras(event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email de trabajo</label>
+                            <input type="email" class="form-control" id="" name="email_enc_conv" aria-describedby=""
+                                value="{{values.email_enc_conv}}" placeholder="ejemplo: encargadoConvenio@dominio.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Telefono/Celular de contacto</label>
+                            <input type="number" class="form-control" id="" name="celular" aria-describedby=""
+                                value="{{values.celular}}" placeholder="Celular ej: 912345678"
+                                onkeypress="return valideKey(event);">
+                        </div>
+
+                        <label for="">Contraseña</label>
+                        <div class="input-group mb-3 border border">
+                            <input type="password" class="form-control" id="password" name="contraseña1"
+                                aria-describedby="" placeholder="Ingresar Contraseña">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                        onclick="mostrarContrasena()"></span></span>
+                            </div>
+                        </div>
+
+                        <label for="">Confirmar Contraseña</label>
+                        <div class="input-group mb-3 border border">
+                            <input type="password" class="form-control" id="password2" name="contraseña2"
+                                aria-describedby="" placeholder="Confirmar Contraseña">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                        onclick="mostrarContrasena2()"></span></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Cuentas Encargado Convenio</h2>
+            <div class="table-responsive py-2">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Rut</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Opciones</th>
+
+                    </tr>
+
+                    {% for cuentasEncConvenio in cuentasEncConvenio %}
+                    <tr class="table-light">
+                        <th>{{cuentasEncConvenio.rut_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.nom_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.ap_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.email_enc_conv}}</th>
+                        <th>{{cuentasEncConvenio.celular}}</th>
+                        <td>
+                            <a href="{% url 'editar-cuenta-enc-convenio' %}?id_enc_conv={{cuentasEncConvenio.id_enc_conv}} "
+                                class="btn btn-dark btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarEncConvenio({{cuentasEncConvenio.id_enc_conv}}) "
+                                class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        function mostrarContrasena() {
+            var tipo = document.getElementById("password");
+            if (tipo.type == "password") {
+                tipo.type = "text";
+            } else {
+                tipo.type = "password";
+            }
+        }
+    </script>
+    <script>
+        function mostrarContrasena2() {
+            var tipo = document.getElementById("password2");
+            if (tipo.type == "password2") {
+                tipo.type = "text";
+            } else {
+                tipo.type = "password2";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function valideKey(evt) {
+
+            // code is the decimal ASCII representation of the pressed key.
+            var code = (evt.which) ? evt.which : evt.keyCode;
+
+            if (code == 8) { // backspace.
+                return true;
+            } else if (code >= 48 && code <= 57) { // is a number.
+                return true;
+            } else { // other keys.
+                return false;
+            }
+        }
+    </script>
+    <script>
+        function soloLetras(e) {
+            key = e.keyCode || e.which;
+            tecla = String.fromCharCode(key).toLowerCase();
+            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+            especiales = [8, 37, 39, 46];
+
+            tecla_especial = false
+            for (var i in especiales) {
+                if (key == especiales[i]) {
+                    tecla_especial = true;
+                    break;
+                }
+            }
+
+            if (letras.indexOf(tecla) == -1 && !tecla_especial)
+                return false;
+        }
+
+        function limpia() {
+            var val = document.getElementById("miInput").value;
+            var tam = val.length;
+            for (i = 0; i < tam; i++) {
+                if (!isNaN(val[i]))
+                    document.getElementById("miInput").value = '';
+            }
+        }
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script src="js/custom-general.js"></script>
+
+
+
+
+    {% endblock %}

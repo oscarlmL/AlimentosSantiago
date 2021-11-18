@@ -1,0 +1,79 @@
+{% extends 'trabajador/base_trabajador.html' %}
+{% block contenido %}
+{% load static %}
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <a href="{{request.META.HTTP_REFERER}}" style="margin-right: 30px;" class="btn btn-dark btn-sm">Volver</a>
+        <br>
+        <br>
+        <h2 class="">Lista de pedidos en ruta</h2>
+        <div>
+            <table class="table table-hover table-responsive-xl">
+                <tr class="table-active">
+
+
+                    <th>Nombre Cliente</th>
+                    <th>Dirección</th>
+                    <th>Horario Entrega</th>
+                    <th>Tipo Pago</th>
+                    <th>Ver ubicación</th>
+                    <th>Opciones</th>
+                </tr>
+                {% for p in pedidos_aceptados %}
+                <tr class="table-light">
+
+                    <td>{{ p.cliente_id | title }}</td>
+                    <td><input type="input" name="direccion" value="{{p.direccion}}" id="direccionEditar" readonly></td>
+                    <td>{{ p.horario_entrega | title }}</td>
+                    <td>{{ p.tipo_pago | title }}</td>
+                    <td>
+                        <a onclick="return mostrarLugar();" type="button" class="btn btn-warning fas fa-plane" href="https://www.google.cl/maps/preview" target="_blank"></a>
+                    </td>
+                    <td>
+                        <form action="{% url 'entregar-pedido' p.id_pedido %}" method="GET">
+                            <input type="submit" name="entregar" style="width: 80px" class="btn btn-danger bi bi-check btn-sm" value="Entregado" />
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+
+        <!-- <div class="row form-group">
+            <label class="col-form-label col-md-4">Direccion:</label>
+            <div class="col-9">
+                <input type="text" name="" value="hevia quilpue" id="direccionEditar" class="form-control" readonly>
+            </div>
+            <a onclick="return mostrarLugar();" type="button" class="btn btn-warning fas fa-plane" href="https://www.google.cl/maps/preview" target="_blank">Consultar</a>
+        </div> -->
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<script>
+    function mostrarLugar() {
+        let item = document.getElementById('direccionEditar')
+        if (item) {
+            window.open('https://google.cl/maps/place/' + item.value, '_blank');
+        }
+        return false; //No ejecutar el evento.
+    }
+</script>
+{% endblock %}

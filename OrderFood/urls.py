@@ -6,7 +6,7 @@ from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_mi
 urlpatterns = [
     path('ubicacion', ubicacion, name="ubicacion"),
     path('', home.as_view(), name="home"),
-    path('home', incio_trabajdor, name="incio_trabajdor"),
+    path('home', incio_trabajador, name="incio_trabajador"),
 
     path('platos/<int:id_restaurante>/',home.as_view() and listar_plato_restaurante, name='platos'),
 

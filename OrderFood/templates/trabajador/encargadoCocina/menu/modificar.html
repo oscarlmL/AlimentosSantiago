@@ -1,0 +1,33 @@
+{% extends 'trabajador/base_trabajador.html' %}
+
+{% block contenido %}
+
+{% load crispy_forms_tags %}
+
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-lg-5  mx-auto col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h2>Editar Plato</h2>
+                    <hr>
+                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    {{ form | crispy}}
+
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-dark btn-round btn-block">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
