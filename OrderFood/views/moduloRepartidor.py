@@ -9,10 +9,10 @@ def editar_perfil_repartidor(request):
     check = Repartidor.objects.filter(
         email_repartidor=request.session['cuentaRepartidor'])
     if len(check) > 0:
-        email = request.session['cuentaRepartidor']
-        data = Repartidor.objects.get(
+        email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
+        repartidor = Repartidor.objects.get(
             email_repartidor=request.session['cuentaRepartidor'])
-        data = {'data': data, 'email': email}
+        data = {'repartidor': repartidor, 'email': email}
     if request.method == 'POST':
         rut_repartidor = request.POST["rut_repartidor"]
         nombre_repartidor = request.POST["nombre_repartidor"]
@@ -52,10 +52,11 @@ def editar_perfil_repartidor(request):
             messages.success(request, "Datos editados correctamente")
             return redirect('editar-perfil-repartidor')
         else:
-            email = request.session['cuentaRepartidor']
+            email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
             data = {
                 'email': email,
                 'error': error_message,
+                'repartidor':repartidor
             }
     return render(request, 'trabajador/repartidor/editarPerfil.html', data)
 
@@ -122,8 +123,7 @@ def cambiar_contraseña_repartidor(request):
 
 #pedidos confirmados
 def listar_pedidos_activos(request):
-    email = request.session.get('cuentaAdmin') or request.session.get(
-            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
+    email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
     pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
     data = {
         'pedidos_confirmados':pedidos_confirmados,
@@ -136,13 +136,13 @@ def listar_pedidos_activos(request):
 
 
 def aceptar_pedido(request, id_pedido):
-     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
-     if (request.method == 'GET') and ("aceptar" in request.GET):
-         pedido.estado = 'En ruta'
-         pedido.save()
-         return redirect('listar-pedidos-aceptados')
-     else:
-         return redirect('listar-pedidos-activos')
+    pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
+    if (request.method == 'GET') and ("aceptar" in request.GET):
+        pedido.estado = 'En ruta'
+        pedido.save()
+        return redirect('listar-pedidos-aceptados')
+    else:
+        return redirect('listar-pedidos-activos')
 
 def entregar_pedido(request, id_pedido):
      pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
@@ -156,9 +156,11 @@ def entregar_pedido(request, id_pedido):
 
 #pedidos aceptados
 def listar_pedidos_aceptados(request):
+    email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
     pedidos_aceptados = Pedido.objects.filter(estado='En ruta')
     data = {
-        'pedidos_aceptados': pedidos_aceptados
+        'pedidos_aceptados': pedidos_aceptados,
+        'email':email
     }
     return render (request ,'trabajador/repartidor/pedidos_aceptados.html',data)
 

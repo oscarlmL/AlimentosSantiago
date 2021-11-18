@@ -768,7 +768,7 @@ def agregar_pedido(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'trabajador/pedido/agregar.html', data)
+    return render(request, 'cliente/pedido/agregar.html', data)
 
 
 def listar_pedido(request):
@@ -777,7 +777,7 @@ def listar_pedido(request):
         'pedidos': pedidos
     }
 
-    return render(request, 'trabajador/pedido/listar.html', data)
+    return render(request, 'cliente/pedido/listar.html', data)
 
 
 def modificar_pedido(request, id):
@@ -792,14 +792,14 @@ def modificar_pedido(request, id):
         formulario = PedidoForm(data=request.POST, instance=pedido)
         if formulario.is_valid():
             formulario.save()
-            return redirect(to="listar-pedido")
+            return redirect(to="listar_pedido")
         data["form"] = formulario
 
-    return render(request, 'trabajador/pedido/modificar.html', data)
+    return render(request, 'cliente/pedido/modificar.html', data)
 
 
 def eliminar_pedido(request, id):
     pedido = get_object_or_404(Pedido, id_pedido=id)
     pedido.delete()
-    return redirect(to="listar-pedido")
+    return redirect(to="listar_pedido")
 # fin pedido

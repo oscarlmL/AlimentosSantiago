@@ -105,25 +105,20 @@ class home(View):
             carro = request.session.get('carro')
             if not carro:
                 request.session['carro'] = {}
-            email = request.session.get('cuentaAdmin') or request.session.get(
-            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
             restaurant = Restaurant.objects.all()
             context = {
                 'restaurant':restaurant,
                 'clienteeee':clienteeee
                 }
             request.session['carro'] = {}
-            return render(request, 'home.html', context)
+            return render(request, 'cliente/home.html', context)
         else:
             carro = request.session.get('carro')
             if not carro:
                 request.session['carro'] = {}
-            email = request.session.get('cuentaAdmin') or request.session.get(
-            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCliente') or request.session.get('cuentaCajero')
             restaurant = Restaurant.objects.all()
             context = {
                     'restaurant':restaurant,
-                    'email':email,
             }
             request.session['carro'] = {}
             return render(request, 'cliente/home.html', context)

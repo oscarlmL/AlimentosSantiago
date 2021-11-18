@@ -17,6 +17,10 @@ class Administrador(models.Model):
     contraseña2 = models.CharField(max_length=100)
     restaurant_id_restaurante = models.ForeignKey(
         'Restaurant', models.CASCADE, db_column='restaurant_id_restaurante' ,default=1)
+    
+    def __str__(self):
+            return self.nombre_adm
+            
     class Meta:
         db_table = 'administrador'
     
@@ -40,6 +44,8 @@ class Cajero(models.Model):
     # restaurant_id_restaurante = models.ForeignKey(
     #     'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
 
+    def __str__(self):
+            return self.nom_cajero
     class Meta:
         db_table = 'cajero'
 
@@ -158,6 +164,10 @@ class EncCocina(models.Model):
     celular = models.IntegerField()
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
+
+
+    def __str__(self):
+        return self.nom_enc_coc
 
     def cuentaEncargadoCocina(self):
         self.save()
@@ -373,6 +383,9 @@ class Repartidor(models.Model):
     celular = models.IntegerField(null=True)
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre_repartidor
 
     def cuentaRepartidor(self):
         self.save()

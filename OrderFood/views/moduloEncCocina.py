@@ -10,9 +10,9 @@ def editar_perfil_enc_cocina(request):
         email_enc_coc=request.session['cuentaEncCocina'])
     if len(check) > 0:
         email = request.session['cuentaEncCocina']
-        data = EncCocina.objects.get(
+        encCocina = EncCocina.objects.get(
             email_enc_coc=request.session['cuentaEncCocina'])
-        data = {'data': data, 'email': email}
+        data = {'encCocina': encCocina, 'email': email}
     if request.method == 'POST':
         nom_enc_coc = request.POST["nom_enc_coc"]
         titulo = request.POST["titulo"]
@@ -52,6 +52,7 @@ def editar_perfil_enc_cocina(request):
             data = {
                 'email': email,
                 'error': error_message,
+                'encCocina':encCocina
             }
     return render(request, 'trabajador/encargadoCocina/editarPerfil.html', data)
 

@@ -34,27 +34,27 @@
                         <div class="form-group">
                             <label for="">Rut</label>
                             <input type="text" class="form-control" name="rut_enc_conv" placeholder="Rut"
-                                value="{{data.rut_enc_conv}}" onkeyup="formatoRut(this)">
+                                value="{{encConvenio.rut_enc_conv}}" onkeyup="formatoRut(this)">
                         </div>
                         <div class="form-group">
                             <label for="">Nombres</label>
                             <input type="text" class="form-control" name="nom_enc_conv"
-                                placeholder="Nombre" value="{{data.nom_enc_conv}}" onkeypress="return soloLetras(event)">
+                                placeholder="Nombre" value="{{encConvenio.nom_enc_conv}}" onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Apellidos</label>
                             <input type="text" class="form-control" name="ap_enc_conv"
-                                placeholder="Apellido" value="{{data.ap_enc_conv}}" onkeypress="return soloLetras(event)">
+                                placeholder="Apellido" value="{{encConvenio.ap_enc_conv}}" onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Email de trabajo</label>
                             <input type="email" class="form-control" readonly name="email_enc_conv" placeholder="Email"
-                                value="{{data.email_enc_conv}}">
+                                value="{{encConvenio.email_enc_conv}}">
                         </div>
                         <div class="form-group">
                             <label for="">Telefono/Celular de contacto</label>
                             <input type="number" class="form-control" name="celular" placeholder="Celular Ej: 912345678"
-                                value="{{data.celular}}" onkeypress="return valideKey(event);">
+                                value="{{encConvenio.celular}}" onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-round btn-block" value="Editar">

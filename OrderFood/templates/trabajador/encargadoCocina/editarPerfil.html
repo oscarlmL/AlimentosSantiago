@@ -34,20 +34,20 @@
                         <div class="form-group">
                             <Label>Nombre Completo</Label>
                             <input type="text" class="form-control" name="nom_enc_coc" placeholder="Nombre Completo"
-                                value="{{data.nom_enc_coc}}" onkeypress="return soloLetras(event)">
+                                value="{{encCocina.nom_enc_coc}}" onkeypress="return soloLetras(event)">
                         </div>
                         <div class="form-group">
                             <label for="">Título que poseé</label>
                             <select class="form-control" id="validationCustom04" name="titulo" required
-                                value="{{data.titulo}}">
+                                value="{{encCocina.titulo}}">
                                 <option value="">--- Seleccionar Tipo de Titulo ---</option>
-                                {% if data.titulo == "Tecnico" %}
+                                {% if encCocina.titulo == "Tecnico" %}
                                 <option value="Tecnico" selected>Técnico</option>
                                 {% else %}
                                 <option value="Tecnico">Técnico</option>
                                 {% endif %}
             
-                                {% if data.titulo == "Profesional" %}
+                                {% if encCocina.titulo == "Profesional" %}
                                 <option value="Profesional"selected>Profesional</option>
                                 {% else %}
                                 <option value="Profesional">Profesional</option>
@@ -57,17 +57,17 @@
                         <div class="form-group">
                             <label for="">Experiencia Laboral</label>
                             <input type="text" class="form-control" name="exp_laboral"
-                                placeholder="Experiencia Laboral en Años" value="{{data.exp_laboral}}" onkeypress="return valideKey(event);">
+                                placeholder="Experiencia Laboral en Años" value="{{encCocina.exp_laboral}}" onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <label for="">Email de trabajo</label>
                             <input type="email" class="form-control" readonly name="email_enc_coc" placeholder="Email"
-                                value="{{data.email_enc_coc}}">
+                                value="{{encCocina.email_enc_coc}}">
                         </div>
                         <div class="form-group">
                             <Label>Telefono/Celular de contacto</Label>
                             <input type="number" class="form-control" name="celular" placeholder="Celular Ej: 912345678"
-                                value="{{data.celular}}" onkeypress="return valideKey(event);">
+                                value="{{encCocina.celular}}" onkeypress="return valideKey(event);">
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-round btn-block" value="Editar">

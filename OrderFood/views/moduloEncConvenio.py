@@ -11,9 +11,9 @@ def editar_perfil_enc_convenio(request):
         email_enc_conv=request.session['cuentaEncConvenio'])
     if len(check) > 0:
         email = request.session['cuentaEncConvenio']
-        data = EncConvenio.objects.get(
+        encConvenio = EncConvenio.objects.get(
             email_enc_conv=request.session['cuentaEncConvenio'])
-        data = {'data': data, 'email': email}
+        data = {'encConvenio': encConvenio, 'email': email}
     if request.method == 'POST':
         rut_enc_conv = request.POST["rut_enc_conv"]
         nom_enc_conv = request.POST["nom_enc_conv"]
@@ -53,6 +53,7 @@ def editar_perfil_enc_convenio(request):
             data = {
                 'email': email,
                 'error': error_message,
+                'encConvenio':encConvenio
             }
     return render(request, 'trabajador/encargadoConvenio/editarPerfil.html', data)
 
