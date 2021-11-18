@@ -167,7 +167,7 @@ class Login(View):
             if flag:
                 request.session['cuentaCajero'] = cuentaCajero.email_cajero
                 print('eres :',email)
-                return redirect('listar-pedidos-pendientes')
+                return redirect('incio_trabajdor')
             else:
                 error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
