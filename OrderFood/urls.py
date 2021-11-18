@@ -80,8 +80,14 @@ urlpatterns = [
 
 
     #REPARTIDOR
-    path("editar-perfil-repartidor/",auth_middleware_repartidor(editar_perfil_repartidor),name="editar-perfil-repartidor"),
-    path("cambiar-contraseña-repartidor/",auth_middleware_repartidor(cambiar_contraseña_repartidor),name="cambiar-contraseña-repartidor"),
+    path('editar-perfil-repartidor/',auth_middleware_repartidor(editar_perfil_repartidor),name="editar-perfil-repartidor"),
+    path('cambiar-contraseña-repartidor/',auth_middleware_repartidor(cambiar_contraseña_repartidor),name="cambiar-contraseña-repartidor"),
+    path('listar-pedidos-activos/',auth_middleware_repartidor(listar_pedidos_activos),name="listar-pedidos-activos"),
+    path('aceptar-pedido/<int:id_pedido>/',aceptar_pedido,name="aceptar-pedido"),
+    path('listar-pedidos-aceptados',auth_middleware_repartidor(listar_pedidos_aceptados),name="listar-pedidos-aceptados"),
+    path('entregar-pedido/<int:id_pedido>/',entregar_pedido,name="entregar-pedido"),
+
+
     #FIN REPARTIDOR
 
 

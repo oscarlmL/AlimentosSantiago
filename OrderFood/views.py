@@ -13,7 +13,6 @@ from django.db.models import Q
 
 
 # Funciones Generales
-
 def buscar_plato(request):
     busqueda = request.GET.get("buscar")
     platos = Plato.objects-all()
@@ -1085,6 +1084,44 @@ def cambiar_contraseña_repartidor(request):
                 }
             return render(request, 'repartidor/cambiar_contraseña.html', data)
     return render(request, "repartidor/cambiar_contraseña.html", data)
+
+
+#pedidos confirmados
+def listar_pedidos_activos(request):
+    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
+    data = {
+        'pedidos_confirmados':pedidos_confirmados
+    }
+    return render (request ,'repartidor/pedidos_activos_local.html',data)
+
+def aceptar_pedido(request, id_pedido):
+     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
+     if (request.method == 'GET') and ("aceptar" in request.GET):
+         pedido.estado = 'En ruta'
+         pedido.save()
+         return redirect('listar-pedidos-aceptados')
+     else:
+         return redirect('listar-pedidos-activos')
+
+def entregar_pedido(request, id_pedido):
+     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
+     if (request.method == 'GET') and ("entregar" in request.GET):
+         pedido.estado = 'Entregado'
+         pedido.save()
+         return redirect('listar-pedidos-aceptados')
+     else:
+         return redirect('listar-pedidos-activos')
+
+
+#pedidos aceptados
+def listar_pedidos_aceptados(request):
+    pedidos_aceptados = Pedido.objects.filter(estado='En ruta')
+    data = {
+        'pedidos_aceptados': pedidos_aceptados
+    }
+    return render (request ,'repartidor/pedidos_aceptados.html',data)
+
+
 
 # Fin Modulo repartidor
 
