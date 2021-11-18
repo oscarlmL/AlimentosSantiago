@@ -209,7 +209,7 @@ def modificar_proveedor(request):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificación exitosa")
-            return redirect(to="listar_proveedor")
+            return redirect(to="listar-proveedor")
         data["form"] = formulario
 
     return render(request, 'trabajador/encargadoCocina/proveedor/modificar.html', data)
@@ -220,7 +220,7 @@ def eliminar_proveedor(request):
     proveedor = get_object_or_404(Proveedor, id_proveedor=id_proveedor)
     proveedor.delete()
     messages.success(request, "Eliminación exitosa")
-    return redirect(to="listar_proveedor")
+    return redirect(to="listar-proveedor")
 
 
 # Modulo Restaurant
