@@ -154,7 +154,7 @@
 </div>
 {% block js %}
 <script>
-    function eliminarEncCocina(id_enc_coc) {
+    function eliminarRepartidor(id_repartidor) {
         Swal.fire({
             "title": "¿Estas seguro?",
             "text": "esta acción no se puede deshacer",
@@ -170,7 +170,7 @@
         })
             .then(function (result) {
                 if (result.isConfirmed) {
-                    window.location.href = "/eliminar-cuenta-enc-cocina/?id_enc_coc=" + id_enc_coc + ""
+                    window.location.href = "/eliminar-cuenta-repartidor/?id_repartidor=" + id_repartidor + ""
                 }
             })
     }

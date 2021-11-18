@@ -1,10 +1,18 @@
 from django.urls import path
 from .views import *
+from OrderFood.views.home import *
+from OrderFood.views.moduloAdministrador import *
+from OrderFood.views.moduloCajero import *
+from OrderFood.views.moduloCliente import *
+from OrderFood.views.moduloEncCocina import *
+from OrderFood.views.moduloEncConvenio import *
+from OrderFood.views.moduloRepartidor import *
+
+
 from .middlewares.auth import auth_middleware,auth_middleware_enc_cocina,auth_middleware_enc_convenio,auth_middleware_repartidor,auth_middleware_cliente,auth_middleware_cajero
 
 
 urlpatterns = [
-    path('ubicacion', ubicacion, name="ubicacion"),
     path('', home.as_view(), name="home"),
     path('home', incio_trabajador, name="incio_trabajador"),
 
@@ -49,7 +57,7 @@ urlpatterns = [
     path('gestionar-plato/', auth_middleware_enc_cocina(gestionar_plato), name="gestionar-plato"),
     path('modificar-plato/', auth_middleware_enc_cocina(modificar_plato), name="modificar_plato"),
     path('eliminar-plato/', auth_middleware_enc_cocina(eliminar_plato), name="eliminar_plato"),
-    path('buscar-plato/', (buscar_plato), name="buscar-plato"),
+    # path('buscar-plato/', (buscar_plato), name="buscar-plato"),
 
     #path Proveedor
     path('proveedor', proveedor, name="proveedor"),
