@@ -1,4 +1,5 @@
 from django.contrib.messages.storage.base import Message
+from django.db.models.query_utils import select_related_descend
 from django.http import request
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
@@ -677,6 +678,7 @@ def generar_cuenta_repartidor(request):
         tipo_veh = postData.get('tipo_veh')
         patente_veh_moto = postData.get('patente_veh_moto')
         patente_veh_auto = postData.get('patente_veh_auto')
+        bicicleta = postData.get('bicicleta')
         celular = postData.get('celular')
         contraseña1 = postData.get('contraseña1')
         contraseña2 = postData.get('contraseña2')
@@ -698,7 +700,7 @@ def generar_cuenta_repartidor(request):
                                 email_repartidor=email_repartidor,
                                 tipo_veh=tipo_veh,
                                 patente_veh=(
-                                    patente_veh_auto or patente_veh_moto),
+                                    patente_veh_auto or patente_veh_moto or bicicleta),
                                 celular=celular,
                                 contraseña1=contraseña1,
                                 contraseña2=contraseña2)
@@ -784,6 +786,7 @@ def editar_cuenta_repartidor(request):
         tipo_veh = request.POST['tipo_veh']
         patente_veh_moto = request.POST['patente_veh_moto']
         patente_veh_auto = request.POST['patente_veh_auto']
+        bicicleta = request.POST['bicicleta']
         celular = request.POST['celular']
 
         cuentaRepartidor.rut_repartidor = rut_repartidor
@@ -791,7 +794,7 @@ def editar_cuenta_repartidor(request):
         cuentaRepartidor.apellido_repartidor = apellido_repartidor
         cuentaRepartidor.email_repartidor = email_repartidor
         cuentaRepartidor.tipo_veh = tipo_veh
-        cuentaRepartidor.patente_veh = (patente_veh_moto or patente_veh_auto)
+        cuentaRepartidor.patente_veh = (patente_veh_moto or patente_veh_auto or bicicleta)
         cuentaRepartidor.celular = celular
 
         error_message = None
