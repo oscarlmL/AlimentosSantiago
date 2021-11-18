@@ -72,7 +72,7 @@ function showInp() {
     document.getElementById("bicicleta").style.display = "none";
 
   } else if (getSelectValue == "Bicicleta") {
-    document.getElementById("bicicleta").style.display = "inline-block";
+    document.getElementById("bicicleta").style.display = "none";
     document.getElementById("patente_veh_moto").style.display = "none";
     document.getElementById("patente_veh_auto").style.display = "none";
 

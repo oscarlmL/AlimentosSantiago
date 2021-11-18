@@ -62,44 +62,46 @@
                                 <option value="Moto">Moto</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" style="display: none" id="patente_veh_moto"
-                                name="patente_veh_moto" value="{{values.patente_veh}}" maxlength="6"
-                                onkeyup="formatoPatenteMoto(this);" placeholder="Patente de la Moto">
+                        <div class="form-group" id="patente_veh_moto" style="display: none">
+                            <label for="">Patente</label>
+                            <input type="text" class="form-control" name="patente_veh_moto"
+                                value="{{values.patente_veh}}" maxlength="6" onkeyup="formatoPatenteMoto(this);"
+                                placeholder="Patente de la Moto">
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" style="display: none" id="patente_veh_auto"
-                                name="patente_veh_auto" value="{{values.patente_veh}}" maxlength="6"
-                                onkeyup="formatoPatenteAuto(this);" placeholder="Patente del Auto">
+                        <div class="form-group" id="patente_veh_auto" style="display: none">
+                            <label for="">Patente</label>
+                            <input type="text" class="form-control" name="patente_veh_auto"
+                                value="{{values.patente_veh}}" maxlength="6" onkeyup="formatoPatenteAuto(this);"
+                                placeholder="Patente del Auto">
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" style="display: none" id="Bicicleta"
-                                name="bicicleta" value="-" placeholder="">
+                        <div class="form-group" id="bicicleta" style="display: none">
+                            <label for="">Patente</label>
+                            <input type="text" class="form-control" name="bicicleta" value="-" placeholder="">
                         </div>
 
-
-                        <Label>Contraseña</Label>
-                        <div class="input-group mb-3 border border">
-
-                            <input type="password" class="form-control border-0" id="password" name="contraseña1"
-                                aria-describedby="" placeholder="Ingresar Contraseña">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
-                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
-                                        onclick="mostrarContrasena()"></span></span>
+                        <div class="form-group">
+                            <Label>Contraseña</Label>
+                            <div class="input-group mb-3 border border">
+                                <input type="password" class="form-control border-0" id="password" name="contraseña1"
+                                    aria-describedby="" placeholder="Ingresar Contraseña">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                            class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                            onclick="mostrarContrasena()"></span></span>
+                                </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="">Confirmar Contraseña</label>
+                            <div class="input-group mb-3 border border">
 
-
-                        <label for="">Confirmar Contraseña</label>
-                        <div class="input-group mb-3 border border">
-
-                            <input type="password" class="form-control border-0" id="password2" name="contraseña2"
-                                aria-describedby="" placeholder="Confirmar Contraseña">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
-                                        class="iconify" data-icon="bi:eye-fill" data-inline="true"
-                                        onclick="mostrarContrasena2()"></span></span>
+                                <input type="password" class="form-control border-0" id="password2" name="contraseña2"
+                                    aria-describedby="" placeholder="Confirmar Contraseña">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-white border-0 " style="cursor: pointer;"><span
+                                            class="iconify" data-icon="bi:eye-fill" data-inline="true"
+                                            onclick="mostrarContrasena2()"></span></span>
+                                </div>
                             </div>
                         </div>
 
@@ -122,8 +124,8 @@
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
-                        <th>Patente Vehiculo</th>
                         <th>Tipo Vehiculo</th>
+                        <th>Patente Vehiculo</th>
                         <th>Celular</th>
                         <th>Opciones</th>
                     </tr>
@@ -152,7 +154,7 @@
 </div>
 {% block js %}
 <script>
-    function eliminarEncCocina(id_enc_coc) {
+    function eliminarRepartidor(id_repartidor) {
         Swal.fire({
             "title": "¿Estas seguro?",
             "text": "esta acción no se puede deshacer",
@@ -168,7 +170,7 @@
         })
             .then(function (result) {
                 if (result.isConfirmed) {
-                    window.location.href = "/eliminar-cuenta-enc-cocina/?id_enc_coc=" + id_enc_coc + ""
+                    window.location.href = "/eliminar-cuenta-repartidor/?id_repartidor=" + id_repartidor + ""
                 }
             })
     }
