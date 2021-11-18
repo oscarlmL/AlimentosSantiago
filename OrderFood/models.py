@@ -399,8 +399,6 @@ class Repartidor(models.Model):
         except:
             return False
 
-
-
     class Meta:
         db_table = 'repartidor'
 

@@ -1,7 +1,8 @@
 {% load static %}
+{% load carro %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -102,6 +103,18 @@
                 </a>
 
                 {% elif request.session.cuentaRepartidor %}
+                <div class="text-center">
+                  <img src="https://w7.pngwing.com/pngs/35/77/png-transparent-computer-icons-courier-deliveryman-miscellaneous-blue-angle.png" alt="Image" class="img-fluid center" width="150" height="150">
+                </div>
+                <h3 class="name mb-4 text-center"> {{email}} <span class="icon-check_circle verified"></span></h3>
+                <a class="list-group-item text-center" href="/listar-pedidos-activos">
+                  <i class="fas fa-edit"></i>
+                  <span class="links_name">Pedidos Activos</span>
+                </a>
+                <a class="list-group-item text-center" href="/listar-pedidos-aceptados">
+                  <i class="fas fa-edit"></i>
+                  <span class="links_name">Pedidos en Ruta</span>
+                </a>
                 <a class="list-group-item text-center" href="/editar-perfil-repartidor">
                   <i class="fas fa-edit"></i>
                   <span class="links_name">Editar Perfil</span>
@@ -122,11 +135,6 @@
         </div>
         {% endif %}
 </aside>
-
-
-
-
-
 
     <div class="" >
         {% block contenido %}
@@ -266,6 +274,8 @@
     <!-- Copyright -->
 </footer>
 <!-- Footer -->
+
+
 <!--SCRIPTS-->
     <!--solo numeros-->
     <script type="text/javascript">

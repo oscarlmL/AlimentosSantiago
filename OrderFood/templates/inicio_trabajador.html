@@ -3,16 +3,16 @@
 {% load static %}
 {% load carro %}
 {% load humanize %}
-
 <br>
 <br>
 <br>
 <br>
 <div class="mx-auto">
-    <div class="container" >
+    <div class="container">
         <style>
-            img{
-                width: 50px; height: 50px;
+            img {
+                width: 50px;
+                height: 50px;
             }
         </style>
         <H1 class="text-center">Tus funciones</H1>
@@ -166,6 +166,30 @@
                         </div>
                         <div class="card-body text-center">
                             <span class="links_name">Editar Perfil</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/listar-pedidos-activos">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <img src="{% static 'app/iconos/sombrero-de-cocinero.png' %}" alt="">
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Pedidos Activos</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/listar-pedidos-aceptados">
+                    <div class="card mb-4 box-shadow">
+                        <div class="text-center">
+                            <img src="{% static 'app/iconos/sombrero-de-cocinero.png' %}" alt="">
+                        </div>
+                        <div class="card-body text-center">
+                            <span class="links_name">Pedidos en Ruta</span>
                         </div>
                     </div>
                 </a>
