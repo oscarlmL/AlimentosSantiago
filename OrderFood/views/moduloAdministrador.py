@@ -790,7 +790,7 @@ def agregar_pedido(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'cliente/pedido/agregar.html', data)
+    return render(request, 'trabajador/pedido/agregar.html', data)
 
 
 def listar_pedido(request):
@@ -799,7 +799,7 @@ def listar_pedido(request):
         'pedidos': pedidos
     }
 
-    return render(request, 'cliente/pedido/listar.html', data)
+    return render(request, 'trabajador/pedido/listar.html', data)
 
 
 def modificar_pedido(request, id):
@@ -817,7 +817,7 @@ def modificar_pedido(request, id):
             return redirect(to="listar_pedido")
         data["form"] = formulario
 
-    return render(request, 'cliente/pedido/modificar.html', data)
+    return render(request, 'trabajador/pedido/modificar.html', data)
 
 
 def eliminar_pedido(request, id):
