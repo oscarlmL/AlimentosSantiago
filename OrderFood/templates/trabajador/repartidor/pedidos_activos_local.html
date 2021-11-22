@@ -15,10 +15,11 @@
             <table class="table table-hover table-responsive-xl">
                 <tr class="table-active">
 
-                    <th>Estado</th>
+
                     <th>Nombre Cliente</th>
                     <th>Fecha Pedido</th>
-                    <th>Dirección</th>
+                    <th>Nombre Restaurant</th>
+                    <th>Dirección Restaurant</th>
                     <th>Horario Entrega</th>
                     <th>Tipo Entrega</th>
                     <th>Tipo Pago</th>
@@ -27,10 +28,10 @@
                 {% for p in pedidos_confirmados %}
                 <tr class="table-light">
 
-                    <td>{{ p.estado | title }}</td>
                     <td>{{ p.cliente_id | title }}</td>
                     <td>{{ p.fecha_pedido | title }}</td>
-                    <td>{{ p.direccion | title }}</td>
+                    <td>{{ p.restaurant_id_restaurante}}</td>
+                    <td>{{ p.restaurant_id_restaurante.direccion_rest}}</td>
                     <td>{{ p.horario_entrega | title }}</td>
                     <td>{{ p.tipo_entrega | title }}</td>
                     <td>{{ p.tipo_pago | title }}</td>

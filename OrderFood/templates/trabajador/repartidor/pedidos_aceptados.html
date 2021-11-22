@@ -17,11 +17,12 @@
 
 
                     <th>Nombre Cliente</th>
-                    <th>Dirección</th>
+                    <th>Dirección Entrega</th>
                     <th>Horario Entrega</th>
                     <th>Tipo Pago</th>
                     <th>Ver ubicación</th>
                     <th>Opciones</th>
+                    <th></th>
                 </tr>
                 {% for p in pedidos_aceptados %}
                 <tr class="table-light">
@@ -38,11 +39,16 @@
                             <input type="submit" name="entregar" style="width: 80px" class="btn btn-danger bi bi-check btn-sm" value="Entregado" />
                         </form>
                     </td>
+                    <td>
+                        <i class="fas fa-check-square" style="font-size: 30px;"></i>
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
         </div>
 
+
+ 
 
 
         <!-- <div class="row form-group">
