@@ -127,11 +127,11 @@
 
                     {% for cuentasEncConvenio in cuentasEncConvenio %}
                     <tr class="table-light">
-                        <th>{{cuentasEncConvenio.rut_enc_conv}}</th>
-                        <th>{{cuentasEncConvenio.nom_enc_conv}}</th>
-                        <th>{{cuentasEncConvenio.ap_enc_conv}}</th>
-                        <th>{{cuentasEncConvenio.email_enc_conv}}</th>
-                        <th>{{cuentasEncConvenio.celular}}</th>
+                        <td>{{cuentasEncConvenio.rut_enc_conv}}</td>
+                        <td>{{cuentasEncConvenio.nom_enc_conv}}</td>
+                        <td>{{cuentasEncConvenio.ap_enc_conv}}</td>
+                        <td>{{cuentasEncConvenio.email_enc_conv}}</td>
+                        <td>{{cuentasEncConvenio.celular}}</td>
                         <td>
                             <a href="{% url 'editar-cuenta-enc-convenio' %}?id_enc_conv={{cuentasEncConvenio.id_enc_conv}} "
                                 class="btn btn-dark btn-sm">Modificar</a>

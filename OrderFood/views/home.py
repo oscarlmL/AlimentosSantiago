@@ -5,9 +5,9 @@ from django.views import View
 from django.db.models import Q
 
 def incio_trabajador(request):
-    email = request.session.get('cuentaAdmin') or request.session.get(
+    nombre = request.session.get('cuentaAdmin') or request.session.get(
             'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
-    return render(request,'trabajador/inicio_trabajador.html',{'email':email})
+    return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
 
 class Login(View):
     def get(self, request):

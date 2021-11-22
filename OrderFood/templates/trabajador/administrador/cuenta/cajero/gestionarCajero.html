@@ -108,9 +108,9 @@
 
                     {% for cuentasCajero in cuentasCajero %}
                     <tr class="table-light">
-                        <th>{{cuentasCajero.id_cajero}}</th>
-                        <th>{{cuentasCajero.nom_cajero}}</th>
-                        <th>{{cuentasCajero.email_cajero}}</th>
+                        <td>{{cuentasCajero.id_cajero}}</td>
+                        <td>{{cuentasCajero.nom_cajero}}</td>
+                        <td>{{cuentasCajero.email_cajero}}</td>
                         <td>
                             <a href="{% url 'editar-cuenta-cajero' %}?id_cajero={{cuentasCajero.id_cajero}}"
                                 class="btn btn-dark btn-sm">Modificar</a>

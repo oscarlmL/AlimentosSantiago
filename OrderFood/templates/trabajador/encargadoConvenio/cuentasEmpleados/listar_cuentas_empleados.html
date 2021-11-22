@@ -1,36 +1,56 @@
 {% extends 'trabajador/base_trabajador.html' %}
 {% block contenido %}
 {% load static %}
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="table table-striped table-hover table-responsive-xl">
+            <h2 class="text-center">Lista de empleados la empresa</h2>
+            <div class="">
+                <table class="table table-hover table-responsive-xl">
+                    <tr class="table-active">
+                        <th>Nombre empleado</th>
+                        <th>Apellidos</th>
+                        <th>Fono Empleado</th>
+                        <th>Email</th>
+                        <th>Saldo</th>
+                        <th>Opciones</th>
+                    </tr>
 
-<div class="container-fluid">
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h2>Lista de empleados la empresa</h2>
-        <div class="table-responsive py-2">
-            <table class="table table-striped">
-                <tr class="table-active">
-                    <th>Nombre empleado</th>
-                    <th>Apellidos</th>
-                    <th>Fono Empleado</th>
-                    <th>Email</th>
-                    <th>Saldo</th>
-                    <th>Opciones</th>
-                </tr>
+                    {% for n in cuentas_empleados %}
+                    <tr class="table-light">
+                        <td>{{ n.nombre_cli | title }}</td>
+                        <td>{{ n.apaterno_cli | title }} {{ n.amaterno_cli | title }}</td>
+                        <td>{{ n.fono_cli | title }}</td>
+                        <td>{{ n.email_cli | title }}</td>
+                        <td>{{ n.saldo_cli | title }}</td>
+                        <td>
+                            <a href="{% url 'editar-cuentaTrabEmp' %}?id_cliente={{n.id_cliente}}"
+                                class="btn btn-dark btn-sm" value="Modificar">Modificar</a>
+                            <a href="{% url 'eliminar-cuentaTrabEmp' %}?id_cliente={{n.id_cliente}}"
+                                class="btn btn-danger btn-sm" value="Modificar">Eliminar</a>
+                        </td>
+                    </tr>
 
-                {% for n in cuentas_empleados %}
-                <tr class="table-light">
-                    <td>{{ n.nombre_cli | title }}</td>
-                    <td>{{ n.apaterno_cli | title }} {{ n.amaterno_cli | title }}</td>
-                    <td>{{ n.fono_cli | title }}</td>
-                    <td>{{ n.email_cli | title }}</td>
-                    <td>{{ n.saldo_cli | title }}</td>
-                    <td> 
-                            <a href="{% url 'editar-cuentaTrabEmp' %}?id_cliente={{n.id_cliente}}" class="btn btn-dark btn-round btn-block" value="Modificar">Modificar</a>
-                    </td>
-                </tr>
+                    {% endfor %}
+                </table>
 
-                {% endfor %}
-            </table>
-
+            </div>
         </div>
     </div>
-{% endblock %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    {% endblock %}

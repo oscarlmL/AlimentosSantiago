@@ -5,15 +5,19 @@ from OrderFood.forms import  *
 
 #Modulo Cajero -----------------------------------------------------------------------------
 def listar_pedidos_pendientes(request):
+    nombre = Cajero.objects.get(
+                email_cajero=request.session['cuentaCajero'])  
     pedidos_pendientes = Pedido.objects.filter(estado='Pendiente')
     repartidores_disponibles = Repartidor.objects.all()
     data = {
             'pedidos_pendientes':pedidos_pendientes,
-            'repartidores_disponibles':repartidores_disponibles
+            'repartidores_disponibles':repartidores_disponibles,
+            'nombre':nombre
             }
     return render(request,'trabajador/cajero/pedidosPendientes.html',data)
 
 def confirmar_pedido(request, id_pedido):
+
     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
     if (request.method == 'GET') and ("confirmar" in request.GET):
         pedido.estado = 'Confirmado'
@@ -23,9 +27,12 @@ def confirmar_pedido(request, id_pedido):
         return redirect('listar-pedidos-pendientes')
 
 def listar_pedidos_confirmados(request):
+    nombre = Cajero.objects.get(
+        email_cajero=request.session['cuentaCajero'])  
     pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
     data = {
-        'pedidos_confirmados':pedidos_confirmados
+        'pedidos_confirmados':pedidos_confirmados,
+        'nombre':nombre
     }
     return render (request ,'trabajador/cajero/pedidosConfirmados.html',data)
 #Fin Modulo Cajero -------------------------------------------------------------------------

@@ -36,20 +36,20 @@
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="" name="nombre_cli" aria-describedby=""
-                            placeholder="Nombres" value="{{values.nombre_cli}}">
+                            placeholder="Nombres" value="{{empresa.nom_emp}}">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="" name="apaterno_cli" aria-describedby=""
-                            placeholder="Apellido Paterno" value="{{values.apaterno_cli}}">
+                            placeholder="Apellido Paterno" value="{{empresa.nom_emp}}">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="" name="amaterno_cli" aria-describedby=""
-                            placeholder="Apellido Materno" value="{{values.amaterno_cli}}">
+                            placeholder="Apellido Materno" value="{{empresa.nom_emp}}">
                     </div>
                     
                     <div class="form-group">
                         <input type="number" class="form-control" id="" name="fono_cli" aria-describedby=""
-                            value="{{values.fono_cli}}" placeholder="Celular ej: 912345678">
+                            value="912345678" placeholder="Celular ej: 912345678">
                     </div>
                     <div class="form-group">
                         <input type="email" class="form-control" id="" name="email_cli" aria-describedby=""
@@ -60,10 +60,10 @@
                             placeholder="Direccion" value="{{values.direccion_cliente}}">
                     </div> -->
                     <div class="form-group">
-                        <input type="password" class="form-control" id="" name="contraseña1" aria-describedby=""
+                        <input type="password" class="form-control" value="{{empresa.rut_emp}}"  id="" name="contraseña1" aria-describedby=""
                             placeholder="Ingresar Contraseña">
                     </div>
-                        <input type="password" class="form-control" id="" name="contraseña2" aria-describedby=""
+                        <input type="password" class="form-control" value="{{empresa.rut_emp}}" id="" name="contraseña2" aria-describedby=""
                             placeholder="Confirmar Contraseña">
                     </div>
 
@@ -74,6 +74,5 @@
             </div>
         </div>
     </div>
-
 </div>
 {% endblock %}
