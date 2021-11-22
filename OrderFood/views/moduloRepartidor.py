@@ -123,7 +123,7 @@ def cambiar_contraseña_repartidor(request):
 #pedidos confirmados
 def listar_pedidos_activos(request):
     repartidor = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
-    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
+    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado',tipo_entrega='Delivery')
     data = {
         'pedidos_confirmados':pedidos_confirmados,
         'repartidor':repartidor
