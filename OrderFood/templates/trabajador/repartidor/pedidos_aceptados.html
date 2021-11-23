@@ -7,7 +7,7 @@
 <br>
 <div class="container-fluid">
     <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <a href="{{request.META.HTTP_REFERER}}" style="margin-right: 30px;" class="btn btn-dark btn-sm">Volver</a>
+        <a href="{% url 'incio_trabajador'%}" style="margin-right: 30px;" class="btn btn-dark btn-sm">Inicio</a>
         <br>
         <br>
         <h2 class="">Lista de pedidos en ruta</h2>
@@ -22,33 +22,52 @@
                     <th>Tipo Pago</th>
                     <th>Ver ubicación</th>
                     <th>Opciones</th>
-                    <th></th>
                 </tr>
                 {% for p in pedidos_aceptados %}
                 <tr class="table-light">
 
                     <td>{{ p.cliente_id | title }}</td>
-                    <td><input type="input" style="border: 0;" name="direccion" value="{{p.direccion}}" id="direccionEditar" readonly></td>
+                    <td><input type="input" style="border: 0;" name="direccion" value="{{p.direccion}}"
+                            id="direccionEditar" readonly></td>
                     <td>{{ p.horario_entrega | title }}</td>
                     <td>{{ p.tipo_pago | title }}</td>
                     <td>
-                        <a onclick="return mostrarLugar();" type="button" class="btn btn-warning fas fa-plane" href="https://www.google.cl/maps/preview" target="_blank"></a>
+                        <a onclick="return mostrarLugar();" type="button" class="btn btn-warning fas fa-plane"
+                            href="https://www.google.cl/maps/preview" target="_blank"></a>
                     </td>
                     <td>
                         <form action="{% url 'entregar-pedido' p.id_pedido %}" method="GET">
-                            <input type="submit" name="entregar" style="width: 80px" class="btn btn-danger bi bi-check btn-sm" value="Entregado" />
+
+                            <div class="input-group-append">
+                                <input type="submit" name="entregar" style="width: 80px" class="btn btn-danger btn-sm"
+                                    value="Entregado" />
+                                <span class="input-group-text  border-0" style="cursor: pointer; background-color: #DC3545;">
+                                    <span class="iconify bg-white" data-icon="bi:check-square-fill"
+                                        data-inline="true"></span>
+                                </span>
+
+                            </div>
+
+
                         </form>
                     </td>
-                    <td>
-                        <i class="fas fa-check-square" style="font-size: 30px;"></i>
+
+                    <!-- <div class="input-group mb-3 border border">
+                            <input type="password" id="password" placeholder="Contraseña" name="contraseña" class="form-control border-0" aria-label="Amount (to the nearest dollar)" required>
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-user form-control-feedback"></i>
+                                <input type="text" class="form-control" placeholder="Escribe un nombre">
+                            </div>
+                        </div>
                     </td>
+                    <i class="fas fa-check-square" style="font-size: 25px;"></i> -->
                 </tr>
                 {% endfor %}
             </table>
         </div>
 
 
- 
+
 
 
         <!-- <div class="row form-group">

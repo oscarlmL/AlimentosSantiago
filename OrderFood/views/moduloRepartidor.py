@@ -148,7 +148,7 @@ def entregar_pedido(request, id_pedido):
      if (request.method == 'GET') and ("entregar" in request.GET):
          pedido.estado = 'Entregado'
          pedido.save()
-         return redirect('listar-pedidos-aceptados')
+         return redirect('listar-pedidos-activos')
      else:
          return redirect('listar-pedidos-activos')
 
