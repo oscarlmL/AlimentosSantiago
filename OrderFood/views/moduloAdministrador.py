@@ -13,10 +13,11 @@ def editar_perfil_admin(request):
     check = Administrador.objects.filter(
         email_admin=request.session['cuentaAdmin'])
     if len(check) > 0:
-        email = request.session['cuentaAdmin']
+        nombre = Administrador.objects.get(
+            email_admin=request.session['cuentaAdmin'])
         admin = Administrador.objects.get(
             email_admin=request.session['cuentaAdmin'])
-        data = {'admin': admin, 'email': email}
+        data = {'admin': admin, 'nombre': nombre}
     if request.method == 'POST':
         nombre_adm = request.POST["nombre_adm"]
         apat_adm = request.POST["apat_adm"]
@@ -50,9 +51,10 @@ def editar_perfil_admin(request):
             messages.success(request, "Datos editados correctamente")
             return redirect('editar-perfil')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])
             data = {
-                'email': email,
+                'nombre': nombre,
                 'error': error_message,
                 'admin':admin
             }
@@ -63,10 +65,12 @@ def cambiar_contraseña_admin(request):
     check = Administrador.objects.filter(
         email_admin=request.session['cuentaAdmin'])
     if len(check) > 0:
+        nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])
         email = request.session['cuentaAdmin']
         data = Administrador.objects.get(
             email_admin=request.session['cuentaAdmin'])
-        data = {'data': data, 'email': email}
+        data = {'data': data, 'email': email,'nombre':nombre}
     if request.method == "POST":
         contraseña_actual = request.POST['contraseña_actual']
         contraseña1 = request.POST['nueva_contraseña']
@@ -97,18 +101,20 @@ def cambiar_contraseña_admin(request):
                         request, "Contraseña Cambiada Correctamente")
                     return redirect('cambiar-contraseña')
                 else:
-                    email = request.session['cuentaAdmin']
+                    nombre = Administrador.objects.get(
+                            email_admin=request.session['cuentaAdmin'])
                     data = {
-                        'email': email,
+                        'nombre': nombre,
                         'error': error_message,
 
                     }
                 return render(request, 'trabajador/administrador/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
-                email = request.session['cuentaAdmin']
+                nombre = Administrador.objects.get(
+                    email_admin=request.session['cuentaAdmin'])
                 data = {
-                    'email': email,
+                    'nombre': nombre,
                     'error': error_message,
 
                 }
@@ -119,10 +125,11 @@ def cambiar_contraseña_admin(request):
 def generar_cuenta_enc_cocina(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
-        email = request.session['cuentaAdmin']
+        nombre = Administrador.objects.get(
+            email_admin=request.session['cuentaAdmin'])        
         cuentasEncCocina = EncCocina.objects.all()
         data = {
-            'email': email,
+            'nombre': nombre,
             'cuentasEncCocina': cuentasEncCocina
         }
         return render(request, 'trabajador/administrador/cuenta/encargadoCocina/gestionarEncCocina.html', data)
@@ -191,10 +198,11 @@ def generar_cuenta_enc_cocina(request):
             messages.success(request, "Cuenta Encargado Cocina Generada")
             return redirect('gestionar-encCocina')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+            email_admin=request.session['cuentaAdmin']) 
             cuentasEncCocina = EncCocina.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'cuentasEncCocina': cuentasEncCocina,
                 'error': error_message,
                 'values': value,
@@ -203,11 +211,12 @@ def generar_cuenta_enc_cocina(request):
 
 
 def editar_cuenta_enc_cocina(request):
-    email = request.session['cuentaAdmin']
+    nombre = Administrador.objects.get(
+            email_admin=request.session['cuentaAdmin']) 
     id_enc_coc = request.GET["id_enc_coc"]
     cuentaEncCocina = get_object_or_404(EncCocina, id_enc_coc=id_enc_coc)
     data1 = {
-        'email': email,
+        'nombre': nombre,
         'cuentaEncCocina': cuentaEncCocina
     }
 
@@ -252,10 +261,11 @@ def editar_cuenta_enc_cocina(request):
             messages.success(request, "Cuenta Encargado Cocina Editada")
             return redirect('gestionar-encCocina')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])             
             cuentasEncCocina = EncCocina.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'cuentasEncCocina': cuentasEncCocina,
                 'error': error_message,
                 'cuentaEncCocina': cuentaEncCocina
@@ -274,11 +284,12 @@ def eliminar_cuenta_enc_cocina(request):
 def generar_cuenta_enc_convenio(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
-        email = request.session['cuentaAdmin']
+        nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])         
         cuentasEncConvenio = EncConvenio.objects.all()
         data = {
             'cuentasEncConvenio': cuentasEncConvenio,
-            'email': email
+            'nombre': nombre
         }
         return render(request, 'trabajador/administrador/cuenta/encargadoConvenio/gestionarEncConvenio.html', data)
     else:
@@ -355,10 +366,11 @@ def generar_cuenta_enc_convenio(request):
             messages.success(request, "Cuenta Encargado Convenio Generada")
             return redirect('gestionar-enc-convenio')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])
             cuentasEncConvenio = EncConvenio.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'cuentasEncConvenio': cuentasEncConvenio,
                 'error': error_message,
                 'values': value,
@@ -367,11 +379,12 @@ def generar_cuenta_enc_convenio(request):
 
 
 def editar_cuenta_enc_convenio(request):
-    email = request.session['cuentaAdmin']
+    nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])    
     id_enc_conv = request.GET["id_enc_conv"]
     cuentaEncConvenio = get_object_or_404(EncConvenio, id_enc_conv=id_enc_conv)
     data1 = {
-        'email': email,
+        'nombre': nombre,
         'cuentaEncConvenio': cuentaEncConvenio
     }
 
@@ -422,10 +435,11 @@ def editar_cuenta_enc_convenio(request):
             messages.success(request, "Cuenta Encargado Convenio Editada")
             return redirect('gestionar-enc-convenio')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])             
             cuentasEncConvenio = EncConvenio.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'error': error_message,
                 'cuentasEncConvenio': cuentasEncConvenio,
                 'cuentaEncConvenio': cuentaEncConvenio
@@ -445,11 +459,12 @@ def eliminar_cuenta_enc_convenio(request):
 def generar_cuenta_repartidor(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
-        email = request.session['cuentaAdmin']
+        nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin']) 
         cuentasRepartidor = Repartidor.objects.all()
         data = {
             'cuentasRepartidor': cuentasRepartidor,
-            'email': email
+            'nombre': nombre
         }
         return render(request, 'trabajador/administrador/cuenta/repartidor/gestionarRepartidor.html', data)
     else:
@@ -541,10 +556,11 @@ def generar_cuenta_repartidor(request):
             messages.success(request, "Cuenta Repartidor Generada")
             return redirect('gestionar-repartidor')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])
             cuentasRepartidor = Repartidor.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'cuentasRepartidor': cuentasRepartidor,
                 'error': error_message,
                 'values': value
@@ -553,12 +569,13 @@ def generar_cuenta_repartidor(request):
 
 
 def editar_cuenta_repartidor(request):
-    email = request.session['cuentaAdmin']
+    nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])
     id_repartidor = request.GET["id_repartidor"]
     cuentaRepartidor = get_object_or_404(
         Repartidor, id_repartidor=id_repartidor)
     data1 = {
-        'email': email,
+        'nombre': nombre,
         'cuentaRepartidor': cuentaRepartidor
     }
     if request.method == "POST":
@@ -617,10 +634,11 @@ def editar_cuenta_repartidor(request):
             messages.success(request, "Cuenta Repartidor Editada")
             return redirect('gestionar-repartidor')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])
             cuentasRepartidor = Repartidor.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'error': error_message,
                 'cuentasRepartidor': cuentasRepartidor,
                 'cuentaRepartidor': cuentaRepartidor
@@ -639,11 +657,12 @@ def eliminar_cuenta_repartidor(request):
 def generar_cuenta_cajero(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
-        email = request.session['cuentaAdmin']
+        nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])        
         cuentaCajero = Cajero.objects.all()
         data = {
             'cuentasCajero': cuentaCajero,
-            'email': email
+            'nombre': nombre
         }
         return render(request, 'trabajador/administrador/cuenta/cajero/gestionarCajero.html', data)
     else:
@@ -695,10 +714,11 @@ def generar_cuenta_cajero(request):
             messages.success(request, "Cuenta Cajero Generada")
             return redirect('gestionar-cajero')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])              
             cuentasCajero = Cajero.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'cuentasCajero': cuentasCajero,
                 'error': error_message,
                 'values': value
@@ -706,12 +726,13 @@ def generar_cuenta_cajero(request):
         return render(request, 'trabajador/administrador/cuenta/cajero/gestionarCajero.html', data)
 
 def editar_cuenta_cajero(request):
-    email = request.session['cuentaAdmin']
+    nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])     
     id_cajero = request.GET["id_cajero"]
     cuentaCajero = get_object_or_404(
         Cajero, id_cajero=id_cajero)
     data1 = {
-        'email': email,
+        'nombre': nombre,
         'cuentaCajero': cuentaCajero
     }
     if request.method == "POST":
@@ -735,10 +756,11 @@ def editar_cuenta_cajero(request):
             messages.success(request, "Cuenta Cajero Editada")
             return redirect('gestionar-cajero')
         else:
-            email = request.session['cuentaAdmin']
+            nombre = Administrador.objects.get(
+                email_admin=request.session['cuentaAdmin'])             
             cuentasCajero = Cajero.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'error': error_message,
                 'cuentasCajero': cuentasCajero,
                 'cuentaCajero': cuentaCajero
@@ -768,7 +790,7 @@ def agregar_pedido(request):
         else:
             data["form"] = formulario
 
-    return render(request, 'cliente/pedido/agregar.html', data)
+    return render(request, 'trabajador/pedido/agregar.html', data)
 
 
 def listar_pedido(request):
@@ -777,7 +799,7 @@ def listar_pedido(request):
         'pedidos': pedidos
     }
 
-    return render(request, 'cliente/pedido/listar.html', data)
+    return render(request, 'trabajador/pedido/listar.html', data)
 
 
 def modificar_pedido(request, id):
@@ -795,7 +817,7 @@ def modificar_pedido(request, id):
             return redirect(to="listar_pedido")
         data["form"] = formulario
 
-    return render(request, 'cliente/pedido/modificar.html', data)
+    return render(request, 'trabajador/pedido/modificar.html', data)
 
 
 def eliminar_pedido(request, id):

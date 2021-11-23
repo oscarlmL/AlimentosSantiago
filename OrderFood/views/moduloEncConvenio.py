@@ -10,10 +10,11 @@ def editar_perfil_enc_convenio(request):
     check = EncConvenio.objects.filter(
         email_enc_conv=request.session['cuentaEncConvenio'])
     if len(check) > 0:
-        email = request.session['cuentaEncConvenio']
+        nombre = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
         encConvenio = EncConvenio.objects.get(
             email_enc_conv=request.session['cuentaEncConvenio'])
-        data = {'encConvenio': encConvenio, 'email': email}
+        data = {'encConvenio': encConvenio,'nombre':nombre}
     if request.method == 'POST':
         rut_enc_conv = request.POST["rut_enc_conv"]
         nom_enc_conv = request.POST["nom_enc_conv"]
@@ -49,11 +50,13 @@ def editar_perfil_enc_convenio(request):
             messages.success(request, "Datos editados correctamente")
             return redirect('editar-perfil-enc-convenio')
         else:
-            email = request.session['cuentaEncConvenio']
+            nombre = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
             data = {
-                'email': email,
+                'encConvenio': encConvenio,
                 'error': error_message,
-                'encConvenio':encConvenio
+                'nombre':nombre
+
             }
     return render(request, 'trabajador/encargadoConvenio/editarPerfil.html', data)
 
@@ -63,9 +66,13 @@ def cambiar_contraseña_enc_convenio(request):
         email_enc_conv=request.session['cuentaEncConvenio'])
     if len(check) > 0:
         email = request.session['cuentaEncConvenio']
+        nombre = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
+        encConvenio = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
         data = EncConvenio.objects.get(
             email_enc_conv=request.session['cuentaEncConvenio'])
-        data = {'data': data, 'email': email}
+        data = {'data': data, 'email': encConvenio,'nombre':nombre}
     if request.method == "POST":
         contraseña_actual = request.POST['contraseña_actual']
         contraseña1 = request.POST['nueva_contraseña']
@@ -99,18 +106,20 @@ def cambiar_contraseña_enc_convenio(request):
                         request, "Contraseña Cambiada Correctamente")
                     return redirect('cambiar-contraseña-enc-convenio')
                 else:
-                    email = request.session['cuentaEncConvenio']
+                    nombre = EncConvenio.objects.get(
+                        email_enc_conv=request.session['cuentaEncConvenio'])
                     data = {
-                        'email': email,
+                        'nombre': nombre,
                         'error': error_message,
 
                     }
                 return render(request, 'trabajador/encargadoConvenio/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
-                email = request.session['cuentaEncConvenio']
+                nombre = EncConvenio.objects.get(
+                    email_enc_conv=request.session['cuentaEncConvenio'])
                 data = {
-                    'email': email,
+                    'nombre': nombre,
                     'error': error_message,
 
                 }
@@ -120,10 +129,11 @@ def cambiar_contraseña_enc_convenio(request):
 
 def agregar_empresa(request):
     request.session.set_expiry(10000)
-    email = request.session['cuentaEncConvenio']
+    nombre = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
     empresa = Empresa.objects.all()
     data = {
-        'email': email,
+        'nombre': nombre,
         'empresa': empresa,
         'form': GestionEmpresaForm()
 
@@ -139,9 +149,12 @@ def agregar_empresa(request):
 
 
 def modificar_convenio(request, rut_emp):
+    nombre = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
     empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
     data = {
-        "form": GestionEmpresaForm(instance=empresa)
+        "form": GestionEmpresaForm(instance=empresa),
+        'nombre':nombre
     }
     if request.method == 'POST':
         formulario = GestionEmpresaForm(data=request.POST, instance=empresa)
@@ -162,8 +175,9 @@ def eliminar_empresa(request, rut_emp):
 def generar_cuenta_empleado(request):
     id = request.GET["rut_emp"]
     empresa = get_object_or_404(Empresa, rut_emp=id)
-    email = request.session['cuentaEncConvenio']
-    data = {'empresa': empresa, 'email': email}
+    nombre = EncConvenio.objects.get(
+            email_enc_conv=request.session['cuentaEncConvenio'])
+    data = {'empresa': empresa, 'nombre': nombre}
     if request.method == 'POST':
         nombre_cli = request.POST["nombre_cli"]
         apaterno_cli = request.POST["apaterno_cli"]
@@ -203,13 +217,15 @@ def generar_cuenta_empleado(request):
             messages.success(request, "Cuenta Trabajador Empresa Generada")
             return redirect('gestionar-empresa')
         else:
-            email = request.session['cuentaEncConvenio']
+            nombre = EncConvenio.objects.get(
+                email_enc_conv=request.session['cuentaEncConvenio'])
             cuentaClienteConvenio = Cliente.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'cuentaClienteConvenio': cuentaClienteConvenio,
                 'error': error_message,
                 'values': value,
+                'empresa':empresa
             }
         return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html', data)
     return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/gestionarCuentaEmpleado.html', data)
@@ -217,16 +233,19 @@ def generar_cuenta_empleado(request):
 
 def listar_cuenta_empleados(request):
     id = request.GET["rut_emp"]
+    nombre = EncConvenio.objects.get(
+                email_enc_conv=request.session['cuentaEncConvenio'])
     cuentas_empleados = Cliente.objects.filter(empresa_rut_empresa_id=id)
-    data = {'cuentas_empleados':cuentas_empleados}
+    data = {'cuentas_empleados':cuentas_empleados,'nombre':nombre}
     return render(request,'trabajador/encargadoConvenio/cuentasEmpleados/listar_cuentas_empleados.html',data)
 
 def editar_cuenta_trab_emp(request):
-    email = request.session['cuentaEncConvenio']
+    nombre = EncConvenio.objects.get(
+                email_enc_conv=request.session['cuentaEncConvenio'])
     id_cliente = request.GET["id_cliente"]
     cuentaClienteConvenio = get_object_or_404(Cliente, id_cliente=id_cliente)
     data1 = {
-        'email': email,
+        'nombre': nombre,
         'cuentaClienteConvenio': cuentaClienteConvenio
     }
 
@@ -274,10 +293,11 @@ def editar_cuenta_trab_emp(request):
             messages.success(request, "Cuenta Cliente Empresa Editada")
             return redirect('editar-cuentaTrabEmp')
         else:
-            email = request.session['cuentaEncConvenio']
+            nombre = EncConvenio.objects.get(
+                email_enc_conv=request.session['cuentaEncConvenio'])
             cuentasClienteConvenio = Cliente.objects.all()
             data = {
-                'email': email,
+                'nombre': nombre,
                 'cuentasClienteConvenio': cuentasClienteConvenio,
                 'error': error_message,
                 'cuentaClienteConvenio': cuentaClienteConvenio
@@ -286,10 +306,11 @@ def editar_cuenta_trab_emp(request):
     return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data1)
 
 
-def eliminar_cuenta_trab_emp(request, id):
-    cuentaClienteConvenio = Cliente.objects.get(id=id)
+def eliminar_cuenta_trab_emp(request):
+    id_cliente = request.GET["id_cliente"]
+    cuentaClienteConvenio = Cliente.objects.get(id_cliente=id_cliente)
     cuentaClienteConvenio.delete()
-    return redirect('gestionar-cuentaTrabEmp')
+    return redirect('gestionar-empresa')
 # fin encargado convenio
 
 

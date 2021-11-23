@@ -105,11 +105,11 @@
 
                     {% for cuentasEncCocina in cuentasEncCocina %}
                     <tr class="table-light">
-                        <th>{{cuentasEncCocina.nom_enc_coc}}</th>
-                        <th>{{cuentasEncCocina.titulo}}</th>
-                        <th> {{cuentasEncCocina.exp_laboral}}</th>
-                        <th>{{cuentasEncCocina.email_enc_coc}}</th>
-                        <th>{{cuentasEncCocina.celular}}</th>
+                        <td>{{cuentasEncCocina.nom_enc_coc}}</td>
+                        <td>{{cuentasEncCocina.titulo}}</td>
+                        <td> {{cuentasEncCocina.exp_laboral}}</td>
+                        <td>{{cuentasEncCocina.email_enc_coc}}</td>
+                        <td>{{cuentasEncCocina.celular}}</td>
                         <td>
                             <a href="{% url 'editar-cuenta-enc-cocina' %}?id_enc_coc={{cuentasEncCocina.id_enc_coc}}"
                                 class="btn btn-dark btn-sm">Modificar</a>

@@ -21,6 +21,10 @@ urlpatterns = [
     path('login', Login.as_view(), name="login"),
     path('logout', logout, name="logout"),
 
+    path('eliminar-plato-carro/', eliminar_plato_carro,name="eliminar-plato-carro"),
+    path('limpiar-carro/', limpiar_carro,name="limpiar-carro"),
+
+
     #CLIENTE
     path('registro/', generarCuentaCliente , name="auto-registro-cliente"),
     path("editar-perfil-cliente/", auth_middleware_cliente(editar_perfil_cliente), name="editar-perfil-cliente"),
@@ -61,7 +65,7 @@ urlpatterns = [
     # path('buscar-plato/', (buscar_plato), name="buscar-plato"),
 
     #path Proveedor
-    path('proveedor', proveedor, name="proveedor"),
+    path('proveedor',proveedor, name="proveedor"),
     path('listar-proveedor/', auth_middleware_enc_cocina(listar_proveedor), name="listar-proveedor"),
     path('modificar-proveedor/', auth_middleware_enc_cocina(modificar_proveedor), name="modificar-proveedor"),
     path('eliminar-proveedor/', auth_middleware_enc_cocina(eliminar_proveedor), name="eliminar-proveedor"),
@@ -86,7 +90,7 @@ urlpatterns = [
     path("leertxt", leertxt , name="leertxt"),
 
     path('editar-cuentaTrabEmp', auth_middleware_enc_convenio(editar_cuenta_trab_emp), name='editar-cuentaTrabEmp'),
-    path('eliminar-cuentaTrabEmp/<id>/', eliminar_cuenta_trab_emp, name='eliminar-cuentaTrabEmp'),
+    path('eliminar-cuentaTrabEmp/', eliminar_cuenta_trab_emp, name='eliminar-cuentaTrabEmp'),
     #FIN ENCARGADO CONVENIO
 
 
@@ -110,11 +114,10 @@ urlpatterns = [
     #path CAJERO
     path('listar-pedidos-pendientes/',auth_middleware_cajero(listar_pedidos_pendientes), name="listar-pedidos-pendientes"),
     path('confirmar-pedido/<int:id_pedido>/',confirmar_pedido, name="confirmar-pedido"),
-    path('listar-pedidos-confirmados/',listar_pedidos_confirmados, name="listar-pedidos-confirmados")
+    path('listar-pedidos-confirmados/',listar_pedidos_confirmados, name="listar-pedidos-confirmados"),
     
     #END CAJERO
 
- 
     # path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
     # path('listar_carrito', listar_carrito, name='listar_carrito'),
     # path('eliminar_item_carrito/<id>/', eliminar_item_carrito, name='eliminar_item_carrito'),   

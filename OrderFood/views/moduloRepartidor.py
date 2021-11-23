@@ -9,10 +9,9 @@ def editar_perfil_repartidor(request):
     check = Repartidor.objects.filter(
         email_repartidor=request.session['cuentaRepartidor'])
     if len(check) > 0:
-        email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
         repartidor = Repartidor.objects.get(
             email_repartidor=request.session['cuentaRepartidor'])
-        data = {'repartidor': repartidor, 'email': email}
+        data = {'repartidor': repartidor}
     if request.method == 'POST':
         rut_repartidor = request.POST["rut_repartidor"]
         nombre_repartidor = request.POST["nombre_repartidor"]
@@ -52,9 +51,7 @@ def editar_perfil_repartidor(request):
             messages.success(request, "Datos editados correctamente")
             return redirect('editar-perfil-repartidor')
         else:
-            email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
             data = {
-                'email': email,
                 'error': error_message,
                 'repartidor':repartidor
             }
@@ -66,9 +63,9 @@ def cambiar_contraseña_repartidor(request):
         email_repartidor=request.session['cuentaRepartidor'])
     if len(check) > 0:
         email = request.session['cuentaRepartidor']
-        data = Repartidor.objects.get(
+        repartidor = Repartidor.objects.get(
             email_repartidor=request.session['cuentaRepartidor'])
-        data = {'data': data, 'email': email}
+        data = {'email': email,'repartidor':repartidor}
     if request.method == "POST":
         contraseña_actual = request.POST['contraseña_actual']
         contraseña1 = request.POST['nueva_contraseña']
@@ -102,18 +99,20 @@ def cambiar_contraseña_repartidor(request):
                         request, "Contraseña Cambiada Correctamente")
                     return redirect('cambiar-contraseña-repartidor')
                 else:
-                    email = request.session['cuentaRepartidor']
+                    repartidor = Repartidor.objects.get(
+                        email_repartidor=request.session['cuentaRepartidor'])
                     data = {
-                        'email': email,
+                        'repartidor': repartidor,
                         'error': error_message,
 
                     }
                 return render(request, 'trabajador/repartidor/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
-                email = request.session['cuentaRepartidor']
+                repartidor = Repartidor.objects.get(
+                        email_repartidor=request.session['cuentaRepartidor'])
                 data = {
-                    'email': email,
+                    'repartidor': repartidor,
                     'error': error_message,
 
                 }
@@ -123,11 +122,11 @@ def cambiar_contraseña_repartidor(request):
 
 #pedidos confirmados
 def listar_pedidos_activos(request):
-    email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
-    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
+    repartidor = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
+    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado',tipo_entrega='Delivery')
     data = {
         'pedidos_confirmados':pedidos_confirmados,
-        'email':email
+        'repartidor':repartidor
     }
     return render (request ,'trabajador/repartidor/pedidos_activos_local.html',data)
 
@@ -149,18 +148,18 @@ def entregar_pedido(request, id_pedido):
      if (request.method == 'GET') and ("entregar" in request.GET):
          pedido.estado = 'Entregado'
          pedido.save()
-         return redirect('listar-pedidos-aceptados')
+         return redirect('listar-pedidos-activos')
      else:
          return redirect('listar-pedidos-activos')
 
 
 #pedidos aceptados
 def listar_pedidos_aceptados(request):
-    email = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
+    repartidor = Repartidor.objects.get(email_repartidor=request.session['cuentaRepartidor'])
     pedidos_aceptados = Pedido.objects.filter(estado='En ruta')
     data = {
         'pedidos_aceptados': pedidos_aceptados,
-        'email':email
+        'repartidor':repartidor
     }
     return render (request ,'trabajador/repartidor/pedidos_aceptados.html',data)
 

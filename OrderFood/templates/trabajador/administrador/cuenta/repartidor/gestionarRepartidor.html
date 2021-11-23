@@ -132,13 +132,13 @@
 
                     {% for cuentasRepartidor in cuentasRepartidor %}
                     <tr class="table-light">
-                        <th>{{cuentasRepartidor.rut_repartidor}}</th>
-                        <th>{{cuentasRepartidor.nombre_repartidor}}</th>
-                        <th>{{cuentasRepartidor.apellido_repartidor}}</th>
-                        <th>{{cuentasRepartidor.email_repartidor}}</th>
-                        <th>{{cuentasRepartidor.tipo_veh}}</th>
-                        <th>{{cuentasRepartidor.patente_veh}}</th>
-                        <th>{{cuentasRepartidor.celular}}</th>
+                        <td>{{cuentasRepartidor.rut_repartidor}}</td>
+                        <td>{{cuentasRepartidor.nombre_repartidor}}</td>
+                        <td>{{cuentasRepartidor.apellido_repartidor}}</td>
+                        <td>{{cuentasRepartidor.email_repartidor}}</td>
+                        <td>{{cuentasRepartidor.tipo_veh}}</td>
+                        <td>{{cuentasRepartidor.patente_veh}}</td>
+                        <td>{{cuentasRepartidor.celular}}</td>
                         <td>
                             <a href="{% url 'editar-cuenta-repartidor' %}?id_repartidor={{cuentasRepartidor.id_repartidor}}"
                                 class="btn btn-dark btn-sm">Modificar</a>

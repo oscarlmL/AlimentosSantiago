@@ -9,10 +9,11 @@ def editar_perfil_enc_cocina(request):
     check = EncCocina.objects.filter(
         email_enc_coc=request.session['cuentaEncCocina'])
     if len(check) > 0:
-        email = request.session['cuentaEncCocina']
+        nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina'])
         encCocina = EncCocina.objects.get(
             email_enc_coc=request.session['cuentaEncCocina'])
-        data = {'encCocina': encCocina, 'email': email}
+        data = {'encCocina': encCocina, 'nombre': nombre}
     if request.method == 'POST':
         nom_enc_coc = request.POST["nom_enc_coc"]
         titulo = request.POST["titulo"]
@@ -61,10 +62,12 @@ def cambiar_contraseña_enc_cocina(request):
     check = EncCocina.objects.filter(
         email_enc_coc=request.session['cuentaEncCocina'])
     if len(check) > 0:
+        nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina'])
         email = request.session['cuentaEncCocina']
         data = EncCocina.objects.get(
             email_enc_coc=request.session['cuentaEncCocina'])
-        data = {'data': data, 'email': email}
+        data = {'data': data, 'email': email,'nombre':nombre}
     if request.method == "POST":
         contraseña_actual_cocina = request.POST['contraseña_actual_cocina']
         contraseña1 = request.POST['nueva_contraseña_cocina']
@@ -96,18 +99,20 @@ def cambiar_contraseña_enc_cocina(request):
                         request, "Contraseña Cambiada Correctamente")
                     return redirect('cambiar-contraseña-enc-cocina')
                 else:
-                    email = request.session['cuentaEncCocina']
+                    nombre = EncCocina.objects.get(
+                        email_enc_coc=request.session['cuentaEncCocina'])
                     data = {
-                        'email': email,
+                        'nombre': nombre,
                         'error': error_message,
 
                     }
                 return render(request, 'trabajador/encargadoCocina/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
-                email = request.session['cuentaEncCocina']
+                nombre = EncCocina.objects.get(
+                        email_enc_coc=request.session['cuentaEncCocina'])
                 data = {
-                    'email': email,
+                    'nombre': nombre,
                     'error': error_message,
 
                 }
@@ -117,10 +122,11 @@ def cambiar_contraseña_enc_cocina(request):
 
 def gestionar_plato(request):
     request.session.set_expiry(10000)
-    email = request.session['cuentaEncCocina']
+    nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina'])
     plato = Plato.objects.all()
     data = {
-        'email': email,
+        'nombre': nombre,
         'plato': plato,
         'form': PlatoForm()
     }
@@ -138,12 +144,13 @@ def gestionar_plato(request):
 
 
 def modificar_plato(request):
-    email = request.session['cuentaEncCocina']
+    nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina'])
     id_plato = request.GET["id_plato"]
     plato = get_object_or_404(Plato, id_plato=id_plato)
 
     data = {
-        'email': email,
+        'nombre': nombre,
         'form': PlatoForm(instance=plato)
     }
     if request.method == 'POST':
@@ -170,7 +177,7 @@ def eliminar_plato(request):
 # contacto proveedor que realiza una oferta la vera el encargado cocina en su modulo
 def proveedor(request):
     data = {
-        'form': ProveedorForm()
+        'form': ProveedorForm(),
     }
     if request.method == 'POST':
         formulario = ProveedorForm(request.POST)
@@ -185,24 +192,26 @@ def proveedor(request):
 
 def listar_proveedor(request):
     request.session.set_expiry(10000)
-    email = request.session['cuentaEncCocina']
+    nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina'])    
     proveedores = Proveedor.objects.all()
     data = {
         'proveedores': proveedores,
-        'email': email
+        'nombre': nombre
     }
     return render(request, 'trabajador/encargadoCocina/proveedor/listar.html', data)
 
 
 def modificar_proveedor(request):
     request.session.set_expiry(10000)
-    email = request.session['cuentaEncCocina']
+    nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina']) 
     id_proveedor = request.GET["id_proveedor"]
     proveedor = get_object_or_404(Proveedor, id_proveedor=id_proveedor)
 
     data = {
         'form': ProveedorForm(instance=proveedor),
-        'email': email
+        'nombre': nombre
     }
 
     if request.method == 'POST':
@@ -226,10 +235,13 @@ def eliminar_proveedor(request):
 
 # Modulo Restaurant
 def restaurant(request):
+    nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina']) 
     restaurantes = Restaurant.objects.all()
     data = {
         'form': RestaurantForm(),
-        'restaurantes': restaurantes
+        'restaurantes': restaurantes,
+        'nombre':nombre
     }
     if request.method == 'POST':
         formulario = RestaurantForm(request.POST, files=request.FILES)
@@ -244,23 +256,25 @@ def restaurant(request):
 
 def listar_restaurant(request):
     request.session.set_expiry(10000)
-    email = request.session['cuentaEncCocina']
+    nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina']) 
     restaurantes = Restaurant.objects.all()
     data = {
         'restaurantes': restaurantes,
-        'email': email
+        'nombre': nombre
     }
     return render(request, 'trabajador/encargadoCocina/restaurant/gestionarRestaurant.html', data)
 
 
 def modificar_restaurant(request):
     request.session.set_expiry(10000)
-    email = request.session['cuentaEncCocina']
+    nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina']) 
     id_restaurante = request.GET["id_restaurante"]
     restaurant = get_object_or_404(Restaurant, id_restaurante=id_restaurante)
 
     data = {
-        'email': email,
+        'nombre': nombre,
         'form': RestaurantForm(instance=restaurant),
         
         # 'restaurant': restaurant

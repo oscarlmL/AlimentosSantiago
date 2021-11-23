@@ -1,13 +1,15 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404,HttpResponseRedirect
 from django.contrib.auth.hashers import make_password, check_password
 from OrderFood.models import *
 from django.views import View
 from django.db.models import Q
+from django.http import HttpResponseRedirect
+
 
 def incio_trabajador(request):
-    email = request.session.get('cuentaAdmin') or request.session.get(
+    nombre = request.session.get('cuentaAdmin') or request.session.get(
             'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
-    return render(request,'trabajador/inicio_trabajador.html',{'email':email})
+    return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
 
 class Login(View):
     def get(self, request):
@@ -124,6 +126,18 @@ class home(View):
             return render(request, 'cliente/home.html', context)
 
 
+  
+def eliminar_plato_carro(request):
+    plato_carro = request.POST.get('plato_carro')
+    list_cart  = request.session['carro']
+    list_cart.pop(plato_carro)
+    request.session.modified = True
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def limpiar_carro(request):
+    request.session['carro'] = {}
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 def listar_plato_restaurante(request,id_restaurante):
     platos = Plato.objects.filter(Restaurant_id=id_restaurante)
     #MODAL CARRITO
@@ -138,6 +152,7 @@ def listar_plato_restaurante(request,id_restaurante):
         'platos_categoria':reversed(categoriaPlato.objects.all()),
     }
     return render(request, 'cliente/platos.html', data)
+
 
 
 # Funciones Generales
