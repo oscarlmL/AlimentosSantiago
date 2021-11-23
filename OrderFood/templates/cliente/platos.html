@@ -37,6 +37,7 @@
                         <div class="row">
                             {% for plato in platos %}
                             {% if plato.categoria == categoria %}
+
                             <div class="col-lg-3">
                                 <div class="">
                                     <div class="card mx-auto mb-3 border-bottom-0" id="{{plato.id_plato}}"
@@ -185,7 +186,7 @@
             <div class="modal-footer border-top-0 d-flex justify-content-between">
                 <form action="{% url  'limpiar-carro' %}" method="POST" class="">
                     {% csrf_token %}
-                    <input type="submit" class="btn btn-secondary" value="Vacia Carro">
+                    <input type="submit" class="btn btn-secondary" value="Vaciar Carro">
                 </form>
                 <div class="m-3 p-3">
                     <a href="{% url 'realizar-pedido' %}" class="btn btn-primary border float-right"
