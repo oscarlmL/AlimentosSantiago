@@ -176,11 +176,8 @@ def eliminar_plato(request):
 
 # contacto proveedor que realiza una oferta la vera el encargado cocina en su modulo
 def proveedor(request):
-    nombre = EncCocina.objects.get(
-            email_enc_coc=request.session['cuentaEncCocina'])
     data = {
         'form': ProveedorForm(),
-        'nombre':nombre
     }
     if request.method == 'POST':
         formulario = ProveedorForm(request.POST)

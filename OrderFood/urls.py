@@ -64,7 +64,7 @@ urlpatterns = [
     # path('buscar-plato/', (buscar_plato), name="buscar-plato"),
 
     #path Proveedor
-    path('proveedor', proveedor, name="proveedor"),
+    path('proveedor',proveedor, name="proveedor"),
     path('listar-proveedor/', auth_middleware_enc_cocina(listar_proveedor), name="listar-proveedor"),
     path('modificar-proveedor/', auth_middleware_enc_cocina(modificar_proveedor), name="modificar-proveedor"),
     path('eliminar-proveedor/', auth_middleware_enc_cocina(eliminar_proveedor), name="eliminar-proveedor"),
