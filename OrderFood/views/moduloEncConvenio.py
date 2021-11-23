@@ -291,3 +291,39 @@ def eliminar_cuenta_trab_emp(request, id):
     cuentaClienteConvenio.delete()
     return redirect('gestionar-cuentaTrabEmp')
 # fin encargado convenio
+
+
+def cargar_saldo_cliente(request):
+    return render(request,'trabajador/encargadoConvenio/cargarSaldo.html')
+
+
+def leertxt(request):
+    
+    data = request.FILES['file'].readlines()
+    case_list = []
+    for a in data:
+
+        fila = str(a).split(';')
+        rut = str(fila[0]).replace("'", "")
+        rut = rut.replace("b", "")
+        saldo = str(fila[1]).replace("'", "")
+        saldo = saldo.replace(r'\n', ' ').replace(r'\r', '')
+
+        existe = Cliente.objects.filter(id_cliente=rut).count()
+
+        if existe > 0 :
+            cliente = Cliente.objects.get(id_cliente=rut)
+            #print(cliente)
+            #print('el valor es : '+ rut + 'su saldo es: ' + saldo)
+
+            saldonuevo = int(cliente.saldo_cli) + int(saldo)
+
+            Cliente.objects.filter(id_cliente=rut).update(saldo_cli=saldonuevo)
+
+            case = {'nombre': cliente.nombre_cli, 'paterno': cliente.apaterno_cli, 'materno': cliente.amaterno_cli, 'saldoactual': cliente.saldo_cli, 'saldo': saldo, 'saldonuevo': saldonuevo }
+            case_list.append(case)
+
+
+    saldos = {'saldos': case_list}
+
+    return render(request, 'trabajador/encargadoConvenio/clientesaldos.html',  saldos)

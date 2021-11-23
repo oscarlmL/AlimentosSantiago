@@ -1,0 +1,42 @@
+{% extends 'trabajador/base_trabajador.html' %}
+{% load static %}
+{% block contenido %}
+
+<br>
+<br>
+<br>
+    <div class="container">
+        <div class="row mt-4 mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        Cargar Saldo Cliente.
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data" action="/leertxt">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlFile1">Seleccionar Planilla Saldo</label>
+                                        <input type="file" name="file" class="form-control-file" id="file" accept="text/plain">
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-info btn-sm btn-block">Cargar Planilla</button>
+                                </div>
+                            </div>                            
+                        </form>                        
+
+                    </div>
+                  </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
