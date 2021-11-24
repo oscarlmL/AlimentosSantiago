@@ -154,6 +154,9 @@ class Empresa(models.Model):
     class Meta:
         db_table = 'empresa'
 
+    def __str__(self):
+        return self.rut_emp
+
 class EncCocina(models.Model):
     id_enc_coc = models.AutoField(primary_key=True)
     # This field type is a guess.

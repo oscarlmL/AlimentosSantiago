@@ -330,18 +330,18 @@ def leertxt(request):
         saldo = str(fila[1]).replace("'", "")
         saldo = saldo.replace(r'\n', ' ').replace(r'\r', '')
 
-        existe = Cliente.objects.filter(id_cliente=rut).count()
+        existe = Cliente.objects.filter(empresa_rut_empresa_id=rut).count()
 
         if existe > 0 :
-            cliente = Cliente.objects.get(id_cliente=rut)
+            cliente = Cliente.objects.get(empresa_rut_empresa_id=rut)
             #print(cliente)
             #print('el valor es : '+ rut + 'su saldo es: ' + saldo)
 
             saldonuevo = int(cliente.saldo_cli) + int(saldo)
 
-            Cliente.objects.filter(id_cliente=rut).update(saldo_cli=saldonuevo)
+            Cliente.objects.filter(empresa_rut_empresa_id=rut).update(saldo_cli=saldonuevo)
 
-            case = {'nombre': cliente.nombre_cli, 'paterno': cliente.apaterno_cli, 'materno': cliente.amaterno_cli, 'saldoactual': cliente.saldo_cli, 'saldo': saldo, 'saldonuevo': saldonuevo }
+            case = {'rut_empresa':cliente.empresa_rut_empresa,'nombre': cliente.nombre_cli, 'paterno': cliente.apaterno_cli, 'materno': cliente.amaterno_cli, 'saldoactual': cliente.saldo_cli, 'saldo': saldo, 'saldonuevo': saldonuevo }
             case_list.append(case)
 
 
