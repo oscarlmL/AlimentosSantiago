@@ -259,10 +259,19 @@ class pedidos(View):
     def get(self, request):
         clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
         cuentaCliente = request.session.get('cuentaCliente')
-        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente)
+        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente).filter(~Q(estado="Entregado"))
         print(pedidos)
         data={'pedidos':pedidos,'clienteeee':clienteeee}
         return render(request, 'cliente/pedidos.html',data)
+
+class historial_pedidos(View):   
+    def get(self, request):
+        clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
+        cuentaCliente = request.session.get('cuentaCliente')
+        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente).filter(estado="Entregado")
+        print(pedidos)
+        data={'pedidos':pedidos,'clienteeee':clienteeee}
+        return render(request, 'cliente/historial-pedidos.html',data)
 
    
 
