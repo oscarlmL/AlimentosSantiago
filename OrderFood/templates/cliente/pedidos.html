@@ -3,14 +3,13 @@
 {% load carro %}
 {% load humanize %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var refreshId = setInterval(function () {
-            $('#mis-pedidos').load('/mis-pedidos');//actualizas el div
-        }, 3000);
+<script> 
+    $(document).ready(function(){
+    setInterval(function(){
+          $("#mis-pedidos").load(window.location.href + " #mis-pedidos" );
+    }, 3000);
     });
-
-</script>
+    </script>
 
 <div id="mis-pedidos">
     <div class="container">
