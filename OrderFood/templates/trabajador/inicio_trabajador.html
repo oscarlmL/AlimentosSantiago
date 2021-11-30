@@ -174,13 +174,28 @@
     {% elif request.session.cuentaRepartidor %}
     <div class="row">
         <div class="col-md-4">
-            <a href="/editar-perfil-repartidor">
+            <a href="/listar-pedidos-activos">
                 <div class="card mb-4 box-shadow">
                     <div class="text-center">
-                        <i class="fa fa-cutlery" aria-hidden="true"></i>
+                        <img src="{% static 'app/iconos/sombrero-de-cocinero.png' %}" alt="">
                     </div>
                     <div class="card-body text-center">
-                        <span class="links_name">Editar Perfil</span>
+                        <span class="links_name">Pedidos Activos</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% elif request.session.cuentaCajero %}
+    <div class="row">
+        <div class="col-md-4">
+            <a href="/listar-pedidos-pendientes">
+                <div class="card mb-4 box-shadow">
+                    <div class="text-center">
+                        <img src="{% static 'app/iconos/pendiente.png' %}">
+                    </div>
+                    <div class="card-body text-center">
+                        <span class="links_name">Pedidos pendientes</span>
                     </div>
                 </div>
             </a>
