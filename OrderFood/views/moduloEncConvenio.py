@@ -167,9 +167,11 @@ def modificar_convenio(request, rut_emp):
     return render(request, 'trabajador/encargadoConvenio/empresas/modificarEmpConv.html', data)
 
 
-def eliminar_empresa(request, rut_emp):
+def eliminar_empresa(request):
+    rut_emp = request.GET["rut_emp"]
     empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
     empresa.delete()
+    messages.success(request, "Empresa Eliminada Correctamente")
     return redirect(to="gestionar-empresa")
 
 def generar_cuenta_empleado(request):

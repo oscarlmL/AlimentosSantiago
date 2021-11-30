@@ -1,30 +1,6 @@
 {% extends "trabajador/base_trabajador.html" %}
 {% block contenido %}
 {% load static %}
-{% block js %}
-<script>
-    function eliminarEncConvenio(id_enc_conv) {
-        Swal.fire({
-            "title": "¿Estas seguro?",
-            "text": "esta acción no se puede deshacer",
-            "icon": "question",
-            "showCancelButton": true,
-            "cancelButtonText": "Cancelar",
-            "confirmButtonText": "Eliminar",
-            "reverseButtons": true,
-            "confirmButtonColor": "#dc3545",
-            "cancelButtonColor": "#303030"
-
-
-        })
-            .then(function (result) {
-                if (result.isConfirmed) {
-                    window.location.href = "/eliminar-cuenta-enc-convenio/?id_enc_conv=" + id_enc_conv + ""
-                }
-            })
-    }
-</script>
-{% endblock %}
 <br>
 <br>
 <br>
@@ -145,78 +121,102 @@
             </div>
         </div>
     </div>
-    <script>
-        function mostrarContrasena() {
-            var tipo = document.getElementById("password");
-            if (tipo.type == "password") {
-                tipo.type = "text";
-            } else {
-                tipo.type = "password";
+</div>
+<script>
+    function mostrarContrasena() {
+        var tipo = document.getElementById("password");
+        if (tipo.type == "password") {
+            tipo.type = "text";
+        } else {
+            tipo.type = "password";
+        }
+    }
+</script>
+<script>
+    function mostrarContrasena2() {
+        var tipo = document.getElementById("password2");
+        if (tipo.type == "password2") {
+            tipo.type = "text";
+        } else {
+            tipo.type = "password2";
+        }
+    }
+</script>
+<script type="text/javascript">
+    function valideKey(evt) {
+
+        // code is the decimal ASCII representation of the pressed key.
+        var code = (evt.which) ? evt.which : evt.keyCode;
+
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    }
+</script>
+<script>
+    function soloLetras(e) {
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = [8, 37, 39, 46];
+
+        tecla_especial = false
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
             }
         }
-    </script>
-    <script>
-        function mostrarContrasena2() {
-            var tipo = document.getElementById("password2");
-            if (tipo.type == "password2") {
-                tipo.type = "text";
-            } else {
-                tipo.type = "password2";
-            }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial)
+            return false;
+    }
+
+    function limpia() {
+        var val = document.getElementById("miInput").value;
+        var tam = val.length;
+        for (i = 0; i < tam; i++) {
+            if (!isNaN(val[i]))
+                document.getElementById("miInput").value = '';
         }
-    </script>
-    <script type="text/javascript">
-        function valideKey(evt) {
+    }
+</script>
 
-            // code is the decimal ASCII representation of the pressed key.
-            var code = (evt.which) ? evt.which : evt.keyCode;
+<script src="js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+<script src="js/custom-general.js"></script>
 
-            if (code == 8) { // backspace.
-                return true;
-            } else if (code >= 48 && code <= 57) { // is a number.
-                return true;
-            } else { // other keys.
-                return false;
-            }
-        }
-    </script>
-    <script>
-        function soloLetras(e) {
-            key = e.keyCode || e.which;
-            tecla = String.fromCharCode(key).toLowerCase();
-            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-            especiales = [8, 37, 39, 46];
+{% block js %}
+<script>
+    function eliminarEncConvenio(id_enc_conv) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
 
-            tecla_especial = false
-            for (var i in especiales) {
-                if (key == especiales[i]) {
-                    tecla_especial = true;
-                    break;
+
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminar-cuenta-enc-convenio/?id_enc_conv=" + id_enc_conv + ""
                 }
-            }
-
-            if (letras.indexOf(tecla) == -1 && !tecla_especial)
-                return false;
-        }
-
-        function limpia() {
-            var val = document.getElementById("miInput").value;
-            var tam = val.length;
-            for (i = 0; i < tam; i++) {
-                if (!isNaN(val[i]))
-                    document.getElementById("miInput").value = '';
-            }
-        }
-    </script>
-
-    <script src="js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-    <script src="js/custom-general.js"></script>
+            })
+    }
+</script>
+{% endblock %}
 
 
-
-
-    {% endblock %}
+{% endblock %}

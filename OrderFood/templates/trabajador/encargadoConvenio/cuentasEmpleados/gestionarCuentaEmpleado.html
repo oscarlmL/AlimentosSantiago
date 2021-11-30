@@ -3,6 +3,7 @@
 {% load static %}
 <br>
 <br>
+<br>
 <div class="p-4 m-4">
     <div class="">
         <div class="col-lg-5 mx-auto rounded pt-4">
@@ -22,57 +23,59 @@
                 <div class="card-body">
                     <h2>Generar Cuenta Trabajador</h2>
                     <hr>
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <!-- <div class="form-group">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <!-- <div class="form-group">
                         <input type="text" class="form-control" name="rut_cli" placeholder="Rut" id=""
                             value="{{values.rut_cli}}" maxlength="12" onkeyup="formatoRut(this)">
                     </div> -->
-                    <div class="form-group">
-                        <input type="hidden" class="form-control"  readonly name="empresa_rut_empresa" value="{{empresa.rut_emp}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" readonly name="nom_emp" value="{{empresa.nom_emp}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" name="nombre_cli" aria-describedby=""
-                            placeholder="Nombres" value="{{empresa.nom_emp}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" name="apaterno_cli" aria-describedby=""
-                            placeholder="Apellido Paterno" value="{{empresa.nom_emp}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" name="amaterno_cli" aria-describedby=""
-                            placeholder="Apellido Materno" value="{{empresa.nom_emp}}">
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="" name="fono_cli" aria-describedby=""
-                            value="912345678" placeholder="Celular ej: 912345678">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="" name="email_cli" aria-describedby=""
-                            value="{{values.email_cli}}" placeholder="ejemplo: emailcliente@dominio.com">
-                    </div>
-                    <!-- <div class="form-group">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" readonly name="empresa_rut_empresa"
+                                value="{{empresa.rut_emp}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" readonly name="nom_emp" value="{{empresa.nom_emp}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="nombre_cli" aria-describedby=""
+                                placeholder="Nombres" value="{{empresa.nom_emp}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="apaterno_cli" aria-describedby=""
+                                placeholder="Apellido Paterno" value="{{empresa.nom_emp}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="amaterno_cli" aria-describedby=""
+                                placeholder="Apellido Materno" value="{{empresa.nom_emp}}">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="" name="fono_cli" aria-describedby=""
+                                value="912345678" placeholder="Celular ej: 912345678">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="" name="email_cli" aria-describedby=""
+                                value="{{values.email_cli}}" placeholder="ejemplo: emailcliente@dominio.com">
+                        </div>
+                        <!-- <div class="form-group">
                         <input type="text" class="form-control" id="" name="direccion_cliente" aria-describedby=""
                             placeholder="Direccion" value="{{values.direccion_cliente}}">
                     </div> -->
-                    <div class="form-group">
-                        <input type="password" class="form-control" value="{{empresa.rut_emp}}"  id="" name="contraseña1" aria-describedby=""
-                            placeholder="Ingresar Contraseña">
-                    </div>
-                        <input type="password" class="form-control" value="{{empresa.rut_emp}}" id="" name="contraseña2" aria-describedby=""
-                            placeholder="Confirmar Contraseña">
-                    </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" value="{{empresa.rut_emp}}" id=""
+                                name="contraseña1" aria-describedby="" placeholder="Ingresar Contraseña">
+                        </div>
+                        <input type="password" class="form-control" value="{{empresa.rut_emp}}" id="" name="contraseña2"
+                            aria-describedby="" placeholder="Confirmar Contraseña">
+                </div>
 
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
-                    </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-dark btn-round btn-block" value="Generar">
+                </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
