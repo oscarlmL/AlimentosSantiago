@@ -41,7 +41,7 @@ class Cajero(models.Model):
     email_cajero = models.CharField(max_length=50)
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
-    nombre_rest = models.ForeignKey(
+    restaurant_id_restaurante = models.ForeignKey(
         'Restaurant', models.CASCADE, db_column='restaurant_id_restaurante' ,default=1)
 
     def __str__(self):

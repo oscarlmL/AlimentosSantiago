@@ -658,18 +658,20 @@ def generar_cuenta_cajero(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
         nombre = Administrador.objects.get(
-                email_admin=request.session['cuentaAdmin'])        
+        email_admin=request.session['cuentaAdmin'])        
         cuentaCajero = Cajero.objects.all()
+        cajero_restaurante=Restaurant.objects.all()
         data = {
             'cuentasCajero': cuentaCajero,
-            'nombre': nombre
+            'nombre': nombre,
+            'cajero_restaurante':cajero_restaurante
         }
         return render(request, 'trabajador/administrador/cuenta/cajero/gestionarCajero.html', data)
     else:
         postData = request.POST
         nom_cajero = postData.get('nom_cajero')
         email_cajero = postData.get('email_cajero')
-        restorant = postData.get('restorant')
+        restaurant_id_restaurante = postData.get('restaurant_id_restaurante')
         contraseña1 = postData.get('contraseña1')
         contraseña2 = postData.get('contraseña2')
 
@@ -677,14 +679,14 @@ def generar_cuenta_cajero(request):
         value = {
             'nom_cajero': nom_cajero,
             'email_cajero': email_cajero,
-            'restorant':restorant,
+            'restaurant_id_restaurante':restaurant_id_restaurante,
             'contraseña1': contraseña1,
             'contraseña2':contraseña2
             }
         error_message = None
         cajero = Cajero(nom_cajero=nom_cajero,
                                 email_cajero=email_cajero,
-                                restorant=restorant,
+                                restaurant_id_restaurante=restaurant_id_restaurante,
                                 contraseña1=contraseña1,
                                 contraseña2=contraseña2
         )

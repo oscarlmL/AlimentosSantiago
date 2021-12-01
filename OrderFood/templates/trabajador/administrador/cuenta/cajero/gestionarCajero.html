@@ -62,10 +62,10 @@
                         </div>
                         <div class="form-group">
                             <label for="">Nombre Restaurant</label>
-                            <select name="nombre_rest" id="" class="form-control">
+                            <select name="restaurant_id_restaurante" id="" class="form-control">
                                 <option value="" selected>--- Seleccionar Restaurant ---</option>
-                                {% for nombre_rest in nombre_rest %}
-                                <option value="{{restaurant_id_restaurante.nombre_rest}}">{{restaurant_id_restaurante.nombre_rest}}</option>
+                                {% for cajero_restaurante in cajero_restaurante %}
+                                <option value="{{cajero_restaurante.id_restaurante}}">{{cajero_restaurante.nombre_rest}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -122,7 +122,7 @@
                         <td>{{cuentasCajero.id_cajero}}</td>
                         <td>{{cuentasCajero.nom_cajero}}</td>
                         <td>{{cuentasCajero.email_cajero}}</td>
-                        <td>{{cuentasCajero.nombre_rest}}</td>            
+                        <td>{{cuentasCajero.restaurant_id_restaurante}}</td>            
                        
                         <td>
                             <a href="{% url 'editar-cuenta-cajero' %}?id_cajero={{cuentasCajero.id_cajero}}"
