@@ -30,8 +30,10 @@ urlpatterns = [
     path("editar-perfil-cliente/", auth_middleware_cliente(editar_perfil_cliente), name="editar-perfil-cliente"),
     path("cambiar-contraseña-cliente/",auth_middleware_cliente(cambiar_contraseña_cliente),name="cambiar-contraseña-cliente"),
     path('realizar-pedido', auth_middleware_cliente(realizar_pedido.as_view()), name="realizar-pedido"),
-    path('pagar', descontar_saldo, name="pagar"),
+    path('pagar', auth_middleware_cliente(realizar_pedido.as_view()), name="pagar"),
     path('mis-pedidos', auth_middleware_cliente(pedidos.as_view()), name="mis-pedidos"),
+    path('historial-pedidos', auth_middleware_cliente(historial_pedidos.as_view()), name="historial-pedidos"),
+
 
     #ADMINITRACION
     path("editar-perfil/",auth_middleware(editar_perfil_admin),name="editar-perfil"),
@@ -83,7 +85,7 @@ urlpatterns = [
     path("cambiar-contraseña-enc-convenio/",auth_middleware_enc_convenio(cambiar_contraseña_enc_convenio),name="cambiar-contraseña-enc-convenio"),
     path('gestionar-empresa/', auth_middleware_enc_convenio(agregar_empresa) , name='gestionar-empresa'),
     path('modificar-convenio/<rut_emp>/', modificar_convenio, name='modificar_convenio'),
-    path('eliminar-empresa//<slug:rut_emp>/', eliminar_empresa, name='eliminar-empresa'),
+    path('eliminar-empresa/', eliminar_empresa, name='eliminar-empresa'),
     path('generar-cuenta-empleado/', auth_middleware_enc_convenio(generar_cuenta_empleado), name='generar-cuenta-empleado'),
     path('gestionar-empresa/listar-cuentas-empleados/', listar_cuenta_empleados, name='listar-cuentas-empleados'),
     path("registrarsaldo/", cargar_saldo_cliente , name="registrarsaldo"),

@@ -74,7 +74,7 @@ class Cliente(models.Model):
     email_cli = models.CharField(max_length=50)  # This field type is a guess.
     saldo_cli = models.IntegerField(null=True, default=0) 
     empresa_rut_empresa = models.ForeignKey(
-        'Empresa', models.DO_NOTHING, db_column='empresa_rut_empresa',null=True)
+        'Empresa', models.CASCADE, db_column='empresa_rut_empresa',null=True)
     contraseña1 = models.CharField(max_length=100)
     contraseña2 = models.CharField(max_length=100)
     
@@ -426,7 +426,6 @@ class Restaurant(models.Model):
     # This field type is a guess.
     direccion_rest = models.CharField(max_length=50)
     # This field type is a guess.
-    # comuna_rest = models.CharField(max_length=50)
     imagen = models.ImageField(default = None, upload_to="restaurantes")
 
 

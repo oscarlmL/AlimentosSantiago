@@ -217,9 +217,9 @@ class realizar_pedido(View):
         id_plato = (list(request.session.get('carro').keys()))
         platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
         
-        for plato in id_plato:
-            platito = Plato.objects.get(id_plato=plato)
-            print(platito.valor_plato)
+        # for plato in id_plato:
+        #     platito = Plato.objects.get(id_plato=plato)
+        #     print(platito.valor_plato)
         print(platos_en_carro)
         #FIN MODAL CARRITO
         platos = Plato.objects.all()
@@ -259,27 +259,36 @@ class pedidos(View):
     def get(self, request):
         clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
         cuentaCliente = request.session.get('cuentaCliente')
-        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente)
+        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente).filter(~Q(estado="Entregado"))
         print(pedidos)
         data={'pedidos':pedidos,'clienteeee':clienteeee}
         return render(request, 'cliente/pedidos.html',data)
 
+class historial_pedidos(View):   
+    def get(self, request):
+        clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
+        cuentaCliente = request.session.get('cuentaCliente')
+        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente).filter(estado="Entregado")
+        print(pedidos)
+        data={'pedidos':pedidos,'clienteeee':clienteeee}
+        return render(request, 'cliente/historial-pedidos.html',data)
+
    
 
-def descontar_saldo(request):
+# def descontar_saldo(request):
 
-    id_cliente=request.session['cuentaCliente'] # obtenemos el rut de la persona a cobrar
-    cliente = Cliente.objects.get(id_cliente=id_cliente) # obtenemos los datos del cliente de la base de datos
+#     id_cliente=request.session['cuentaCliente'] # obtenemos el rut de la persona a cobrar
+#     cliente = Cliente.objects.get(id_cliente=id_cliente) # obtenemos los datos del cliente de la base de datos
 
-    costopedido = 0 # aca guaramos el costo a cobrar
+#     costopedido = 0 # aca guaramos el costo a cobrar
 
-    id_plato = (list(request.session.get('carro').keys()))
-    for plato in id_plato:
-        platito = Plato.objects.get(id_plato=plato)
-        costopedido += platito.valor_plato
+#     id_plato = (list(request.session.get('carro').keys()))
+#     for plato in id_plato:
+#         platito = Plato.objects.get(id_plato=plato)
+#         costopedido += platito.valor_plato
 
 
-    saldonuevo = int(cliente.saldo_cli) - int(costopedido) # se resta la plata de la cuenta del cliente con el costo del pedido
-    Cliente.objects.filter(id_cliente=id_cliente).update(saldo_cli=saldonuevo) # se actualiza el saldo del cliente
+#     saldonuevo = int(cliente.saldo_cli) - int(costopedido) # se resta la plata de la cuenta del cliente con el costo del pedido
+#     Cliente.objects.filter(id_cliente=id_cliente).update(saldo_cli=saldonuevo) # se actualiza el saldo del cliente
    
-    return redirect('home')
+#     return redirect('mis-pedidos')
