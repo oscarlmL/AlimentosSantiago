@@ -660,15 +660,18 @@ def generar_cuenta_cajero(request):
         nombre = Administrador.objects.get(
                 email_admin=request.session['cuentaAdmin'])        
         cuentaCajero = Cajero.objects.all()
+        cajero_rest = Restaurant.objects.all()
         data = {
             'cuentasCajero': cuentaCajero,
-            'nombre': nombre
+            'nombre': nombre,
+            'cajero_rest':cajero_rest
         }
         return render(request, 'trabajador/administrador/cuenta/cajero/gestionarCajero.html', data)
     else:
         postData = request.POST
         nom_cajero = postData.get('nom_cajero')
         email_cajero = postData.get('email_cajero')
+        restaurante = postData.get('restaurante')
         contraseña1 = postData.get('contraseña1')
         contraseña2 = postData.get('contraseña2')
 
@@ -681,11 +684,11 @@ def generar_cuenta_cajero(request):
             }
         error_message = None
         cajero = Cajero(nom_cajero=nom_cajero,
-                                email_cajero=email_cajero,
-                                contraseña1=contraseña1,
-                                contraseña2=contraseña2
+                            email_cajero=email_cajero,
+                            restaurante_id = restaurante,
+                            contraseña1=contraseña1,
+                            contraseña2=contraseña2
         )
-
         if not nom_cajero:
             error_message = 'El Nombre es requerido'
         elif len(nom_cajero) < 4:
