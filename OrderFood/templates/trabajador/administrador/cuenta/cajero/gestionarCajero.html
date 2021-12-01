@@ -60,7 +60,15 @@
                             <input type="text" class="form-control" name="email_cajero" placeholder="Email Cajero" id=""
                                 value="{{values.email_cajero}}" placeholder="ejemplo: cajero@dominio.com">
                         </div>
-
+                        <div class="form-group">
+                            <label for="">Nombre Restaurant</label>
+                            <select name="nombre_rest" id="" class="form-control">
+                                <option value="" selected>--- Seleccionar Restaurant ---</option>
+                                {% for nombre_rest in nombre_rest %}
+                                <option value="{{restaurant_id_restaurante.nombre_rest}}">{{restaurant_id_restaurante.nombre_rest}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                         <Label>Contraseña</Label>
                         <div class="input-group mb-3 border border">
 
@@ -83,6 +91,7 @@
                                 </span>
                             </div>
                         </div>
+                                                
 
 
                         <div class="form-group">
@@ -102,7 +111,9 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Correo</th>
+                        <th>Restaurant</th>
                         <th>Opciones</th>
+                        
 
                     </tr>
 
@@ -111,6 +122,8 @@
                         <td>{{cuentasCajero.id_cajero}}</td>
                         <td>{{cuentasCajero.nom_cajero}}</td>
                         <td>{{cuentasCajero.email_cajero}}</td>
+                        <td>{{cuentasCajero.nombre_rest}}</td>            
+                       
                         <td>
                             <a href="{% url 'editar-cuenta-cajero' %}?id_cajero={{cuentasCajero.id_cajero}}"
                                 class="btn btn-dark btn-sm">Modificar</a>

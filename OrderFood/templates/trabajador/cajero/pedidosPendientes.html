@@ -21,6 +21,7 @@
                 <table class="table table-hover table-responsive-xl">
                     <tr class="table-active">
                         <th>ID Pedido</th>
+                        <th>restaurant</th>
                         <th>Estado</th>
                         <th>Nombre Cliente</th>
                         <th>Fecha Pedido</th>
@@ -33,6 +34,7 @@
                     {% for n in pedidos_pendientes %}
                     <tr class="table-light">
                         <td>{{ n.id_pedido | title }}</td>
+                        <td>{{ n.restaurant_id_restaurante | title }}</td>
                         <td>{{ n.estado | title }}</td>
                         <td>{{ n.cliente_id | title }}</td>
                         <td>{{ n.fecha_pedido | title }}</td>

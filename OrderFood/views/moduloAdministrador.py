@@ -669,6 +669,7 @@ def generar_cuenta_cajero(request):
         postData = request.POST
         nom_cajero = postData.get('nom_cajero')
         email_cajero = postData.get('email_cajero')
+        restorant = postData.get('restorant')
         contraseña1 = postData.get('contraseña1')
         contraseña2 = postData.get('contraseña2')
 
@@ -676,12 +677,14 @@ def generar_cuenta_cajero(request):
         value = {
             'nom_cajero': nom_cajero,
             'email_cajero': email_cajero,
+            'restorant':restorant,
             'contraseña1': contraseña1,
             'contraseña2':contraseña2
             }
         error_message = None
         cajero = Cajero(nom_cajero=nom_cajero,
                                 email_cajero=email_cajero,
+                                restorant=restorant,
                                 contraseña1=contraseña1,
                                 contraseña2=contraseña2
         )
