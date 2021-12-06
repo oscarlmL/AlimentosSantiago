@@ -1,9 +1,11 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render, get_object_or_404,HttpResponseRedirect
 from django.contrib.auth.hashers import make_password, check_password
 from OrderFood.models import *
 from django.views import View
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from OrderFood.filters import buscarPlato
 
 
 def incio_trabajador(request):
@@ -145,7 +147,10 @@ def listar_plato_restaurante(request,id_restaurante):
     platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
     print(platos_en_carro)
     #FIN MODAL CARRITO
+    myfilter = buscarPlato(request.GET, queryset=platos)
+    platos = myfilter.qs
     data = {
+        'myfilter':myfilter,
         'platos': platos,
         'platos_en_carro':platos_en_carro,
         'categoria':reversed(categoriaPlato.objects.all()),

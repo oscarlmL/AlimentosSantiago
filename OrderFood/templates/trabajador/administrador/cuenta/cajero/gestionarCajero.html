@@ -65,7 +65,7 @@
                             <select name="restaurante" id="" class="form-control">
                                 <option value="" selected>--- Seleccionar Restaurante---</option>
                                 {% for cajero_rest in cajero_rest %}
-                                <option value="{{cajero_rest.id_restaurante}}">{{cajero_rest.id_restaurante}}</option>
+                                <option value="{{cajero_rest.id_restaurante}}">{{cajero_rest.nombre_rest}}</option>
                                 {% endfor %}
                             </select>
                         </div>
