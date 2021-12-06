@@ -75,6 +75,7 @@ class Login(View):
                 return redirect('incio_trabajador')
             else:
                 error_message = 'Email o Contraseña incorrecto'
+        error_message = 'Email o Contraseña incorrecto'
         return render(request, 'login.html', {'error': error_message})
 
 class home(View):
@@ -174,9 +175,6 @@ def buscar_plato(request):
         ).distinc()
 
     return render(request,'home.html', {'platos': platos})
-
-
-
 
 def logout(request):
     request.session.clear()
