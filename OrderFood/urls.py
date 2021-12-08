@@ -91,7 +91,7 @@ urlpatterns = [
     path("registrarsaldo/", cargar_saldo_cliente , name="registrarsaldo"),
     path("leertxt", leertxt , name="leertxt"),
 
-    path('editar-cuentaTrabEmp', auth_middleware_enc_convenio(editar_cuenta_trab_emp), name='editar-cuentaTrabEmp'),
+    path('editar-cuentaTrabEmp/', auth_middleware_enc_convenio(editar_cuenta_trab_emp), name='editar-cuentaTrabEmp'),
     path('eliminar-cuentaTrabEmp/', eliminar_cuenta_trab_emp, name='eliminar-cuentaTrabEmp'),
     #FIN ENCARGADO CONVENIO
 

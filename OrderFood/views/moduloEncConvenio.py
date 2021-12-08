@@ -3,6 +3,8 @@ from django.contrib.auth.hashers import make_password, check_password
 from OrderFood.models import *
 from OrderFood.forms import  *
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+
 
 
 # Modulo Encargado Convenio
@@ -181,36 +183,22 @@ def generar_cuenta_empleado(request):
             email_enc_conv=request.session['cuentaEncConvenio'])
     data = {'empresa': empresa, 'nombre': nombre}
     if request.method == 'POST':
-        nombre_cli = request.POST["nombre_cli"]
-        apaterno_cli = request.POST["apaterno_cli"]
-        amaterno_cli = request.POST["amaterno_cli"]
-        fono_cli = request.POST["fono_cli"]
         email_cli = request.POST["email_cli"]
-        #saldo_cli = postData.get('')
         empresa_rut_empresa = request.POST['empresa_rut_empresa']
         contraseña1 = request.POST["contraseña1"]
         contraseña2 = request.POST["contraseña2"]
         # validaciones
         value = {
-            'nombre_cli': nombre_cli,
-            'apaterno_cli': apaterno_cli,
-            'amaterno_cli':amaterno_cli,
-            'fono_cli':fono_cli,
             'email_cli':email_cli,
             'empresa_rut_empresa':empresa_rut_empresa,
         }
         error_message = None
-        trabEmp = Cliente(nombre_cli=nombre_cli,
-                          apaterno_cli=apaterno_cli,
-                          amaterno_cli=amaterno_cli,
-                          fono_cli=fono_cli,
+        trabEmp = Cliente(
                           email_cli=email_cli,
                           empresa_rut_empresa_id=empresa_rut_empresa,
                           contraseña1=contraseña1,
                           contraseña2=contraseña2)
 
-        if len(nombre_cli) < 4:
-            error_message = 'El nombre debe tener mas de 4 caracteres'
         # guadar datos de cuenta
         if not error_message:
             trabEmp.contraseña1 = make_password(trabEmp.contraseña1)
@@ -248,28 +236,23 @@ def editar_cuenta_trab_emp(request):
     cuentaClienteConvenio = get_object_or_404(Cliente, id_cliente=id_cliente)
     data1 = {
         'nombre': nombre,
-        'cuentaClienteConvenio': cuentaClienteConvenio
+        'cuentasClienteConvenio': cuentaClienteConvenio
     }
 
     if request.method == "POST":
-        id_cliente = request.POST["id_cliente"]
         nombre_cli = request.POST["nombre_cli"]
         apaterno_cli = request.POST["apaterno_cli"]
         amaterno_cli = request.POST["amaterno_cli"]
         fono_cli = request.POST["fono_cli"]
         email_cli = request.POST["email_cli"]
-        contraseña1 = request.POST["contraseña1"]
-        contraseña2 = request.POST["contraseña2"]
 
-        cuentaClienteConvenio.id_cliente = id_cliente
         cuentaClienteConvenio.nombre_cli = nombre_cli
         cuentaClienteConvenio.apaterno_cli = apaterno_cli
         cuentaClienteConvenio.amaterno_cli = amaterno_cli
         cuentaClienteConvenio.fono_cli = fono_cli
         cuentaClienteConvenio.email_cli = email_cli
-        cuentaClienteConvenio.contraseña1 = contraseña1
-        cuentaClienteConvenio.contraseña2 = contraseña2
 
+        error_message = None
         if len(nombre_cli) < 4:
             error_message = 'El nombre debe tener mas de 4 caracteres'
         elif len(apaterno_cli) < 4:
@@ -283,17 +266,11 @@ def editar_cuenta_trab_emp(request):
         elif not email_cli:
             error_message = 'El email es requerido'
 
-        elif len(contraseña1 and contraseña2) < 5:
-            error_message = 'Las contraseñas deben tener mas de 5 caracteres'
-
-        elif contraseña2 != contraseña1:
-            error_message = 'Las contraseñas no coinciden'
-
         # guardar datos de cuenta
         if not error_message:
             cuentaClienteConvenio.save()
-            messages.success(request, "Cuenta Cliente Empresa Editada")
-            return redirect('editar-cuentaTrabEmp')
+            messages.success(request, "Cuenta Trabajador Empresa Editada")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             nombre = EncConvenio.objects.get(
                 email_enc_conv=request.session['cuentaEncConvenio'])
@@ -302,7 +279,7 @@ def editar_cuenta_trab_emp(request):
                 'nombre': nombre,
                 'cuentasClienteConvenio': cuentasClienteConvenio,
                 'error': error_message,
-                'cuentaClienteConvenio': cuentaClienteConvenio
+                'cuentasClienteConvenio': cuentaClienteConvenio
             }
         return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data)
     return render(request, 'trabajador/encargadoConvenio/cuentasEmpleados/editarCuentaEmpleado.html', data1)
@@ -312,6 +289,7 @@ def eliminar_cuenta_trab_emp(request):
     id_cliente = request.GET["id_cliente"]
     cuentaClienteConvenio = Cliente.objects.get(id_cliente=id_cliente)
     cuentaClienteConvenio.delete()
+    messages.success(request, "Trabajador Eliminado Correctamente")
     return redirect('gestionar-empresa')
 # fin encargado convenio
 

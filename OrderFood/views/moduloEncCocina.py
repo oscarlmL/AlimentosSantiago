@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from OrderFood.models import *
 from OrderFood.forms import  *
 from django.contrib import messages
+from OrderFood.filters import buscarPlatoEncCocina
 
 # Modulo Encargado Cocina
 def editar_perfil_enc_cocina(request):
@@ -125,7 +126,10 @@ def gestionar_plato(request):
     nombre = EncCocina.objects.get(
             email_enc_coc=request.session['cuentaEncCocina'])
     plato = Plato.objects.all()
+    myfilter = buscarPlatoEncCocina(request.GET,queryset=plato)
+    plato = myfilter.qs
     data = {
+        'myfilter':myfilter,
         'nombre': nombre,
         'plato': plato,
         'form': PlatoForm()

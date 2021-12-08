@@ -44,7 +44,7 @@ class Login(View):
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncConvenio:
-            flag = check_password(contraseña, cuentaEncConvenio.contraseña1)
+            flag = contraseña, cuentaEncConvenio.contraseña1
             if flag:
                 request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
                 print('eres :', email)
@@ -54,8 +54,8 @@ class Login(View):
         elif cuentaRepartidor:
             flag = check_password(contraseña, cuentaRepartidor.contraseña1)
             if flag:
-                request.session['cuentaRepartidor'] = cuentaRepartidor.email_repartidor
-                print('eres :', email)
+                request.session['cuentaRepartidor'] = cuentaRepartidor.id_repartidor
+                print('eres :', email, cuentaRepartidor.id_repartidor)
                 return redirect('incio_trabajador')
             else:
                 error_message = 'Email o Contraseña incorrecto'

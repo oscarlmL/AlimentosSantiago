@@ -15,7 +15,7 @@
             <table class="table table-hover table-responsive-xl">
                 <tr class="table-active">
 
-
+                    <th>ID Pedido</th>
                     <th>Nombre Cliente</th>
                     <th>Fecha Pedido</th>
                     <th>Nombre Restaurant</th>
@@ -27,7 +27,7 @@
                 </tr>
                 {% for p in pedidos_confirmados %}
                 <tr class="table-light">
-
+                    <td>{{ p.id_pedido | title }}</td>
                     <td>{{ p.cliente_id | title }}</td>
                     <td>{{ p.fecha_pedido | title }}</td>
                     <td>{{ p.restaurant_id_restaurante}}</td>

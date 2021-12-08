@@ -298,6 +298,8 @@ class Pedido(models.Model):
     estado = models.CharField(max_length=50, choices=estado_pedido, default='Pendiente')
     restaurant_id_restaurante = models.ForeignKey(
         'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
+    repartidor_id = models.ForeignKey('Repartidor', models.CASCADE, db_column='repartidor_id')
+
 
     class Meta:
         db_table = 'pedido'
@@ -407,6 +409,13 @@ class Repartidor(models.Model):
         if Repartidor.objects.filter(patente_veh=self.patente_veh):
             return True
         return False
+
+    @staticmethod
+    def get_repartidor_by_id(id_repartidor):
+        try:
+            return Repartidor.objects.get(id_repartidor=id_repartidor)
+        except:
+            return False
 
     @staticmethod
     def get_repartidor_by_email(email_repartidor):
