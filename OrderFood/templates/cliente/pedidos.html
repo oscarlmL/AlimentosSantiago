@@ -3,14 +3,16 @@
 {% load carro %}
 {% load humanize %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script> 
-    $(document).ready(function(){
-    setInterval(function(){
-          $("#mis-pedidos").load(window.location.href + " #mis-pedidos" );
-    }, 3000);
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $("#mis-pedidos").load(window.location.href + " #mis-pedidos");
+        }, 3000);
     });
-    </script>
-
+</script>
+<br>
+<br>
+<br>
 <div id="mis-pedidos">
     <div class="container">
         <h2 class="text-center">Pedidos Actuales</h2>
@@ -28,6 +30,8 @@
                         <th scope="col">Cantidad</th>
                         <th scope="col">Total</th>
                         <th scope="col">Estado</th>
+                        <th scope="col">Repartidor</th>
+
                     </tr>
 
 
@@ -50,7 +54,7 @@
                         {% else %}
                         <td><small class="badge badge-success">Entregado</small></td>
                         {% endif %}
-
+                        <td>{{pedidos.repartidor_id}}</td>
                     </tr>
                     {% endfor %}
 

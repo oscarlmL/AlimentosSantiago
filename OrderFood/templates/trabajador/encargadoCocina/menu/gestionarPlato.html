@@ -29,29 +29,47 @@
                     </form>
                 </div>
             </div>
+            <br>
+            <br>
         </div>
 
-
         <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-            <h2>Lista de Platos</h2>
+            <div class="">
+                <div class="">
+                    <div class="">
+                        <h2 class="text-center">Búsqueda</h2>
+                        <form class="" method="GET">
+                            <div class="input-group mb-3">
+                                {{myfilter.form.categoria}}
+                                {{myfilter.form.nom_plato}}
+                                <button class="input-group-text rounded-right" style="cursor: pointer;"><span
+                                        class="fa fa-search" data-icon="bi:eye-fill" data-inline="true"></span></button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <br>
             <div class="table-responsive py-2">
+                <h2>Lista de Platos</h2>
+
                 <table class="table table-striped">
                     <tr class="table-active">
                         <th>Nombre Plato</th>
+                        <th>Categoria</th>
                         <th>Valor Plato</th>
                         <th>Descripción</th>
-                        <!-- <th>Ingredientes</th> -->
                         <th>Opciónes</th>
 
                     </tr>
 
                     {% for p in plato %}
                     <tr class="table-light">
-                        <td> {{ p.nom_plato | title }} </td>
+                        <td> {{ p.nom_plato }} </td>
+                        <td> {{ p.categoria }} </td>
                         <td> $ {{ p.valor_plato }} </td>
-                        <td> {{ p.descripcion | title }} </td>
-                        <!-- <td> {{ p.Ingrediente | title }} </td> -->
-
+                        <td> {{ p.descripcion }} </td>
                         <td>
                             <a href="{% url 'modificar_plato'%}?id_plato={{p.id_plato}} "
                                 class="btn btn-dark btn-sm">Modificar</a>

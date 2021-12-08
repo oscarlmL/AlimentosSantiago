@@ -10,7 +10,7 @@
         <section id="">
             <div class="row">
 
-                <div class="col-md-2 " style="padding-left: 30px;">
+                <div class="col-md-2" style="padding-left: 20px; padding-bottom: 20px;">
                     <div class="list-group" style="position: -webkit-sticky; position: sticky; display: block;">
                         <li class="list-group-item list-group-item-light list-group-item-hover onclick-highlight"
                             style="color:#ff9d2f;background-color:white;border-right:1px solid #818182;border-left:1px solid #818182;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
@@ -29,6 +29,15 @@
 
                 {% csrf_token %}
                 <div class="col-md-10 item-select">
+                        <form class="" method="GET" style="padding-left: 1%;">
+                            <div class="input-group mb-3 w-50 text-center">
+                                <input type="text" class="form-control rounded-left" placeholder="Buscar plato por nombre" {{myfilter.form.nom_plato}}
+                                <div class="input-group-append">
+                                  <button class="input-group-text rounded-right" style="cursor: pointer;"><span
+                                    class="fa fa-search" data-icon="bi:eye-fill" data-inline="true"></span></button>
+                                </div>
+                        </form>
+                    </div>
                     {% for categoria in categoria %}
                     <div id="{{categoria}}" class="items" style="margin-bottom:35px;">
                         <div class="category-header-name" style="text-align:left;">
@@ -37,7 +46,6 @@
                         <div class="row">
                             {% for plato in platos %}
                             {% if plato.categoria == categoria %}
-
                             <div class="col-lg-3">
                                 <div class="">
                                     <div class="card mx-auto mb-3 border-bottom-0" id="{{plato.id_plato}}"

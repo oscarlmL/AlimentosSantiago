@@ -149,7 +149,7 @@ class Empresa(models.Model):
     nom_gerente = models.CharField(max_length=50)
     cant_trabajadores = models.IntegerField()
     enc_convenio_id_enc_conv = models.ForeignKey(
-        'EncConvenio', models.DO_NOTHING, db_column='enc_convenio_id_enc_conv')
+        'EncConvenio', models.CASCADE, db_column='enc_convenio_id_enc_conv')
 
     class Meta:
         db_table = 'empresa'
@@ -224,6 +224,14 @@ class EncConvenio(models.Model):
             return False
 
 
+    @staticmethod
+    def get_enc_convenio_by_id(id_enc_conv):
+        try:
+            return EncConvenio.objects.get(id_enc_conv=id_enc_conv)
+        except:
+            return False
+
+
     def rutExiste(self):
         if EncConvenio.objects.filter(rut_enc_conv=self.rut_enc_conv):
             return True
@@ -278,11 +286,13 @@ tipo_entrega = [
 ]
 estado_pedido = [
     ['Pendiente', "Pendiente"],
+    ['Cancelado', "Cancelado"],
     ['Confirmado', "Confirmado"],
     ['En ruta', "En ruta"],
+    ['No entregado', "No entregado"],
     ['Entregado', "Entregado"]
-
 ]
+
 class Pedido(models.Model):
     id_pedido = models.AutoField(primary_key=True)
     plato_id = models.ForeignKey('Plato',on_delete=models.CASCADE)
@@ -294,10 +304,13 @@ class Pedido(models.Model):
     tipo_entrega = models.CharField(max_length=50, choices=tipo_entrega, null=False)
     tipo_pago = models.ForeignKey(Pago, models.CASCADE, db_column='tipo_pago')
     celular = models.CharField(max_length=10, default='', blank=True)
-    fecha_pedido = models.DateField(default=datetime.datetime.today)
+    fecha_pedido = models.DateTimeField(default=datetime.datetime.today)
+    #fecha_pedido = models.DateField(default=datetime.datetime.today)
     estado = models.CharField(max_length=50, choices=estado_pedido, default='Pendiente')
     restaurant_id_restaurante = models.ForeignKey(
         'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')
+    repartidor_id = models.ForeignKey('Repartidor', models.CASCADE, db_column='repartidor_id')
+
 
     class Meta:
         db_table = 'pedido'
@@ -407,6 +420,13 @@ class Repartidor(models.Model):
         if Repartidor.objects.filter(patente_veh=self.patente_veh):
             return True
         return False
+
+    @staticmethod
+    def get_repartidor_by_id(id_repartidor):
+        try:
+            return Repartidor.objects.get(id_repartidor=id_repartidor)
+        except:
+            return False
 
     @staticmethod
     def get_repartidor_by_email(email_repartidor):

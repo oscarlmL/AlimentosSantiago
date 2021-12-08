@@ -1,6 +1,28 @@
 {% extends 'trabajador/base_trabajador.html' %}
 {% block contenido %}
 {% load static %}
+<script>
+    function eliminarEmpleado(id_cliente) {
+        Swal.fire({
+            "title": "¿Estas seguro?",
+            "text": "esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545",
+            "cancelButtonColor": "#303030"
+
+
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    location.href = "/eliminar-cuentaTrabEmp/?id_cliente="  + id_cliente + "" 
+                }
+            })
+    }
+</script>
 <br>
 <br>
 <br>
@@ -22,15 +44,15 @@
 
                     {% for n in cuentas_empleados %}
                     <tr class="table-light">
-                        <td>{{ n.nombre_cli | title }}</td>
-                        <td>{{ n.apaterno_cli | title }} {{ n.amaterno_cli | title }}</td>
-                        <td>{{ n.fono_cli | title }}</td>
-                        <td>{{ n.email_cli | title }}</td>
-                        <td>{{ n.saldo_cli | title }}</td>
+                        <td>{{ n.nombre_cli }}</td>
+                        <td>{{ n.apaterno_cli}} {{n.amaterno_cli}}</td>
+                        <td>{{ n.fono_cli }}</td>
+                        <td>{{ n.email_cli}}</td>
+                        <td>{{ n.saldo_cli }}</td>
                         <td>
                             <a href="{% url 'editar-cuentaTrabEmp' %}?id_cliente={{n.id_cliente}}"
                                 class="btn btn-dark btn-sm" value="Modificar">Modificar</a>
-                            <a href="{% url 'eliminar-cuentaTrabEmp' %}?id_cliente={{n.id_cliente}}"
+                            <a href="#" onclick="eliminarEmpleado({{n.id_cliente}})"
                                 class="btn btn-danger btn-sm" value="Modificar">Eliminar</a>
                         </td>
                     </tr>
