@@ -12,7 +12,7 @@
                     <a class="list-group-item list-group-item-action" href="#">Delivery</a>
                     <a class="list-group-item list-group-item-action" href="#">Retiro en local</a>
 
-                <form action="/pagar" method="post">
+                <form action="/pagar" method="post" name="form" id="form">
                     {% csrf_token %}
 
                     </div>
@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <input type="datetime-local" class="form-control" name="programar_horario_entrega" id="">
+                                            <input type="datetime-local" class="form-control" name="programar_horario_entrega" id="programar_horario_entrega">
                                         </div>
                                     </div>
                                 </div>
@@ -70,19 +70,24 @@
                     </div>
                     <div class="form-group">
                         <label for="">Tipo Pago</label>
-                        <select name="tipo_pago" id="" class="form-control">
-                            <option value="" selected>--- Seleccionar tipo de pago ---</option>
+                        <select name="tipo_pago" id="tipo_pago" class="form-control">
+                            <option value="0" selected>--- Seleccionar tipo de pago ---</option>
                             {% for tipo_pago in tipo_pago %}
                             <option value="{{tipo_pago.id_pago}}">{{tipo_pago.tipo_pago}}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="">Saldo Cliente</label>
+                        <input type="text" readonly class="form-control" name="saldo_cli" id="saldo_cli" value={{clienteeee.saldo_cli}}>
+                        <input type="hidden" readonly class="form-control" name="totalpagar" id="totalpagar" value={{platos|precio_total_carro:request.session.carro}}>
+                    </div>
+                    <div class="form-group">
                         <label for="">Celular de contacto</label>
                         <input type="tel" class="form-control" name="celular_contacto" placeholder="" value=""  onkeypress="return valideKey(event);">
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary btn-round btn-block" value="Pagar">
+                        <input type="submit" class="btn btn-primary btn-round btn-block" id="btnEnviar" name="btnEnviar" value="Pagar">
                     </div>
                 </form>
 
@@ -205,23 +210,76 @@
                         </ul>
                         {% endfor %}
                         <hr>
+                        <ul class="list-group">
                         <li class="list-group font-weight-bold" style="font-size: 22px;">TOTAL A PAGAR <span>$
                                 {{platos|precio_total_carro:request.session.carro | intcomma}}</span></li>
-
+                        </ul>
+                        <hr>
+                        <ul class="list-group">
+                        <li class="list-group font-weight-bold" style="font-size: 22px;">Mi Saldo <span>
+                            {% if request.session.cuentaCliente %}
+                            $ {{clienteeee.saldo_cli}}
+                            {% endif %}                            
+                        </span>
+                        </li>                                
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row d-none" id="mensajeSaldo">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                   Saldo de Cliente No es suficiente para Realizar el pago
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
 
 
+<script>
 
+    let combo = document.getElementById("tipo_pago");
+    let btn = document.getElementById("btnEnviar");
+    let saldo = document.getElementById("saldo_cli").value;
+    let total = document.getElementById("totalpagar").value;
 
+    var now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById('programar_horario_entrega').value = now.toISOString().slice(0,16);
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    let validarForm = () =>{
+        document.getElementById("mensajeSaldo").classList.add("d-none");
+        if(combo.value == 0){
+        btn.disabled = true;
+        }else{
+            btn.disabled = false;
+        }
+        if(combo.value == 3){
+            if(parseInt(total) > parseInt(saldo)){
+                btn.disabled = true;
+                document.getElementById("mensajeSaldo").classList.remove("d-none");
+            }else{
+                btn.disabled = false;
+                document.getElementById("mensajeSaldo").classList.add("d-none");
+            }
+        }
+    }
+    validarForm();
 
+    combo.onchange = () =>{
+        validarForm();
+    }
+
+</script>
+
+<!-- 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         var current = 1,

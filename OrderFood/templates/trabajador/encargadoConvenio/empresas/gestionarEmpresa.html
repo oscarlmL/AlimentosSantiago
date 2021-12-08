@@ -3,28 +3,7 @@
 {% load static %}
 
 {% load crispy_forms_tags %}
-<script>
-    function eliminarEmpresa(rut_emp) {
-        Swal.fire({
-            "title": "¿Estas seguro?",
-            "text": "Eliminaras todo cliente asociado a la empresa",
-            "icon": "question",
-            "showCancelButton": true,
-            "cancelButtonText": "Cancelar",
-            "confirmButtonText": "Eliminar",
-            "reverseButtons": true,
-            "confirmButtonColor": "#dc3545",
-            "cancelButtonColor": "#303030"
 
-
-        })
-            .then(function (result) {
-                if (result.isConfirmed) {
-                    location.href = "/eliminar-empresa/?rut_emp="  + rut_emp + "" 
-                }
-            })
-    }
-</script>
 <br>
 <br>
 <br>
@@ -85,7 +64,7 @@
                         <td>{{ e.enc_convenio_id_enc_conv | title }}</td>
                         <td>
                             <a href="{% url 'modificar_convenio' e.rut_emp %}" class="btn btn-dark btn-sm">Modificar</a>
-                            <a href="#" onclick="eliminarEmpresa({{e.rut_emp}})" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="#" onclick="eliminarEmpresa('{{e.rut_emp}}')" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                         <td>
                             <a href="{% url 'generar-cuenta-empleado'%}?rut_emp={{e.rut_emp}}" class="btn btn-dark btn-sm">Generar Cuenta</a>
@@ -104,7 +83,31 @@
         </div>
 
 
-
+        <script>
+            function eliminarEmpresa(rut_emp) {
+ 
+                Swal.fire({
+                    "title": "¿Estas seguro?",
+                    "text": "Eliminaras todo cliente asociado a la empresa",
+                    "icon": "question",
+                    "showCancelButton": true,
+                    "cancelButtonText": "Cancelar",
+                    "confirmButtonText": "Eliminar",
+                    "reverseButtons": true,
+                    "confirmButtonColor": "#dc3545",
+                    "cancelButtonColor": "#303030"
+        
+        
+                })
+                    .then(function (result) {
+                        if (result.isConfirmed) {
+                            location.href = "/eliminar-empresa/?rut_emp='"  + rut_emp + "'" 
+                            
+                        }
+                    })
+                    
+            }
+        </script>
 
     </div>
 </div>

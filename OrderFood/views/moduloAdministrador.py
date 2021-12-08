@@ -659,7 +659,7 @@ def generar_cuenta_cajero(request):
     request.session.set_expiry(10000)
     if request.method == 'GET':
         nombre = Administrador.objects.get(
-                email_admin=request.session['cuentaAdmin'])        
+        email_admin=request.session['cuentaAdmin'])        
         cuentaCajero = Cajero.objects.all()
         cajero_rest = Restaurant.objects.all()
         data = {
@@ -680,6 +680,7 @@ def generar_cuenta_cajero(request):
         value = {
             'nom_cajero': nom_cajero,
             'email_cajero': email_cajero,
+            'restaurante':restaurante,
             'contraseña1': contraseña1,
             'contraseña2':contraseña2
             }

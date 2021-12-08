@@ -91,6 +91,7 @@
                                 </span>
                             </div>
                         </div>
+                                                
 
 
                         <div class="form-group">
@@ -110,7 +111,9 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Correo</th>
+                        <th>Restaurant</th>
                         <th>Opciones</th>
+                        
 
                     </tr>
 
@@ -119,10 +122,12 @@
                         <td>{{cuentasCajero.id_cajero}}</td>
                         <td>{{cuentasCajero.nom_cajero}}</td>
                         <td>{{cuentasCajero.email_cajero}}</td>
+                        <td>{{cuentasCajero.restaurante}}</td>            
+                       
                         <td>
                             <a href="{% url 'editar-cuenta-cajero' %}?id_cajero={{cuentasCajero.id_cajero}}"
                                 class="btn btn-dark btn-sm">Modificar</a>
-                            <a href="#" onclick="eliminarCajero({{cuentasCajero.id_cajero}})"
+                           <!--  <a href="#" onclick="eliminarCajero({{cuentasCajero.id_cajero}})" >  -->
                                 class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
