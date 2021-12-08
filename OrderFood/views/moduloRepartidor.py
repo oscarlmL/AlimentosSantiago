@@ -9,9 +9,11 @@ def editar_perfil_repartidor(request):
     check = Repartidor.objects.filter(
         id_repartidor=request.session['cuentaRepartidor'])
     if len(check) > 0:
+        nombre = Repartidor.objects.get(
+            id_repartidor=request.session['cuentaRepartidor'])
         repartidor = Repartidor.objects.get(
             id_repartidor=request.session['cuentaRepartidor'])
-        data = {'repartidor': repartidor}
+        data = {'repartidor': repartidor,'nombre':nombre}
     if request.method == 'POST':
         rut_repartidor = request.POST["rut_repartidor"]
         nombre_repartidor = request.POST["nombre_repartidor"]
@@ -51,9 +53,12 @@ def editar_perfil_repartidor(request):
             messages.success(request, "Datos editados correctamente")
             return redirect('editar-perfil-repartidor')
         else:
+            nombre = Repartidor.objects.get(
+                id_repartidor=request.session['cuentaRepartidor'])
             data = {
                 'error': error_message,
-                'repartidor':repartidor
+                'repartidor':repartidor,
+                'nombre':nombre
             }
     return render(request, 'trabajador/repartidor/editarPerfil.html', data)
 
@@ -63,14 +68,16 @@ def cambiar_contraseña_repartidor(request):
         id_repartidor=request.session['cuentaRepartidor'])
     if len(check) > 0:
         email = request.session['cuentaRepartidor']
+        nombre = Repartidor.objects.get(
+            id_repartidor=request.session['cuentaRepartidor'])
         repartidor = Repartidor.objects.get(
             id_repartidor=request.session['cuentaRepartidor'])
-        data = {'email': email,'repartidor':repartidor}
+        data = {'email': email,'repartidor':repartidor,'nombre':nombre}
     if request.method == "POST":
         contraseña_actual = request.POST['contraseña_actual']
         contraseña1 = request.POST['nueva_contraseña']
         contraseña2 = request.POST['con_nueva_contraseña']
-        cuentaRepartidor = Repartidor.get_repartidor_by_email(email)
+        cuentaRepartidor = Repartidor.get_repartidor_by_id(email)
         if cuentaRepartidor:
             flag = check_password(
                 contraseña_actual, cuentaRepartidor.contraseña1)
@@ -99,20 +106,20 @@ def cambiar_contraseña_repartidor(request):
                         request, "Contraseña Cambiada Correctamente")
                     return redirect('cambiar-contraseña-repartidor')
                 else:
-                    repartidor = Repartidor.objects.get(
+                    nombre = Repartidor.objects.get(
                         id_repartidor=request.session['cuentaRepartidor'])
                     data = {
-                        'repartidor': repartidor,
+                        'nombre': nombre,
                         'error': error_message,
 
                     }
                 return render(request, 'trabajador/repartidor/cambiar_contraseña.html', data)
             else:
                 error_message = 'La contraseña actual es incorrecta'
-                repartidor = Repartidor.objects.get(
+                nombre = Repartidor.objects.get(
                         id_repartidor=request.session['cuentaRepartidor'])
                 data = {
-                    'repartidor': repartidor,
+                    'nombre': nombre,
                     'error': error_message,
 
                 }

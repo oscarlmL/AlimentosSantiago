@@ -149,7 +149,7 @@ class Empresa(models.Model):
     nom_gerente = models.CharField(max_length=50)
     cant_trabajadores = models.IntegerField()
     enc_convenio_id_enc_conv = models.ForeignKey(
-        'EncConvenio', models.DO_NOTHING, db_column='enc_convenio_id_enc_conv')
+        'EncConvenio', models.CASCADE, db_column='enc_convenio_id_enc_conv')
 
     class Meta:
         db_table = 'empresa'
@@ -220,6 +220,14 @@ class EncConvenio(models.Model):
     def get_enc_convenio_by_email(email_enc_conv):
         try:
             return EncConvenio.objects.get(email_enc_conv=email_enc_conv)
+        except:
+            return False
+
+
+    @staticmethod
+    def get_enc_convenio_by_id(id_enc_conv):
+        try:
+            return EncConvenio.objects.get(id_enc_conv=id_enc_conv)
         except:
             return False
 

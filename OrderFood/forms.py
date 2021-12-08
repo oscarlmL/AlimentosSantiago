@@ -97,8 +97,7 @@ class GestionEmpresaForm(forms.ModelForm):
                   'nom_emp',
                   'nom_gerente',
                   'cant_trabajadores',
-                  'enc_convenio_id_enc_conv']
-        labels = {'enc_convenio_id_enc_conv': 'Encargado de Convenio'}
+                  ]
 
     rut_emp = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control', 'onkeyup': 'formatoRut(this)', 'placeholder': 'Run Empresa', 'display': None}), label='Run Empresa')
@@ -108,6 +107,7 @@ class GestionEmpresaForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Nombre Gerente'}), label='Nombre del Gerente')
     cant_trabajadores = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Cantidad Trabajadores'}), label='Cantidad de Trabajadores')
+    
 
 
 # INFORMACIÓN VALIDACIONES

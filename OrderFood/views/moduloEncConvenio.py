@@ -5,17 +5,15 @@ from OrderFood.forms import  *
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
-
-
 # Modulo Encargado Convenio
 def editar_perfil_enc_convenio(request):
     check = EncConvenio.objects.filter(
-        email_enc_conv=request.session['cuentaEncConvenio'])
+        id_enc_conv=request.session['cuentaEncConvenio'])
     if len(check) > 0:
         nombre = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
         encConvenio = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
         data = {'encConvenio': encConvenio,'nombre':nombre}
     if request.method == 'POST':
         rut_enc_conv = request.POST["rut_enc_conv"]
@@ -25,7 +23,7 @@ def editar_perfil_enc_convenio(request):
         celular = request.POST["celular"]
 
         encConvenio = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
         encConvenio.rut_enc_conv = rut_enc_conv
         encConvenio.nom_enc_conv = nom_enc_conv
         encConvenio.ap_enc_conv = ap_enc_conv
@@ -53,7 +51,7 @@ def editar_perfil_enc_convenio(request):
             return redirect('editar-perfil-enc-convenio')
         else:
             nombre = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
             data = {
                 'encConvenio': encConvenio,
                 'error': error_message,
@@ -65,28 +63,28 @@ def editar_perfil_enc_convenio(request):
 
 def cambiar_contraseña_enc_convenio(request):
     check = EncConvenio.objects.filter(
-        email_enc_conv=request.session['cuentaEncConvenio'])
+        id_enc_conv=request.session['cuentaEncConvenio'])
     if len(check) > 0:
         email = request.session['cuentaEncConvenio']
         nombre = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
         encConvenio = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
         data = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
         data = {'data': data, 'email': encConvenio,'nombre':nombre}
     if request.method == "POST":
         contraseña_actual = request.POST['contraseña_actual']
         contraseña1 = request.POST['nueva_contraseña']
         contraseña2 = request.POST['con_nueva_contraseña']
-        cuentaEncConvenio = EncConvenio.get_enc_convenio_by_email(email)
+        cuentaEncConvenio = EncConvenio.get_enc_convenio_by_id(email)
         if cuentaEncConvenio:
             flag = check_password(
                 contraseña_actual, cuentaEncConvenio.contraseña1)
             error_message = None
             if flag:
                 enConvenio = EncConvenio.objects.get(
-                    email_enc_conv=request.session['cuentaEncConvenio'])
+                    id_enc_conv=request.session['cuentaEncConvenio'])
                 enConvenio.contraseña1 = contraseña1
                 enConvenio.contraseña2 = contraseña2
 
@@ -109,7 +107,7 @@ def cambiar_contraseña_enc_convenio(request):
                     return redirect('cambiar-contraseña-enc-convenio')
                 else:
                     nombre = EncConvenio.objects.get(
-                        email_enc_conv=request.session['cuentaEncConvenio'])
+                        id_enc_conv=request.session['cuentaEncConvenio'])
                     data = {
                         'nombre': nombre,
                         'error': error_message,
@@ -119,7 +117,7 @@ def cambiar_contraseña_enc_convenio(request):
             else:
                 error_message = 'La contraseña actual es incorrecta'
                 nombre = EncConvenio.objects.get(
-                    email_enc_conv=request.session['cuentaEncConvenio'])
+                    id_enc_conv=request.session['cuentaEncConvenio'])
                 data = {
                     'nombre': nombre,
                     'error': error_message,
@@ -129,30 +127,57 @@ def cambiar_contraseña_enc_convenio(request):
     return render(request, "trabajador/encargadoConvenio/cambiar_contraseña.html", data)
 
 
+# def agregar_empresa(request):
+#     request.session.set_expiry(10000)
+#     prueba = request.session.get(
+#             'cuentaEncConvenio')
+#     nombre = EncConvenio.objects.get(
+#             email_enc_conv=request.session['cuentaEncConvenio'])
+#     empresa = Empresa.objects.all()
+#     data = {
+#         'prueba':prueba,
+#         'nombre': nombre,
+#         'empresa': empresa,
+#         'form': GestionEmpresaForm()
+
+#     }
+#     if request.method == 'POST':
+#         formula = GestionEmpresaForm(request.POST)
+#         if formula.is_valid():
+#             formula = GestionEmpresaForm.save(commit=False)
+#             formula.enc_convenio_id_enc_conv = prueba
+#             formula.save()
+#             messages.success(request, "Empresa Agregada Correctamente")
+#         else:
+#             data["form"] = formula
+#     return render(request, 'trabajador/encargadoConvenio/empresas/gestionarEmpresa.html', data)
+
+
 def agregar_empresa(request):
-    request.session.set_expiry(10000)
+    id_enc_convenio = request.session.get(
+            'cuentaEncConvenio')
     nombre = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+             id_enc_conv=request.session['cuentaEncConvenio'])
     empresa = Empresa.objects.all()
-    data = {
-        'nombre': nombre,
-        'empresa': empresa,
-        'form': GestionEmpresaForm()
-
-    }
-    if request.method == 'POST':
-        formula = GestionEmpresaForm(data=request.POST, files=request.FILES)
-        if formula.is_valid():
-            formula.save()
+    if request.method == "POST":
+        form = GestionEmpresaForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.enc_convenio_id_enc_conv_id = id_enc_convenio
+            post.save()
             messages.success(request, "Empresa Agregada Correctamente")
-        else:
-            data["form"] = formula
+    else:
+        form = GestionEmpresaForm()
+    data = {
+        'empresa':empresa,
+        'form':form,
+        'nombre':nombre
+    }
     return render(request, 'trabajador/encargadoConvenio/empresas/gestionarEmpresa.html', data)
-
 
 def modificar_convenio(request, rut_emp):
     nombre = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
     empresa = get_object_or_404(Empresa, rut_emp=rut_emp)
     data = {
         "form": GestionEmpresaForm(instance=empresa),
@@ -180,7 +205,7 @@ def generar_cuenta_empleado(request):
     id = request.GET["rut_emp"]
     empresa = get_object_or_404(Empresa, rut_emp=id)
     nombre = EncConvenio.objects.get(
-            email_enc_conv=request.session['cuentaEncConvenio'])
+            id_enc_conv=request.session['cuentaEncConvenio'])
     data = {'empresa': empresa, 'nombre': nombre}
     if request.method == 'POST':
         email_cli = request.POST["email_cli"]
@@ -224,14 +249,14 @@ def generar_cuenta_empleado(request):
 def listar_cuenta_empleados(request):
     id = request.GET["rut_emp"]
     nombre = EncConvenio.objects.get(
-                email_enc_conv=request.session['cuentaEncConvenio'])
+                id_enc_conv=request.session['cuentaEncConvenio'])
     cuentas_empleados = Cliente.objects.filter(empresa_rut_empresa_id=id)
     data = {'cuentas_empleados':cuentas_empleados,'nombre':nombre}
     return render(request,'trabajador/encargadoConvenio/cuentasEmpleados/listar_cuentas_empleados.html',data)
 
 def editar_cuenta_trab_emp(request):
     nombre = EncConvenio.objects.get(
-                email_enc_conv=request.session['cuentaEncConvenio'])
+                id_enc_conv=request.session['cuentaEncConvenio'])
     id_cliente = request.GET["id_cliente"]
     cuentaClienteConvenio = get_object_or_404(Cliente, id_cliente=id_cliente)
     data1 = {
@@ -273,7 +298,7 @@ def editar_cuenta_trab_emp(request):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             nombre = EncConvenio.objects.get(
-                email_enc_conv=request.session['cuentaEncConvenio'])
+                id_enc_conv=request.session['cuentaEncConvenio'])
             cuentasClienteConvenio = Cliente.objects.all()
             data = {
                 'nombre': nombre,
@@ -295,11 +320,15 @@ def eliminar_cuenta_trab_emp(request):
 
 
 def cargar_saldo_cliente(request):
-    return render(request,'trabajador/encargadoConvenio/cargarSaldo.html')
+    nombre = EncConvenio.objects.get(
+             id_enc_conv=request.session['cuentaEncConvenio'])
+    data = {'nombre':nombre}
+    return render(request,'trabajador/encargadoConvenio/cargarSaldo.html',data)
 
 
 def leertxt(request):
-    
+    nombre = EncConvenio.objects.get(
+             id_enc_conv=request.session['cuentaEncConvenio'])
     data = request.FILES['file'].readlines()
     case_list = []
     for a in data:
@@ -325,6 +354,7 @@ def leertxt(request):
             case_list.append(case)
 
 
-    saldos = {'saldos': case_list}
+    saldos = {'saldos': case_list,
+    'nombre':nombre}
 
     return render(request, 'trabajador/encargadoConvenio/clientesaldos.html',  saldos)

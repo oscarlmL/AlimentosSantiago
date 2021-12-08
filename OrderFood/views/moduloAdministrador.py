@@ -453,6 +453,7 @@ def eliminar_cuenta_enc_convenio(request):
     id_enc_conv = request.GET["id_enc_conv"]
     cuentaEncConvenio = EncConvenio.objects.get(id_enc_conv=id_enc_conv)
     cuentaEncConvenio.delete()
+    messages.success(request, "Cuenta Encargado Convenio Eliminada")
     return redirect('gestionar-enc-convenio')
 
 

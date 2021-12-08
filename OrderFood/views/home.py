@@ -9,9 +9,26 @@ from OrderFood.filters import buscarPlato
 
 
 def incio_trabajador(request):
-    nombre = request.session.get('cuentaAdmin') or request.session.get(
-            'cuentaEncConvenio') or request.session.get('cuentaEncCocina') or request.session.get('cuentaRepartidor') or request.session.get('cuentaCajero')
-    return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
+    if request.session.get('cuentaAdmin'):
+        nombre = Administrador.objects.get(
+            email_admin=request.session['cuentaAdmin'])
+        return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
+    elif request.session.get('cuentaEncConvenio'):
+        nombre = EncConvenio.objects.get(
+            id_enc_conv=request.session['cuentaEncConvenio'])
+        return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
+    elif request.session.get('cuentaEncCocina'):
+        nombre = EncCocina.objects.get(
+            email_enc_coc=request.session['cuentaEncCocina'])
+        return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
+    elif request.session.get('cuentaRepartidor'):
+        nombre = Repartidor.objects.get(
+            id_repartidor=request.session['cuentaRepartidor'])
+        return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
+    elif request.session.get('cuentaCajero'):
+        nombre = Cajero.objects.get(
+                email_cajero=request.session['cuentaCajero'])  
+        return render(request,'trabajador/inicio_trabajador.html',{'nombre':nombre})
 
 class Login(View):
     def get(self, request):
@@ -44,9 +61,9 @@ class Login(View):
             else:
                 error_message = 'Email o Contraseña incorrecto'
         elif cuentaEncConvenio:
-            flag = contraseña, cuentaEncConvenio.contraseña1
+            flag = check_password(contraseña, cuentaEncConvenio.contraseña1)
             if flag:
-                request.session['cuentaEncConvenio'] = cuentaEncConvenio.email_enc_conv
+                request.session['cuentaEncConvenio'] = cuentaEncConvenio.id_enc_conv
                 print('eres :', email)
                 return redirect('incio_trabajador')
             else:
