@@ -798,7 +798,7 @@ def agregar_pedido(request):
 
 
 def listar_pedido(request):
-    pedidos = Pedido.objects.all()
+    pedidos = Pedido.objects.all().order_by('-fecha_pedido')
     data = {
         'pedidos': pedidos
     }

@@ -164,6 +164,14 @@ def entregar_pedido(request, id_pedido):
      else:
          return redirect('listar-pedidos-activos')
 
+def cancelar_pedido(request, id_pedido):
+     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
+     if (request.method == 'GET') and ("cancelar" in request.GET):
+         pedido.estado = 'No entregado'
+         pedido.save()
+         return redirect('listar-pedidos-activos')
+     else:
+         return redirect('listar-pedidos-activos')
 
 #pedidos aceptados
 def listar_pedidos_aceptados(request):
