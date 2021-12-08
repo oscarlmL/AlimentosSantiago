@@ -103,6 +103,7 @@ urlpatterns = [
     path('aceptar-pedido/<int:id_pedido>/',aceptar_pedido,name="aceptar-pedido"),
     path('listar-pedidos-aceptados',auth_middleware_repartidor(listar_pedidos_aceptados),name="listar-pedidos-aceptados"),
     path('entregar-pedido/<int:id_pedido>/',entregar_pedido,name="entregar-pedido"),
+    path('cancelar-pedido/<int:id_pedido>/',cancelar_pedido,name="cancelar-pedido"),
     #FIN REPARTIDOR
 
 
@@ -117,6 +118,7 @@ urlpatterns = [
     path('listar-pedidos-pendientes/',auth_middleware_cajero(listar_pedidos_pendientes), name="listar-pedidos-pendientes"),
     path('confirmar-pedido/<int:id_pedido>/',confirmar_pedido, name="confirmar-pedido"),
     path('listar-pedidos-confirmados/',listar_pedidos_confirmados, name="listar-pedidos-confirmados"),
+    path('cancelar-pedido/<int:id_pedido>/',cancelar_pedido, name="cancelar-pedido"),
     
     #END CAJERO
 

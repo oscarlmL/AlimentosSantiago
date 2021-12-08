@@ -278,11 +278,13 @@ tipo_entrega = [
 ]
 estado_pedido = [
     ['Pendiente', "Pendiente"],
+    ['Cancelado', "Cancelado"],
     ['Confirmado', "Confirmado"],
     ['En ruta', "En ruta"],
+    ['No entregado', "No entregado"],
     ['Entregado', "Entregado"]
-
 ]
+
 class Pedido(models.Model):
     id_pedido = models.AutoField(primary_key=True)
     plato_id = models.ForeignKey('Plato',on_delete=models.CASCADE)
@@ -294,7 +296,8 @@ class Pedido(models.Model):
     tipo_entrega = models.CharField(max_length=50, choices=tipo_entrega, null=False)
     tipo_pago = models.ForeignKey(Pago, models.CASCADE, db_column='tipo_pago')
     celular = models.CharField(max_length=10, default='', blank=True)
-    fecha_pedido = models.DateField(default=datetime.datetime.today)
+    fecha_pedido = models.DateTimeField(default=datetime.datetime.today)
+    #fecha_pedido = models.DateField(default=datetime.datetime.today)
     estado = models.CharField(max_length=50, choices=estado_pedido, default='Pendiente')
     restaurant_id_restaurante = models.ForeignKey(
         'Restaurant', models.DO_NOTHING, db_column='restaurant_id_restaurante')

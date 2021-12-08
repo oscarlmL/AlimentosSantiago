@@ -14,14 +14,14 @@
         <div>
             <table class="table table-hover table-responsive-xl">
                 <tr class="table-active">
-
-
                     <th>Nombre Cliente</th>
                     <th>Dirección Entrega</th>
                     <th>Horario Entrega</th>
                     <th>Tipo Pago</th>
+                    <th>Valor a pagar</th>
                     <th>Ver ubicación</th>
                     <th>Opciones</th>
+                    <th></th>
                 </tr>
                 {% for p in pedidos_aceptados %}
                 <tr class="table-light">
@@ -31,36 +31,34 @@
                             id="direccionEditar" readonly></td>
                     <td>{{ p.horario_entrega | title }}</td>
                     <td>{{ p.tipo_pago | title }}</td>
+                    <td>{{ p.precio | title }}</td>
                     <td>
                         <a onclick="return mostrarLugar();" type="button" class="btn btn-warning fas fa-plane"
                             href="https://www.google.cl/maps/preview" target="_blank"></a>
                     </td>
                     <td>
                         <form action="{% url 'entregar-pedido' p.id_pedido %}" method="GET">
-
                             <div class="input-group-append">
-                                <input type="submit" name="entregar" style="width: 80px" class="btn btn-danger btn-sm"
+                                <input type="submit" name="entregar" style="width: 80px" class="btn btn-success btn-sm"
                                     value="Entregado" />
-                                <span class="input-group-text  border-0" style="cursor: pointer; background-color: #DC3545;">
+                                <span class="input-group-text  border-0" style="cursor: pointer; background-color: #28A745;">
                                     <span class="iconify bg-white" data-icon="bi:check-square-fill"
                                         data-inline="true"></span>
                                 </span>
-
                             </div>
-
-
+                        </form>
+                     <td>
+                        <form action="{% url 'cancelar-pedido' p.id_pedido %}" method="GET">
+                            <div class="input-group-append">
+                                <input type="submit" name="cancelar" style="width: 80px" class="btn btn-danger btn-sm"
+                                    value="Cancelado" />
+                                <span class="input-group-text  border-0" style="cursor: pointer; background-color: #DC3545;">
+                                    <span class="iconify bg-white" data-icon="ic:baseline-cancel"
+                                        data-inline="true"></span>
+                                </span>
+                            </div>
                         </form>
                     </td>
-
-                    <!-- <div class="input-group mb-3 border border">
-                            <input type="password" id="password" placeholder="Contraseña" name="contraseña" class="form-control border-0" aria-label="Amount (to the nearest dollar)" required>
-                            <div class="form-group has-feedback">
-                                <i class="fa fa-user form-control-feedback"></i>
-                                <input type="text" class="form-control" placeholder="Escribe un nombre">
-                            </div>
-                        </div>
-                    </td>
-                    <i class="fas fa-check-square" style="font-size: 25px;"></i> -->
                 </tr>
                 {% endfor %}
             </table>
@@ -101,4 +99,5 @@
         return false; //No ejecutar el evento.
     }
 </script>
+
 {% endblock %}

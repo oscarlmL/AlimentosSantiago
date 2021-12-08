@@ -2,15 +2,6 @@
 {% block contenido %}
 {% load static %}
 {% if request.session.cuentaCajero %}
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        setInterval(function () {
-            $("#pedidos-pendientes").load(window.location.href + " #pedidos-pendientes");
-        }, 3000);
-    });
-</script>
-
 <br>
 <br>
 <br>
@@ -28,79 +19,62 @@
 
             <br>
             <div>
+                <table >
                 <table class="table table-hover table-responsive-xl" id="pedidos-pendientes">
                     <tr class="table-active">
-                        <th>ID Pedido</th>
-                        <th>Estado</th>
+                        <th >Fecha Pedido</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
                         <th>Nombre Cliente</th>
-                        <th>Fecha Pedido</th>
                         <th>Direccion</th>
                         <th>Horario Entrega</th>
                         <th>Tipo Entrega</th>
                         <th>Tipo Pago</th>
-                        <th>Opciones</th>
+                        <th>Opciones </th>
+                        <th></th>
                     </tr>
                     {% for n in pedidos_pendientes %}
                     <tr class="table-light">
-                        <td>{{ n.id_pedido | title }}</td>
-                        <td>{{ n.estado | title }}</td>
-                        <td>{{ n.cliente_id | title }}</td>
                         <td>{{ n.fecha_pedido | title }}</td>
+                        <td>{{ n.plato_id | title}}</td>
+                        <td>{{ n.cantidad| title}}</td>
+                        <td>{{ n.cliente_id | title }}</td>
                         <td>{{ n.direccion | title }}</td>
                         <td>{{ n.horario_entrega | title }}</td>
                         <td>{{ n.tipo_entrega | title }}</td>
                         <td>{{ n.tipo_pago | title }}</td>
-
                         <td>
                             <form action="{% url 'confirmar-pedido' n.id_pedido %}" method="GET">
                                 <input type="submit" name="confirmar" style="width: 80px" class="btn btn-success btn-sm"
                                     value="Confirmar" />
                             </form>
                         </td>
+                        <td>
+                            <form action="{% url 'cancelar-pedido' n.id_pedido %}" method="GET">
+                                <input type="submit" name="cancelar" style="width: 80px" class="btn btn-danger btn-sm"
+                                    value="Cancelar" />
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>
-
+            </table>
             </div>
             <br>
             <hr>
             <br>
-            <!-- <div class="">
-                <h2 class="text-center">Lista de Repartidores</h2>
-                <div class="">
-                    <table class="table table-hover table-responsive-xl">
-                        <tr class="table-active">
-                            <th>Rut</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>Patente Vehiculo</th>
-                            <th>Tipo Vehiculo</th>
-                            <th>Celular</th>
-                        </tr>
-
-                        {% for repartidores_disponibles in repartidores_disponibles %}
-                        <tr class="table-light">
-                            <td>{{repartidores_disponibles.rut_repartidor}}</td>
-                            <td>{{repartidores_disponibles.nombre_repartidor}}</td>
-                            <td>{{repartidores_disponibles.apellido_repartidor}}</td>
-                            <td>{{repartidores_disponibles.email_repartidor}}</td>
-                            <td>{{repartidores_disponibles.tipo_veh}}</td>
-                            <td>{{repartidores_disponibles.patente_veh}}</td>
-                            <td>{{repartidores_disponibles.celular}}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div> -->
-
-
-
-
         </div>
     </div>
 </div>   
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $("#pedidos-pendientes").load(window.location.href + " #pedidos-pendientes");
+        }, 3000);
+    });
+</script>
 
 {% endif %}
 {% endblock %}

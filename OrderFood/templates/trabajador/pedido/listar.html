@@ -2,33 +2,57 @@
 {% block contenido %}
 {% load static %}
 {% load crispy_forms_tags %}
-
-
-<div class="card">
-    <div class="card-body">
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
         <h2 class="text-center">Listado de pedidos</h2>
-        <table class="table table-striped table-hover table-responsive-sm">
-            <tr>
-                <th>Estado</th>
+        <table class="table table-hover table-responsive-xl">
+            <tr class="table-active">
+                <th>Id Pedido</th>
                 <th>Fecha_pedido</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Restaurant</th>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Celular</th>
+                <th>Medio de pago</th>
+                <th>Tipo de entrega</th>
+                <th>Estado</th>
+                <th>Horario de entrega</th>
+                <th>Repartidor</th>
                 <th>Opciones</th>
+                <th></th>
             </tr>
             
             {% for p in pedidos %}
 
-            <tr>
+            <tr class="table-light">
+                <td>{{p.id_pedido | title }}</td>
+                <td>{{p.fecha_pedido | title }}</td>
+                <td>{{p.plato_id | title }}</td>
+                <td>{{p.cantidad | title }}</td>
+                <td>{{p.precio | title }}</td>
+                <td>{{p.restaurant_id_restaurante | title }}</td>
+                <td>{{p.cliente_id | title }}</td>
+                <td>{{p.direccion| title }}</td>
+                <td>{{p.celular| title }}</td>
+                <td>{{p.tipo_pago| title }}</td>
+                <td>{{p.tipo_entrega| title }}</td>
                 <td>{{p.estado | title }}</td>
-                <td>{{p.fecha_pedido}}</td>
+                <td>{{p.horario_entrega | title }}</td>
+                <td>{{p.repartidor_id | title }}</td>
                 <td>
                     <a href="{% url 'modificar-pedido' p.id_pedido %}" class="btn btn-dark btn-round">Modificar</a>
+                </td>
+                <td>
                     <a href="{% url 'eliminar-pedido' p.id_pedido %}" class="btn btn-dark btn-round">Eliminar</a>
                 </td>
-
-
             </tr>
-
-
-
 
             {% endfor %}
             </table>
