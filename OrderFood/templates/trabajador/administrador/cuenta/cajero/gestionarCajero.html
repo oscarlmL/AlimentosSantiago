@@ -61,11 +61,11 @@
                                 value="{{values.email_cajero}}" placeholder="ejemplo: cajero@dominio.com">
                         </div>
                         <div class="form-group">
-                            <label for="">Nombre Restaurant</label>
-                            <select name="restaurant_id_restaurante" id="" class="form-control">
-                                <option value="" selected>--- Seleccionar Restaurant ---</option>
-                                {% for cajero_restaurante in cajero_restaurante %}
-                                <option value="{{cajero_restaurante.id_restaurante}}">{{cajero_restaurante.nombre_rest}}</option>
+                            <label for="">Restaurante</label>
+                            <select name="restaurante" id="" class="form-control">
+                                <option value="" selected>--- Seleccionar Restaurante---</option>
+                                {% for cajero_rest in cajero_rest %}
+                                <option value="{{cajero_rest.id_restaurante}}">{{cajero_rest.nombre_rest}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -122,12 +122,12 @@
                         <td>{{cuentasCajero.id_cajero}}</td>
                         <td>{{cuentasCajero.nom_cajero}}</td>
                         <td>{{cuentasCajero.email_cajero}}</td>
-                        <td>{{cuentasCajero.restaurant_id_restaurante}}</td>            
+                        <td>{{cuentasCajero.restaurante}}</td>            
                        
                         <td>
                             <a href="{% url 'editar-cuenta-cajero' %}?id_cajero={{cuentasCajero.id_cajero}}"
                                 class="btn btn-dark btn-sm">Modificar</a>
-                            <a href="#" onclick="eliminarCajero({{cuentasCajero.id_cajero}})"
+                           <!--  <a href="#" onclick="eliminarCajero({{cuentasCajero.id_cajero}})" >  -->
                                 class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>

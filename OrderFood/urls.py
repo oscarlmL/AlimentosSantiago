@@ -32,7 +32,7 @@ urlpatterns = [
     path('realizar-pedido', auth_middleware_cliente(realizar_pedido.as_view()), name="realizar-pedido"),
     path('pagar', auth_middleware_cliente(realizar_pedido.as_view()), name="pagar"),
     path('mis-pedidos', auth_middleware_cliente(pedidos.as_view()), name="mis-pedidos"),
-    path('historial-pedidos', auth_middleware_cliente(historial_pedidos.as_view()), name="historial-pedidos"),
+ # path('historial-pedidos', auth_middleware_cliente(historial_pedidos.as_view()), name="historial-pedidos"),
 
 
     #ADMINITRACION
