@@ -278,7 +278,7 @@ class pedidos(View):
     def get(self, request):
         clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
         cuentaCliente = request.session.get('cuentaCliente')
-        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente).filter(Q(estado="Pendiente")|Q(estado="Confirmado")|Q(estado="En ruta"))
+        pedidos = Pedido.get_pedidos_by_cliente(cuentaCliente).filter(Q(estado="Pendiente")|Q(estado="Confirmado")|Q(estado="En ruta")).order_by("fecha_pedido")
         print(pedidos)
         data={'pedidos':pedidos,'clienteeee':clienteeee}
         return render(request, 'cliente/pedidos.html',data)
