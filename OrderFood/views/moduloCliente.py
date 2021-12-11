@@ -247,6 +247,9 @@ class realizar_pedido(View):
 
             costopedido = 0 # aca guaramos el costo a cobrar
 
+            if str(tipo_entrega) == "Delivery":
+                costopedido = 1790
+
             id_plato = (list(carro.keys()))
             for plato in id_plato:
                 platito = Plato.objects.get(id_plato=plato)
