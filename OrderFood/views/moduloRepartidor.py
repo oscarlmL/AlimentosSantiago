@@ -130,11 +130,11 @@ def cambiar_contraseña_repartidor(request):
 
 #pedidos confirmados
 def listar_pedidos_activos(request):
-    repartidor = Repartidor.objects.get(id_repartidor=request.session['cuentaRepartidor'])
+    nombre = Repartidor.objects.get(id_repartidor=request.session['cuentaRepartidor'])
     pedidos_confirmados = Pedido.objects.filter(estado='Confirmado',tipo_entrega='Delivery')
     data = {
         'pedidos_confirmados':pedidos_confirmados,
-        'repartidor':repartidor
+        'nombre':nombre
     }
     return render (request ,'trabajador/repartidor/pedidos_activos_local.html',data)
 
@@ -174,7 +174,8 @@ def cancelar_pedido(request, id_pedido):
 #pedidos aceptados
 def listar_pedidos_aceptados(request):
     repartidor = Repartidor.objects.get(id_repartidor=request.session['cuentaRepartidor'])
-    pedidos_aceptados = Pedido.objects.filter(estado='En ruta')
+    
+    pedidos_aceptados = Pedido.objects.filter(estado='En ruta', repartidor_id = repartidor)
     data = {
         'pedidos_aceptados': pedidos_aceptados,
         'repartidor':repartidor,

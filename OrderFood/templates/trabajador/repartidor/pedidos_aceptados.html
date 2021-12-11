@@ -35,9 +35,10 @@
                 <table class="table table-hover table-responsive-xl">
                     <tr class="table-active">
                         <th>Nombre Cliente</th>
-                        <th >Dirección Restaurante</th>
+                        <th>Dirección Restaurante</th>
                         <th>Dirección Entrega</th>
                         <th>Horario Entrega</th>
+                        <th>Celular Cliente</th>
                         <th>Pago</th>
                         <th>Valor a pagar</th>
                         <th>Opciones</th>
@@ -51,6 +52,7 @@
                         <td><input type="input" style="border: 0;" name="direccion" value="{{p.direccion}}"
                                 id="to" readonly></td>
                         <td>{{ p.horario_entrega | title }}</td>
+                        <td>{{ p.celular | title }}</td>
                         <td>{{ p.tipo_pago | title }}</td>
                         <td>${{ p.precio | intcomma }}</td>
                         <td>
@@ -92,4 +94,4 @@
     async defer"></script>
 </body>
 
-</html>
+</html>https://www.youtube.com/watch?v=5z4sk3zOwnQ&ab_channel=SamCodes
