@@ -371,19 +371,23 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap"
         async defer"></script>
     <script>
-        function initMap() {
-            var input = document.getElementById('clientAddress');
-            var autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.addListener('place_changed', function () {
-                var place = autocomplete.getPlace();
-                document.getElementById('location-snap').
-                    innerHTML = place.formatted_address;
-                document.getElementById('lat-span').
-                    innerHTML = place.geometry.location.lat();
-                document.getElementById('lon-span').
-                    innerHTML = place.geometry.location.lng();
-            });
-        }
+    function initMap() {
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("clientAddress"),
+        {
+          types: ['address'],
+          componentRestrictions: {'country': ['cl']},
+        })
+      autocomplete.addListener('place_changed', function () {
+        var place = autocomplete.getPlace();
+        document.getElementById('location-snap').
+          innerHTML = place.formatted_address;
+        document.getElementById('lat-span').
+          innerHTML = place.geometry.location.lat();
+        document.getElementById('lon-span').
+          innerHTML = place.geometry.location.lng();
+      });
+    }
     </script>
 </body>
 
