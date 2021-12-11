@@ -174,7 +174,8 @@ def cancelar_pedido(request, id_pedido):
 #pedidos aceptados
 def listar_pedidos_aceptados(request):
     repartidor = Repartidor.objects.get(id_repartidor=request.session['cuentaRepartidor'])
-    pedidos_aceptados = Pedido.objects.filter(estado='En ruta')
+
+    pedidos_aceptados = Pedido.objects.filter(estado='En ruta').filter(repartidor_id=repartidor)
     data = {
         'pedidos_aceptados': pedidos_aceptados,
         'repartidor':repartidor,
