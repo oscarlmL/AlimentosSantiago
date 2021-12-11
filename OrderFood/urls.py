@@ -104,6 +104,7 @@ urlpatterns = [
     path('listar-pedidos-aceptados',auth_middleware_repartidor(listar_pedidos_aceptados),name="listar-pedidos-aceptados"),
     path('entregar-pedido/<int:id_pedido>/',entregar_pedido,name="entregar-pedido"),
     path('cancelar-pedido/<int:id_pedido>/',cancelar_pedido,name="cancelar-pedido"),
+
     #FIN REPARTIDOR
 
 
@@ -125,4 +126,5 @@ urlpatterns = [
     # path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
     # path('listar_carrito', listar_carrito, name='listar_carrito'),
     # path('eliminar_item_carrito/<id>/', eliminar_item_carrito, name='eliminar_item_carrito'),   
+
 ]
