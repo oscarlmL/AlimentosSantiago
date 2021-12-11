@@ -5,9 +5,14 @@ from OrderFood.forms import  *
 
 #Modulo Cajero -----------------------------------------------------------------------------
 def listar_pedidos_pendientes(request):
-    nombre = Cajero.objects.get(
-                email_cajero=request.session['cuentaCajero'])  
-    pedidos_pendientes = Pedido.objects.filter(estado='Pendiente').order_by('fecha_pedido','direccion')
+    nombre = Cajero.objects.get(email_cajero=request.session['cuentaCajero'])  
+
+    cajero = Cajero.objects.get(email_cajero=request.session['cuentaCajero'])
+
+    print("-----------------------------")
+    print(cajero.restaurante_id)
+
+    pedidos_pendientes = Pedido.objects.filter(restaurant_id_restaurante=cajero.restaurante_id, estado='Pendiente').order_by('fecha_pedido','direccion')
     repartidores_disponibles = Repartidor.objects.all()
     data = {
             'pedidos_pendientes':pedidos_pendientes,

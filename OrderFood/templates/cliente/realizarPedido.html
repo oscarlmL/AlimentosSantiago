@@ -229,6 +229,11 @@
                         </ul>
                         {% endfor %}
                         <hr>
+                        <ul class="list-group" id="div-costo-envio" name="div-costo-envio" class="d-none">
+                            <li class="list-group font-weight-bold" style="font-size: 22px;">Costo Env&iacute;o <span> $ 1.790</span>
+                            </li>                                
+                        </ul>                          
+                        <hr>
                         <ul class="list-group">
                             <li class="list-group font-weight-bold" style="font-size: 22px;">TOTAL A PAGAR <span>$
                                     {{platos|precio_total_carro:request.session.carro | intcomma}}</span></li>
@@ -248,6 +253,25 @@
     let btn = document.getElementById("btnEnviar");
     let saldo = document.getElementById("saldo_cli").value;
     let total = document.getElementById("totalpagar").value;
+
+    let tipoentrega = document.getElementById("tipo_entrega");
+    
+    let validarTipoEntrega = () =>{
+
+        let totalcompra = document.getElementById("totalplato").value;
+
+        if(tipoentrega.value == "Delivery"){
+            document.getElementById("div-costo-envio").classList.remove("d-none");
+            document.getElementById("totalcompra").value = parseInt(totalcompra) + 1790;
+        }else{
+            document.getElementById("div-costo-envio").classList.add("d-none");
+            document.getElementById("totalcompra").value = parseInt(totalcompra);
+        }
+    }
+    validarTipoEntrega();
+    tipoentrega.onchange = () =>{
+        validarTipoEntrega();
+    }
 
     var now = new Date();
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
