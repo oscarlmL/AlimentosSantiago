@@ -1,6 +1,7 @@
 {% load static %}
 {% load carro %}
 {% load humanize %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,13 +15,15 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9e06d751a2.js" crossorigin="anonymous"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" href="{% static 'app/img/icon.png' %}" />
     <link rel="stylesheet" href="{% static 'app/fonts/icomoon/style.css' %}">
     <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
     <!-- Style -->
-    <script src="https://kit.fontawesome.com/9e06d751a2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
+    <!-- MAPA -->
+    <link rel="stylesheet" href="{% static 'app/css/prueba.css' %}" />
     <!-- Bootstrap AZUL 4.5 CSS -->
     <!-- <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">  -->
 </head>
@@ -144,247 +147,248 @@
         {% block contenido %}
         {% endblock %}
     </div>
-    <!-- Footer -->
-    <footer class="text-center text-lg-start bg-dark text-white">
-        <!-- Section: Social media -->
-        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-            <!-- Left -->
-            <div class="me-5 d-none d-lg-block">
-                <span>Nuestras redes sociales:</span>
-            </div>
-            <!-- Left -->
-
-            <!-- Right -->
-            <div>
-                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="icon-facebook"></i>
-                </a>
-
-                <!-- Twitter -->
-                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="icon-twitter"></i></a>
-
-                <!-- Google -->
-                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="icon-google"></i>
-                </a>
-
-                <!-- Instagram -->
-                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="icon-instagram"></i>
-                </a>
-
-                <!-- Linkedin -->
-                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="iconify" data-icon="simple-icons:tiktok"></i>
-
-
-                    <!-- Github -->
-                    <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                            class="icon-github"></i></a>
-            </div>
-            <!-- Right -->
-        </section>
-        <!-- Section: Social media -->
-
-        <!-- Section: Links  -->
-        <section class="">
-            <div class="container text-center text-md-start mt-5">
-                <!-- Grid row -->
-                <div class="row mt-3">
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                        <!-- Content -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            <i class="fas fa-gem me-3"></i>RNASSS.CL
-                        </h6>
-                        <p>
-                            Here you can use rows and columns to organize your footer content. Lorem ipsum
-                            dolor sit amet, consectetur adipisicing elit.
-                        </p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            Products
-                        </h6>
-                        <p>
-                            <a href="#!" class="text-reset">Angular</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">React</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">Vue</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">Laravel</a>
-                        </p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            Useful links
-                        </h6>
-                        <p>
-                            <a href="#!" class="text-reset">Pricing</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">Settings</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">Orders</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">Help</a>
-                        </p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            Información de contacto
-                        </h6>
-                        <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
-                        <p>
-                            <i class="fas fa-envelope me-3"></i>
-                            info@example.com
-                        </p>
-                        <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-                        <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
-                    </div>
-                    <!-- Grid column -->
-                </div>
-                <!-- Grid row -->
-            </div>
-        </section>
-        <!-- Section: Links  -->
-
-        <!-- Copyright -->
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-            © 2021 Copyright:
-            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">RNASSS.CL</a>
-        </div>
-        <!-- Copyright -->
-    </footer>
-    <!-- Footer -->
-    <!--SCRIPTS-->
-    <!--solo numeros-->
-    <script type="text/javascript">
-        function valideKey(evt) {
-
-            // code is the decimal ASCII representation of the pressed key.
-            var code = (evt.which) ? evt.which : evt.keyCode;
-
-            if (code == 8) { // backspace.
-                return true;
-            } else if (code >= 48 && code <= 57) { // is a number.
-                return true;
-            } else { // other keys.
-                return false;
-            }
-        }
-    </script>
-    <!--solo letras-->
-    <script>
-        function soloLetras(e) {
-            key = e.keyCode || e.which;
-            tecla = String.fromCharCode(key).toLowerCase();
-            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-            especiales = [8, 37, 39, 46];
-
-            tecla_especial = false
-            for (var i in especiales) {
-                if (key == especiales[i]) {
-                    tecla_especial = true;
-                    break;
-                }
-            }
-
-            if (letras.indexOf(tecla) == -1 && !tecla_especial)
-                return false;
-        }
-        function limpia() {
-            var val = document.getElementById("miInput").value;
-            var tam = val.length;
-            for (i = 0; i < tam; i++) {
-                if (!isNaN(val[i]))
-                    document.getElementById("miInput").value = '';
-            }
-        }
-    </script>
-    <script>
-        AOS.init();
-    </script>
-    <script type="text/javascript">
-        function openItems(category) {
-            var i;
-            var x = document.getElementsByClassName("items");
-            if (category == 'All') {
-                var display = 'block'
-            }
-            else {
-                var display = 'none'
-            }
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = display;
-            }
-
-            if (category != 'All')
-                document.getElementById(category).style.display = "block";
-
-        }
-        function highlightCategoryText(element) {
-            all_elements = document.querySelectorAll(".list-group-item-hover");
-
-            for (var i = 0; i < all_elements.length; i++) {
-                all_elements[i].style.color = '#aeaeae'; // light gray
-                // all_elements[i].style.boxShadow = ''; // light gray
-            }
-
-            element.style.color = '#ff9d2f'; //highlighted blue
-            // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
-        }
-    </script>
-    <script src="{% static 'app/js/mycart.js' %}"></script>
-    <script src="{% static 'app/js/mycart-custom.js' %}"></script>
-    <script src="{% static 'app/js/js.js' %}"></script>
-    <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'app/js/custom-general.js' %}"></script>
-    <script src="{% static 'app/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'app/js/popper.min.js' %}"></script>
-    <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'app/js/main.js' %}"></script>
-    <script src="{% static 'app/js/jquery.min.js' %}"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
-    <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap"
-        async defer"></script>
-    <script>
-        function initMap() {
-            var input = document.getElementById('clientAddress');
-            var autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.addListener('place_changed', function () {
-                var place = autocomplete.getPlace();
-                document.getElementById('location-snap').
-                    innerHTML = place.formatted_address;
-                document.getElementById('lat-span').
-                    innerHTML = place.geometry.location.lat();
-                document.getElementById('lon-span').
-                    innerHTML = place.geometry.location.lng();
-            });
-        }
-    </script>
 </body>
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-dark text-white">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+            <span>Nuestras redes sociales:</span>
+        </div>
+        <!-- Left -->
+
+        <!-- Right -->
+        <div>
+            <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                <i class="icon-facebook"></i>
+            </a>
+
+            <!-- Twitter -->
+            <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                <i class="icon-twitter"></i></a>
+
+            <!-- Google -->
+            <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                <i class="icon-google"></i>
+            </a>
+
+            <!-- Instagram -->
+            <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                <i class="icon-instagram"></i>
+            </a>
+
+            <!-- Linkedin -->
+            <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button">
+                <i class="iconify" data-icon="simple-icons:tiktok"></i>
+
+
+                <!-- Github -->
+                <a class="btn rounded-circle btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="icon-github"></i></a>
+        </div>
+        <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3"></i>RNASSS.CL
+                    </h6>
+                    <p>
+                        Here you can use rows and columns to organize your footer content. Lorem ipsum
+                        dolor sit amet, consectetur adipisicing elit.
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Products
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Angular</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">React</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Vue</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Laravel</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Useful links
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Pricing</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Settings</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Orders</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Help</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Información de contacto
+                    </h6>
+                    <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        info@example.com
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                    <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2021 Copyright:
+        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">RNASSS.CL</a>
+    </div>
+    <!-- Copyright -->
+</footer>
 
 </html>
+
+<!--SCRIPTS-->
+<!--solo numeros-->
+<script type="text/javascript">
+    function valideKey(evt) {
+
+        // code is the decimal ASCII representation of the pressed key.
+        var code = (evt.which) ? evt.which : evt.keyCode;
+
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            return true;
+        } else { // other keys.
+            return false;
+        }
+    }
+</script>
+<!--solo letras-->
+<script>
+    function soloLetras(e) {
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = [8, 37, 39, 46];
+
+        tecla_especial = false
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial)
+            return false;
+    }
+    function limpia() {
+        var val = document.getElementById("miInput").value;
+        var tam = val.length;
+        for (i = 0; i < tam; i++) {
+            if (!isNaN(val[i]))
+                document.getElementById("miInput").value = '';
+        }
+    }
+</script>
+<script>
+    AOS.init();
+</script>
+<script type="text/javascript">
+    function openItems(category) {
+        var i;
+        var x = document.getElementsByClassName("items");
+        if (category == 'All') {
+            var display = 'block'
+        }
+        else {
+            var display = 'none'
+        }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = display;
+        }
+
+        if (category != 'All')
+            document.getElementById(category).style.display = "block";
+
+    }
+    function highlightCategoryText(element) {
+        all_elements = document.querySelectorAll(".list-group-item-hover");
+
+        for (var i = 0; i < all_elements.length; i++) {
+            all_elements[i].style.color = '#aeaeae'; // light gray
+            // all_elements[i].style.boxShadow = ''; // light gray
+        }
+
+        element.style.color = '#ff9d2f'; //highlighted blue
+        // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
+    }
+</script>
+<script src="{% static 'app/js/mycart.js' %}"></script>
+<script src="{% static 'app/js/mycart-custom.js' %}"></script>
+<script src="{% static 'app/js/js.js' %}"></script>
+<script src="{% static 'app/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'app/js/custom-general.js' %}"></script>
+<script src="{% static 'app/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'app/js/popper.min.js' %}"></script>
+<script src="{% static 'app/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'app/js/main.js' %}"></script>
+<script src="{% static 'app/js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+<script>
+    function initMap() {
+        var input = document.getElementById('clientAddress');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            document.getElementById('location-snap').
+                innerHTML = place.formatted_address;
+            document.getElementById('lat-span').
+                innerHTML = place.geometry.location.lat();
+            document.getElementById('lon-span').
+                innerHTML = place.geometry.location.lng();
+        });
+    }
+</script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap"
+    async defer></script>
+<script src="{% static 'app/js/GPS.js' %}"></script>
