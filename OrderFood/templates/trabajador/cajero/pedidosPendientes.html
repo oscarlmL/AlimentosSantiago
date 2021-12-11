@@ -5,7 +5,6 @@
 <br>
 <br>
 <br>
-
  <div class="container">
     <div class="row">
         <div class="table table-striped table-hover table-responsive-xl">
@@ -22,6 +21,7 @@
                 <table >
                 <table class="table table-hover table-responsive-xl" id="pedidos-pendientes">
                     <tr class="table-active">
+                        <th>ID Pedido</th>
                         <th >Fecha Pedido</th>
                         <th>Descripción</th>
                         <th>Cantidad</th>
@@ -35,6 +35,7 @@
                     </tr>
                     {% for n in pedidos_pendientes %}
                     <tr class="table-light">
+                        <td>{{ n.id_pedido | title }}</td>
                         <td>{{ n.fecha_pedido | title }}</td>
                         <td>{{ n.plato_id | title}}</td>
                         <td>{{ n.cantidad| title}}</td>
@@ -66,7 +67,6 @@
         </div>
     </div>
 </div>   
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -75,6 +75,5 @@
         }, 3000);
     });
 </script>
-
 {% endif %}
 {% endblock %}

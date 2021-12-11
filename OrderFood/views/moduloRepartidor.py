@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from OrderFood.models import *
 from OrderFood.forms import  *
+from django.conf import settings
 
 # Modulo repartidor
 def editar_perfil_repartidor(request):
@@ -138,9 +139,6 @@ def listar_pedidos_activos(request):
     return render (request ,'trabajador/repartidor/pedidos_activos_local.html',data)
 
 
-
-
-
 def aceptar_pedido(request, id_pedido):
     repartidor = request.session.get('cuentaRepartidor')
     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
@@ -179,10 +177,7 @@ def listar_pedidos_aceptados(request):
     pedidos_aceptados = Pedido.objects.filter(estado='En ruta')
     data = {
         'pedidos_aceptados': pedidos_aceptados,
-        'repartidor':repartidor
+        'repartidor':repartidor,
     }
     return render (request ,'trabajador/repartidor/pedidos_aceptados.html',data)
-
-
-
 # Fin Modulo repartidor

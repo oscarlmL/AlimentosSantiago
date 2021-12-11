@@ -1,232 +1,95 @@
-{% extends 'trabajador/base_trabajador.html' %}
-{% block contenido %}
 {% load static %}
-<br>
-<br>
-<br>
-<br>
-<div class="container-fluid">
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <a href="{% url 'incio_trabajador'%}" style="margin-right: 30px;" class="btn btn-dark btn-sm">Inicio</a>
-        <br>
-        <br>
-        <h2 class="">Lista de pedidos en ruta</h2>
-        <div>
-            <table class="table table-hover table-responsive-xl">
-                <tr class="table-active">
-                    <th>Nombre Cliente</th>
-                    <th>Dirección Entrega</th>
-                    <th>Horario Entrega</th>
-                    <th>Tipo Pago</th>
-                    <th>Valor a pagar</th>
-                    <th>Ver ubicación</th>
-                    <th>Opciones</th>
-                    <th></th>
-                </tr>
-                {% for p in pedidos_aceptados %}
-                <tr class="table-light">
+{% load humanize %}
 
-                    <td>{{ p.cliente_id | title }}</td>
-                    <td><input type="input" style="border: 0;" name="direccion" value="{{p.direccion}}"
-                            id="direccionEditar" readonly></td>
-                    <td>{{ p.horario_entrega | title }}</td>
-                    <td>{{ p.tipo_pago | title }}</td>
-                    <td>{{ p.precio | title }}</td>
-                    <td>
-                        <a onclick="return mostrarLugar();" type="button" class="btn btn-warning fas fa-plane"
-                            href="https://www.google.cl/maps/preview" target="_blank"></a>
-                    </td>
-                    <td>
-                        <form action="{% url 'entregar-pedido' p.id_pedido %}" method="GET">
-                            <div class="input-group-append">
-                                <input type="submit" name="entregar" style="width: 80px" class="btn btn-success btn-sm"
-                                    value="Entregado" />
-                                <span class="input-group-text  border-0"
-                                    style="cursor: pointer; background-color: #28A745;">
-                                    <span class="iconify bg-white" data-icon="bi:check-square-fill"
-                                        data-inline="true"></span>
-                                </span>
-                            </div>
-                        </form>
-                    <td>
-                        <form action="{% url 'cancelar-pedido' p.id_pedido %}" method="GET">
-                            <div class="input-group-append">
-                                <input type="submit" name="cancelar" style="width: 80px" class="btn btn-danger btn-sm"
-                                    value="Cancelado" />
-                                <span class="input-group-text  border-0"
-                                    style="cursor: pointer; background-color: #DC3545;">
-                                    <span class="iconify bg-white" data-icon="ic:baseline-cancel"
-                                        data-inline="true"></span>
-                                </span>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-
-
-
-
-
-        <!-- <div class="row form-group">
-            <label class="col-form-label col-md-4">Direccion:</label>
-            <div class="col-9">
-                <input type="text" name="" value="hevia quilpue" id="direccionEditar" class="form-control" readonly>
-            </div>
-            <a onclick="return mostrarLugar();" type="button" class="btn btn-warning fas fa-plane" href="https://www.google.cl/maps/preview" target="_blank">Consultar</a>
-        </div> -->
-    </div>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<script>
-    function mostrarLugar() {
-        let item = document.getElementById('direccionEditar')
-        if (item) {
-            window.open('https://google.cl/maps/place/' + item.value, '_blank');
-        }
-        return false; //No ejecutar el evento.
-    }
-</script>
-
-
-<!-- leaflet js  -->
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script>
-    // Map initialization 
-    var map = L.map('map').setView([14.0860746, 100.608406], 6);
-
-    //osm layer
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    osm.addTo(map);
-
-    if (!navigator.geolocation) {
-        console.log("Your browser doesn't support geolocation feature!")
-    } else {
-        setInterval(() => {
-            navigator.geolocation.getCurrentPosition(getPosition)
-        }, 5000);
-    }
-
-    var marker, circle;
-
-    function getPosition(position) {
-        // console.log(position)
-        var lat = position.coords.latitude
-        var long = position.coords.longitude
-        var accuracy = position.coords.accuracy
-
-        if (marker) {
-            map.removeLayer(marker)
-        }
-
-        if (circle) {
-            map.removeLayer(circle)
-        }
-
-        marker = L.marker([lat, long])
-        circle = L.circle([lat, long], { radius: accuracy })
-
-        var featureGroup = L.featureGroup([marker, circle]).addTo(map)
-
-        map.fitBounds(featureGroup.getBounds())
-
-        console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
-    }
-
-</script>
-<iframe src="https://storage.googleapis.com/maps-solutions-mv0qwh3ixx/locator-plus/locator-plus.html" width="100%"
-    height="100%" style="border:0;" loading="lazy">
-</iframe>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realtime location tracker</title>
+    <head>
+        <meta charset="UTF-8" />
+    
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
+        <script src="{% static '/app/js/jquery.min.js' %}"></script>
+        <link rel="icon" href="{% static 'app/img/icon.png' %}" />
+        <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+        <link rel="stylesheet" href="{% static 'app/css/prueba.css' %}" />
 
-    <!-- leaflet css  -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            width: 100%;
-            height: 100vh;
-        }
-    </style>
-</head>
+        <title>OrderFood Delivery</title>
+    </head>
 
 <body>
-    <div id="map"></div>
+    <br>
+    <br>
+    <div class="container">
+        <div class="table table-striped table-hover table-responsive-xl">
+            <a href="{% url 'incio_trabajador'%}" style="margin-right: 30px;" class="btn btn-dark btn-sm">Inicio</a>
+            <br>
+            <h2 class="">Pedido tomado</h2>
+            <div>
+                <table class="table table-hover table-responsive-xl">
+                    <tr class="table-active">
+                        <th>Nombre Cliente</th>
+                        <th >Dirección Restaurante</th>
+                        <th>Dirección Entrega</th>
+                        <th>Horario Entrega</th>
+                        <th>Pago</th>
+                        <th>Valor a pagar</th>
+                        <th>Opciones</th>
+                        <th></th>
+                    </tr>
+                    {% for p in pedidos_aceptados %}
+                    <tr class="table-light">
+                        <td>{{ p.cliente_id | title }}</td>
+                        <td><input type="input" style="border: 0;" name="direccion" value="{{ p.restaurant_id_restaurante.direccion_rest}}"
+                            id="from" readonly></td>
+                        <td><input type="input" style="border: 0;" name="direccion" value="{{p.direccion}}"
+                                id="to" readonly></td>
+                        <td>{{ p.horario_entrega | title }}</td>
+                        <td>{{ p.tipo_pago | title }}</td>
+                        <td>${{ p.precio | intcomma }}</td>
+                        <td>
+                            <form action="{% url 'entregar-pedido' p.id_pedido %}" method="GET">
+                                <div class="input-group-append">
+                                    <input type="submit" name="entregar" style="width: 80px"
+                                        class="btn btn-success btn-sm" value="Entregado" />
+                                    <span class="input-group-text  border-0"
+                                        style="cursor: pointer; background-color: #28A745;">
+                                        <span class="iconify bg-white" data-icon="bi:check-square-fill"
+                                            data-inline="true"></span>
+                                    </span>
+                                </div>
+                            </form>
+                        <td>
+                            <form action="{% url 'cancelar-pedido' p.id_pedido %}" method="GET">
+                                <div class="input-group-append">
+                                    <input type="submit" name="cancelar" style="width: 80px"
+                                        class="btn btn-danger btn-sm" value="Cancelado" />
+                                    <span class="input-group-text  border-0"
+                                        style="cursor: pointer; background-color: #DC3545;">
+                                        <span class="iconify bg-white" data-icon="ic:baseline-cancel"
+                                            data-inline="true"></span>
+                                    </span>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+        <div id="map"></div>
+    <script src="{% static 'app/js/GPS.js' %}"></script>
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE&libraries=places&callback=initMap"
+    async defer"></script>
 </body>
+
 </html>
-
-<!-- leaflet js  -->
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script>
-    // Map initialization 
-    var map = L.map('map').setView([14.0860746, 100.608406], 6);
-
-    //osm layer
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    osm.addTo(map);
-
-    if(!navigator.geolocation) {
-        console.log("Your browser doesn't support geolocation feature!")
-    } else {
-        setInterval(() => {
-            navigator.geolocation.getCurrentPosition(getPosition)
-        }, 5000);
-    }
-
-    var marker, circle;
-
-    function getPosition(position){
-        // console.log(position)
-        var lat = position.coords.latitude
-        var long = position.coords.longitude
-        var accuracy = position.coords.accuracy
-
-        if(marker) {
-            map.removeLayer(marker)
-        }
-
-        if(circle) {
-            map.removeLayer(circle)
-        }
-
-        marker = L.marker([lat, long])
-        circle = L.circle([lat, long], {radius: accuracy})
-
-        var featureGroup = L.featureGroup([marker, circle]).addTo(map)
-
-        map.fitBounds(featureGroup.getBounds())
-
-        console.log("Your coordinate is: Lat: "+ lat +" Long: "+ long+ " Accuracy: "+ accuracy)
-    }
-
-</script>
-{% endblock %}
