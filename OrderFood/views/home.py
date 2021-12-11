@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from OrderFood.filters import buscarPlato
 
+def index(request):
+    return render(request, 'index.html')
 
 def incio_trabajador(request):
     if request.session.get('cuentaAdmin'):

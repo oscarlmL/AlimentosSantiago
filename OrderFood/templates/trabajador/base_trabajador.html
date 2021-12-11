@@ -3,31 +3,34 @@
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="icon" href="{% static 'app/img/icon.png' %}" />
-    <link rel="stylesheet" href="{% static 'app/fonts/icomoon/style.css' %}">
-    <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
-    <!-- Style -->
-    <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
-    <!-- Bootstrap AZUL 4.5 CSS -->
-    <script src="https://kit.fontawesome.com/9e06d751a2.js" crossorigin="anonymous"></script>
-    <!-- <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="icon" href="{% static 'app/img/icon.png' %}" />
+  <link rel="stylesheet" href="{% static 'app/fonts/icomoon/style.css' %}">
+  <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
+  <!-- Style -->
+  <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'app/css/prueba.css' %}" />
+
+  <!-- Bootstrap AZUL 4.5 CSS -->
+  <script src="https://kit.fontawesome.com/9e06d751a2.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">  -->
 </head>
 
 <body style="padding: 0%;">
 
   <!--Sidebar-->
-  
+
   <aside class="sidebar">
     <div class="toggle">
       <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
@@ -93,7 +96,7 @@
             <i class="fas fa-edit"></i>
             <span class="links_name">Editar Perfil</span>
           </a>
-          
+
           {% elif request.session.cuentaEncConvenio %}
           <div class="text-center">
             <img
@@ -109,7 +112,7 @@
           <a class="list-group-item text-center" href="/registrarsaldo">
             <i class="fas fa-edit"></i>
             <span class="links_name">Cargar Saldo</span>
-          </a>        
+          </a>
           <a class="list-group-item text-center" href="/editar-perfil-enc-convenio">
             <i class="fas fa-edit"></i>
             <span class="links_name">Editar Perfil</span>
@@ -135,7 +138,7 @@
             <span class="links_name">Editar Perfil</span>
           </a>
           {% elif request.session.cuentaCajero %}
-          <div class="text-center"> 
+          <div class="text-center">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvlbOftZH5JRWVG-33321qDoWEyC3bv7R5vg&usqp=CAU"
               alt="Image" class="img-fluid center" width="150" height="150">
@@ -149,7 +152,7 @@
       {% endif %}
   </aside>
 
-  <div class="" style="padding-bottom: 300px;">
+  <div class="div-container"style="padding-bottom: 300px;">
     {% block contenido %}
     {% endblock %}
   </div>
@@ -365,6 +368,8 @@
       // element.style.boxShadow = "0 0 10px 2px rgba(0, 140, 186, 0.5)";
     }
   </script>
+    <script src="{% static 'app/js/GPS.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="{% static 'app/js/mycart.js' %}"></script>
   <script src="{% static 'app/js/mycart-custom.js' %}"></script>
   <script src="{% static 'app/js/js.js' %}"></script>
@@ -383,6 +388,10 @@
     async defer"></script>
   <script>
     function initMap() {
+      var options = {
+        types: ['(regions)'],
+        componentRestrictions: { country: "cl" }
+      };
       var input = document.getElementById('clientAddress');
       var autocomplete = new google.maps.places.Autocomplete(input);
       autocomplete.addListener('place_changed', function () {
@@ -398,4 +407,4 @@
   </script>
 </body>
 
-</html>
+</html></div>

@@ -140,4 +140,5 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATIC_URL = '/static/'
+GOOGLE_API_KEY = "AIzaSyDq9u7UgsFdaDmz2I9RWJoAq2Cwy-YJxmE"
 
