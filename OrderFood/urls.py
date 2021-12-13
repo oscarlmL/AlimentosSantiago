@@ -118,8 +118,8 @@ urlpatterns = [
     #path CAJERO
     path('listar-pedidos-pendientes/',auth_middleware_cajero(listar_pedidos_pendientes), name="listar-pedidos-pendientes"),
     path('confirmar-pedido/<int:id_pedido>/',confirmar_pedido, name="confirmar-pedido"),
-    path('listar-pedidos-confirmados/',listar_pedidos_confirmados, name="listar-pedidos-confirmados"),
-    path('cancelar-pedido/<int:id_pedido>/',cancelar_pedido, name="cancelar-pedido"),
+    path('listar-pedidos-confirmados/',auth_middleware_cajero(listar_pedidos_confirmados), name="listar-pedidos-confirmados"),
+    path('cancelar-pedido-cajero/<int:id_pedido>/',cancelar_pedido_cajero, name="cancelar-pedido-cajero"),
     
     #END CAJERO
 

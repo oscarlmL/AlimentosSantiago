@@ -160,8 +160,8 @@ def generar_cuenta_enc_cocina(request):
                               contraseña2=contraseña2)
         if(not nom_enc_coc):
             error_message = 'El nombre es requerido'
-        elif len(nom_enc_coc) < 4:
-            error_message = 'El nombre debe tener mas de 4 caracteres'
+        elif len(nom_enc_coc) < 3:
+            error_message = 'El nombre debe tener mas de 3 caracteres'
 
         elif not titulo:
             error_message = 'El titulo es requerido'
@@ -180,6 +180,9 @@ def generar_cuenta_enc_cocina(request):
             error_message = 'EL celular es requierodo'
         elif len(celular) < 7:
             error_message = 'El celular debe tener mas de 7 digitos'
+        
+        elif len(celular) > 9:
+            error_message = 'El celular no puede tener mas de 9 digitos'
 
         elif len(contraseña1 and contraseña2) < 5:
             error_message = 'Las contraseñas deben tener mas de 5 caracteres'
@@ -236,8 +239,8 @@ def editar_cuenta_enc_cocina(request):
         error_message = None
         if(not cuentaEncCocina.nom_enc_coc):
             error_message = 'El nombre es requerido'
-        elif len(cuentaEncCocina.nom_enc_coc) < 4:
-            error_message = 'El nombre debe tener mas de 4 caracteres'
+        elif len(cuentaEncCocina.nom_enc_coc) < 3:
+            error_message = 'El nombre debe tener mas de 3 caracteres'
 
         elif not cuentaEncCocina.titulo:
             error_message = 'El titulo es requerido'
@@ -327,13 +330,13 @@ def generar_cuenta_enc_convenio(request):
 
         elif not nom_enc_conv:
             error_message = 'El Nombre es requerido'
-        elif len(nom_enc_conv) < 4:
-            error_message = 'El Nombre debe tener mas de 4 caracteres'
+        elif len(nom_enc_conv) < 3:
+            error_message = 'El Nombre debe tener mas de 3 caracteres'
 
         elif not ap_enc_conv:
             error_message = 'El Apellido  es requerida'
-        elif len(ap_enc_conv) < 2:
-            error_message = 'EL appelido debe tener mas de 2'
+        elif len(ap_enc_conv) < 3:
+            error_message = 'EL appelido debe tener mas de 3'
 
         elif not email_enc_conv:
             error_message = 'El email es requerido'
@@ -342,6 +345,8 @@ def generar_cuenta_enc_convenio(request):
             error_message = 'EL celular es requierodo'
         elif len(celular) < 7:
             error_message = 'El celular debe tener mas de 7 digitos'
+        elif len(celular) > 9:
+            error_message = 'El celular no puede tener mas de 9 digitos'
 
         elif len(contraseña1 and contraseña2) < 5:
             error_message = 'Las contraseñas deben tener mas de 5 caracteres'
@@ -411,13 +416,13 @@ def editar_cuenta_enc_convenio(request):
 
         elif not cuentaEncConvenio.nom_enc_conv:
             error_message = 'El Nombre es requerido'
-        elif len(cuentaEncConvenio.nom_enc_conv) < 4:
-            error_message = 'El Nombre debe tener mas de 4 caracteres'
+        elif len(cuentaEncConvenio.nom_enc_conv) < 3:
+            error_message = 'El Nombre debe tener mas de 3 caracteres'
 
         elif not cuentaEncConvenio.ap_enc_conv:
             error_message = 'El Apellido  es requerida'
-        elif len(cuentaEncConvenio.ap_enc_conv) < 2:
-            error_message = 'EL appelido debe tener mas de 2'
+        elif len(cuentaEncConvenio.ap_enc_conv) < 3:
+            error_message = 'EL appelido debe tener mas de 3'
 
         elif not cuentaEncConvenio.email_enc_conv:
             error_message = 'El email es requerido'
@@ -530,6 +535,8 @@ def generar_cuenta_repartidor(request):
             error_message = 'EL celular es requierodo'
         elif len(celular) < 7:
             error_message = 'El celular debe tener mas de 7 digitos'
+        elif len(celular) > 9:
+            error_message = 'El celular no puede tener mas de 9 digitos'
 
         elif len(contraseña1 and contraseña2) < 5:
             error_message = 'Las contraseñas deben tener mas de 5 caracteres'
@@ -608,12 +615,12 @@ def editar_cuenta_repartidor(request):
 
         elif not cuentaRepartidor.nombre_repartidor:
             error_message = 'El Nombre es requerido'
-        elif len(cuentaRepartidor.nombre_repartidor) < 4:
+        elif len(cuentaRepartidor.nombre_repartidor) < 3:
             error_message = 'El Nombre debe tener mas de 4 caracteres'
 
         elif not cuentaRepartidor.apellido_repartidor:
             error_message = 'El Apellido  es requerida'
-        elif len(cuentaRepartidor.apellido_repartidor) < 2:
+        elif len(cuentaRepartidor.apellido_repartidor) < 3:
             error_message = 'EL appelido debe tener mas de 2'
 
         elif not cuentaRepartidor.email_repartidor:
@@ -695,7 +702,8 @@ def generar_cuenta_cajero(request):
             error_message = 'El Nombre es requerido'
         elif len(nom_cajero) < 4:
             error_message = 'El Nombre debe tener mas de 4 caracteres'
-
+        elif not email_cajero:
+            error_message = 'El email es requerido'
         elif len(contraseña1 and contraseña2) < 5:
             error_message = 'Las contraseñas deben tener mas de 5 caracteres'
 
@@ -704,9 +712,6 @@ def generar_cuenta_cajero(request):
 
         elif contraseña2 != contraseña1:
             error_message = 'Las contraseñas no coinciden'
-
-        elif not email_cajero:
-            error_message = 'El email es requerido'
 
         elif cajero.emailExiste():
             error_message = 'El email ya tiene una cuenta'
@@ -722,9 +727,11 @@ def generar_cuenta_cajero(request):
             nombre = Administrador.objects.get(
                 email_admin=request.session['cuentaAdmin'])              
             cuentasCajero = Cajero.objects.all()
+            cajero_rest = Restaurant.objects.all()
             data = {
                 'nombre': nombre,
                 'cuentasCajero': cuentasCajero,
+                'cajero_rest':cajero_rest,
                 'error': error_message,
                 'values': value
             }
@@ -736,7 +743,10 @@ def editar_cuenta_cajero(request):
     id_cajero = request.GET["id_cajero"]
     cuentaCajero = get_object_or_404(
         Cajero, id_cajero=id_cajero)
+    cajero_rest = Restaurant.objects.all()
+
     data1 = {
+        'cajero_rest':cajero_rest,
         'nombre': nombre,
         'cuentaCajero': cuentaCajero
     }
@@ -764,11 +774,14 @@ def editar_cuenta_cajero(request):
             nombre = Administrador.objects.get(
                 email_admin=request.session['cuentaAdmin'])             
             cuentasCajero = Cajero.objects.all()
+            cajero_rest = Restaurant.objects.all()
             data = {
                 'nombre': nombre,
                 'error': error_message,
                 'cuentasCajero': cuentasCajero,
-                'cuentaCajero': cuentaCajero
+                'cuentaCajero': cuentaCajero,
+                'cajero_rest':cajero_rest,
+
             }
         return render(request, 'trabajador/administrador/cuenta/cajero/edicionCajero.html', data)
     return render(request, 'trabajador/administrador/cuenta/cajero/edicionCajero.html', data1)

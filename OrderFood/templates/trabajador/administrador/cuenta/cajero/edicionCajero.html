@@ -38,8 +38,8 @@
                     </div>
                     <div class="form-group">
                         <label for="">Restaurante</label>
-                        <select name="restaurante" id="" class="form-control">
-                            <option value="" selected>--- Seleccionar Restaurante---</option>
+                        <select name="restaurante" id=""  class="form-control">
+                            <option value="" selected>{{cuentaCajero.restaurante}}</option>
                             {% for cajero_rest in cajero_rest %}
                             <option value="{{cajero_rest.id_restaurante}}">{{cajero_rest.nombre_rest}}</option>
                             {% endfor %}

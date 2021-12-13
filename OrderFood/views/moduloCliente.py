@@ -209,7 +209,6 @@ def cambiar_contraseña_cliente(request):
     return render(request, "cliente/cambiar_contraseña.html", data)
 
 
-
 class realizar_pedido(View):
     def get(self, request):
         #MODAL CARRITO
@@ -240,7 +239,24 @@ class realizar_pedido(View):
 
         print("tipo pago:")
         print(tipo_pago)
-        if int(tipo_pago) == 3:
+        if int(tipo_pago) == 1:          
+            for plato in platos:
+                print(carro.get(str(plato.id_plato)))
+                pedido = Pedido(cliente_id=Cliente(id_cliente=cuentaCliente),
+                            plato_id=plato,
+                            precio=plato.valor_plato,
+                            horario_entrega=horario_entrega,
+                            tipo_entrega=tipo_entrega,
+                            tipo_pago_id=tipo_pago,
+                            direccion=direccion,
+                            celular=celular_contacto,
+                            restaurant_id_restaurante=plato.Restaurant,
+                            cantidad=carro.get(str(plato.id_plato)))
+                pedido.pedido()
+            request.session['carro'] = {}
+            return redirect('mis-pedidos')
+
+        elif int(tipo_pago) == 3:
             print("entro a hacer el pago")
             id_cliente=cuentaCliente # obtenemos el rut de la persona a cobrar
             cliente = Cliente.objects.get(id_cliente=id_cliente) # obtenemos los datos del cliente de la base de datos
@@ -289,7 +305,6 @@ class pedidos(View):
    
 
 def descontar_saldo(request):
-
     id_cliente=request.session['cuentaCliente'] # obtenemos el rut de la persona a cobrar
     cliente = Cliente.objects.get(id_cliente=id_cliente) # obtenemos los datos del cliente de la base de datos
 

@@ -79,6 +79,15 @@ function showInp() {
   }
 }
 
+function tipoEntregaIn() {
+  getSelectValue = document.getElementById("tipo_entrega").value;
+  if (getSelectValue == "Delivery") {
+    document.getElementById("ocultarCostoEnvenio").style.display = "inline-block";
+  } else {
+    document.getElementById("ocultarCostoEnvenio").style.display = "none";
+  }
+}
+
 function mostrarContrasena() {
   var tipo = document.getElementById("password");
   if (tipo.type == "password") {
@@ -114,7 +123,7 @@ function initMap() {
     document.getElementById("clientAddress"),
     {
       types: ['address'],
-      componentRestrictions: {'country': ['cl']},
+      componentRestrictions: { 'country': ['cl'] },
     })
   autocomplete.addListener('place_changed', function () {
     var place = autocomplete.getPlace();

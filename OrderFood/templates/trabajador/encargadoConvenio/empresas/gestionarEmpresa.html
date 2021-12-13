@@ -37,9 +37,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
             <h2>Lista de Empresas en Convenio</h2>
             <div class="table-responsive py-2">
@@ -49,7 +46,7 @@
                         <th>Nombre Empresa</th>
                         <th>Nombre Gerente</th>
                         <th>Cantidad Trabajadores</th>
-                        <th>ID Encargado Convenio</th>
+                        <th>Encargado Convenio</th>
                         <th>Opciones</th>
                         <th>Opciones Trabajadores</th>
 
@@ -64,11 +61,14 @@
                         <td>{{ e.enc_convenio_id_enc_conv | title }}</td>
                         <td>
                             <a href="{% url 'modificar_convenio' e.rut_emp %}" class="btn btn-dark btn-sm">Modificar</a>
-                            <a href="#" onclick="eliminarEmpresa('{{e.rut_emp}}')" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="#" onclick="eliminarEmpresa('{{e.rut_emp}}')"
+                                class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                         <td>
-                            <a href="{% url 'generar-cuenta-empleado'%}?rut_emp={{e.rut_emp}}" class="btn btn-dark btn-sm">Generar Cuenta</a>
-                            <a href="{% url 'listar-cuentas-empleados'%}?rut_emp={{e.rut_emp}}" class="btn btn-dark btn-sm">Listar Cuentas</a>
+                            <a href="{% url 'generar-cuenta-empleado'%}?rut_emp={{e.rut_emp}}"
+                                class="btn btn-dark btn-sm">Generar Cuenta</a>
+                            <a href="{% url 'listar-cuentas-empleados'%}?rut_emp={{e.rut_emp}}"
+                                class="btn btn-dark btn-sm">Listar Cuentas</a>
 
                         </td>
 
@@ -85,7 +85,6 @@
 
         <script>
             function eliminarEmpresa(rut_emp) {
- 
                 Swal.fire({
                     "title": "¿Estas seguro?",
                     "text": "Eliminaras todo cliente asociado a la empresa",
@@ -96,19 +95,19 @@
                     "reverseButtons": true,
                     "confirmButtonColor": "#dc3545",
                     "cancelButtonColor": "#303030"
-        
-        
+
+
                 })
                     .then(function (result) {
                         if (result.isConfirmed) {
-                            location.href = "/eliminar-empresa/?rut_emp='"  + rut_emp + "'" 
-                            
+                            location.href = "/eliminar-empresa/?rut_emp=" + rut_emp + ""
+
                         }
                     })
-                    
+
             }
         </script>
 
     </div>
 </div>
-    {% endblock %}
+{% endblock %}

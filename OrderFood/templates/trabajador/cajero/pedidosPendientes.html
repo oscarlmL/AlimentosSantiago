@@ -5,7 +5,7 @@
 <br>
 <br>
 <br>
- <div class="container">
+<div class="container">
     <div class="row">
         <div class="table table-striped table-hover table-responsive-xl">
 
@@ -18,55 +18,55 @@
 
             <br>
             <div>
-                <table >
-                <table class="table table-hover table-responsive-xl" id="pedidos-pendientes">
-                    <tr class="table-active">
-                        <th>ID PediSdo</th>
-                        <th >Fecha Pedido</th>
-                        <th>Descripción</th>
-                        <th>Cantidad</th>
-                        <th>Nombre Cliente</th>
-                        <th>Direccion</th>
-                        <th>Horario Entrega</th>
-                        <th>Tipo Entrega</th>
-                        <th>Tipo Pago</th>
-                        <th>Opciones </th>
-                        <th></th>
-                    </tr>
-                    {% for n in pedidos_pendientes %}
-                    <tr class="table-light">
-                        <td>{{ n.id_pedido | title }}</td>
-                        <td>{{ n.fecha_pedido | title }}</td>
-                        <td>{{ n.plato_id | title}}</td>
-                        <td>{{ n.cantidad| title}}</td>
-                        <td>{{ n.cliente_id | title }}</td>
-                        <td>{{ n.direccion | title }}</td>
-                        <td>{{ n.horario_entrega | title }}</td>
-                        <td>{{ n.tipo_entrega | title }}</td>
-                        <td>{{ n.tipo_pago | title }}</td>
-                        <td>
-                            <form action="{% url 'confirmar-pedido' n.id_pedido %}" method="GET">
-                                <input type="submit" name="confirmar" style="width: 80px" class="btn btn-success btn-sm"
-                                    value="Confirmar" />
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{% url 'cancelar-pedido' n.id_pedido %}" method="GET">
-                                <input type="submit" name="cancelar" style="width: 80px" class="btn btn-danger btn-sm"
-                                    value="Cancelar" />
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                <table>
+                    <table class="table table-hover table-responsive-xl" id="pedidos-pendientes">
+                        <tr class="table-active">
+                            <th>ID Pedido</th>
+                            <th>Fecha Pedido</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Cliente</th>
+                            <th>Direccion</th>
+                            <th>Horario Entrega</th>
+                            <th>Tipo Entrega</th>
+                            <th>Tipo Pago</th>
+                            <th>Opciones </th>
+                            <th></th>
+                        </tr>
+                        {% for n in pedidos_pendientes %}
+                        <tr class="table-light">
+                            <td>{{ n.id_pedido | title }}</td>
+                            <td>{{ n.fecha_pedido | title }}</td>
+                            <td>{{ n.plato_id | title}}</td>
+                            <td>{{ n.cantidad| title}}</td>
+                            <td>{{ n.cliente_id | title }}</td>
+                            <td>{{ n.direccion | title }}</td>
+                            <td>{{ n.horario_entrega | title }}</td>
+                            <td>{{ n.tipo_entrega | title }}</td>
+                            <td>{{ n.tipo_pago | title }}</td>
+                            <td>
+                                <form action="{% url 'confirmar-pedido' n.id_pedido %}" method="GET">
+                                    <input type="submit" name="confirmar" style="width: 80px"
+                                        class="btn btn-success btn-sm" value="Confirmar" />
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url 'cancelar-pedido-cajero' n.id_pedido %}" method="GET">
+                                    <input type="submit" name="cancelar" style="width: 80px"
+                                        class="btn btn-danger btn-sm" value="Cancelar" />
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
                 </table>
-            </table>
             </div>
             <br>
             <hr>
             <br>
         </div>
     </div>
-</div>   
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $(document).ready(function () {

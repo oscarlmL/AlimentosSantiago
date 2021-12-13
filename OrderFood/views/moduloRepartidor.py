@@ -175,9 +175,12 @@ def cancelar_pedido(request, id_pedido):
 def listar_pedidos_aceptados(request):
     repartidor = Repartidor.objects.get(id_repartidor=request.session['cuentaRepartidor'])
     pedidos_aceptados = Pedido.objects.filter(estado='En ruta', repartidor_id = repartidor)
+    pedidos_aceptados1 = Pedido.objects.filter(estado='En ruta', repartidor_id = repartidor)
     data = {
         'pedidos_aceptados': pedidos_aceptados,
+        'pedidos_aceptados1':pedidos_aceptados1,
         'repartidor':repartidor,
     }
+    print('a',pedidos_aceptados1)
     return render (request ,'trabajador/repartidor/pedidos_aceptados.html',data)
 # Fin Modulo repartidor

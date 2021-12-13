@@ -16,193 +16,87 @@
                         </div>
                     </div>
                 </div>
-                <div class="list-group list-group-horizontal">
-                    <a class="list-group-item list-group-item-action" href="#">Delivery</a>
-                    <a class="list-group-item list-group-item-action" href="#">Retiro en local</a>
+                <h2 class="text-center">Realizar pedido</h2>
+                <hr>
+                <form action="/pagar" method="post" name="form" id="form">
+                    {% csrf_token %}
 
-                    <form action="/pagar" method="post" name="form" id="form">
-                        {% csrf_token %}
-                </div>
-                <div class="form-group">
-                    <label for="">Tipo de entrega</label>
-                    <select name="tipo_entrega" id="" class="form-control">
-                        <option value="" selected>--- Seleccionar tipo de entrega ---</option>
-                        <option value="Delivery">Delivery</option>
-                        <option value="Retiro en local">Retiro en local</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="">Tiempo estimado para retiro en el local</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="ahora_horario">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Ahora mismo
-                        </label>
+                    <div class="form-group">
+                        <label for="">Tipo de entrega</label>
+                        <select name="tipo_entrega" id="tipo_entrega" class="form-control" required
+                            onclick="tipoEntregaIn(this);">
+                            <option value="" selected>--- Seleccionar tipo de entrega ---</option>
+                            <option value="Delivery">Delivery</option>
+                            <option value="Retiro en local">Retiro en local</option>
+                        </select>
                     </div>
-                    <div class="form-check" data-toggle="modal" data-target="#cartModal">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Programar
-                        </label>
-                    </div>
-                    <div class="modal fade bd-example-modal-sm" id="cartModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header border-bottom-0">
-                                    <h5 class="modal-title" id="exampleModalLabel">
-                                        Elige un horario
-                                    </h5>
-                                    <hr>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <input type="datetime-local" class="form-control"
-                                            name="programar_horario_entrega" id="programar_horario_entrega">
+                    <div class="form-group">
+                        <label for="">Horario de entrega</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="ahora_horario">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Ahora mismo
+                            </label>
+                        </div>
+                        <div class="form-check" data-toggle="modal" data-target="#cartModal">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Programar
+                            </label>
+                        </div>
+                        <div class="modal fade bd-example-modal-sm" id="cartModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            Elige un horario
+                                        </h5>
+                                        <hr>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <input type="datetime-local" class="form-control"
+                                                name="programar_horario_entrega" id="programar_horario_entrega">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="">Dirección</label>
-                    <input type="text" class="form-control" placeholder="Tú dirección" name="direccion"
-                        id="clientAddress">
-                </div>
-                <div class="form-group">
-                    <label for="">Tipo Pago</label>
-                    <select name="tipo_pago" id="tipo_pago" class="form-control">
-                        <option value="0" selected>--- Seleccionar tipo de pago ---</option>
-                        {% for tipo_pago in tipo_pago %}
-                        <option value="{{tipo_pago.id_pago}}">{{tipo_pago.tipo_pago}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="">Saldo Cliente</label>
-                    <input type="text" readonly class="form-control" name="saldo_cli" id="saldo_cli"
-                        value={{clienteeee.saldo_cli}}>
-                    <input type="hidden" readonly class="form-control" name="totalpagar" id="totalpagar"
-                        value={{platos|precio_total_carro:request.session.carro}}>
-                </div>
-                <div class="form-group">
-                    <label for="">Celular de contacto</label>
-                    <input type="tel" class="form-control" name="celular_contacto" placeholder="" value=""
-                        onkeypress="return valideKey(event);">
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-round btn-block" id="btnEnviar" name="btnEnviar"
-                        value="Pagar">
-                </div>
-                </form>
-
-
-
-                <!-- <div class="col">
-                    <h1>Pasar para realizar el pedido</h1>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0"
-                            aria-valuemax="100"></div>
+                    <div class="form-group">
+                        <label for="">Dirección</label>
+                        <input type="text" class="form-control" placeholder="Tú dirección" name="direccion" minlength="3" required
+                            id="clientAddress">
                     </div>
-
-                    <form id="regiration_form" action="action.php" method="post">
-                        <fieldset>
-                            <h2>Paso 1: Tipo de entrega</h2>
-                            <div class="form-group">
-                                <label for="">Tipo de entrega</label>
-                                <select name="tipo_entrega" id="tipo_entrega" class="form-control">
-                                    <option value="" selected>--- Seleccionar tipo de entrega ---</option>
-                                    <option value="Delivery">Delivery</option>
-                                    <option value="Retiro en local">Retiro en local</option>
-                                </select>
-                            </div>
-                            <input type="button" name="data[password]" class="next btn btn-info" value="Siguiente" />
-                        </fieldset>
-                        <fieldset>
-                            <h2> Paso 2: Horario</h2>
-                            <div class="form-group">
-                                <label for="">Tiempo estimado para retiro en el local</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="ahora_horario" checked>
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Ahora mismo
-                                    </label>
-                                </div>
-                                <div class="form-check" data-toggle="modal" data-target="#cartModal">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="">
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        Programar
-                                    </label>
-                                </div>
-                                <div class="modal fade bd-example-modal-sm" id="cartModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header border-bottom-0">
-                                                <h5 class="modal-title" id="exampleModalLabel">
-                                                    Elige un horario
-                                                </h5>
-                                                <hr>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="datetime-local" class="form-control"
-                                                        name="programar_horario_entrega" id="programar_horario_entrega">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="button" name="previous" class="previous btn btn-default" value="Previo" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
-                        </fieldset>
-                        <fieldset>
-                            <h2>Paso 3: Información de contacto</h2>
-                            <div class="form-group">
-                                <label for="">Dirección</label>
-                                <input type="text" class="form-control" placeholder="Tú dirección" name="direccion"
-                                    id="direccion_cliente">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Celular de contacto</label>
-                                <input type="tel" class="form-control" name="celular_contacto" id="celular_contacto"
-                                    placeholder="" value="">
-                            </div>
-                            <input type="button" name="previous" class="previous btn btn-default" value="Previo" />
-                            <input type="button" name="next" class="next btn btn-info" value="Siguiente" />
-
-                        </fieldset>
-
-                        <fieldset>
-                            <h2>Paso 4: Tipo de pago</h2>
-                            <div class="form-group">
-                                <label for="">Tipo Pago</label>
-                                <select name="tipo_pago" id="tipo_pago" class="form-control">
-                                    <option value="" selected>--- Seleccionar tipo de pago ---</option>
-                                    {% for tipo_pago in tipo_pago %}
-                                    <option value="{{tipo_pago.id_pago}}">{{tipo_pago.tipo_pago}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <input type="button" name="previous" class="previous btn btn-default" value="Previo" />
-
-                            <input type="submit" name="submit" class="submit btn btn-success" value="Enviar"
-                                id="submit_data" />
-                        </fieldset>
-                    </form>
-                </div> -->
-
+                    <div class="form-group">
+                        <label for="">Tipo Pago</label>
+                        <select name="tipo_pago" id="tipo_pago" class="form-control" required>
+                            <option value="0" selected>--- Seleccionar tipo de pago ---</option>
+                            {% for tipo_pago in tipo_pago %}
+                            <option value="{{tipo_pago.id_pago}}">{{tipo_pago.tipo_pago}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" readonly class="form-control" name="saldo_cli" id="saldo_cli"
+                            value={{clienteeee.saldo_cli}}>
+                        <input type="tex" readonly class="form-control" name="totalpagar" id="totalpagar"
+                            value={{platos|precio_total_carro:request.session.carro}}>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Celular de contacto</label>
+                        <input type="tel" class="form-control" name="celular_contacto" placeholder="" value="" required minlength="7" maxlength="9"
+                            onkeypress="return valideKey(event);">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-round btn-block" id="btnEnviar" name="btnEnviar"
+                            value="Pagar">
+                    </div>
+                </form>
             </div>
             <div class="">
                 <div class="col">
@@ -229,11 +123,20 @@
                         </ul>
                         {% endfor %}
                         <hr>
-                        <ul class="list-group" id="div-costo-envio" name="div-costo-envio" class="d-none">
-                            <li class="list-group font-weight-bold" style="font-size: 22px;">Costo Env&iacute;o <span> $ 1.790</span>
-                            </li>                                
-                        </ul>                          
-                        <hr>
+                        <!-- <div class="form-group" id="ocultarCostoEnvenio" style="display: none">
+                            <label for="">Valor envio</label>
+                            <input type="text" class="form-control" value="1.790">
+                        </div> -->
+                        <div class="form-group" id="ocultarCostoEnvenio" style="display: none">
+                            <ul class="list-group" id="div-costo-envio"
+                                name="div-costo-envio" class="d-none">
+                                <li class="list-group font-weight-bold" style="font-size: 22px;">Costo Env&iacute;o
+                                    <span> $
+                                        1.790</span>
+                                </li>
+                            </ul>
+                        </div>
+
                         <ul class="list-group">
                             <li class="list-group font-weight-bold" style="font-size: 22px;">TOTAL A PAGAR <span>$
                                     {{platos|precio_total_carro:request.session.carro | intcomma}}</span></li>
@@ -242,36 +145,12 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
 
-
 <script>
-
-    let combo = document.getElementById("tipo_pago");
-    let btn = document.getElementById("btnEnviar");
-    let saldo = document.getElementById("saldo_cli").value;
-    let total = document.getElementById("totalpagar").value;
-
-    let tipoentrega = document.getElementById("tipo_entrega");
-    
-    let validarTipoEntrega = () =>{
-
-        let totalcompra = document.getElementById("totalplato").value;
-
-        if(tipoentrega.value == "Delivery"){
-            document.getElementById("div-costo-envio").classList.remove("d-none");
-            document.getElementById("totalcompra").value = parseInt(totalcompra) + 1790;
-        }else{
-            document.getElementById("div-costo-envio").classList.add("d-none");
-            document.getElementById("totalcompra").value = parseInt(totalcompra);
-        }
-    }
-    validarTipoEntrega();
-    tipoentrega.onchange = () =>{
-        validarTipoEntrega();
-    }
 
     var now = new Date();
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -302,83 +181,31 @@
 
 </script>
 
-<!-- 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
-        var current = 1,
-            current_step, next_step, steps;
-        steps = $("fieldset").length;
-        $(".next").click(function (e) {
-            let first_input;
-            switch (current) {
-                case 1:
-                    first_input = document.getElementById('tipo_entrega');
-                    break;
-                case 2:
-                    first_input = document.getElementById('programar_horario_entrega');
-                    break;
-                case 3:
-                    first_input = document.getElementById('direccion_cliente');
-                    second_input = document.getElementById('celular_contacto');
-                    break;
-                case 4:
-                    first_input = document.getElementById('tipo_pago');
-                default:
-                    break;
-            }
-            if (first_input.validity.valid) {
-                current_step = $(this).parent();
-                next_step = $(this).parent().next();
-                next_step.show();
-                current_step.hide();
-                setProgressBar(++current);
-            }
-        });
+    let combo = document.getElementById("tipo_pago");
+    let btn = document.getElementById("btnEnviar");
+    let saldo = document.getElementById("saldo_cli").value;
+    let total = document.getElementById("totalpagar").value;
 
-        $(".previous").click(function () {
-            current_step = $(this).parent();
-            next_step = $(this).parent().prev();
-            next_step.show();
-            current_step.hide();
-            setProgressBar(--current);
-        });
+    let tipoentrega = document.getElementById("tipo_entrega");
+    
+    let validarTipoEntrega = () =>{
 
+        let totalcompra = document.getElementById("totalplato").value;
 
-        $('.submit').click(function (e) {
-            const formulario = document.querySelector('form');
-            e.preventDefault();
-            if (formulario.reportValidity()) {
-                formulario.requestSubmit();
-            }
-        });
-
-        setProgressBar(current);
-        // Change progress bar action
-        function setProgressBar(curStep) {
-            var percent = parseFloat(100 / steps) * curStep;
-            percent = percent.toFixed();
-            $(".progress-bar")
-                .css("width", percent + "%")
-                .html(percent + "%");
+        if(tipoentrega.value == "Delivery"){
+            document.getElementById("div-costo-envio").classList.remove("d-none");
+            document.getElementById("totalcompra").value = parseInt(totalcompra) + 1790;
+        }else{
+            document.getElementById("div-costo-envio").classList.add("d-none");
+            document.getElementById("totalcompra").value = parseInt(totalcompra);
         }
-    });
-    // el evento
-    $('.submit').click(function (e) {
-        e.preventDefault();
-        // el formulario
-        const formulario = document.querySelector('form');
+    }
+    validarTipoEntrega();
+    tipoentrega.onchange = () =>{
+        validarTipoEntrega();
+    }
 
-        if (formulario.reportValidity()) {
-            formulario.requestSubmit();
-        }
-    });
 </script>
 
-<style>
-    #regiration_form fieldset:not(:first-of-type) {
-        display: none;
-    } -->
-</style>
 {% endblock %}

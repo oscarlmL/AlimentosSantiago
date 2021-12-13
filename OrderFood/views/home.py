@@ -6,9 +6,8 @@ from django.views import View
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from OrderFood.filters import buscarPlato
-
-def index(request):
-    return render(request, 'index.html')
+from transbank.webpay.webpay_plus.transaction import Transaction
+from transbank.error.transbank_error import TransbankError
 
 def incio_trabajador(request):
     if request.session.get('cuentaAdmin'):
@@ -161,23 +160,42 @@ def limpiar_carro(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def listar_plato_restaurante(request,id_restaurante):
-    platos = Plato.objects.filter(Restaurant_id=id_restaurante)
-    #MODAL CARRITO
-    id_plato = (list(request.session.get('carro').keys()))
-    platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
-    print(platos_en_carro)
-    #FIN MODAL CARRITO
-    myfilter = buscarPlato(request.GET, queryset=platos)
-    platos = myfilter.qs
-    data = {
-        'myfilter':myfilter,
-        'platos': platos,
-        'platos_en_carro':platos_en_carro,
-        'categoria':reversed(categoriaPlato.objects.all()),
-        'platos_categoria':reversed(categoriaPlato.objects.all()),
-    }
-    return render(request, 'cliente/platos.html', data)
-
+    if request.session.get('cuentaCliente'):
+        clienteeee = Cliente.objects.get(id_cliente=request.session['cuentaCliente'])
+        platos = Plato.objects.filter(Restaurant_id=id_restaurante)
+        #MODAL CARRITO
+        id_plato = (list(request.session.get('carro').keys()))
+        platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
+        print(platos_en_carro)
+        #FIN MODAL CARRITO
+        myfilter = buscarPlato(request.GET, queryset=platos)
+        platos = myfilter.qs
+        data = {
+            'myfilter':myfilter,
+            'clienteeee':clienteeee,
+            'platos': platos,
+            'platos_en_carro':platos_en_carro,
+            'categoria':reversed(categoriaPlato.objects.all()),
+            'platos_categoria':reversed(categoriaPlato.objects.all()),
+        }
+        return render(request, 'cliente/platos.html', data)
+    else:
+        platos = Plato.objects.filter(Restaurant_id=id_restaurante)
+        #MODAL CARRITO
+        id_plato = (list(request.session.get('carro').keys()))
+        platos_en_carro = Plato.get_plato_by_id_plato(id_plato)
+        print(platos_en_carro)
+        #FIN MODAL CARRITO
+        myfilter = buscarPlato(request.GET, queryset=platos)
+        platos = myfilter.qs
+        data = {
+            'myfilter':myfilter,
+            'platos': platos,
+            'platos_en_carro':platos_en_carro,
+            'categoria':reversed(categoriaPlato.objects.all()),
+            'platos_categoria':reversed(categoriaPlato.objects.all()),
+        }
+        return render(request, 'cliente/platos.html', data)
 
 
 # Funciones Generales

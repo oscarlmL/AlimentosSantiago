@@ -37,7 +37,7 @@
                         <th>Dirección Restaurante</th>
                         <th>Dirección Entrega</th>
                         <th>Horario Entrega</th>
-                        <th>Pago</th>
+                        <th>Estado Pago</th>
                         <th>Valor a pagar</th>
                         <th>Opciones</th>
                         <th></th>
@@ -50,8 +50,16 @@
                         <td><input type="input" style="border: 0;" name="direccion" value="{{p.direccion}}" id="to"
                                 readonly></td>
                         <td>{{ p.horario_entrega | title }}</td>
-                        <td>{{ p.tipo_pago | title }}</td>
+                        {% if p.tipo_pago_id == 1 %}
+                        <td>Pendiente</td>
+                        {% elif p.tipo_pago_id == 2 %}
+                        <td>Pagado</td>
+                        {% elif p.tipo_pago_id == 3 %}
+                        <td>Pagado</td>
+                        {% endif %}
                         <td>${{ p.precio | intcomma }}</td>
+
+                            
                         <td>
                             <form action="{% url 'entregar-pedido' p.id_pedido %}" method="GET">
                                 <div class="input-group-append">

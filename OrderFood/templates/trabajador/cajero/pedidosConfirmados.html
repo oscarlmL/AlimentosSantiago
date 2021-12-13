@@ -15,7 +15,7 @@
             <div>
                 <table class="table table-hover table-responsive-xl">
                     <tr class="table-active">
-                        <th>ID Pedido</th>
+                        <th>Nro pedido</th>
                         <th>Estado</th>
                         <th>Nombre Cliente</th>
                         <th>Fecha Pedido</th>
@@ -27,7 +27,15 @@
                     {% for n in pedidos_confirmados %}
                     <tr class="table-light">
                         <td>{{ n.id_pedido | title }}</td>
-                        <td>{{ n.estado | title }}</td>
+                        {% if n.estado == 'Pendiente' %}
+                        <td><small class="badge badge-danger">Pendiente</small></td>
+                        {% elif n.estado == 'Confirmado' %}
+                        <td><small class="badge badge-warning">Confirmado</small></td>
+                        {% elif n.estado == 'En ruta' %}
+                        <td><small class="badge badge-primary">En ruta</small></td>
+                        {% else %}
+                        <td><small class="badge badge-success">Entregado</small></td>
+                        {% endif %}
                         <td>{{ n.cliente_id | title }}</td>
                         <td>{{ n.fecha_pedido | title }}</td>
                         <td>{{ n.direccion | title }}</td>

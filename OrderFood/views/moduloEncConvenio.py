@@ -166,6 +166,8 @@ def agregar_empresa(request):
             post.enc_convenio_id_enc_conv_id = id_enc_convenio
             post.save()
             messages.success(request, "Empresa Agregada Correctamente")
+            return redirect(to="gestionar-empresa")
+
     else:
         form = GestionEmpresaForm()
     data = {

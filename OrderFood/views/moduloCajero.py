@@ -23,7 +23,6 @@ def listar_pedidos_pendientes(request):
 
 
 def confirmar_pedido(request, id_pedido):
-
     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
     if (request.method == 'GET') and ("confirmar" in request.GET):
         pedido.estado = 'Confirmado'
@@ -32,8 +31,7 @@ def confirmar_pedido(request, id_pedido):
     else:
         return redirect('listar-pedidos-pendientes')
 
-def cancelar_pedido(request, id_pedido):
-
+def cancelar_pedido_cajero(request, id_pedido):
     pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
     if (request.method == 'GET') and ("cancelar" in request.GET):
         pedido.estado = 'Cancelado'
@@ -43,9 +41,10 @@ def cancelar_pedido(request, id_pedido):
         return redirect('listar-pedidos-pendientes')
 
 def listar_pedidos_confirmados(request):
+    cajero = Cajero.objects.get(email_cajero=request.session['cuentaCajero'])
     nombre = Cajero.objects.get(
         email_cajero=request.session['cuentaCajero'])  
-    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado')
+    pedidos_confirmados = Pedido.objects.filter(estado='Confirmado', restaurant_id_restaurante=cajero.restaurante_id)
     data = {
         'pedidos_confirmados':pedidos_confirmados,
         'nombre':nombre
