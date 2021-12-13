@@ -31,6 +31,10 @@ urlpatterns = [
     path("cambiar-contraseña-cliente/",auth_middleware_cliente(cambiar_contraseña_cliente),name="cambiar-contraseña-cliente"),
     path('realizar-pedido', auth_middleware_cliente(realizar_pedido.as_view()), name="realizar-pedido"),
     path('pagar', auth_middleware_cliente(realizar_pedido.as_view()), name="pagar"),
+    path('webpay', webpay, name="webpay"),
+    path('terminar', webpaycommit, name="terminar"),
+
+
     path('mis-pedidos', auth_middleware_cliente(pedidos.as_view()), name="mis-pedidos"),
  # path('historial-pedidos', auth_middleware_cliente(historial_pedidos.as_view()), name="historial-pedidos"),
 
@@ -122,9 +126,7 @@ urlpatterns = [
     path('cancelar-pedido-cajero/<int:id_pedido>/',cancelar_pedido_cajero, name="cancelar-pedido-cajero"),
     
     #END CAJERO
-
     # path('agregar_carrito', agregar_carrito, name= 'agregar_carrito'),
     # path('listar_carrito', listar_carrito, name='listar_carrito'),
     # path('eliminar_item_carrito/<id>/', eliminar_item_carrito, name='eliminar_item_carrito'),   
-
 ]

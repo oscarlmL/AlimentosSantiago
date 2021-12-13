@@ -69,8 +69,8 @@
                     </div>
                     <div class="form-group">
                         <label for="">Dirección</label>
-                        <input type="text" class="form-control" placeholder="Tú dirección" name="direccion" minlength="3" required
-                            id="clientAddress">
+                        <input type="text" class="form-control" placeholder="Tú dirección" name="direccion"
+                            minlength="3" required id="clientAddress">
                     </div>
                     <div class="form-group">
                         <label for="">Tipo Pago</label>
@@ -82,15 +82,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="hidden" readonly class="form-control" name="saldo_cli" id="saldo_cli"
-                            value={{clienteeee.saldo_cli}}>
-                        <input type="tex" readonly class="form-control" name="totalpagar" id="totalpagar"
-                            value={{platos|precio_total_carro:request.session.carro}}>
+                        <input type="hidden" readonly class="form-control" name="saldo_cli" id="saldo_cli" value={{clienteeee.saldo_cli}}>
+                        <input type="hidden" readonly class="form-control" name="totalpagar" id="totalpagar" value={{platos|precio_total_carro:request.session.carro}}>
                     </div>
                     <div class="form-group">
                         <label for="">Celular de contacto</label>
-                        <input type="tel" class="form-control" name="celular_contacto" placeholder="" value="" required minlength="7" maxlength="9"
-                            onkeypress="return valideKey(event);">
+                        <input type="tel" class="form-control" name="celular_contacto" placeholder="" value="" required
+                            minlength="7" maxlength="9" onkeypress="return valideKey(event);">
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary btn-round btn-block" id="btnEnviar" name="btnEnviar"
@@ -128,8 +126,7 @@
                             <input type="text" class="form-control" value="1.790">
                         </div> -->
                         <div class="form-group" id="ocultarCostoEnvenio" style="display: none">
-                            <ul class="list-group" id="div-costo-envio"
-                                name="div-costo-envio" class="d-none">
+                            <ul class="list-group" id="div-costo-envio" name="div-costo-envio" class="d-none">
                                 <li class="list-group font-weight-bold" style="font-size: 22px;">Costo Env&iacute;o
                                     <span> $
                                         1.790</span>
@@ -148,6 +145,44 @@
 
     </div>
 </div>
+
+
+
+<script>
+
+    let combo = document.getElementById("tipo_pago");
+    let btn = document.getElementById("btnEnviar");
+    let saldo = document.getElementById("saldo_cli").value;
+    let total = document.getElementById("totalpagar").value;
+
+    var now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById('programar_horario_entrega').value = now.toISOString().slice(0,16);
+
+    let validarForm = () =>{
+        document.getElementById("mensajeSaldo").classList.add("d-none");
+        if(combo.value == 0){
+        btn.disabled = true;
+        }else{
+            btn.disabled = false;
+        }
+        if(combo.value == 3){
+            if(parseInt(total) > parseInt(saldo)){
+                btn.disabled = true;
+                document.getElementById("mensajeSaldo").classList.remove("d-none");
+            }else{
+                btn.disabled = false;
+                document.getElementById("mensajeSaldo").classList.add("d-none");
+            }
+        }
+    }
+    validarForm();
+
+    combo.onchange = () =>{
+        validarForm();
+    }
+
+</script>
 
 
 <script>
@@ -178,34 +213,6 @@
     combo.onchange = () => {
         validarForm();
     }
-
-</script>
-
-<script>
-    let combo = document.getElementById("tipo_pago");
-    let btn = document.getElementById("btnEnviar");
-    let saldo = document.getElementById("saldo_cli").value;
-    let total = document.getElementById("totalpagar").value;
-
-    let tipoentrega = document.getElementById("tipo_entrega");
-    
-    let validarTipoEntrega = () =>{
-
-        let totalcompra = document.getElementById("totalplato").value;
-
-        if(tipoentrega.value == "Delivery"){
-            document.getElementById("div-costo-envio").classList.remove("d-none");
-            document.getElementById("totalcompra").value = parseInt(totalcompra) + 1790;
-        }else{
-            document.getElementById("div-costo-envio").classList.add("d-none");
-            document.getElementById("totalcompra").value = parseInt(totalcompra);
-        }
-    }
-    validarTipoEntrega();
-    tipoentrega.onchange = () =>{
-        validarTipoEntrega();
-    }
-
 </script>
 
 {% endblock %}

@@ -6,7 +6,9 @@ from OrderFood.models import  *
 from django.views import View
 from django.contrib import messages
 from django.db.models import Q
-
+from transbank.webpay.webpay_plus.transaction import Transaction
+from transbank.error.transbank_error import TransbankError
+import transbank
 
 # Modulo Cliente
 def generarCuentaCliente(request):
@@ -276,21 +278,57 @@ class realizar_pedido(View):
             Cliente.objects.filter(id_cliente=id_cliente).update(saldo_cli=saldonuevo) # se actualiza el saldo del cliente
 
 
-        for plato in platos:
-            print(carro.get(str(plato.id_plato)))
-            pedido = Pedido(cliente_id=Cliente(id_cliente=cuentaCliente),
-                          plato_id=plato,
-                          precio=plato.valor_plato,
-                          horario_entrega=horario_entrega,
-                          tipo_entrega=tipo_entrega,
-                          tipo_pago_id=tipo_pago,
-                          direccion=direccion,
-                          celular=celular_contacto,
-                          restaurant_id_restaurante=plato.Restaurant,
-                          cantidad=carro.get(str(plato.id_plato)))
-            pedido.pedido()
-        request.session['carro'] = {}
-        return redirect('mis-pedidos')
+            for plato in platos:
+                print(carro.get(str(plato.id_plato)))
+                pedido = Pedido(cliente_id=Cliente(id_cliente=cuentaCliente),
+                            plato_id=plato,
+                            precio=plato.valor_plato,
+                            horario_entrega=horario_entrega,
+                            tipo_entrega=tipo_entrega,
+                            tipo_pago_id=tipo_pago,
+                            direccion=direccion,
+                            celular=celular_contacto,
+                            restaurant_id_restaurante=plato.Restaurant,
+                            cantidad=carro.get(str(plato.id_plato)))
+                pedido.pedido()
+            request.session['carro'] = {}
+            return redirect('mis-pedidos')
+
+
+        elif int(tipo_pago) == 2:
+            return redirect('webpay')
+
+
+def webpay(request):
+    buy_order = str(1)
+    session_id = str(1)
+    return_url = 'http://127.0.0.1:8000/terminar'
+    costopedido = 0 
+    carro = request.session.get('carro')
+    id_plato = (list(carro.keys()))
+    for plato in id_plato:
+            platito = Plato.objects.get(id_plato=plato)
+            costopedido += platito.valor_plato
+    amount = costopedido
+    try:
+        response = Transaction().create(buy_order, session_id, amount, return_url)
+        print(amount)
+        return render(request, 'cliente/webpay/webpay.html', {"response":response})
+    except TransbankError as e:
+        print(e.message)
+        print(e.message)
+        error =e.message
+        return render(request, 'cliente/webpay/falloTransaccion.html', {"error":error})
+
+def webpaycommit(request):
+    token = request.POST.get("token_ws")
+    try:
+        response = Transaction().commit(token) 
+        return render(request, 'cliente/webpay/terminar.html',{"token": token,"response": response})
+    except TransbankError as e:
+        error =e.message
+        return render(request, 'cliente/webpay//falloTransaccion.html', {"error":error})   
+
 
 
 class pedidos(View):
